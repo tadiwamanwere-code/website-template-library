@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Template Library">
+  <rect width="64" height="64" rx="12" fill="#08080a"/>
+  <!-- three stacked artboards -->
+  <rect x="14" y="14" width="26" height="18" rx="2" fill="none" stroke="#f4f4f5" stroke-width="3"/>
+  <rect x="24" y="36" width="26" height="14" rx="2" fill="none" stroke="#f4f4f5" stroke-width="3"/>
+  <rect x="44" y="14" width="6"  height="18" rx="2" fill="#f4f4f5"/>
+</svg>
