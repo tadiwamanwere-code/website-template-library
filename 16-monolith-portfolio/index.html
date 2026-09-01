@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ivo Marchetti — Monolith / Creative Direction, Berlin</title>
+<meta name="description" content="Ivo Marchetti operates as Monolith — a one-director studio in Berlin building identity systems, editorial and film for clients who need the work to outlive the launch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&family=Spline+Sans+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MONOLITH — Ivo Marchetti, creative direction (Berlin)
+   Palette: near-black #0a0a0a / off-white #ededea / signal #ff4d17
+   Type:    Anybody (wide variable grotesk) + Spline Sans Mono
+   ============================================================ */
+
+:root{
+  --ink:#0a0a0a;
+  --paper:#ededea;
+  --paper-dim:#8f8f8a;
+  --paper-faint:#4a4a46;
+  --rule:rgba(237,237,234,.13);
+  --rule-soft:rgba(237,237,234,.07);
+  --signal:#ff4d17;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-io:cubic-bezier(.76,0,.24,1);
+  --gut:clamp(20px,4vw,64px);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto !important}
+
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:'Spline Sans Mono','SFMono-Regular',ui-monospace,Menlo,monospace;
+  font-size:14px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  text-rendering:optimizeLegibility;
+}
+body.is-loading{overflow:hidden;height:100vh}
+
+::selection{background:var(--signal);color:#0a0a0a}
+
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0}
+
+/* ---------- type primitives ---------- */
+.display{
+  font-family:'Anybody','Archivo','Helvetica Neue',Arial,sans-serif;
+  font-variation-settings:'wdth' 126,'wght' 700;
+  font-weight:700;
+  text-transform:uppercase;
+  line-height:.82;
+  letter-spacing:-.018em;
+}
+.mono{
+  font-family:'Spline Sans Mono',ui-monospace,Menlo,monospace;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-size:10px;
+  font-weight:400;
+  color:var(--paper-dim);
+}
+.mono-sm{font-size:9px;letter-spacing:.18em}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1}
+
+/* ---------- hand-split reveal primitives ---------- */
+.line{display:block;overflow:hidden;padding-bottom:.10em;margin-bottom:-.10em}
+.line-soft{display:block}
+.wdm{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
+.ch,.wd{display:inline-block;vertical-align:top;will-change:transform}
+.js .ch,.js .wd{transform:translateY(130%)}
+.js [data-fade]{opacity:0;transform:translateY(22px)}
+
+/* ============================================================
+   LOADER
+   ============================================================ */
+.loader{
+  position:fixed;inset:0;z-index:120;
+  background:var(--ink);
+  display:grid;grid-template-rows:1fr auto;
+  padding:var(--gut);
+  clip-path:inset(0 0 0 0);
+}
+.loader__stage{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.loader__word{
+  font-family:'Anybody','Archivo',sans-serif;
+  font-variation-settings:'wdth' 132,'wght' 800;
+  text-transform:uppercase;
+  font-size:clamp(38px,9vw,132px);
+  line-height:.8;letter-spacing:-.02em;
+  color:var(--paper);
+}
+.loader__word span{display:inline-block;transform:translateY(110%)}
+.loader__foot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.loader__count{
+  font-family:'Anybody','Archivo',sans-serif;
+  font-variation-settings:'wdth' 100,'wght' 500;
+  font-size:clamp(40px,7vw,88px);
+  line-height:.85;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;
+  color:var(--paper);
+}
+.loader__meta{text-align:right;max-width:38ch}
+.loader__bar{
+  position:absolute;left:var(--gut);right:var(--gut);bottom:calc(var(--gut) + 108px);
+  height:1px;background:var(--rule);
+}
+.loader__bar i{
+  display:block;height:1px;width:100%;background:var(--signal);
+  transform:scaleX(0);transform-origin:0 50%;
+}
+
+/* ============================================================
+   CURSOR
+   ============================================================ */
+.cursor,.cursor-dot{
+  position:fixed;top:0;left:0;z-index:200;pointer-events:none;
+  will-change:transform;
+}
+/* the wrapper carries the lerped position; the ring carries the scale, so the
+   rAF write and the GSAP tween never fight over one transform */
+.cursor__ring{
+  position:absolute;left:-23px;top:-23px;width:46px;height:46px;
+  border:1px solid var(--signal);border-radius:50%;display:block;
+  transition:background-color .32s var(--ease);
+}
+.cursor__label{
+  position:absolute;left:0;top:0;transform:translate(-50%,-50%) scale(.7);
+  font-family:'Spline Sans Mono',monospace;
+  font-size:8px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink);opacity:0;
+  transition:opacity .25s var(--ease),transform .25s var(--ease);
+  white-space:nowrap;
+}
+.cursor.is-view .cursor__ring{background:var(--signal)}
+.cursor.is-view .cursor__label{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.cursor-dot{width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:var(--signal)}
+@media (max-width:1023px){.cursor,.cursor-dot{display:none}}
+
+/* ============================================================
+   GRID OVERLAY + WEBGL CANVAS
+   ============================================================ */
+.grid-lines{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  display:grid;grid-template-columns:repeat(6,1fr);
+  padding:0 var(--gut);
+}
+.grid-lines span{border-left:1px solid var(--rule-soft)}
+.grid-lines span:first-child{border-left:0}
+@media (max-width:900px){.grid-lines{grid-template-columns:repeat(2,1fr)}}
+
+#gl{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  opacity:0;transition:opacity .35s linear;
+}
+#gl.on{opacity:1}
+
+/* CSS fallback reveal (used when WebGL is unavailable) */
+.gl-fallback{
+  position:fixed;top:0;left:0;z-index:1;pointer-events:none;
+  width:min(30vw,420px);aspect-ratio:4/5;
+  opacity:0;
+  transform:translate3d(-50%,-50%,0) scale(.86);
+  overflow:hidden;
+}
+.gl-fallback img{
+  width:100%;height:100%;object-fit:cover;
+  filter:grayscale(1) contrast(1.12) brightness(.92);
+  transform:scale(1.06);
+}
+@media (max-width:1023px){#gl,.gl-fallback{display:none}}
+
+/* ============================================================
+   CHROME / NAV
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:24px;padding:22px var(--gut);
+  mix-blend-mode:difference;
+}
+.nav__mark{
+  font-family:'Anybody','Archivo',sans-serif;
+  font-variation-settings:'wdth' 132,'wght' 700;
+  text-transform:uppercase;font-size:15px;letter-spacing:.02em;line-height:1;
+}
+.nav__links{display:flex;gap:clamp(14px,2.2vw,34px);align-items:center}
+.nav__links a{position:relative;padding-bottom:2px}
+.nav__links a::after{
+  content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;
+  background:var(--signal);transform:scaleX(0);transform-origin:100% 50%;
+  transition:transform .45s var(--ease);
+}
+.nav__links a:hover::after{transform:scaleX(1);transform-origin:0 50%}
+.nav__clock{color:var(--paper-dim)}
+@media (max-width:820px){.nav__links a:not(.nav__cta){display:none}.nav__clock{display:none}}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;z-index:2;
+  min-height:100svh;
+  padding:0 var(--gut) clamp(28px,4vh,52px);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;
+}
+.hero__eyebrow{
+  display:flex;gap:clamp(16px,3vw,44px);flex-wrap:wrap;
+  padding-bottom:clamp(18px,3vh,40px);
+}
+.hero__eyebrow b{color:var(--paper);font-weight:400}
+.hero__name{
+  font-size:clamp(46px,11.6vw,186px);
+  margin-left:-.012em;
+  display:flex;flex-direction:column;align-items:stretch;
+}
+.hero__name .line,.cta__big .line{white-space:nowrap}
+/* IVO hangs left, MARCHETTI runs flush to the right gutter at every width */
+.hero__name .l2{text-align:right;margin-right:-.02em}
+.hero__name em{
+  font-style:normal;
+  -webkit-text-stroke:1.2px var(--paper);
+  color:transparent;
+}
+.hero__base{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,min(46ch,38vw));
+  gap:clamp(20px,4vw,60px);
+  align-items:end;
+  padding-top:clamp(26px,4.5vh,58px);
+  border-top:1px solid var(--rule);
+  margin-top:clamp(26px,4.5vh,58px);
+}
+.hero__stats{display:flex;gap:clamp(18px,4vw,70px);flex-wrap:wrap}
+.hero__stat b{
+  display:block;font-family:'Anybody',sans-serif;
+  font-variation-settings:'wdth' 108,'wght' 500;
+  font-size:clamp(20px,2.4vw,32px);line-height:1;letter-spacing:-.02em;
+  color:var(--paper);margin-bottom:6px;font-variant-numeric:tabular-nums;
+}
+.hero__blurb{font-size:13px;line-height:1.75;color:var(--paper-dim);text-transform:none;letter-spacing:0}
+.hero__blurb strong{color:var(--paper);font-weight:400}
+.avail{display:inline-flex;align-items:center;gap:8px;color:var(--paper)}
+.avail i{width:6px;height:6px;border-radius:50%;background:var(--signal);animation:pulse 2.6s var(--ease) infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+@media (max-width:820px){
+  .hero__base{grid-template-columns:1fr}
+  .hero__name{align-items:flex-start}
+  .hero__name .l2{text-align:left;margin-right:0}
+}
+
+/* ============================================================
+   WORK INDEX (WebGL rows)
+   ============================================================ */
+.work{
+  position:relative;z-index:2;
+  padding:clamp(80px,13vh,180px) var(--gut) clamp(60px,10vh,140px);
+}
+.sec-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:24px;flex-wrap:wrap;
+  padding-bottom:clamp(24px,4vh,54px);
+}
+.sec-head h2{
+  font-family:'Anybody',sans-serif;font-variation-settings:'wdth' 112,'wght' 500;
+  text-transform:uppercase;font-size:clamp(15px,1.5vw,20px);letter-spacing:.01em;font-weight:500;
+}
+.work__list{border-top:1px solid var(--rule)}
+.row{
+  position:relative;display:block;
+  border-bottom:1px solid var(--rule);
+  padding:clamp(16px,2.4vw,30px) 0;
+}
+.row__top{
+  display:grid;
+  grid-template-columns:52px minmax(0,1fr) auto;
+  gap:clamp(12px,2vw,32px);
+  align-items:baseline;
+}
+.row__idx{transition:color .4s var(--ease)}
+.row__title{
+  font-family:'Anybody',sans-serif;
+  font-variation-settings:'wdth' 124,'wght' 700;
+  text-transform:uppercase;font-weight:700;
+  font-size:clamp(30px,6.4vw,104px);
+  line-height:.92;letter-spacing:-.022em;
+  color:var(--paper);
+  transition:transform .7s var(--ease),color .5s var(--ease),-webkit-text-stroke-color .5s var(--ease);
+  -webkit-text-stroke:1px transparent;
+  will-change:transform;
+}
+.row__meta{text-align:right;white-space:nowrap;transition:color .4s var(--ease)}
+.row__out{
+  display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .6s var(--ease);
+  padding-left:calc(52px + clamp(12px,2vw,32px));
+}
+.row__out > span{overflow:hidden;display:block}
+.row__out p{
+  font-size:12px;line-height:1.6;color:var(--paper-dim);
+  max-width:56ch;text-transform:none;letter-spacing:.01em;
+  padding-top:12px;
+}
+.row__thumb{display:none}
+
+@media (hover:hover) and (min-width:1024px){
+  .row.is-hot .row__title{
+    transform:translateX(clamp(14px,2vw,40px));
+    color:transparent;
+    -webkit-text-stroke:1px var(--paper);
+  }
+  .row.is-hot .row__idx{color:var(--signal)}
+  .row.is-hot .row__meta{color:var(--paper)}
+  .row:hover .row__out{grid-template-rows:1fr}
+  .work.is-active .row:not(.is-hot) .row__title{color:var(--paper-faint)}
+}
+@media (max-width:1023px){
+  .row__top{grid-template-columns:38px minmax(0,1fr)}
+  .row__meta{grid-column:2;text-align:left;white-space:normal;padding-top:8px}
+  .row__out{grid-template-rows:1fr;padding-left:calc(38px + 12px)}
+  .row__thumb{
+    display:block;margin-top:16px;margin-left:calc(38px + 12px);
+    aspect-ratio:16/10;overflow:hidden;
+  }
+  .row__thumb img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1)}
+}
+
+/* ============================================================
+   STUDIO — broken grid
+   ============================================================ */
+.studio{
+  position:relative;z-index:2;background:var(--ink);
+  padding:clamp(80px,13vh,180px) var(--gut);
+  border-top:1px solid var(--rule);
+}
+.studio__grid{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:clamp(16px,2.4vw,34px);
+  align-items:start;
+}
+.studio__quote{
+  grid-column:1 / span 9;
+  font-family:'Anybody',sans-serif;font-variation-settings:'wdth' 108,'wght' 400;
+  text-transform:none;font-weight:400;
+  font-size:clamp(24px,3.7vw,58px);
+  line-height:1.06;letter-spacing:-.024em;
+  padding-bottom:clamp(40px,7vh,110px);
+}
+.studio__quote em{font-style:normal;color:var(--signal)}
+.studio__aside{grid-column:11 / span 2;grid-row:1;padding-top:10px}
+.studio__figure{
+  grid-column:1 / span 4;grid-row:2;
+  position:relative;overflow:hidden;aspect-ratio:3/4;
+  margin-top:clamp(0px,4vw,64px);
+}
+.studio__figure img{
+  position:absolute;top:-8%;left:0;
+  width:100%;height:116%;object-fit:cover;
+  filter:grayscale(1) contrast(1.14) brightness(.85);
+  will-change:transform;
+}
+.studio__cap{padding-top:12px;grid-column:1 / span 4;grid-row:3}
+.studio__body{grid-column:6 / span 4;grid-row:2 / span 2;align-self:end;padding-bottom:clamp(0px,3vw,48px)}
+.studio__body p{
+  font-size:13.5px;line-height:1.8;color:var(--paper-dim);
+  text-transform:none;letter-spacing:.005em;margin-bottom:20px;
+}
+.studio__body p strong{color:var(--paper);font-weight:400}
+.approach{grid-column:11 / span 2;grid-row:2 / span 2;border-top:1px solid var(--rule)}
+.approach li{list-style:none;padding:16px 0;border-bottom:1px solid var(--rule-soft)}
+.approach b{display:block;color:var(--paper);font-weight:400;font-size:10px;letter-spacing:.14em;margin-bottom:7px}
+.approach span{font-size:10.5px;line-height:1.65;color:var(--paper-dim);text-transform:none;letter-spacing:.015em}
+@media (max-width:1023px){
+  .studio__quote{grid-column:1 / -1;grid-row:auto}
+  .studio__aside{grid-column:1 / -1;grid-row:auto;padding-bottom:24px}
+  .studio__figure{grid-column:1 / span 7;grid-row:auto;margin-top:0}
+  .studio__cap{grid-column:1 / span 7;grid-row:auto}
+  .studio__body{grid-column:1 / -1;grid-row:auto;padding-top:32px;padding-bottom:0}
+  .approach{grid-column:1 / -1;grid-row:auto;margin-top:24px}
+}
+@media (max-width:700px){.studio__figure,.studio__cap{grid-column:1 / -1}}
+
+/* ============================================================
+   ARCHIVE — horizontal showcase
+   ============================================================ */
+.archive{position:relative;z-index:2;background:var(--ink);overflow:hidden}
+/* head lives INSIDE the pinned view so it stays put through the whole run */
+.archive__view{position:relative;padding:clamp(84px,12vh,124px) 0 clamp(40px,6vh,76px)}
+.archive__head{padding:0 var(--gut) clamp(20px,3vh,40px)}
+.archive__track{
+  display:flex;align-items:flex-end;gap:clamp(20px,3vw,52px);
+  padding:0 var(--gut);
+  will-change:transform;
+}
+.frame{flex:0 0 auto;width:clamp(200px,min(26vw,44vh),380px)}
+.frame:nth-child(even){padding-bottom:clamp(24px,4.4vw,72px)}
+.frame__media{position:relative;overflow:hidden;aspect-ratio:4/5;background:#131313}
+.frame:nth-child(3n) .frame__media{aspect-ratio:16/11}
+.frame__media img{
+  width:112%;height:100%;object-fit:cover;margin-left:-6%;
+  filter:grayscale(1) contrast(1.12) brightness(.88);
+  will-change:transform;
+}
+.frame__cap{display:flex;justify-content:space-between;gap:16px;padding-top:12px;border-top:1px solid var(--rule);margin-top:14px}
+.frame__cap b{color:var(--paper);font-weight:400}
+@media (max-width:1023px){
+  .archive__view{padding:clamp(64px,9vh,110px) 0 clamp(50px,8vh,90px)}
+  .archive__track{overflow-x:auto;scrollbar-width:none;padding-bottom:8px}
+  .archive__track::-webkit-scrollbar{display:none}
+  .frame{width:min(74vw,360px)}
+}
+
+/* ============================================================
+   RECOGNITION — proof
+   ============================================================ */
+.proof{
+  position:relative;z-index:2;background:var(--ink);
+  padding:clamp(70px,11vh,150px) var(--gut) clamp(60px,9vh,120px);
+  border-top:1px solid var(--rule);
+}
+.stats{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(16px,2.4vw,34px);
+  padding-bottom:clamp(48px,8vh,110px);
+}
+.stat b{
+  display:block;
+  font-family:'Anybody',sans-serif;font-variation-settings:'wdth' 118,'wght' 600;
+  font-size:clamp(40px,7.4vw,110px);line-height:.86;letter-spacing:-.035em;
+  font-variant-numeric:tabular-nums;color:var(--paper);
+  padding-bottom:12px;
+}
+.stat b i{font-style:normal;color:var(--signal)}
+.stat span{display:block;border-top:1px solid var(--rule);padding-top:10px}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,1fr);gap:28px 16px}}
+
+.awards{border-top:1px solid var(--rule)}
+.award{
+  display:grid;grid-template-columns:84px minmax(0,1.4fr) minmax(0,1fr) auto;
+  gap:clamp(10px,2vw,28px);align-items:baseline;
+  padding:18px 0;border-bottom:1px solid var(--rule-soft);
+  transition:padding-left .5s var(--ease),border-color .4s var(--ease);
+}
+.award b{
+  color:var(--paper);font-weight:400;
+  font-family:'Anybody',sans-serif;font-variation-settings:'wdth' 108,'wght' 500;
+  font-size:clamp(13px,1.4vw,19px);letter-spacing:0;text-transform:uppercase;
+}
+.award i{font-style:normal;color:var(--paper-faint);transition:color .4s var(--ease)}
+.award:hover{padding-left:clamp(8px,1.4vw,24px);border-color:var(--signal)}
+.award:hover i{color:var(--signal)}
+@media (max-width:820px){
+  .award{grid-template-columns:64px minmax(0,1fr);row-gap:4px}
+  .award i{grid-column:2}
+}
+
+.marquee{
+  margin-top:clamp(48px,8vh,110px);
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  padding:18px 0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.marquee ul{display:flex;gap:0;list-style:none;width:max-content;animation:slide 42s linear infinite}
+.marquee li{padding:0 clamp(20px,3vw,54px);white-space:nowrap;position:relative}
+.marquee li::after{content:'';position:absolute;right:0;top:50%;width:3px;height:3px;background:var(--paper-faint);transform:translateY(-50%)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ============================================================
+   CTA + FOOTER
+   ============================================================ */
+.cta{
+  position:relative;z-index:2;background:var(--ink);
+  padding:clamp(90px,16vh,220px) var(--gut) clamp(60px,9vh,120px);
+  border-top:1px solid var(--rule);
+}
+.cta__big{
+  font-size:clamp(44px,11.4vw,172px);
+  padding-bottom:clamp(30px,5vh,64px);
+  display:flex;flex-direction:column;align-items:flex-start;
+}
+.cta__big .l2{padding-left:clamp(0px,5vw,110px)}
+.cta__big em{font-style:normal;-webkit-text-stroke:1.2px var(--paper);color:transparent}
+.cta__row{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:24px;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:clamp(22px,3.6vh,44px);
+}
+.mail{
+  font-family:'Anybody',sans-serif;font-variation-settings:'wdth' 104,'wght' 400;
+  text-transform:none;font-size:clamp(18px,2.5vw,38px);letter-spacing:-.02em;line-height:1;
+  position:relative;display:inline-block;padding-bottom:6px;
+}
+.mail::after{
+  content:'';position:absolute;left:0;bottom:0;height:1px;width:100%;
+  background:var(--signal);transform:scaleX(0);transform-origin:0 50%;
+  transition:transform .6s var(--ease);
+}
+.mail:hover::after{transform:scaleX(1)}
+.mail:hover{color:var(--signal)}
+
+.footer{position:relative;z-index:2;background:var(--ink);padding:0 var(--gut) 26px;overflow:hidden}
+.footer__cols{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:clamp(24px,3vw,44px);
+  border-top:1px solid var(--rule);padding:clamp(34px,5vh,64px) 0;
+}
+.footer h4{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-faint);font-weight:400;padding-bottom:16px}
+.footer ul{list-style:none;display:grid;gap:9px}
+.footer li a{color:var(--paper-dim);font-size:11px;letter-spacing:.06em;text-transform:uppercase;transition:color .3s var(--ease)}
+.footer li a:hover{color:var(--signal)}
+.footer__blurb{font-size:11.5px;line-height:1.75;color:var(--paper-dim);max-width:40ch;text-transform:none;letter-spacing:.01em}
+.footer__mark{
+  font-family:'Anybody',sans-serif;font-variation-settings:'wdth' 134,'wght' 700;
+  text-transform:uppercase;font-size:clamp(34px,12.5vw,190px);line-height:.78;letter-spacing:-.03em;white-space:nowrap;
+  color:transparent;-webkit-text-stroke:1px rgba(237,237,234,.18);
+  padding:clamp(20px,4vh,50px) 0 clamp(16px,3vh,34px);
+  user-select:none;
+}
+.footer__bar{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:18px}
+@media (max-width:820px){
+  .footer__cols{grid-template-columns:1fr 1fr;gap:32px 20px}
+  .footer__blurb{grid-column:1 / -1}
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .js .ch,.js .wd{transform:none !important}
+  .js [data-fade]{opacity:1 !important;transform:none !important}
+  .loader{display:none}
+  .cursor,.cursor-dot,#gl,.gl-fallback{display:none !important}
+  .marquee ul{animation:none}
+  .archive__track{overflow-x:auto}
+  .row__out{grid-template-rows:1fr}
+}
+</style>
+</head>
+<body class="is-loading">
+
+<!-- ============================ LOADER ============================ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__stage">
+    <div class="loader__word" id="loaderWord">MONOLITH</div>
+  </div>
+  <div class="loader__bar"><i id="loaderBar"></i></div>
+  <div class="loader__foot">
+    <div class="loader__count num" id="loaderCount">000</div>
+    <div class="loader__meta mono">
+      Ivo Marchetti · Creative Direction<br>
+      Berlin — Est. MMXIII<br>
+      Loading index
+    </div>
+  </div>
+</div>
+
+<!-- ============================ CURSOR ============================ -->
+<div class="cursor" id="cursor">
+  <i class="cursor__ring" id="cursorRing"></i>
+  <span class="cursor__label" id="cursorLabel">View</span>
+</div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- ==================== BACKGROUND GRID + WEBGL ==================== -->
+<div class="grid-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="gl-fallback" id="glFallback" aria-hidden="true"><img alt="" id="glFallbackImg"></div>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav">
+  <a href="#top" class="nav__mark" data-cursor="link">Monolith<span style="color:var(--signal)">.</span></a>
+  <nav class="nav__links mono">
+    <a href="#index" data-cursor="link">Index</a>
+    <a href="#studio" data-cursor="link">Studio</a>
+    <a href="#recognition" data-cursor="link">Recognition</a>
+    <a href="#contact" class="nav__cta" data-cursor="link">Contact</a>
+  </nav>
+  <div class="nav__clock mono num" id="clock">BER —:—:—</div>
+</header>
+
+<main id="top">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="hero__eyebrow mono" data-fade>
+    <span><b>Creative Direction</b> / Identity / Editorial / Film</span>
+    <span>Berlin 52.52°N 13.40°E</span>
+    <span>Active since 2013</span>
+  </div>
+
+  <h1 class="hero__name display" data-split="chars">
+    <span class="line">Ivo</span>
+    <span class="line l2"><em>Marchetti</em></span>
+  </h1>
+
+  <div class="hero__base">
+    <div class="hero__stats mono">
+      <div class="hero__stat"><b class="num">68</b><span>Projects shipped</span></div>
+      <div class="hero__stat"><b class="num">14</b><span>Countries</span></div>
+      <div class="hero__stat"><b class="num">41</b><span>Awards & citations</span></div>
+      <div class="hero__stat"><b><span class="avail"><i></i></span></b><span>Available Q1 2027</span></div>
+    </div>
+    <p class="hero__blurb" data-fade>
+      I work as <strong>Monolith</strong> — one director, a rotating bench of five specialists, and a refusal to
+      hand over anything that needs an agency to keep it alive. Identity systems, editorial art direction and
+      launch film for aerospace, banking, optics and publishing.
+    </p>
+  </div>
+</section>
+
+<!-- ======================= WORK INDEX (WEBGL) ======================= -->
+<section class="work" id="index">
+  <div class="sec-head">
+    <h2 data-split="words">Selected Work</h2>
+    <div class="mono" data-fade>2021 — 2026 · Six of sixty-eight · Hover to view</div>
+  </div>
+
+  <div class="work__list" id="workList">
+
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <a class="row" href="#index" data-img="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1000&q=70" data-cursor="view">
+      <div class="row__top">
+        <span class="row__idx mono num">01</span>
+        <h3 class="row__title">Halden</h3>
+        <span class="row__meta mono">Halden Aerospace · 2025 · Identity System</span>
+      </div>
+      <div class="row__out"><span><p>Rebuilt a forty-year defence-adjacent brand into a civilian-first identity and naming architecture. Qualified inbound rose 3.1× across two quarters.</p></span></div>
+      <div class="row__thumb"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=700&q=60" alt="Halden Aerospace identity system" loading="lazy"></div>
+    </a>
+
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <a class="row" href="#index" data-img="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1000&q=70" data-cursor="view">
+      <div class="row__top">
+        <span class="row__idx mono num">02</span>
+        <h3 class="row__title">Verso</h3>
+        <span class="row__meta mono">Verso Editions · 2024 · Editorial Direction</span>
+      </div>
+      <div class="row__out"><span><p>Art direction and a bespoke grid for a quarterly art book. The 4,000-copy first run sold out in eleven days and the format is now on issue nine.</p></span></div>
+      <div class="row__thumb"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=700&q=60" alt="Verso Editions art book direction" loading="lazy"></div>
+    </a>
+
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <a class="row" href="#index" data-img="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=70" data-cursor="view">
+      <div class="row__top">
+        <span class="row__idx mono num">03</span>
+        <h3 class="row__title">Lumenfeld</h3>
+        <span class="row__meta mono">Lumenfeld Optics · 2023 · Campaign & Film</span>
+      </div>
+      <div class="row__out"><span><p>Directed a six-film launch for a precision lens house, shot over nine days in Jena. Assisted conversion across EMEA lifted 62% against the prior season.</p></span></div>
+      <div class="row__thumb"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=700&q=60" alt="Lumenfeld Optics campaign film" loading="lazy"></div>
+    </a>
+
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <a class="row" href="#index" data-img="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=70" data-cursor="view">
+      <div class="row__top">
+        <span class="row__idx mono num">04</span>
+        <h3 class="row__title">Atrium</h3>
+        <span class="row__meta mono">Atrium Bank · 2022 · Product Direction</span>
+      </div>
+      <div class="row__out"><span><p>A visual and motion system for a private bank's retail platform. It now runs unmodified across 14 million monthly sessions in four languages.</p></span></div>
+      <div class="row__thumb"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=700&q=60" alt="Atrium Bank product direction" loading="lazy"></div>
+    </a>
+
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <a class="row" href="#index" data-img="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=70" data-cursor="view">
+      <div class="row__top">
+        <span class="row__idx mono num">05</span>
+        <h3 class="row__title">Nocturne</h3>
+        <span class="row__meta mono">Nocturne Festival · 2021 · Identity & Motion</span>
+      </div>
+      <div class="row__out"><span><p>A five-year identity for a 60,000-capacity festival on the Elbe. Five editions in, it has not been revised once — only extended.</p></span></div>
+      <div class="row__thumb"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=700&q=60" alt="Nocturne Festival identity" loading="lazy"></div>
+    </a>
+
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <a class="row" href="#index" data-img="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1000&q=70" data-cursor="view">
+      <div class="row__top">
+        <span class="row__idx mono num">06</span>
+        <h3 class="row__title">Kiosk Twelve</h3>
+        <span class="row__meta mono">Kiosk Twelve · 2026 · Retail & Signage</span>
+      </div>
+      <div class="row__out"><span><p>Naming, wayfinding and a fabricated signage kit for twelve micro-format stores. Rolled out in Hamburg, Lyon and Porto on a fixed eight-week build.</p></span></div>
+      <div class="row__thumb"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=700&q=60" alt="Kiosk Twelve retail signage" loading="lazy"></div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============================ STUDIO ============================ -->
+<section class="studio" id="studio">
+  <div class="studio__grid">
+
+    <p class="studio__quote" data-split="words">
+      Most brands do not fail at the launch. They fail eighteen months later, when nobody remembers <em>why</em> the rules exist.
+    </p>
+
+    <div class="studio__aside mono" data-fade>
+      Approach<br><span style="color:var(--paper-faint)">§ 01 — 04</span>
+    </div>
+
+    <figure class="studio__figure" data-parallax>
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=70" alt="The Monolith studio floor, Kreuzberg, Berlin" loading="lazy">
+    </figure>
+    <div class="studio__cap mono" data-fade>Fig. 01 — Studio floor, Ritterstraße, Kreuzberg</div>
+
+    <div class="studio__body">
+      <p data-fade><strong>Monolith is one director and a bench.</strong> I write the strategy, art-direct the work, and stay on the file until the last spec sheet is signed off. Specialists — a typographer in Leipzig, a motion lead in Lisbon, a fabricator in Rotterdam — come in per project, never on retainer.</p>
+      <p data-fade>The output is a system with reasons attached. Every decision ships with the argument behind it, so the team inheriting it can extend the work without calling me. That is the entire point: identity that survives its author.</p>
+      <p data-fade>Engagements run six to fourteen weeks. I take four a year. If the brief needs sixty people, I will tell you who to call instead.</p>
+    </div>
+
+    <ol class="approach mono">
+      <li data-fade><b>01 / Diagnose</b><span>Two weeks inside the business. Interviews, shelf audit, the numbers nobody circulates.</span></li>
+      <li data-fade><b>02 / Position</b><span>One sentence the CEO and the warehouse both recognise as true.</span></li>
+      <li data-fade><b>03 / System</b><span>Type, grid, colour, motion, tone — built as rules with stated reasons.</span></li>
+      <li data-fade><b>04 / Evidence</b><span>Applied to the twelve surfaces that actually decide whether it works.</span></li>
+    </ol>
+
+  </div>
+</section>
+
+<!-- ============================ ARCHIVE ============================ -->
+<section class="archive" id="archive">
+  <div class="archive__view" id="archiveView">
+    <div class="archive__head sec-head">
+      <h2 data-split="words">Process Archive</h2>
+      <div class="mono" data-fade>Scroll → · Plates 01—05 · Unretouched</div>
+    </div>
+    <div class="archive__track" id="archiveTrack">
+
+      <figure class="frame">
+        <div class="frame__media"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=900&q=70" alt="Halden wordmark construction plates" loading="lazy"></div>
+        <div class="frame__cap mono"><b>Plate 01</b><span>Halden — wordmark construction</span></div>
+      </figure>
+
+      <figure class="frame">
+        <div class="frame__media"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=70" alt="Nocturne location survey" loading="lazy"></div>
+        <div class="frame__cap mono"><b>Plate 02</b><span>Nocturne — location survey</span></div>
+      </figure>
+
+      <figure class="frame">
+        <div class="frame__media"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=70" alt="Lumenfeld colour grade references" loading="lazy"></div>
+        <div class="frame__cap mono"><b>Plate 03</b><span>Lumenfeld — grade references</span></div>
+      </figure>
+
+      <figure class="frame">
+        <div class="frame__media"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=70" alt="Verso Editions signature layout" loading="lazy"></div>
+        <div class="frame__cap mono"><b>Plate 04</b><span>Verso — signature layout</span></div>
+      </figure>
+
+      <figure class="frame">
+        <div class="frame__media"><!-- PLACEHOLDER: swap for Higgsfield-generated asset --><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=70" alt="Kiosk Twelve signage prototype" loading="lazy"></div>
+        <div class="frame__cap mono"><b>Plate 05</b><span>Kiosk Twelve — signage prototype</span></div>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========================== RECOGNITION ========================== -->
+<section class="proof" id="recognition">
+  <div class="sec-head">
+    <h2 data-split="words">Recognition & Register</h2>
+    <div class="mono" data-fade>Selected citations 2019 — 2026</div>
+  </div>
+
+  <div class="stats mono" id="stats">
+    <div class="stat"><b class="num" data-count="41">0</b><span>Awards & citations</span></div>
+    <div class="stat"><b class="num" data-count="68">0</b><span>Projects delivered</span></div>
+    <div class="stat"><b class="num" data-count="13">0</b><span>Years directing</span></div>
+    <div class="stat"><b class="num" data-count="94" data-suffix="%">0</b><span>Clients who return</span></div>
+  </div>
+
+  <div class="awards mono">
+    <div class="award"><i class="num">2026</i><b>D&amp;AD Wood Pencil</b><span>Brand Identity — Kiosk Twelve</span><i>London</i></div>
+    <div class="award"><i class="num">2025</i><b>Type Directors Club</b><span>Certificate of Excellence — Halden</span><i>New York</i></div>
+    <div class="award"><i class="num">2025</i><b>ADC Silver Cube</b><span>Design Systems — Halden Aerospace</span><i>New York</i></div>
+    <div class="award"><i class="num">2024</i><b>German Design Award</b><span>Gold, Editorial — Verso Editions</span><i>Frankfurt</i></div>
+    <div class="award"><i class="num">2024</i><b>The One Show</b><span>Merit, Art Direction — Lumenfeld</span><i>New York</i></div>
+    <div class="award"><i class="num">2023</i><b>Red Dot: Best of the Best</b><span>Communication — Lumenfeld Optics</span><i>Essen</i></div>
+    <div class="award"><i class="num">2022</i><b>Webby Honoree</b><span>Financial Services — Atrium Bank</span><i>New York</i></div>
+    <div class="award"><i class="num">2021</i><b>Berlin Design Prize</b><span>Identity — Nocturne Festival</span><i>Berlin</i></div>
+  </div>
+
+  <div class="marquee mono" aria-hidden="true">
+    <ul id="marquee">
+      <li>Halden Aerospace</li><li>Verso Editions</li><li>Lumenfeld Optics</li><li>Atrium Bank</li>
+      <li>Nocturne Festival</li><li>Kiosk Twelve</li><li>Ostbahn Rail</li><li>Studio Ferrand</li>
+      <li>Kunsthalle Nord</li><li>Bregenz Chamber</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================== CTA ============================== -->
+<section class="cta" id="contact">
+  <h2 class="cta__big display" data-split="chars">
+    <span class="line">Available</span>
+    <span class="line l2"><em>Q1 2027</em></span>
+  </h2>
+  <div class="cta__row">
+    <div>
+      <div class="mono" style="padding-bottom:14px">Four engagements a year. Two left.</div>
+      <a class="mail" href="mailto:ivo@monolith.studio" data-cursor="link">ivo@monolith.studio</a>
+    </div>
+    <div class="mono" style="text-align:right;line-height:2">
+      Ritterstraße 12A, 10969 Berlin<br>
+      +49 30 5544 8102<br>
+      Briefs reviewed Mondays
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="footer">
+  <div class="footer__cols">
+    <div>
+      <h4>Monolith</h4>
+      <p class="footer__blurb">The studio practice of Ivo Marchetti. Identity systems, editorial direction and launch film, built to be maintained by the people who inherit them.</p>
+    </div>
+    <div>
+      <h4>Index</h4>
+      <ul>
+        <li><a href="#index" data-cursor="link">Halden</a></li>
+        <li><a href="#index" data-cursor="link">Verso</a></li>
+        <li><a href="#index" data-cursor="link">Lumenfeld</a></li>
+        <li><a href="#index" data-cursor="link">Atrium</a></li>
+        <li><a href="#index" data-cursor="link">Nocturne</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="#studio" data-cursor="link">Approach</a></li>
+        <li><a href="#archive" data-cursor="link">Process archive</a></li>
+        <li><a href="#recognition" data-cursor="link">Recognition</a></li>
+        <li><a href="#contact" data-cursor="link">Availability</a></li>
+        <li><a href="#top" data-cursor="link">Rate card (PDF)</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="#top" data-cursor="link">Instagram</a></li>
+        <li><a href="#top" data-cursor="link">Are.na</a></li>
+        <li><a href="#top" data-cursor="link">LinkedIn</a></li>
+        <li><a href="#top" data-cursor="link">Letter — quarterly</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__mark" aria-hidden="true">Monolith</div>
+
+  <div class="footer__bar mono mono-sm">
+    <span>© 2013—2026 Ivo Marchetti / Monolith Studio</span>
+    <span>Set in Anybody &amp; Spline Sans Mono</span>
+    <span>Berlin — 52.52°N 13.40°E</span>
+  </div>
+</footer>
+
+<!-- ============================ SCRIPTS ============================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<script>
+document.documentElement.classList.add('js');
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+(function () {
+  'use strict';
+
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DESKTOP = window.matchMedia('(min-width: 1024px)').matches;
+  var HAS_GSAP = typeof window.gsap !== 'undefined';
+
+  /* ------------------------------------------------------------------
+     0. Clock (Berlin)
+  ------------------------------------------------------------------ */
+  var clockEl = document.getElementById('clock');
+  function tickClock() {
+    try {
+      var t = new Date().toLocaleTimeString('en-GB', { timeZone: 'Europe/Berlin', hour12: false });
+      clockEl.textContent = 'BER ' + t;
+    } catch (e) { clockEl.textContent = 'BERLIN'; }
+  }
+  tickClock(); setInterval(tickClock, 1000);
+
+  /* ------------------------------------------------------------------
+     1. Hand-rolled text splitting (chars / words) into mask wrappers
+  ------------------------------------------------------------------ */
+  function wrap(text, cls) {
+    var s = document.createElement('span');
+    s.className = cls;
+    s.textContent = text;
+    return s;
+  }
+
+  function splitNode(node, mode) {
+    // Recursively split text nodes into spans, preserving inline tags (em, etc.)
+    var kids = Array.prototype.slice.call(node.childNodes);
+    var out = [];
+    kids.forEach(function (kid) {
+      if (kid.nodeType === 3) {
+        var text = kid.textContent;
+        if (/^\s*$/.test(text)) return;          // never wrap pure whitespace
+        var frag = document.createDocumentFragment();
+        if (mode === 'chars') {
+          for (var i = 0; i < text.length; i++) {
+            if (/\s/.test(text[i])) { frag.appendChild(document.createTextNode(' ')); continue; }
+            var c = wrap(text[i], 'ch');
+            frag.appendChild(c); out.push(c);
+          }
+        } else {
+          var words = text.split(/(\s+)/);
+          words.forEach(function (w) {
+            if (!w) return;
+            if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(' ')); return; }
+            // per-word mask: multi-line copy reveals line by line, not as one slab
+            var mask = document.createElement('span');
+            mask.className = 'wdm';
+            var el = wrap(w, 'wd');
+            mask.appendChild(el);
+            frag.appendChild(mask); out.push(el);
+          });
+        }
+        node.replaceChild(frag, kid);
+      } else if (kid.nodeType === 1) {
+        out = out.concat(splitNode(kid, mode));
+      }
+    });
+    return out;
+  }
+
+  function prepare(el) {
+    var mode = el.getAttribute('data-split') || 'words';
+    if (el.querySelector('.line')) {
+      // Strip whitespace between hand-authored .line spans — at 180px type each
+      // stray newline would otherwise generate its own full-height line box.
+      Array.prototype.slice.call(el.childNodes).forEach(function (n) {
+        if (n.nodeType === 3 && /^\s*$/.test(n.textContent)) el.removeChild(n);
+      });
+    } else {
+      var inner = document.createElement('span');
+      inner.className = 'line-soft';
+      while (el.firstChild) inner.appendChild(el.firstChild);
+      el.appendChild(inner);
+    }
+    return splitNode(el, mode);
+  }
+
+  var splitTargets = Array.prototype.slice.call(document.querySelectorAll('[data-split]'));
+  var splitMap = new Map();
+  splitTargets.forEach(function (el) { splitMap.set(el, prepare(el)); });
+
+  /* ------------------------------------------------------------------
+     2. Reduced-motion / no-GSAP escape hatch — show final state
+  ------------------------------------------------------------------ */
+  function revealEverything() {
+    document.body.classList.remove('is-loading');
+    var l = document.getElementById('loader');
+    if (l) l.style.display = 'none';
+    document.querySelectorAll('.ch,.wd').forEach(function (n) { n.style.transform = 'none'; });
+    document.querySelectorAll('[data-fade]').forEach(function (n) { n.style.opacity = 1; n.style.transform = 'none'; });
+    document.querySelectorAll('[data-count]').forEach(function (n) {
+      n.textContent = n.getAttribute('data-count') + (n.getAttribute('data-suffix') || '');
+    });
+  }
+
+  if (REDUCED || !HAS_GSAP) { revealEverything(); return; }
+
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.defaults({ ease: 'power3.out' });
+
+  /* ------------------------------------------------------------------
+     3. Lenis smooth scroll ↔ ScrollTrigger
+  ------------------------------------------------------------------ */
+  var lenis = null;
+  var scrollVelocity = 0;
+
+  if (typeof window.Lenis !== 'undefined') {
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+    lenis.on('scroll', function (e) {
+      ScrollTrigger.update();
+      scrollVelocity = (e && typeof e.velocity === 'number') ? e.velocity : 0;
+    });
+    gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // Anchor links routed through Lenis
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (ev) {
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      ev.preventDefault();
+      if (lenis) lenis.scrollTo(target, { offset: -10, duration: 1.3 });
+      else target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  /* ------------------------------------------------------------------
+     4. TECHNIQUE — lerped custom cursor
+  ------------------------------------------------------------------ */
+  var cursor = document.getElementById('cursor');
+  var cursorRing = document.getElementById('cursorRing');
+  var cursorDot = document.getElementById('cursorDot');
+  var cursorLabel = document.getElementById('cursorLabel');
+  var pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  var cur = { x: pointer.x, y: pointer.y };
+  var dot = { x: pointer.x, y: pointer.y };
+  var velocity = { x: 0, y: 0 };
+  var lastP = { x: pointer.x, y: pointer.y };
+
+  window.addEventListener('pointermove', function (e) {
+    pointer.x = e.clientX; pointer.y = e.clientY;
+  }, { passive: true });
+
+  if (DESKTOP) {
+    document.querySelectorAll('[data-cursor]').forEach(function (el) {
+      var kind = el.getAttribute('data-cursor');
+      el.addEventListener('pointerenter', function () {
+        if (kind === 'view') {
+          cursor.classList.add('is-view');
+          cursorLabel.textContent = 'View';
+          gsap.to(cursorRing, { scale: 1.62, duration: 0.45, ease: 'power3.out' });
+        } else {
+          gsap.to(cursorRing, { scale: 0.42, duration: 0.35, ease: 'power3.out' });
+        }
+      });
+      el.addEventListener('pointerleave', function () {
+        cursor.classList.remove('is-view');
+        gsap.to(cursorRing, { scale: 1, duration: 0.4, ease: 'power3.out' });
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     5. TECHNIQUE — WebGL hover distortion (OGL), with CSS fallback
+  ------------------------------------------------------------------ */
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var workSection = document.querySelector('.work');
+  var canvas = document.getElementById('gl');
+  var fallbackBox = document.getElementById('glFallback');
+  var fallbackImg = document.getElementById('glFallbackImg');
+
+  var glState = {
+    ready: false,
+    failed: false,
+    mode: null,           // 'webgl' | 'css' | 'off'
+    target: { x: pointer.x, y: pointer.y },
+    smooth: { x: pointer.x, y: pointer.y },
+    hover: 0,
+    hoverTarget: 0,
+    vel: { x: 0, y: 0 }
+  };
+
+  var USE_GL = DESKTOP && rows.length > 0;
+
+  function setHotRow(row) {
+    rows.forEach(function (r) { r.classList.toggle('is-hot', r === row); });
+    workSection.classList.toggle('is-active', !!row);
+  }
+
+  /* ---- CSS fallback path ------------------------------------------ */
+  var fbQuickX = null, fbQuickY = null;
+  function enableCssFallback(reason) {
+    if (glState.mode) return;
+    glState.mode = 'css';
+    if (canvas) canvas.style.display = 'none';
+    if (!USE_GL) { if (fallbackBox) fallbackBox.style.display = 'none'; glState.mode = 'off'; return; }
+    if (reason) console.warn('[monolith] WebGL unavailable — CSS reveal fallback engaged:', reason);
+
+    fbQuickX = gsap.quickTo(fallbackBox, 'x', { duration: 0.85, ease: 'power3.out' });
+    fbQuickY = gsap.quickTo(fallbackBox, 'y', { duration: 0.85, ease: 'power3.out' });
+    gsap.set(fallbackBox, { xPercent: -50, yPercent: -50, scale: 0.86, opacity: 0, x: pointer.x, y: pointer.y });
+
+    rows.forEach(function (row) {
+      row.addEventListener('pointerenter', function () {
+        setHotRow(row);
+        fallbackImg.src = row.getAttribute('data-img');
+        gsap.to(fallbackBox, { opacity: 1, scale: 1, duration: 0.55, ease: 'power3.out' });
+        gsap.fromTo(fallbackImg, { scale: 1.16 }, { scale: 1.06, duration: 0.9, ease: 'power3.out' });
+      });
+    });
+    workSection.addEventListener('pointerleave', function () {
+      setHotRow(null);
+      gsap.to(fallbackBox, { opacity: 0, scale: 0.86, duration: 0.4, ease: 'power3.in' });
+    });
+
+    gsap.ticker.add(function () {
+      if (fbQuickX) { fbQuickX(pointer.x); fbQuickY(pointer.y); }
+    });
+  }
+
+  /* ---- WebGL path -------------------------------------------------- */
+  var glApi = null;
+
+  window.__monolithInitGL = function (OGL) {
+    if (!USE_GL) { enableCssFallback(null); return; }
+    if (glState.mode) return;           // fallback already took over (slow/blocked CDN)
+    try {
+      var Renderer = OGL.Renderer, Program = OGL.Program, Mesh = OGL.Mesh,
+          Triangle = OGL.Triangle, Texture = OGL.Texture;
+
+      var renderer = new Renderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: false,
+        dpr: Math.min(window.devicePixelRatio || 1, 2)
+      });
+      var gl = renderer.gl;
+      if (!gl) throw new Error('no gl context');
+      gl.clearColor(0, 0, 0, 0);
+
+      var vert = [
+        'attribute vec2 uv;',
+        'attribute vec2 position;',
+        'varying vec2 vUv;',
+        'void main(){ vUv = uv; gl_Position = vec4(position, 0.0, 1.0); }'
+      ].join('\n');
+
+      var frag = [
+        'precision highp float;',
+        'uniform sampler2D uTex1;',
+        'uniform sampler2D uTex2;',
+        'uniform vec2 uAsp1;',
+        'uniform vec2 uAsp2;',
+        'uniform float uMix;',
+        'uniform vec2 uRes;',
+        'uniform vec2 uMouse;',
+        'uniform vec2 uSize;',
+        'uniform vec2 uVel;',
+        'uniform float uHover;',
+        'uniform float uTime;',
+        'varying vec2 vUv;',
+        '',
+        'vec2 coverUv(vec2 p, vec2 img, vec2 box){',
+        '  float ba = box.x / box.y;',
+        '  float ia = img.x / img.y;',
+        '  vec2 s = (ba > ia) ? vec2(1.0, ia / ba) : vec2(ba / ia, 1.0);',
+        '  return (p - 0.5) * s + 0.5;',
+        '}',
+        '',
+        'vec3 splitSample(sampler2D t, vec2 img, vec2 box, vec2 p, vec2 off){',
+        '  vec2 a = clamp(coverUv(p + off, img, box), 0.002, 0.998);',
+        '  vec2 b = clamp(coverUv(p,       img, box), 0.002, 0.998);',
+        '  vec2 c = clamp(coverUv(p - off, img, box), 0.002, 0.998);',
+        '  return vec3(texture2D(t, a).r, texture2D(t, b).g, texture2D(t, c).b);',
+        '}',
+        '',
+        'void main(){',
+        '  vec2 frag = vUv * uRes;',
+        '  float grow = mix(0.80, 1.0, uHover);',
+        '  vec2 box = uSize * grow;',
+        '  vec2 p = (frag - uMouse) / box + 0.5;',
+        '  if (p.x < 0.0 || p.x > 1.0 || p.y < 0.0 || p.y > 1.0) discard;',
+        '',
+        '  vec2 c = p - 0.5;',
+        '  float r = length(c);',
+        '  float vm = clamp(length(uVel) * 1.35, 0.0, 1.0);',
+        '',
+        // concentric ripple, amplitude rides pointer velocity
+        '  float ripple = sin(r * 24.0 - uTime * 3.2) * 0.010 * (0.22 + vm * 1.6);',
+        '  vec2 disp = normalize(c + vec2(0.0001)) * ripple * 3.0;',
+        // directional shear + bulge from pointer velocity
+        '  vec2 shear = uVel * 0.085 * (1.0 - smoothstep(0.0, 0.62, r));',
+        '  float bulge = 1.0 - 0.16 * vm * (1.0 - r);',
+        '  vec2 q = 0.5 + (c + disp - shear) * bulge;',
+        '',
+        '  vec2 dir = normalize(uVel + vec2(0.0001, 0.0001));',
+        '  vec2 off = dir * (0.004 + vm * 0.048);',
+        '',
+        '  vec3 c1 = splitSample(uTex1, uAsp1, box, q, off);',
+        '  vec3 c2 = splitSample(uTex2, uAsp2, box, q, off);',
+        '  vec3 col = mix(c1, c2, uMix);',
+        '',
+        // near-monochrome, then push the signal orange into the chromatic fringe
+        '  float lum = dot(col, vec3(0.299, 0.587, 0.114));',
+        '  col = mix(vec3(lum), col, 0.14) * 1.05;',
+        '  float fringe = clamp(abs(col.r - col.b) * 3.4, 0.0, 1.0);',
+        '  col = mix(col, vec3(1.0, 0.302, 0.090), fringe * 0.6 * (0.25 + vm));',
+        '',
+        '  float e = smoothstep(0.0, 0.014, p.x) * smoothstep(0.0, 0.014, 1.0 - p.x)',
+        '          * smoothstep(0.0, 0.011, p.y) * smoothstep(0.0, 0.011, 1.0 - p.y);',
+        '  gl_FragColor = vec4(col, uHover * e);',
+        '}'
+      ].join('\n');
+
+      function makeTex() {
+        return new Texture(gl, {
+          generateMipmaps: false,
+          minFilter: gl.LINEAR,
+          magFilter: gl.LINEAR,
+          wrapS: gl.CLAMP_TO_EDGE,
+          wrapT: gl.CLAMP_TO_EDGE
+        });
+      }
+
+      var texA = makeTex(), texB = makeTex();
+      var boxW = Math.min(430, window.innerWidth * 0.30);
+      var boxH = boxW * 1.24;
+
+      var program = new Program(gl, {
+        vertex: vert,
+        fragment: frag,
+        transparent: true,
+        depthTest: false,
+        depthWrite: false,
+        cullFace: null,
+        uniforms: {
+          uTex1: { value: texA },
+          uTex2: { value: texB },
+          uAsp1: { value: [4, 5] },
+          uAsp2: { value: [4, 5] },
+          uMix: { value: 0 },
+          uRes: { value: [window.innerWidth, window.innerHeight] },
+          uMouse: { value: [pointer.x, window.innerHeight - pointer.y] },
+          uSize: { value: [boxW, boxH] },
+          uVel: { value: [0, 0] },
+          uHover: { value: 0 },
+          uTime: { value: 0 }
+        }
+      });
+
+      var mesh = new Mesh(gl, { geometry: new Triangle(gl), program: program });
+
+      function resize() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        program.uniforms.uRes.value = [window.innerWidth, window.innerHeight];
+        boxW = Math.min(430, window.innerWidth * 0.30);
+        boxH = boxW * 1.24;
+        program.uniforms.uSize.value = [boxW, boxH];
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      // Texture cache — remote images need crossOrigin for the upload to be legal
+      var cache = {};
+      function loadTexture(src, cb) {
+        if (cache[src] && cache[src].loaded) { cb(cache[src]); return; }
+        var entry = cache[src] || (cache[src] = { loaded: false, image: null, aspect: [4, 5] });
+        var img = new Image();
+        img.crossOrigin = 'anonymous';           // required: Unsplash sends permissive CORS
+        img.onload = function () {
+          entry.loaded = true;
+          entry.image = img;
+          entry.aspect = [img.naturalWidth || 4, img.naturalHeight || 5];
+          cb(entry);
+        };
+        img.onerror = function () { /* leave slot empty; plane simply stays dark */ };
+        img.src = src;
+      }
+
+      var slot = 0; // 0 => showing texA
+      function show(src) {
+        loadTexture(src, function (entry) {
+          if (slot === 0) {
+            texB.image = entry.image; texB.needsUpdate = true;
+            program.uniforms.uAsp2.value = entry.aspect;
+            gsap.to(program.uniforms.uMix, { value: 1, duration: 0.5, ease: 'power2.inOut' });
+            slot = 1;
+          } else {
+            texA.image = entry.image; texA.needsUpdate = true;
+            program.uniforms.uAsp1.value = entry.aspect;
+            gsap.to(program.uniforms.uMix, { value: 0, duration: 0.5, ease: 'power2.inOut' });
+            slot = 0;
+          }
+        });
+      }
+
+      // preload every row image so the first hover is instant
+      rows.forEach(function (r) { loadTexture(r.getAttribute('data-img'), function () {}); });
+
+      rows.forEach(function (row) {
+        row.addEventListener('pointerenter', function () {
+          setHotRow(row);
+          show(row.getAttribute('data-img'));
+          glState.hoverTarget = 1;
+          canvas.classList.add('on');
+        });
+      });
+      workSection.addEventListener('pointerleave', function () {
+        setHotRow(null);
+        glState.hoverTarget = 0;
+      });
+
+      glApi = { renderer: renderer, mesh: mesh, program: program };
+      glState.mode = 'webgl';
+      glState.ready = true;
+      if (fallbackBox) fallbackBox.style.display = 'none';
+
+      gsap.ticker.add(function (time, delta) {
+        var u = program.uniforms;
+        u.uTime.value = time;
+        u.uHover.value += (glState.hoverTarget - u.uHover.value) * 0.10;
+        glState.smooth.x += (pointer.x - glState.smooth.x) * 0.11;
+        glState.smooth.y += (pointer.y - glState.smooth.y) * 0.11;
+        u.uMouse.value = [glState.smooth.x, window.innerHeight - glState.smooth.y];
+        u.uVel.value = [velocity.x, -velocity.y];
+        if (u.uHover.value > 0.001) {
+          renderer.render({ scene: mesh });
+          canvas.classList.add('on');
+        } else {
+          canvas.classList.remove('on');
+        }
+      });
+
+    } catch (err) {
+      glState.failed = true;
+      enableCssFallback(err && err.message ? err.message : err);
+    }
+  };
+
+  window.__monolithFailGL = function (err) {
+    if (glState.mode) return;
+    glState.failed = true;
+    enableCssFallback(err && err.message ? err.message : (err || 'module load failed'));
+  };
+
+  // Safety net: if the module never boots (no network, no ESM, blocked CDN,
+  // no WebGL context) drop to the CSS reveal so the page is never broken.
+  if (USE_GL) {
+    setTimeout(function () { if (!glState.mode) window.__monolithFailGL('init timeout'); }, 5000);
+  } else {
+    enableCssFallback(null);
+  }
+
+  /* ------------------------------------------------------------------
+     6. Pointer velocity + cursor rAF loop (shared)
+  ------------------------------------------------------------------ */
+  gsap.ticker.add(function () {
+    velocity.x += ((pointer.x - lastP.x) / Math.max(window.innerWidth, 1) * 6 - velocity.x) * 0.16;
+    velocity.y += ((pointer.y - lastP.y) / Math.max(window.innerHeight, 1) * 6 - velocity.y) * 0.16;
+    lastP.x = pointer.x; lastP.y = pointer.y;
+
+    if (!DESKTOP) return;
+    cur.x += (pointer.x - cur.x) * 0.13;
+    cur.y += (pointer.y - cur.y) * 0.13;
+    dot.x += (pointer.x - dot.x) * 0.42;
+    dot.y += (pointer.y - dot.y) * 0.42;
+    cursor.style.transform = 'translate3d(' + cur.x + 'px,' + cur.y + 'px,0)';
+    cursorDot.style.transform = 'translate3d(' + dot.x + 'px,' + dot.y + 'px,0)';
+  });
+
+  /* ------------------------------------------------------------------
+     7. TECHNIQUE — character / word mask reveals on scroll
+  ------------------------------------------------------------------ */
+  var MASK_Y = 130;   // must clear 100% + the mask's bottom padding
+
+  // fromTo with an explicit y:0 on BOTH ends. The hidden state ships in CSS as
+  // translateY(130%), which GSAP reads back as a resolved *pixel* y — so a bare
+  // yPercent tween would stack on top of it and double the offset.
+  function revealSplit(el, opts) {
+    var nodes = splitMap.get(el) || [];
+    if (!nodes.length) return null;
+    opts = opts || {};
+    return gsap.fromTo(nodes, { yPercent: MASK_Y, y: 0 }, {
+      yPercent: 0, y: 0,
+      duration: opts.duration || 1.05,
+      ease: 'power4.out',
+      stagger: opts.stagger || 0.035,
+      scrollTrigger: opts.scroll === false ? undefined : {
+        trigger: el,
+        start: 'top 88%',
+        once: true
+      }
+    });
+  }
+
+  splitTargets.forEach(function (el) {
+    if (el.closest('.hero') || el.closest('.cta')) return;   // handled separately
+    revealSplit(el, { stagger: 0.022, duration: 0.9 });
+  });
+
+  // CTA headline — bigger stagger, chars
+  var ctaHead = document.querySelector('.cta__big');
+  if (ctaHead) revealSplit(ctaHead, { stagger: 0.03, duration: 1.15 });
+
+  // Generic fade-ups
+  gsap.utils.toArray('[data-fade]').forEach(function (el) {
+    if (el.closest('.hero')) return;
+    gsap.fromTo(el, { opacity: 0, y: 22 }, {
+      opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 92%', once: true }
+    });
+  });
+
+  // Work rows stagger in
+  gsap.from('.row', {
+    y: 46, opacity: 0, duration: 1, ease: 'power3.out', stagger: 0.07,
+    scrollTrigger: { trigger: '.work__list', start: 'top 82%', once: true }
+  });
+
+  // Award rows
+  gsap.from('.award', {
+    y: 26, opacity: 0, duration: 0.7, ease: 'power3.out', stagger: 0.045,
+    scrollTrigger: { trigger: '.awards', start: 'top 85%', once: true }
+  });
+
+  /* ------------------------------------------------------------------
+     8. TECHNIQUE — scroll-velocity skew
+  ------------------------------------------------------------------ */
+  var skewTargets = ['.work__list', '.archive__track', '.stats'];
+  var skewSetters = skewTargets.map(function (sel) {
+    var el = document.querySelector(sel);
+    return el ? gsap.quickTo(el, 'skewY', { duration: 0.65, ease: 'power3.out' }) : null;
+  }).filter(Boolean);
+
+  var skewClamp = gsap.utils.clamp(-5.5, 5.5);
+  gsap.ticker.add(function () {
+    var s = skewClamp(scrollVelocity * 0.10);
+    if (Math.abs(s) < 0.01) s = 0;
+    skewSetters.forEach(function (fn) { fn(s); });
+    scrollVelocity *= 0.92;
+  });
+
+  /* ------------------------------------------------------------------
+     9. TECHNIQUE — parallax layers
+  ------------------------------------------------------------------ */
+  gsap.utils.toArray('[data-parallax]').forEach(function (fig) {
+    var img = fig.querySelector('img');
+    if (!img) return;
+    gsap.fromTo(img, { yPercent: -4 }, {
+      yPercent: 4, ease: 'none',
+      scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+    });
+  });
+
+  // Hero depth: name and meta drift apart on scroll
+  gsap.to('.hero__name', {
+    yPercent: -14, opacity: 0.35, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.6 }
+  });
+  gsap.to('.hero__base', {
+    yPercent: -42, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.6 }
+  });
+
+  /* ------------------------------------------------------------------
+     10. Pinned horizontal archive (desktop only) + in-frame parallax
+  ------------------------------------------------------------------ */
+  var track = document.getElementById('archiveTrack');
+  var view = document.getElementById('archiveView');
+
+  if (track && DESKTOP) {
+    var buildHorizontal = function () {
+      var distance = track.scrollWidth - window.innerWidth;
+      if (distance <= 0) return;
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: view,
+          start: 'top top',
+          end: function () { return '+=' + (distance * 1.15); },
+          pin: true,
+          scrub: 0.8,
+          anticipatePin: 1,
+          invalidateOnRefresh: true
+        }
+      });
+      tl.to(track, { x: -distance, ease: 'none' }, 0);
+      tl.fromTo(track.querySelectorAll('.frame__media img'),
+        { xPercent: -5 }, { xPercent: 5, ease: 'none' }, 0);
+    };
+    buildHorizontal();
+    window.addEventListener('resize', function () { ScrollTrigger.refresh(); });
+  }
+
+  /* ------------------------------------------------------------------
+     11. Count-up numbers
+  ------------------------------------------------------------------ */
+  gsap.utils.toArray('[data-count]').forEach(function (el) {
+    var end = parseFloat(el.getAttribute('data-count'));
+    var suffix = el.getAttribute('data-suffix') || '';
+    var obj = { v: 0 };
+    gsap.to(obj, {
+      v: end, duration: 1.9, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+      onUpdate: function () { el.textContent = Math.round(obj.v) + suffix; }
+    });
+  });
+
+  /* ------------------------------------------------------------------
+     12. Marquee duplication (supporting element)
+  ------------------------------------------------------------------ */
+  var mq = document.getElementById('marquee');
+  if (mq) mq.innerHTML += mq.innerHTML;
+
+  /* ------------------------------------------------------------------
+     13. Page-load intro — counter + curtain, then hero settles
+  ------------------------------------------------------------------ */
+  var loader = document.getElementById('loader');
+  var loaderWord = document.getElementById('loaderWord');
+  var loaderCount = document.getElementById('loaderCount');
+  var loaderBar = document.getElementById('loaderBar');
+
+  // split the loader word by hand
+  (function () {
+    var text = loaderWord.textContent;
+    loaderWord.textContent = '';
+    for (var i = 0; i < text.length; i++) {
+      var s = document.createElement('span');
+      s.textContent = text[i];
+      loaderWord.appendChild(s);
+    }
+  })();
+
+  if (lenis) lenis.stop();
+
+  var counter = { v: 0 };
+  var intro = gsap.timeline({
+    onComplete: function () {
+      document.body.classList.remove('is-loading');
+      if (lenis) lenis.start();
+      ScrollTrigger.refresh();
+    }
+  });
+
+  intro
+    .to(loaderWord.children, { y: 0, duration: 1, ease: 'power4.out', stagger: 0.045 }, 0.15)
+    .to(loaderBar, { scaleX: 1, duration: 2.0, ease: 'power2.inOut' }, 0.15)
+    .to(counter, {
+      v: 100, duration: 2.0, ease: 'power2.inOut',
+      onUpdate: function () {
+        loaderCount.textContent = String(Math.round(counter.v)).padStart(3, '0');
+      }
+    }, 0.15)
+    .to(loaderWord.children, { y: '-110%', duration: 0.75, ease: 'power4.inOut', stagger: 0.03 }, '+=0.12')
+    .to('.loader__foot, .loader__bar', { opacity: 0, duration: 0.4, ease: 'power2.out' }, '<0.15')
+    .to(loader, {
+      clipPath: 'inset(0% 0% 100% 0%)',
+      duration: 1.05, ease: 'power4.inOut',
+      onComplete: function () { loader.style.display = 'none'; }
+    }, '<0.2')
+    // hero settles
+    .add(function () {
+      var heroSplit = document.querySelector('.hero__name');
+      var nodes = splitMap.get(heroSplit) || [];
+      gsap.fromTo(nodes, { yPercent: MASK_Y, y: 0 }, { yPercent: 0, y: 0, duration: 1.25, ease: 'power4.out', stagger: 0.028 });
+      gsap.fromTo('.hero [data-fade]', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.08, delay: 0.25 });
+      gsap.from('.nav > *', { y: -20, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 });
+    }, '-=0.55');
+
+  /* ------------------------------------------------------------------
+     14. Housekeeping
+  ------------------------------------------------------------------ */
+  window.addEventListener('resize', function () { ScrollTrigger.refresh(); });
+  window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+
+})();
+</script>
+
+<!-- OGL loaded as an ES module; every failure path lands on the CSS fallback -->
+<script type="module">
+  // ogl 1.x ships no prebuilt dist/ogl.mjs — jsDelivr's `+esm` bundle is the
+  // working ESM entry. Both are tried, then unpkg, then we degrade to CSS.
+  const SOURCES = [
+    'https://cdn.jsdelivr.net/npm/ogl@1.0.11/+esm',
+    'https://cdn.jsdelivr.net/npm/ogl@1.0.11/dist/ogl.mjs',
+    'https://unpkg.com/ogl@1.0.11/src/index.js'
+  ];
+  (async function () {
+    let lastErr = null;
+    for (const src of SOURCES) {
+      try {
+        const OGL = await import(/* @vite-ignore */ src);
+        if (OGL && OGL.Renderer && typeof window.__monolithInitGL === 'function') {
+          window.__monolithInitGL(OGL);
+          return;
+        }
+      } catch (err) { lastErr = err; }
+    }
+    if (typeof window.__monolithFailGL === 'function') {
+      window.__monolithFailGL(lastErr || new Error('no usable OGL build'));
+    }
+  })();
+</script>
+
+</body>
+</html>

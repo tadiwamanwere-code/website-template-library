@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kuroba — Fourteen Seats, Spitalfields</title>
+<meta name="description" content="Kuroba. A fourteen-seat omakase counter on Fournier Street, Spitalfields. Six movements, two seatings, Tuesday to Saturday. £245 per guest.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script>
+  /* Set the animation flag before first paint so nothing flashes in. */
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add(reduce ? 'no-anim' : 'anim');
+  })();
+</script>
+
+<style>
+/* ============================================================
+   KUROBA — tokens
+   ============================================================ */
+:root{
+  --ink:        #0b0b0c;   /* near-black charcoal ground        */
+  --ink-2:      #101012;   /* one step up, for panels           */
+  --ink-3:      #17171a;   /* hairline-lit surfaces             */
+  --paper:      #EFE8DC;   /* warm off-white text               */
+  --paper-dim:  #A79F92;   /* secondary warm grey               */
+  --paper-faint:#6B655C;   /* tertiary / rules                  */
+  --lacquer:    #A32B1E;   /* THE accent. Deep lacquer red.     */
+
+  --serif: "Cormorant Garamond", "Times New Roman", serif;
+  --mono:  "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --gut: clamp(20px, 5vw, 76px);
+  --rule: rgba(239,232,220,.13);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+html{ -webkit-text-size-adjust:100%; }
+
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:clamp(17px,1.05vw,19px);
+  line-height:1.62;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+
+img{ display:block; width:100%; height:100%; object-fit:cover; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+
+::selection{ background:var(--lacquer); color:var(--paper); }
+
+/* ---- typographic primitives ------------------------------- */
+.label{
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--paper-dim);
+}
+.label--faint{ color:var(--paper-faint); }
+
+.display{
+  font-family:var(--serif);
+  font-weight:300;
+  line-height:.94;
+  letter-spacing:-.015em;
+  margin:0;
+}
+.display em{ font-style:italic; font-weight:300; }
+
+.h2{
+  font-size:clamp(2.6rem,6vw,5.6rem);
+}
+.h3{
+  font-size:clamp(1.9rem,3.2vw,3.1rem);
+  font-weight:300;
+  line-height:1.06;
+  letter-spacing:-.01em;
+  margin:0;
+}
+.lede{
+  font-size:clamp(1.1rem,1.5vw,1.45rem);
+  line-height:1.55;
+  color:var(--paper-dim);
+  font-weight:300;
+  max-width:44ch;
+  margin:0;
+}
+.num{ font-family:var(--mono); font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+
+.rule{ height:1px; width:100%; background:var(--rule); border:0; margin:0; }
+
+/* ---- split-text machinery --------------------------------- */
+.word{ display:inline-block; white-space:nowrap; }
+.mask{
+  display:inline-block;
+  overflow:hidden;
+  vertical-align:bottom;
+  padding-bottom:.16em;
+  margin-bottom:-.16em;
+  padding-right:.02em;
+  margin-right:-.02em;
+}
+.mask > span{ display:inline-block; will-change:transform; }
+
+/* Hold pre-animation state only when JS motion is active. */
+.anim [data-reveal]{ opacity:0; }
+.anim [data-fade]{ opacity:0; }
+
+/* ============================================================
+   Page-load intro
+   ============================================================ */
+.intro{
+  position:fixed; inset:0; z-index:200;
+  background:var(--ink);
+  display:grid; place-items:center;
+  overflow:hidden;
+}
+.no-anim .intro{ display:none; }
+.intro__inner{ text-align:center; }
+.intro__mark{
+  font-family:var(--serif);
+  font-weight:300;
+  font-size:clamp(2.6rem,7vw,5.4rem);
+  letter-spacing:.34em;
+  text-indent:.34em;
+  line-height:1;
+  margin:0 0 26px;
+}
+.intro__meta{ display:flex; gap:22px; justify-content:center; align-items:baseline; }
+.intro__count{
+  font-family:var(--mono); font-size:11px; letter-spacing:.22em;
+  color:var(--paper-faint); font-variant-numeric:tabular-nums;
+}
+.intro__bar{
+  position:absolute; left:var(--gut); right:var(--gut); bottom:clamp(28px,6vh,64px);
+  height:1px; background:rgba(239,232,220,.14);
+}
+.intro__bar span{
+  position:absolute; inset:0 auto 0 0; width:0%;
+  background:var(--paper-dim);
+}
+.curtain{
+  position:fixed; inset:0; z-index:199;
+  display:grid; grid-template-columns:repeat(5,1fr);
+  pointer-events:none;
+}
+.no-anim .curtain{ display:none; }
+.curtain i{ background:var(--ink); display:block; }
+
+/* ============================================================
+   Header
+   ============================================================ */
+.hdr{
+  position:fixed; top:0; left:0; right:0; z-index:120;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px;
+  padding:22px var(--gut);
+  transition:background .5s ease, backdrop-filter .5s ease, border-color .5s ease;
+  border-bottom:1px solid transparent;
+}
+.hdr.is-stuck{
+  background:rgba(11,11,12,.72);
+  backdrop-filter:blur(14px) saturate(120%);
+  -webkit-backdrop-filter:blur(14px) saturate(120%);
+  border-bottom-color:var(--rule);
+}
+.hdr__mark{
+  font-family:var(--serif); font-size:19px; font-weight:400;
+  letter-spacing:.36em; text-indent:.36em;
+}
+.hdr__nav{ display:flex; gap:34px; align-items:center; }
+.hdr__nav a.label{ position:relative; padding-bottom:3px; }
+.hdr__nav a.label::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:var(--paper-dim); transform:scaleX(0); transform-origin:100% 50%;
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+}
+.hdr__nav a.label:hover::after{ transform:scaleX(1); transform-origin:0 50%; }
+@media (max-width:860px){ .hdr__nav .is-hideable{ display:none; } }
+
+/* ---- the magnetic reserve button (ACCENT #1) --------------- */
+.magnetic{ display:inline-block; position:relative; }
+.btn-reserve{
+  position:relative;
+  display:inline-flex; align-items:center; gap:12px;
+  padding:13px 26px;
+  border:1px solid var(--lacquer);
+  border-radius:999px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--paper);
+  overflow:hidden;
+  isolation:isolate;
+}
+.btn-reserve::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:var(--lacquer);
+  transform:translateY(101%);
+  transition:transform .55s cubic-bezier(.22,1,.36,1);
+}
+.btn-reserve:hover::before{ transform:translateY(0); }
+.btn-reserve .dot{
+  width:5px; height:5px; border-radius:50%; background:var(--lacquer);
+  transition:background .4s ease;
+}
+.btn-reserve:hover .dot{ background:var(--paper); }
+.btn-reserve--lg{ padding:20px 40px; font-size:12px; }
+
+/* ---- custom cursor ---------------------------------------- */
+.cursor{
+  position:fixed; top:0; left:0; z-index:190;
+  width:38px; height:38px; margin:-19px 0 0 -19px;
+  border:1px solid rgba(239,232,220,.5); border-radius:50%;
+  pointer-events:none; opacity:0;
+  display:grid; place-items:center;
+  mix-blend-mode:difference;
+}
+.cursor span{
+  font-family:var(--mono); font-size:8px; letter-spacing:.16em; text-transform:uppercase;
+  opacity:0; transform:scale(.6);
+  transition:opacity .3s ease, transform .3s ease;
+  color:var(--paper);
+}
+.cursor.is-drag span{ opacity:1; transform:scale(1); }
+@media (max-width:1023px), (pointer:coarse){ .cursor{ display:none !important; } }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero{
+  position:relative; min-height:100svh;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:0 var(--gut) clamp(34px,6vh,70px);
+  overflow:hidden;
+}
+.hero__bg{
+  position:absolute; inset:-12% 0 -12% 0; z-index:0;
+  will-change:transform;
+}
+.hero__bg img{ filter:grayscale(.34) contrast(1.06) brightness(.5); }
+.hero__scrim{
+  position:absolute; inset:0; z-index:1;
+  background:
+    linear-gradient(to top, rgba(11,11,12,.96) 0%, rgba(11,11,12,.55) 38%, rgba(11,11,12,.25) 70%, rgba(11,11,12,.7) 100%);
+}
+.hero__grain{
+  position:absolute; inset:0; z-index:2; opacity:.4; pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.35'/></svg>");
+}
+.hero__inner{ position:relative; z-index:3; width:100%; }
+
+.hero__eyebrow{
+  display:flex; gap:clamp(14px,3vw,44px); flex-wrap:wrap;
+  padding-bottom:clamp(24px,5vh,56px);
+}
+.hero__title{
+  font-size:clamp(3.4rem,12.4vw,12.2rem);
+  margin:0 0 clamp(26px,5vh,54px);
+}
+.hero__title .l2{ display:block; padding-left:clamp(0px,14vw,20vw); }
+.hero__title .l3{ display:block; }
+.hero__foot{
+  display:grid; grid-template-columns:1fr auto; gap:clamp(20px,4vw,60px);
+  align-items:end;
+  padding-top:clamp(20px,3vh,34px);
+  border-top:1px solid var(--rule);
+}
+.hero__foot p{ margin:0; max-width:38ch; color:var(--paper-dim); font-weight:300; }
+.hero__scroll{ display:flex; align-items:center; gap:12px; }
+.hero__scroll i{
+  display:block; width:44px; height:1px; background:var(--paper-faint); position:relative; overflow:hidden;
+}
+.hero__scroll i::after{
+  content:""; position:absolute; inset:0; background:var(--paper);
+  transform:translateX(-100%);
+  animation:sweep 2.6s cubic-bezier(.66,0,.34,1) infinite;
+}
+@keyframes sweep{ 0%{transform:translateX(-100%)} 55%{transform:translateX(0)} 100%{transform:translateX(100%)} }
+@media (max-width:720px){
+  .hero__foot{ grid-template-columns:1fr; }
+  .hero__scroll{ display:none; }
+}
+
+/* ============================================================
+   Manifesto — single lines alone on screen
+   ============================================================ */
+.manifesto{
+  padding:clamp(120px,22vh,260px) var(--gut);
+  display:grid; grid-template-columns:repeat(12,1fr); gap:24px;
+}
+.manifesto__label{ grid-column:1 / span 3; }
+.manifesto__body{ grid-column:4 / span 8; }
+.manifesto__body p{
+  font-size:clamp(1.5rem,3vw,2.9rem);
+  font-weight:300; line-height:1.22; letter-spacing:-.01em;
+  margin:0 0 1.1em; max-width:22ch;
+}
+.manifesto__body p:nth-child(2){ margin-left:clamp(0px,8vw,140px); }
+.manifesto__body p:last-child{ margin-bottom:0; color:var(--paper-dim); }
+.manifesto__body em{ font-style:italic; }
+@media (max-width:900px){
+  .manifesto__label{ grid-column:1 / -1; margin-bottom:34px; }
+  .manifesto__body{ grid-column:1 / -1; }
+  .manifesto__body p:nth-child(2){ margin-left:0; }
+}
+
+/* ============================================================
+   §3 PINNED SCRUB — the six movements
+   ============================================================ */
+.menu{ position:relative; }
+.menu-stage{
+  position:relative;
+  height:100svh; width:100%;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:24px;
+  align-items:center;
+  padding:0 var(--gut);
+}
+.menu-stage__head{
+  position:absolute; top:clamp(84px,12vh,132px); left:var(--gut); right:var(--gut);
+  display:flex; justify-content:space-between; align-items:baseline; gap:20px;
+  z-index:5;
+}
+.menu-index{
+  grid-column:1 / span 2; grid-row:1;
+  display:flex; flex-direction:column; gap:9px;
+  z-index:4;
+  margin:0; padding:0;
+}
+.menu-index li{ list-style:none; }
+.menu-index button{
+  font-family:var(--mono); font-size:10px; letter-spacing:.2em;
+  color:var(--paper-faint);
+  display:flex; align-items:center; gap:10px;
+  transition:color .45s ease;
+  padding:2px 0;
+}
+.menu-index button i{
+  display:block; width:14px; height:1px; background:currentColor;
+  transition:width .5s cubic-bezier(.22,1,.36,1);
+}
+.menu-index li.is-on button{ color:var(--paper); }
+.menu-index li.is-on button i{ width:34px; }
+
+.course-deck{
+  grid-column:1 / -1; grid-row:1;
+  position:relative;
+  min-height:min(60svh,620px);
+  z-index:3;
+}
+
+.course{
+  position:absolute; inset:0;
+  display:grid; grid-template-columns:repeat(12,1fr); gap:24px;
+  align-items:center;
+}
+.course__copy{ grid-column:3 / span 5; }
+.course__num{
+  font-family:var(--mono); font-size:12px; letter-spacing:.24em;
+  color:var(--lacquer);           /* ACCENT #2 */
+  margin-bottom:20px;
+}
+.course__jp{
+  font-family:var(--serif); font-size:1.05rem; letter-spacing:.42em;
+  color:var(--paper-faint); margin:0 0 14px;
+}
+.course__name{
+  font-family:var(--serif); font-weight:300;
+  font-size:clamp(1.8rem,3.1vw,3.05rem); line-height:1.06; letter-spacing:-.012em;
+  margin:0 0 22px; max-width:16ch;
+}
+.course__name em{ font-style:italic; }
+.course__note{
+  margin:0; max-width:34ch; color:var(--paper-dim);
+  font-weight:300; font-size:1.02rem; line-height:1.6;
+}
+.course__pair{
+  margin-top:26px; padding-top:16px; border-top:1px solid var(--rule);
+  max-width:34ch;
+}
+
+.plate{
+  grid-column:9 / span 4;
+  position:relative; overflow:visible;
+  height:min(58svh,600px);
+  margin:0;
+}
+.plate__frame{
+  position:absolute; inset:0; display:block; overflow:hidden;
+  will-change:clip-path, transform;
+}
+.plate img{ filter:grayscale(.2) contrast(1.08) brightness(.78); }
+.plate figcaption{
+  position:absolute; left:0; bottom:-30px;
+  font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--paper-faint);
+}
+
+.menu-progress{
+  position:absolute; left:var(--gut); right:var(--gut); bottom:clamp(40px,7vh,84px);
+  height:1px; background:var(--rule); z-index:5;
+}
+.menu-progress span{
+  position:absolute; inset:0 auto 0 0; width:0%;
+  background:var(--paper-dim);
+}
+
+/* mobile: no pin, natural stacking */
+@media (max-width:1023px){
+  .menu-stage{
+    height:auto; display:block; padding:clamp(90px,14vh,140px) var(--gut);
+  }
+  .menu-stage__head{ position:static; margin-bottom:56px; flex-direction:column; align-items:flex-start; gap:14px; }
+  .menu-index, .menu-progress{ display:none; }
+  .course-deck{ min-height:0; position:static; }
+  .course{
+    position:relative; inset:auto;
+    display:block;
+    padding-bottom:56px; margin-bottom:56px;
+    border-bottom:1px solid var(--rule);
+    opacity:1 !important;
+  }
+  .course:last-child{ border-bottom:0; margin-bottom:0; padding-bottom:0; }
+  .course__copy{ opacity:1 !important; }
+  .plate{ position:relative; height:auto; aspect-ratio:4/5; margin-bottom:46px; }
+  .plate__frame{ clip-path:none !important; }
+  .plate figcaption{ position:absolute; left:0; bottom:-24px; }
+}
+
+/* ============================================================
+   §4 The counter — broken editorial grid
+   ============================================================ */
+.counter{
+  position:relative;
+  padding:clamp(120px,20vh,240px) var(--gut);
+  display:grid; grid-template-columns:repeat(12,1fr); gap:24px;
+  align-items:start;
+}
+.counter__label{ grid-column:1 / span 2; padding-top:8px; }
+.counter__title{
+  grid-column:3 / span 7;
+  font-size:clamp(2.4rem,5.4vw,5.2rem);
+  margin:0 0 clamp(48px,7vh,90px);
+}
+.counter__portrait{
+  grid-column:1 / span 4; grid-row:3;
+  aspect-ratio:4/5; position:relative; overflow:hidden;
+  margin-top:clamp(0px,6vh,80px);
+}
+.counter__portrait img{ filter:grayscale(.55) contrast(1.1) brightness(.72); }
+.counter__body{ grid-column:6 / span 6; grid-row:3; }
+.counter__body p{ margin:0 0 1.35em; max-width:46ch; color:var(--paper-dim); font-weight:300; }
+.counter__body p:first-child{
+  color:var(--paper);
+  font-size:clamp(1.25rem,1.9vw,1.7rem);
+  line-height:1.42;
+}
+.counter__body p:first-child::first-letter{
+  font-size:2.6em; float:left; line-height:.82; padding:.06em .12em 0 0; font-weight:300;
+}
+.counter__sig{
+  margin-top:44px; padding-top:22px; border-top:1px solid var(--rule);
+  display:flex; gap:34px; flex-wrap:wrap;
+}
+.counter__quote{
+  grid-column:8 / span 5; grid-row:2;
+  align-self:end;
+  font-style:italic; font-weight:300;
+  font-size:clamp(1.15rem,1.5vw,1.4rem);
+  line-height:1.5; color:var(--paper-dim);
+  margin:0 0 clamp(48px,7vh,90px);
+  border-left:1px solid var(--rule); padding-left:24px;
+}
+@media (max-width:1023px){
+  .counter{ display:block; }
+  .counter__label{ margin-bottom:26px; }
+  .counter__title{ margin-bottom:36px; }
+  .counter__quote{ margin:0 0 44px; }
+  .counter__portrait{ margin:0 0 44px; }
+}
+
+/* ============================================================
+   §5 Showcase — horizontal track
+   ============================================================ */
+.gallery{ position:relative; background:var(--ink-2); }
+.gallery__head{
+  display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap;
+  padding:clamp(96px,16vh,180px) var(--gut) clamp(34px,5vh,60px);
+}
+.gallery__head h2{ max-width:14ch; }
+.gallery__viewport{ overflow:hidden; }
+.gallery__track{
+  display:flex; gap:clamp(20px,3vw,54px);
+  padding:0 var(--gut) clamp(96px,16vh,180px);
+  width:max-content;
+}
+.slab{ width:clamp(260px,32vw,460px); flex:0 0 auto; }
+.slab__img{ position:relative; overflow:hidden; aspect-ratio:4/5; margin-bottom:22px; }
+.slab__img img{ filter:grayscale(.3) contrast(1.06) brightness(.76); transition:transform 1.1s cubic-bezier(.22,1,.36,1); }
+.slab:hover .slab__img img{ transform:scale(1.045); }
+.slab__meta{ display:flex; justify-content:space-between; gap:16px; align-items:baseline; margin-bottom:10px; }
+.slab h3{ font-size:clamp(1.3rem,1.9vw,1.85rem); font-weight:300; margin:0 0 8px; letter-spacing:-.01em; }
+.slab p{ margin:0; color:var(--paper-dim); font-size:.98rem; font-weight:300; max-width:32ch; }
+.slab--tall{ margin-top:clamp(30px,7vw,110px); }
+
+@media (min-width:1024px){
+  .gallery{
+    height:100svh;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .gallery__head{ padding:0 var(--gut) clamp(26px,4vh,50px); }
+  .gallery__track{ padding:0 var(--gut); align-items:flex-start; }
+  .slab{ width:clamp(240px,25vw,380px); }
+  .slab__img{ height:min(40vh,380px); aspect-ratio:auto; margin-bottom:20px; }
+  .slab--tall{ margin-top:clamp(20px,4vh,64px); }
+}
+
+@media (max-width:1023px){
+  .gallery__track{
+    width:auto; flex-direction:column; gap:clamp(48px,9vw,72px);
+    transform:none !important;
+  }
+  .slab{ width:100%; }
+  .slab--tall{ margin-top:0; }
+}
+
+/* ============================================================
+   §6 Proof — counts + accordion
+   ============================================================ */
+.proof{ padding:clamp(110px,18vh,220px) var(--gut); }
+.stats{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+  background:var(--rule); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  margin-bottom:clamp(80px,13vh,150px);
+}
+.stat{ background:var(--ink); padding:clamp(30px,4vw,52px) clamp(18px,2vw,34px); }
+.stat__n{
+  font-family:var(--serif); font-weight:300;
+  font-size:clamp(3rem,6vw,6.2rem); line-height:1;
+  letter-spacing:-.02em; display:flex; align-items:baseline; gap:4px;
+}
+.stat__n .pre{ font-size:.38em; color:var(--paper-dim); }
+.stat__n .suf{ font-size:.26em; font-family:var(--mono); letter-spacing:.14em; color:var(--paper-dim); margin-left:6px; }
+.stat p{ margin:16px 0 0; color:var(--paper-dim); font-size:.96rem; font-weight:300; max-width:24ch; }
+@media (max-width:900px){ .stats{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:520px){ .stats{ grid-template-columns:1fr; } }
+
+.detail-grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:24px; }
+.detail-grid > .label{ grid-column:1 / span 3; }
+.acc{ grid-column:5 / span 8; border-top:1px solid var(--rule); }
+@media (max-width:900px){
+  .detail-grid > .label{ grid-column:1 / -1; margin-bottom:26px; }
+  .acc{ grid-column:1 / -1; }
+}
+.acc__item{ border-bottom:1px solid var(--rule); }
+.acc__btn{
+  width:100%; display:flex; align-items:center; justify-content:space-between; gap:24px;
+  padding:clamp(22px,3vh,32px) 0; text-align:left;
+}
+.acc__btn h3{
+  font-family:var(--serif); font-weight:300; margin:0;
+  font-size:clamp(1.25rem,2.1vw,1.9rem); letter-spacing:-.01em;
+  transition:color .4s ease, transform .6s cubic-bezier(.22,1,.36,1);
+}
+.acc__item:hover .acc__btn h3{ transform:translateX(10px); }
+.acc__sign{ position:relative; width:14px; height:14px; flex:0 0 auto; }
+.acc__sign::before,.acc__sign::after{
+  content:""; position:absolute; background:var(--paper-dim); transition:transform .5s cubic-bezier(.22,1,.36,1);
+}
+.acc__sign::before{ left:0; right:0; top:50%; height:1px; margin-top:-.5px; }
+.acc__sign::after{ top:0; bottom:0; left:50%; width:1px; margin-left:-.5px; }
+.acc__item.is-open .acc__sign::after{ transform:scaleY(0); }
+.acc__panel{ overflow:hidden; height:0; }
+.no-anim .acc__panel{ height:auto; }
+.acc__panel div{ padding:0 0 clamp(26px,4vh,40px); max-width:56ch; color:var(--paper-dim); font-weight:300; }
+.acc__panel p{ margin:0 0 1em; }
+.acc__panel p:last-child{ margin-bottom:0; }
+
+/* ============================================================
+   Closing CTA
+   ============================================================ */
+.cta{
+  position:relative; overflow:hidden;
+  min-height:96svh; display:grid; place-items:center; text-align:center;
+  padding:clamp(110px,16vh,190px) var(--gut);
+}
+.cta__bg{ position:absolute; inset:-14% 0; z-index:0; }
+.cta__bg img{ filter:grayscale(.5) contrast(1.05) brightness(.34); }
+.cta__scrim{ position:absolute; inset:0; z-index:1;
+  background:radial-gradient(ellipse at center, rgba(11,11,12,.42) 0%, rgba(11,11,12,.93) 72%); }
+.cta__inner{ position:relative; z-index:2; }
+.cta h2{ font-size:clamp(2.8rem,8vw,8.4rem); margin:26px 0 34px; }
+.cta__lines{ display:flex; gap:clamp(16px,3vw,40px); justify-content:center; flex-wrap:wrap; margin-bottom:44px; }
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.ftr{ border-top:1px solid var(--rule); padding:clamp(70px,10vh,110px) var(--gut) 34px; }
+.ftr__grid{
+  display:grid; grid-template-columns:2.2fr 1fr 1fr 1fr 1.4fr; gap:clamp(24px,3vw,48px);
+  padding-bottom:clamp(60px,9vh,100px);
+}
+.ftr__mark{
+  font-family:var(--serif); font-weight:300; font-size:clamp(2rem,3.4vw,3.2rem);
+  letter-spacing:.2em; text-indent:.2em; margin:0 0 20px; line-height:1;
+}
+.ftr__addr{ font-style:normal; color:var(--paper-dim); font-weight:300; max-width:26ch; }
+.ftr h4{ margin:0 0 22px; }
+.ftr ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px; }
+.ftr ul a, .ftr ul span{
+  color:var(--paper-dim); font-weight:300; font-size:1.02rem;
+  transition:color .35s ease;
+}
+.ftr ul a:hover{ color:var(--paper); }
+.ftr__hours{ display:flex; justify-content:space-between; gap:14px; color:var(--paper-dim); font-weight:300; }
+.ftr__hours .num{ font-size:.86rem; color:var(--paper-faint); }
+.ftr__sub p{ margin:0 0 18px; color:var(--paper-dim); font-weight:300; max-width:28ch; }
+.ftr__field{ display:flex; gap:10px; align-items:center; border-bottom:1px solid var(--rule); padding-bottom:10px; }
+.ftr__field input{
+  flex:1; background:none; border:0; outline:none; color:var(--paper);
+  font-family:var(--mono); font-size:11px; letter-spacing:.14em; padding:4px 0;
+}
+.ftr__field input::placeholder{ color:var(--paper-faint); }
+.ftr__field button{ font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--paper-dim); }
+.ftr__field button:hover{ color:var(--paper); }
+.ftr__base{
+  display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  padding-top:26px; border-top:1px solid var(--rule);
+}
+@media (max-width:1023px){
+  .ftr__grid{ grid-template-columns:1fr 1fr; gap:44px 24px; }
+  .ftr__brand{ grid-column:1 / -1; }
+  .ftr__sub{ grid-column:1 / -1; }
+}
+@media (max-width:560px){ .ftr__grid{ grid-template-columns:1fr; } }
+
+/* ============================================================
+   Reduced motion — everything sits in its final state
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation:none !important; transition:none !important; }
+  .intro,.curtain,.cursor{ display:none !important; }
+  .course{
+    position:relative; inset:auto; display:block; opacity:1 !important;
+    padding-bottom:56px; margin-bottom:56px; border-bottom:1px solid var(--rule);
+  }
+  .course__copy{ opacity:1 !important; }
+  .course-deck{ position:static; min-height:0; }
+  .plate{ position:relative; height:auto; aspect-ratio:4/5; margin-bottom:46px; }
+  .plate__frame{ clip-path:none !important; }
+  .menu-stage{ height:auto; display:block; padding:120px var(--gut); }
+  .menu-stage__head{ position:static; margin-bottom:56px; }
+  .menu-index,.menu-progress{ display:none; }
+  .gallery__track{ flex-direction:column; width:auto; }
+  .acc__panel{ height:auto; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============ page-load intro ============ -->
+<div class="curtain" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__inner">
+    <p class="intro__mark">KUROBA</p>
+    <div class="intro__meta">
+      <span class="intro__count" id="introCount">00</span>
+      <span class="intro__count">SEATS · FOURNIER ST · E1</span>
+    </div>
+  </div>
+  <div class="intro__bar"><span id="introBar"></span></div>
+</div>
+
+<div class="cursor" id="cursor" aria-hidden="true"><span>Drag</span></div>
+
+<!-- ============ header ============ -->
+<header class="hdr" id="hdr">
+  <a href="#top" class="hdr__mark">KUROBA</a>
+  <nav class="hdr__nav">
+    <a href="#menu" class="label is-hideable">The Six Movements</a>
+    <a href="#counter" class="label is-hideable">The Counter</a>
+    <a href="#proof" class="label is-hideable">Details</a>
+    <span class="magnetic" data-magnetic>
+      <a href="#reserve" class="btn-reserve" data-mag-inner><span class="dot"></span> Reserve</a>
+    </span>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ============ 1 · HERO ============ -->
+<section class="hero">
+  <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+  <div class="hero__bg" data-parallax="0.18">
+    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2000&auto=format&fit=crop"
+         alt="A dark timber counter lit by a single low lamp">
+  </div>
+  <div class="hero__scrim"></div>
+  <div class="hero__grain"></div>
+
+  <div class="hero__inner">
+    <div class="hero__eyebrow">
+      <span class="label" data-fade>Est. 2019</span>
+      <span class="label" data-fade>Nº 14 Fournier Street, Spitalfields</span>
+      <span class="label" data-fade>Tue — Sat · Two seatings</span>
+    </div>
+
+    <h1 class="display hero__title">
+      <span class="l1" data-reveal data-split="chars">Fourteen</span>
+      <span class="l2" data-reveal data-split="chars">seats.</span>
+      <span class="l3" data-reveal data-split="chars">One evening.</span>
+    </h1>
+
+    <div class="hero__foot">
+      <p data-reveal data-split="words">Chef Rina Oyama cooks six movements a night for fourteen people, and never writes the menu down before four o'clock.</p>
+      <div class="hero__scroll" data-fade>
+        <span class="label label--faint">Scroll</span><i></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2 · MANIFESTO ============ -->
+<section class="manifesto">
+  <div class="manifesto__label"><span class="label" data-fade>001 — Intent</span></div>
+  <div class="manifesto__body">
+    <p data-reveal data-split="words">There is no à la carte. There is no wine list on the table.</p>
+    <p data-reveal data-split="words">There is a <em>counter</em>, a fire, and whatever came off the boat at Brixham that morning.</p>
+    <p data-reveal data-split="words">£245 per guest. Two hours. Fourteen chairs, and we set every one of them by hand.</p>
+  </div>
+</section>
+
+<!-- ============ 3 · PINNED SCRUB — SIX MOVEMENTS ============ -->
+<section class="menu" id="menu">
+  <div class="menu-stage" id="menuStage">
+
+    <div class="menu-stage__head">
+      <span class="label" data-fade>002 — The Six Movements</span>
+      <span class="label label--faint">Autumn service · Nov 2026</span>
+    </div>
+
+    <ul class="menu-index" id="menuIndex" aria-hidden="true">
+      <li class="is-on"><button type="button" data-goto="0"><i></i>01</button></li>
+      <li><button type="button" data-goto="1"><i></i>02</button></li>
+      <li><button type="button" data-goto="2"><i></i>03</button></li>
+      <li><button type="button" data-goto="3"><i></i>04</button></li>
+      <li><button type="button" data-goto="4"><i></i>05</button></li>
+      <li><button type="button" data-goto="5"><i></i>06</button></li>
+    </ul>
+
+    <div class="course-deck" id="courseDeck">
+
+      <article class="course">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <figure class="plate">
+          <span class="plate__frame"><img loading="lazy" src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1200&auto=format&fit=crop" alt="Scallop in a dark broth"></span>
+          <figcaption>01 · Sakizuke</figcaption>
+        </figure>
+        <div class="course__copy">
+          <span class="course__num">Movement 01 / 06</span>
+          <p class="course__jp">先付</p>
+          <h3 class="course__name">Hokkaidō scallop, <em>brown-butter dashi</em></h3>
+          <p class="course__note">Raw, cut thick, warmed only by the broth poured over it at the counter. Finger lime for acid. Six weeks of kombu in that dashi.</p>
+          <div class="course__pair"><span class="label label--faint">Paired · Tedorigawa Yamahai Junmai, Ishikawa</span></div>
+        </div>
+      </article>
+
+      <article class="course">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <figure class="plate">
+          <span class="plate__frame"><img loading="lazy" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=1200&auto=format&fit=crop" alt="Aged fish sliced on dark ceramic"></span>
+          <figcaption>02 · Otsukuri</figcaption>
+        </figure>
+        <div class="course__copy">
+          <span class="course__num">Movement 02 / 06</span>
+          <p class="course__jp">御造り</p>
+          <h3 class="course__name">Kinmedai aged <em>eight days</em></h3>
+          <p class="course__note">Golden eye snapper, hung in the ageing cabinet behind you until the flesh turns translucent. Salt-cured plum, and nothing else on the plate.</p>
+          <div class="course__pair"><span class="label label--faint">Paired · Meursault Les Narvaux 2019, Boyer-Martenot</span></div>
+        </div>
+      </article>
+
+      <article class="course">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <figure class="plate">
+          <span class="plate__frame"><img loading="lazy" src="https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1200&auto=format&fit=crop" alt="Fish searing over charcoal"></span>
+          <figcaption>03 · Sumiyaki</figcaption>
+        </figure>
+        <div class="course__copy">
+          <span class="course__num">Movement 03 / 06</span>
+          <p class="course__jp">炭焼き</p>
+          <h3 class="course__name">Nodoguro over <em>binchōtan</em></h3>
+          <p class="course__note">Blackthroat seaperch, skin side down over white charcoal at 900°C for ninety seconds. Burnt scallion oil, brushed twice. You will hear it before you see it.</p>
+          <div class="course__pair"><span class="label label--faint">Paired · Hōraisen Wa Junmai Ginjō, Aichi</span></div>
+        </div>
+      </article>
+
+      <article class="course">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <figure class="plate">
+          <span class="plate__frame"><img loading="lazy" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1200&auto=format&fit=crop" alt="Clear broth in a lacquer bowl"></span>
+          <figcaption>04 · Wanmono</figcaption>
+        </figure>
+        <div class="course__copy">
+          <span class="course__num">Movement 04 / 06</span>
+          <p class="course__jp">椀物</p>
+          <h3 class="course__name">Clear broth, <em>matsutake and hamo</em></h3>
+          <p class="course__note">The quiet one. Pine mushroom from Nagano, conger eel bone-cut three hundred times to the inch. Served in lacquer, lid on, so the steam arrives with it.</p>
+          <div class="course__pair"><span class="label label--faint">Paired · Hōjicha, first flush, brewed at 82°C</span></div>
+        </div>
+      </article>
+
+      <article class="course">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <figure class="plate">
+          <span class="plate__frame"><img loading="lazy" src="https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?q=80&w=1200&auto=format&fit=crop" alt="Nigiri set on a dark counter"></span>
+          <figcaption>05 · Nigiri</figcaption>
+        </figure>
+        <div class="course__copy">
+          <span class="course__num">Movement 05 / 06</span>
+          <p class="course__jp">握り</p>
+          <h3 class="course__name">Twelve pieces, <em>cut to order</em></h3>
+          <p class="course__note">Akazu rice at body temperature, seasoned with three-year red vinegar. Chef Oyama forms each piece in front of you and expects you to eat it inside thirty seconds.</p>
+          <div class="course__pair"><span class="label label--faint">Paired · Kokuryū Kuzuryū Junmai, served warm at 45°C</span></div>
+        </div>
+      </article>
+
+      <article class="course">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <figure class="plate">
+          <span class="plate__frame"><img loading="lazy" src="https://images.unsplash.com/photo-1470162656305-6f429ba817bf?q=80&w=1200&auto=format&fit=crop" alt="A dark dessert under syrup"></span>
+          <figcaption>06 · Mizugashi</figcaption>
+        </figure>
+        <div class="course__copy">
+          <span class="course__num">Movement 06 / 06</span>
+          <p class="course__jp">水菓子</p>
+          <h3 class="course__name">Kuromitsu, black sesame, <em>toasted rice</em></h3>
+          <p class="course__note">Ice cream churned from the rice we toasted for the evening's tea. Okinawan black sugar syrup, poured at the table. Then the lights come up.</p>
+          <div class="course__pair"><span class="label label--faint">Paired · Kijōshu, ten years in cedar, 30ml</span></div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="menu-progress" aria-hidden="true"><span id="menuProgress"></span></div>
+  </div>
+</section>
+
+<!-- ============ 4 · THE COUNTER — broken editorial grid ============ -->
+<section class="counter" id="counter">
+  <div class="counter__label"><span class="label" data-fade>003 — The Counter</span></div>
+
+  <h2 class="display counter__title" data-reveal data-split="chars">Rina Oyama</h2>
+
+  <p class="counter__quote" data-reveal data-split="words">“I spent eleven years being told the fish was not ready. Now I am the one who says it.”</p>
+
+  <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+  <figure class="counter__portrait" data-clip>
+    <img loading="lazy" src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=1200&auto=format&fit=crop"
+         alt="Chef's hands working at a counter in low light">
+  </figure>
+
+  <div class="counter__body">
+    <p data-fade>Oyama learned her knife work at Sushi Kaneda in Susukino, Sapporo — eleven winters, the last four running the second counter. She moved to London in 2017 for a six-month stage that she never went home from.</p>
+    <p data-fade>Kuroba opened in the spring of 2019 in a former silk-weaver's front room on Fournier Street: one slab of two-hundred-year-old hinoki, fourteen chairs, and a charcoal grill she had shipped from Wakayama in three pieces. There is no pass, no printed menu and no second sitting of the same food — the 18:00 and 20:45 services are cooked differently because the fish has changed by then.</p>
+    <p data-fade>She buys day-boat fish from Brixham and Peterhead on Monday and Thursday, and holds most of it. The ageing cabinet behind the counter is deliberately in view: guests are meant to watch their own dinner getting older.</p>
+    <div class="counter__sig">
+      <span class="label label--faint">Head Chef &amp; Proprietor</span>
+      <span class="label label--faint">One Michelin star, 2022 —</span>
+      <span class="label label--faint">Good Food Guide, 8/10</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 · SHOWCASE — horizontal track ============ -->
+<section class="gallery" id="gallery">
+  <div class="gallery__head">
+    <h2 class="display h2" data-reveal data-split="chars">The room</h2>
+    <span class="label label--faint">004 — Four things worth arriving early for</span>
+  </div>
+
+  <div class="gallery__viewport" id="galleryViewport">
+    <div class="gallery__track" id="galleryTrack">
+
+      <article class="slab">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <figure class="slab__img" data-clip>
+          <img loading="lazy" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop" alt="Low-lit dining room">
+        </figure>
+        <div class="slab__meta"><span class="label label--faint">i</span><span class="label label--faint">1826</span></div>
+        <h3>The hinoki slab</h3>
+        <p>Four and a half metres of Japanese cypress, unfinished. It is sanded with water, never oiled, and it will be pale again by spring.</p>
+      </article>
+
+      <article class="slab slab--tall">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <figure class="slab__img" data-clip>
+          <img loading="lazy" src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200&auto=format&fit=crop" alt="Charcoal grill glowing in the dark">
+        </figure>
+        <div class="slab__meta"><span class="label label--faint">ii</span><span class="label label--faint">900°C</span></div>
+        <h3>The binchōtan</h3>
+        <p>White oak charcoal from Kishū, lit at 15:40 every service day. It takes ninety minutes to reach temperature and burns without smoke or flame.</p>
+      </article>
+
+      <article class="slab">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <figure class="slab__img" data-clip>
+          <img loading="lazy" src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?q=80&w=1200&auto=format&fit=crop" alt="Aged fish hanging in a cabinet">
+        </figure>
+        <div class="slab__meta"><span class="label label--faint">iii</span><span class="label label--faint">2 — 21 days</span></div>
+        <h3>The ageing cabinet</h3>
+        <p>Glass-fronted, 1°C, 72% humidity. Turbot at four days, kinmedai at eight, and one obstinate amberjack that has been in there since the 14th.</p>
+      </article>
+
+      <article class="slab slab--tall">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <figure class="slab__img" data-clip>
+          <img loading="lazy" src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1200&auto=format&fit=crop" alt="Sake bottles in a dark cellar">
+        </figure>
+        <div class="slab__meta"><span class="label label--faint">iv</span><span class="label label--faint">61 labels</span></div>
+        <h3>The cold room</h3>
+        <p>Sixty-one sake, eleven of them koshu aged past a decade, and a short, stubborn list of Jura and Mosel that our sommelier Théo Marchand refuses to expand.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 · PROOF — counts + accordion ============ -->
+<section class="proof" id="proof">
+
+  <div class="stats" data-stats>
+    <div class="stat">
+      <div class="stat__n"><span class="num" data-count="14">0</span></div>
+      <p>Seats at the counter. There are no tables and there is no private room.</p>
+    </div>
+    <div class="stat">
+      <div class="stat__n"><span class="pre">£</span><span class="num" data-count="245">0</span></div>
+      <p>Per guest, six movements. Service is included; pairings are £120 or £75.</p>
+    </div>
+    <div class="stat">
+      <div class="stat__n"><span class="num" data-count="118">0</span><span class="suf">MIN</span></div>
+      <p>Average service, first pour to last spoon. We start the moment all fourteen are seated.</p>
+    </div>
+    <div class="stat">
+      <div class="stat__n"><span class="num" data-count="2019">0</span></div>
+      <p>Opened in March. One Michelin star retained every year since 2022.</p>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <span class="label" data-fade>005 — Before you book</span>
+
+    <div class="acc" id="acc">
+      <div class="acc__item">
+        <button class="acc__btn" type="button" aria-expanded="false">
+          <h3>Seatings &amp; the booking window</h3><span class="acc__sign"></span>
+        </button>
+        <div class="acc__panel"><div>
+          <p>Tuesday to Saturday, two services: 18:00 and 20:45. Bookings open at 10:00 on the first Monday of each month for the month after next, and the November counter has historically gone in under nine minutes.</p>
+          <p>Tickets are prepaid in full. We hold four seats back from each Saturday release for the waiting list, which currently runs to 1,340 names.</p>
+        </div></div>
+      </div>
+
+      <div class="acc__item">
+        <button class="acc__btn" type="button" aria-expanded="false">
+          <h3>Dietary requirements</h3><span class="acc__sign"></span>
+        </button>
+        <div class="acc__panel"><div>
+          <p>Tell us at least 72 hours ahead and we will cook around shellfish, dairy and gluten without substituting the movement structure. We cannot cook a menu without fish — the entire kitchen is built around one grill and one ageing cabinet.</p>
+          <p>The counter is not suitable for guests under twelve.</p>
+        </div></div>
+      </div>
+
+      <div class="acc__item">
+        <button class="acc__btn" type="button" aria-expanded="false">
+          <h3>Cancellation &amp; transfers</h3><span class="acc__sign"></span>
+        </button>
+        <div class="acc__panel"><div>
+          <p>Cancel more than seven days out and we refund in full. Inside seven days the seat is yours to transfer to anyone you like — email the name to the counter and we will change the setting.</p>
+          <p>If we cannot fill a same-day cancellation, the seat stays empty. We would rather cook for thirteen than rush someone into a chair.</p>
+        </div></div>
+      </div>
+
+      <div class="acc__item">
+        <button class="acc__btn" type="button" aria-expanded="false">
+          <h3>Corkage, photography, the rest</h3><span class="acc__sign"></span>
+        </button>
+        <div class="acc__panel"><div>
+          <p>Corkage is £45 a bottle, one bottle per pair, nothing we already list. Photographs are fine before the nigiri begins and not after — by then the rice is at temperature and thirty seconds matters more than the picture.</p>
+          <p>The room seats fourteen strangers side by side. Most nights they end up talking. That is not an accident.</p>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7 · CLOSING CTA ============ -->
+<section class="cta" id="reserve">
+  <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+  <div class="cta__bg" data-parallax="0.12">
+    <img loading="lazy" src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?q=80&w=2000&auto=format&fit=crop"
+         alt="Empty counter set for service">
+  </div>
+  <div class="cta__scrim"></div>
+
+  <div class="cta__inner">
+    <span class="label" data-fade>006 — Reserve</span>
+    <h2 class="display" data-reveal data-split="chars">Sit down.</h2>
+    <div class="cta__lines">
+      <span class="label label--faint" data-fade>18:00 &amp; 20:45</span>
+      <span class="label label--faint" data-fade>Tue — Sat</span>
+      <span class="label label--faint" data-fade>£245 per guest</span>
+    </div>
+    <span class="magnetic" data-magnetic>
+      <a href="mailto:counter@kuroba.london" class="btn-reserve btn-reserve--lg" data-mag-inner>
+        <span class="dot"></span> Request a seat
+      </a>
+    </span>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="ftr">
+  <div class="ftr__grid">
+    <div class="ftr__brand">
+      <p class="ftr__mark">KUROBA</p>
+      <address class="ftr__addr">
+        Nº 14 Fournier Street<br>
+        Spitalfields, London E1 6QE<br>
+        <a href="tel:+442075530014">+44 20 7553 0014</a>
+      </address>
+    </div>
+
+    <div>
+      <h4 class="label">Visit</h4>
+      <ul>
+        <li><a href="#menu">The six movements</a></li>
+        <li><a href="#counter">Chef Oyama</a></li>
+        <li><a href="#gallery">The room</a></li>
+        <li><a href="#proof">Before you book</a></li>
+        <li><a href="#reserve">Reserve a seat</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="label">Hours</h4>
+      <ul>
+        <li><span class="ftr__hours">Tue — Thu <span class="num">18:00 / 20:45</span></span></li>
+        <li><span class="ftr__hours">Fri — Sat <span class="num">18:00 / 20:45</span></span></li>
+        <li><span class="ftr__hours">Sun — Mon <span class="num">Closed</span></span></li>
+        <li><span class="ftr__hours">Counter kitchen <span class="num">from 15:40</span></span></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="label">Enquiries</h4>
+      <ul>
+        <li><a href="mailto:counter@kuroba.london">Bookings</a></li>
+        <li><a href="mailto:press@kuroba.london">Press</a></li>
+        <li><a href="mailto:hello@kuroba.london">Private buy-outs</a></li>
+        <li><a href="mailto:kitchen@kuroba.london">Stages &amp; hiring</a></li>
+        <li><a href="#top">Suppliers</a></li>
+      </ul>
+    </div>
+
+    <div class="ftr__sub">
+      <h4 class="label">The Monday note</h4>
+      <p>One email a month, sent the hour the counter opens for booking. Nothing else, ever.</p>
+      <form class="ftr__field" onsubmit="return false;">
+        <input type="email" placeholder="EMAIL ADDRESS" aria-label="Email address">
+        <button type="submit">Join</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="ftr__base">
+    <span class="label label--faint">© 2026 Kuroba Ltd — Registered in England 11908442</span>
+    <span class="label label--faint">Instagram · Resy · The Good Food Guide</span>
+    <span class="label label--faint">Site by the counter, not by committee</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  var REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+
+  /* ---------------------------------------------------------
+     Accordion works with or without GSAP / motion preference.
+     --------------------------------------------------------- */
+  function initAccordion() {
+    var items = Array.prototype.slice.call(document.querySelectorAll('.acc__item'));
+    items.forEach(function (item) {
+      var btn = item.querySelector('.acc__btn');
+      var panel = item.querySelector('.acc__panel');
+      btn.addEventListener('click', function () {
+        var open = item.classList.contains('is-open');
+        items.forEach(function (other) {
+          if (other === item) return;
+          if (!other.classList.contains('is-open')) return;
+          other.classList.remove('is-open');
+          other.querySelector('.acc__btn').setAttribute('aria-expanded', 'false');
+          if (hasGSAP && !REDUCE) {
+            gsap.to(other.querySelector('.acc__panel'), {
+              height: 0, duration: 0.5, ease: 'power3.inOut',
+              onComplete: function () { if (window.ScrollTrigger) ScrollTrigger.refresh(); }
+            });
+          } else {
+            other.querySelector('.acc__panel').style.height = '0px';
+          }
+        });
+
+        item.classList.toggle('is-open', !open);
+        btn.setAttribute('aria-expanded', String(!open));
+
+        if (hasGSAP && !REDUCE) {
+          gsap.to(panel, {
+            height: open ? 0 : 'auto',
+            duration: 0.62, ease: 'power3.inOut',
+            onComplete: function () { if (window.ScrollTrigger) ScrollTrigger.refresh(); }
+          });
+        } else {
+          panel.style.height = open ? '0px' : 'auto';
+        }
+      });
+    });
+  }
+
+  if (REDUCE || !hasGSAP) {
+    // Final-state page: no intro, no scrub, content visible.
+    var introEl = document.getElementById('intro');
+    var curtainEl = document.querySelector('.curtain');
+    if (introEl) introEl.style.display = 'none';
+    if (curtainEl) curtainEl.style.display = 'none';
+    document.documentElement.classList.remove('anim');
+    document.documentElement.classList.add('no-anim');
+    Array.prototype.forEach.call(document.querySelectorAll('[data-count]'), function (n) {
+      n.textContent = n.getAttribute('data-count');
+    });
+    initAccordion();
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* =========================================================
+     LENIS — smooth scroll wired into ScrollTrigger
+     ========================================================= */
+  var lenis = new Lenis({
+    duration: 1.15,
+    lerp: 0.09,
+    wheelMultiplier: 0.92,
+    smoothWheel: true
+  });
+
+  lenis.on('scroll', ScrollTrigger.update);
+
+  gsap.ticker.add(function (time) {
+    lenis.raf(time * 1000);
+  });
+  gsap.ticker.lagSmoothing(0);
+
+  // Anchor links go through Lenis so pinned sections resolve correctly.
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = a.getAttribute('href');
+      if (!id || id === '#') return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -20, duration: 1.4 });
+    });
+  });
+
+  /* =========================================================
+     Hand-rolled text splitting (no paid SplitText plugin)
+     ========================================================= */
+  function buildMask(text) {
+    var m = document.createElement('span');
+    m.className = 'mask';
+    var i = document.createElement('span');
+    i.textContent = text;
+    m.appendChild(i);
+    return m;
+  }
+
+  function splitElement(el, mode) {
+    var source = Array.prototype.slice.call(el.childNodes);
+    var frag = document.createDocumentFragment();
+    var pieces = [];
+
+    source.forEach(function (node) {
+      if (node.nodeType === 3) {
+        var words = node.textContent.split(/(\s+)/);
+        words.forEach(function (w) {
+          if (w === '') return;
+          if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(' ')); return; }
+          var wordEl = document.createElement('span');
+          wordEl.className = 'word';
+          if (mode === 'chars') {
+            w.split('').forEach(function (ch) {
+              var m = buildMask(ch);
+              wordEl.appendChild(m);
+              pieces.push(m.firstChild);
+            });
+          } else {
+            var m2 = buildMask(w);
+            wordEl.appendChild(m2);
+            pieces.push(m2.firstChild);
+          }
+          frag.appendChild(wordEl);
+        });
+      } else if (node.nodeType === 1) {
+        // Keep inline tags (<em>) intact; split their text inside.
+        var clone = node.cloneNode(false);
+        var innerWords = node.textContent.split(/(\s+)/);
+        innerWords.forEach(function (w) {
+          if (w === '') return;
+          if (/^\s+$/.test(w)) { clone.appendChild(document.createTextNode(' ')); return; }
+          var wordEl = document.createElement('span');
+          wordEl.className = 'word';
+          if (mode === 'chars') {
+            w.split('').forEach(function (ch) {
+              var m = buildMask(ch);
+              wordEl.appendChild(m);
+              pieces.push(m.firstChild);
+            });
+          } else {
+            var m3 = buildMask(w);
+            wordEl.appendChild(m3);
+            pieces.push(m3.firstChild);
+          }
+          clone.appendChild(wordEl);
+        });
+        frag.appendChild(clone);
+      }
+    });
+
+    el.innerHTML = '';
+    el.appendChild(frag);
+    return pieces;
+  }
+
+  var splitCache = new Map();
+  document.querySelectorAll('[data-split]').forEach(function (el) {
+    splitCache.set(el, splitElement(el, el.getAttribute('data-split')));
+  });
+
+  function piecesOf(el) { return splitCache.get(el) || []; }
+
+  /* =========================================================
+     1 · PAGE-LOAD INTRO — counter + curtain lift
+     ========================================================= */
+  var intro = document.getElementById('intro');
+  var introCount = document.getElementById('introCount');
+  var introBar = document.getElementById('introBar');
+  var curtainPanels = gsap.utils.toArray('.curtain i');
+
+  var heroTitleLines = gsap.utils.toArray('.hero__title > span');
+  var heroFootP = document.querySelector('.hero__foot p');
+
+  lenis.stop();
+  window.scrollTo(0, 0);
+
+  gsap.set(intro.querySelector('.intro__mark'), { yPercent: 40, opacity: 0 });
+  gsap.set('.hero__bg', { scale: 1.14 });
+
+  var seats = { v: 0 };
+
+  var introTl = gsap.timeline({
+    onComplete: function () {
+      lenis.start();
+      intro.style.display = 'none';
+      ScrollTrigger.refresh();
+    }
+  });
+
+  introTl
+    .to(intro.querySelector('.intro__mark'), {
+      yPercent: 0, opacity: 1, duration: 1.15, ease: 'expo.out'
+    })
+    .to(introBar, { width: '100%', duration: 1.5, ease: 'power2.inOut' }, 0.15)
+    .to(seats, {
+      v: 14, duration: 1.45, ease: 'power2.inOut',
+      onUpdate: function () {
+        introCount.textContent = String(Math.round(seats.v)).padStart(2, '0');
+      }
+    }, 0.15)
+    .to(intro.querySelector('.intro__inner'), {
+      yPercent: -22, opacity: 0, duration: 0.7, ease: 'power3.inOut'
+    }, '+=0.22')
+    .to(intro, { opacity: 0, duration: 0.5, ease: 'power2.out' }, '<0.15')
+    .to(curtainPanels, {
+      scaleY: 0, transformOrigin: '50% 0%',
+      duration: 1.1, ease: 'expo.inOut', stagger: 0.065
+    }, '<0.1')
+    .from(heroTitleLines.reduce(function (acc, line) {
+      return acc.concat(piecesOf(line));
+    }, []), {
+      yPercent: 115, duration: 1.25, ease: 'expo.out', stagger: 0.022
+    }, '-=0.72')
+    .to('.hero__bg', { scale: 1, duration: 1.9, ease: 'power3.out' }, '<')
+    .from('.hero__eyebrow .label', {
+      yPercent: 60, duration: 0.9, ease: 'power3.out', stagger: 0.07
+    }, '-=0.95')
+    .from(piecesOf(heroFootP), {
+      yPercent: 110, duration: 0.9, ease: 'power3.out', stagger: 0.012
+    }, '-=0.8')
+    .from('.hero__scroll', { opacity: 0, duration: 0.8, ease: 'power2.out' }, '-=0.6')
+    .from('.hdr', { yPercent: -110, opacity: 0, duration: 0.9, ease: 'power3.out' }, '-=0.8');
+
+  gsap.set(heroTitleLines, { opacity: 1 });
+  gsap.set('.hero__eyebrow .label, .hero__foot p, .hero__scroll', { opacity: 1 });
+
+  /* =========================================================
+     2 · SCROLL-TRIGGERED MASK REVEALS (headlines + copy)
+     ========================================================= */
+  document.querySelectorAll('[data-split]').forEach(function (el) {
+    if (el.closest('.hero')) return; // handled by the intro timeline
+    var mode = el.getAttribute('data-split');
+    gsap.set(el, { opacity: 1 });
+    gsap.from(piecesOf(el), {
+      yPercent: 115,
+      duration: mode === 'chars' ? 1.15 : 0.95,
+      ease: 'expo.out',
+      stagger: mode === 'chars' ? 0.026 : 0.035,
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+
+  document.querySelectorAll('[data-fade]').forEach(function (el) {
+    if (el.closest('.hero')) return; // handled by the intro timeline
+    gsap.fromTo(el,
+      { opacity: 0, y: 26 },
+      {
+        opacity: 1, y: 0, duration: 1.0, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 92%', once: true }
+      });
+  });
+
+  /* =========================================================
+     3 · CLIP-PATH IMAGE REVEALS
+     ========================================================= */
+  gsap.utils.toArray('[data-clip]').forEach(function (fig) {
+    if (fig.closest('#galleryTrack')) return; // handled per-breakpoint below
+    var img = fig.querySelector('img');
+    gsap.fromTo(fig,
+      { clipPath: 'inset(0% 0% 100% 0%)' },
+      {
+        clipPath: 'inset(0% 0% 0% 0%)',
+        duration: 1.35, ease: 'power4.inOut',
+        scrollTrigger: { trigger: fig, start: 'top 86%', once: true }
+      });
+    if (img) {
+      gsap.fromTo(img,
+        { scale: 1.28 },
+        {
+          scale: 1, duration: 1.7, ease: 'power3.out',
+          scrollTrigger: { trigger: fig, start: 'top 86%', once: true }
+        });
+    }
+  });
+
+  /* =========================================================
+     4 · PARALLAX LAYERS
+     ========================================================= */
+  gsap.utils.toArray('[data-parallax]').forEach(function (layer) {
+    var depth = parseFloat(layer.getAttribute('data-parallax')) || 0.15;
+    gsap.to(layer, {
+      yPercent: depth * 100,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: layer.parentElement,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  });
+
+  /* =========================================================
+     5 · COUNT-UP NUMBERS
+     ========================================================= */
+  gsap.utils.toArray('[data-count]').forEach(function (node) {
+    var end = parseFloat(node.getAttribute('data-count'));
+    var obj = { v: 0 };
+    ScrollTrigger.create({
+      trigger: node,
+      start: 'top 88%',
+      once: true,
+      onEnter: function () {
+        gsap.to(obj, {
+          v: end, duration: 1.9, ease: 'power3.out',
+          onUpdate: function () { node.textContent = Math.round(obj.v); }
+        });
+      }
+    });
+  });
+
+  /* =========================================================
+     6 · MAGNETIC BUTTONS + LERPED CURSOR (desktop only)
+     ========================================================= */
+  var cursor = document.getElementById('cursor');
+  var pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  var cursorPos = { x: pointer.x, y: pointer.y };
+  var magnets = [];
+
+  function isDesktop() {
+    return window.innerWidth >= 1024 && window.matchMedia('(pointer:fine)').matches;
+  }
+
+  function setupMagnets() {
+    magnets = gsap.utils.toArray('[data-magnetic]').map(function (wrap) {
+      return {
+        wrap: wrap,
+        inner: wrap.querySelector('[data-mag-inner]'),
+        cur: { x: 0, y: 0 },
+        tgt: { x: 0, y: 0 },
+        innerCur: { x: 0, y: 0 },
+        innerTgt: { x: 0, y: 0 }
+      };
+    });
+  }
+  setupMagnets();
+
+  window.addEventListener('mousemove', function (e) {
+    pointer.x = e.clientX;
+    pointer.y = e.clientY;
+  }, { passive: true });
+
+  function lerp(a, b, n) { return a + (b - a) * n; }
+
+  gsap.ticker.add(function () {
+    if (!isDesktop()) return;
+
+    // cursor
+    cursorPos.x = lerp(cursorPos.x, pointer.x, 0.16);
+    cursorPos.y = lerp(cursorPos.y, pointer.y, 0.16);
+    gsap.set(cursor, { x: cursorPos.x, y: cursorPos.y, opacity: 1 });
+
+    // magnets
+    for (var i = 0; i < magnets.length; i++) {
+      var m = magnets[i];
+      var r = m.wrap.getBoundingClientRect();
+      var cx = r.left + r.width / 2;
+      var cy = r.top + r.height / 2;
+      var dx = pointer.x - cx;
+      var dy = pointer.y - cy;
+      var radius = Math.max(r.width, r.height) * 1.35;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < radius) {
+        var pull = 1 - dist / radius;
+        m.tgt.x = dx * 0.42 * pull;
+        m.tgt.y = dy * 0.42 * pull;
+        m.innerTgt.x = dx * 0.14 * pull;
+        m.innerTgt.y = dy * 0.14 * pull;
+      } else {
+        m.tgt.x = 0; m.tgt.y = 0;
+        m.innerTgt.x = 0; m.innerTgt.y = 0;
+      }
+
+      m.cur.x = lerp(m.cur.x, m.tgt.x, 0.15);
+      m.cur.y = lerp(m.cur.y, m.tgt.y, 0.15);
+      m.innerCur.x = lerp(m.innerCur.x, m.innerTgt.x, 0.19);
+      m.innerCur.y = lerp(m.innerCur.y, m.innerTgt.y, 0.19);
+
+      gsap.set(m.wrap, { x: m.cur.x, y: m.cur.y });
+      if (m.inner) gsap.set(m.inner, { x: m.innerCur.x, y: m.innerCur.y });
+    }
+  });
+
+  /* =========================================================
+     7 · SIGNATURE — PINNED SCROLL-SCRUB THROUGH SIX MOVEMENTS
+        + 8 · HORIZONTAL SHOWCASE TRACK
+        Both live inside gsap.matchMedia so they never run
+        below 1024px, and clean up their inline styles.
+     ========================================================= */
+  var mm = gsap.matchMedia();
+
+  mm.add('(min-width: 1024px)', function () {
+
+    /* ---- 7 · the pinned tasting-menu scrub ---- */
+    var courses = gsap.utils.toArray('#courseDeck .course');
+    var copies = courses.map(function (c) { return c.querySelector('.course__copy'); });
+    var plates = courses.map(function (c) { return c.querySelector('.plate__frame'); });
+    var caps = courses.map(function (c) { return c.querySelector('figcaption'); });
+    var indexItems = gsap.utils.toArray('#menuIndex li');
+    var progressBar = document.getElementById('menuProgress');
+    var n = courses.length;
+
+    // initial states — courses stay at opacity 1; copy and plate are driven apart
+    gsap.set(courses, { opacity: 1 });
+    copies.forEach(function (el, i) {
+      gsap.set(el, { opacity: i === 0 ? 1 : 0, y: i === 0 ? 0 : 46 });
+    });
+    caps.forEach(function (el, i) {
+      gsap.set(el, { opacity: i === 0 ? 1 : 0 });
+    });
+    plates.forEach(function (p, i) {
+      gsap.set(p, {
+        clipPath: i === 0 ? 'inset(0% 0% 0% 0%)' : 'inset(100% 0% 0% 0%)',
+        scale: 1,
+        zIndex: i === 0 ? 2 : 1
+      });
+    });
+
+    var activeIndex = -1;
+    function setActive(i) {
+      if (i === activeIndex) return;
+      activeIndex = i;
+      indexItems.forEach(function (li, k) {
+        li.classList.toggle('is-on', k === i);
+      });
+    }
+    setActive(0);
+
+    var menuTl = gsap.timeline({
+      defaults: { ease: 'power2.inOut' },
+      scrollTrigger: {
+        trigger: '#menu',
+        start: 'top top',
+        end: function () { return '+=' + (window.innerHeight * n * 0.85); },
+        pin: '#menuStage',
+        pinSpacing: true,
+        scrub: 0.7,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: function (self) {
+          if (progressBar) progressBar.style.width = (self.progress * 100).toFixed(2) + '%';
+          setActive(Math.min(n - 1, Math.floor(self.progress * n + 0.0001)));
+        }
+      }
+    });
+
+    for (var i = 1; i < n; i++) {
+      var at = i - 1;
+      menuTl
+        .to(courses[i - 1], { opacity: 0, y: -44, duration: 0.55 }, at)
+        .fromTo(courses[i],
+          { opacity: 0, y: 44 },
+          { opacity: 1, y: 0, duration: 0.55 }, at + 0.42)
+        .to(plates[i - 1], { clipPath: 'inset(0% 0% 100% 0%)', scale: 1.06, duration: 0.9 }, at)
+        .fromTo(plates[i],
+          { opacity: 1, clipPath: 'inset(100% 0% 0% 0%)', scale: 1.1, zIndex: 2 },
+          { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 0.9 }, at)
+        .set(plates[i - 1], { opacity: 0, zIndex: 1 }, at + 0.9);
+    }
+    // pad the tail so the final movement holds on screen
+    menuTl.to({}, { duration: 0.55 });
+
+    // index buttons scrub the pin
+    var jump = indexItems.map(function (li) { return li.querySelector('button'); });
+    jump.forEach(function (btn, k) {
+      var handler = function () {
+        var st = menuTl.scrollTrigger;
+        if (!st) return;
+        var target = st.start + (st.end - st.start) * ((k + 0.35) / n);
+        lenis.scrollTo(target, { duration: 1.1 });
+      };
+      btn.addEventListener('click', handler);
+      btn._kurobaHandler = handler;
+    });
+
+    /* ---- 8 · horizontal showcase track ---- */
+    var track = document.getElementById('galleryTrack');
+    var viewport = document.getElementById('galleryViewport');
+    var horizontalTween = null;
+
+    function shift() {
+      return Math.max(0, track.scrollWidth - window.innerWidth);
+    }
+
+    if (track && shift() > 0) {
+      horizontalTween = gsap.to(track, {
+        x: function () { return -shift(); },
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#gallery',
+          start: 'top top',
+          end: function () { return '+=' + shift(); },
+          pin: '#gallery',
+          scrub: 0.6,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onToggle: function (self) {
+            if (cursor) cursor.classList.toggle('is-drag', self.isActive);
+          }
+        }
+      });
+    }
+
+    return function cleanup() {
+      courses.forEach(function (c) { gsap.set(c, { clearProps: 'all' }); });
+      plates.forEach(function (p) { gsap.set(p, { clearProps: 'all' }); });
+      if (track) gsap.set(track, { clearProps: 'transform' });
+      indexItems.forEach(function (li) { li.classList.remove('is-on'); });
+      jump.forEach(function (btn) {
+        if (btn._kurobaHandler) btn.removeEventListener('click', btn._kurobaHandler);
+      });
+      if (cursor) cursor.classList.remove('is-drag');
+      if (progressBar) progressBar.style.width = '0%';
+    };
+  });
+
+  /* =========================================================
+     9 · Header state
+     ========================================================= */
+  var hdr = document.getElementById('hdr');
+  ScrollTrigger.create({
+    start: 'top -80',
+    end: 99999,
+    onUpdate: function (self) {
+      hdr.classList.toggle('is-stuck', self.scroll() > 80);
+    }
+  });
+
+  /* =========================================================
+     10 · Accordion + housekeeping
+     ========================================================= */
+  initAccordion();
+
+  window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () { ScrollTrigger.refresh(); }, 220);
+  });
+
+})();
+</script>
+</body>
+</html>

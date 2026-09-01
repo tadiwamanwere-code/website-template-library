@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="en" class="pre">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meridian &amp; Cie — Observatoire 39, Réf. MO-39.02B</title>
+<meta name="description" content="Meridian &amp; Cie, Le Sentier. The Observatoire 39 — calibre MC-7 « Sablier », deadbeat seconds, 72-hour reserve, 60 pieces per annum.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+
+<script>document.documentElement.classList.add('js');</script>
+<noscript><style>.pre [data-reveal]{opacity:1!important}.loader{display:none!important}</style></noscript>
+
+<style>
+/* ============================================================
+   MERIDIAN & CIE — instrument-grade landing page
+   Palette : champagne / bone / brushed steel, near-black ink
+   Accent  : #1E3A63 blued steel — technical annotation only
+   Type    : Instrument Sans (grotesk) × IBM Plex Mono (spec)
+   ============================================================ */
+
+:root{
+  --bone:#EAE7E0;
+  --paper:#F3F1EC;
+  --sand:#E1DDD3;
+  --shade:#D8D4C9;
+  --ink:#131418;
+  --ink-2:#4C4E54;
+  --ink-3:#8A8B8F;
+  --rule:#C7C2B7;
+  --rule-2:#D8D4C9;
+  --steel:#A2A5AA;
+  --blue:#1E3A63;
+  --blue-soft:rgba(30,58,99,.10);
+
+  --gut:clamp(18px,3.4vw,56px);
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --sans:"Instrument Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+
+  --e-out:cubic-bezier(.16,1,.3,1);
+  --e-io:cubic-bezier(.76,0,.24,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bone);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.5;
+  font-variant-numeric:tabular-nums lining-nums;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+body.is-locked{overflow:hidden;height:100vh}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+::selection{background:var(--blue);color:var(--bone)}
+
+/* ---------- primitives ---------- */
+.mono{
+  font-family:var(--mono);
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1,"zero" 1;
+}
+.tag{
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.tag--blue{color:var(--blue)}
+.num{font-variant-numeric:tabular-nums lining-nums;font-feature-settings:"tnum" 1}
+.rule{height:1px;background:var(--rule);width:100%}
+.wrap{width:100%;max-width:1560px;margin:0 auto;padding:0 var(--gut)}
+
+/* mask reveal primitives (split by hand) */
+.ln{display:block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em}
+.lni{display:block;will-change:transform}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
+.wi{display:inline-block;will-change:transform}
+html.js.pre .lni,html.js.pre .wi{transform:translateY(110%)}
+html.js.pre [data-reveal]{opacity:0}
+html.no-anim .lni,html.no-anim .wi{transform:none!important}
+html.no-anim [data-reveal]{opacity:1!important}
+
+/* ---------- background grid (instrument plate) ---------- */
+.plate{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  padding:0 var(--gut);
+}
+.plate__inner{
+  height:100%;width:100%;max-width:1560px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(6,1fr);
+}
+.plate__inner span{border-left:1px solid rgba(19,20,24,.055)}
+.plate__inner span:first-child{border-left:0}
+.plate::after{
+  content:"";position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(to bottom,rgba(19,20,24,.022) 0 1px,transparent 1px 96px);
+}
+
+/* ---------- measurement rules ---------- */
+.ruler{
+  position:relative;height:26px;width:100%;
+  border-bottom:1px solid var(--rule);
+  overflow:hidden;
+}
+.ruler__ticks{
+  position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 20px),
+    repeating-linear-gradient(to right,var(--ink-3) 0 1px,transparent 1px 100px);
+  background-position:bottom left,bottom left;
+  background-repeat:repeat-x;
+  background-size:100% 7px,100% 14px;
+  opacity:.9;
+}
+.ruler__nums{
+  position:absolute;left:0;top:2px;display:flex;gap:0;
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--ink-3);
+}
+.ruler__nums b{display:block;width:100px;font-weight:400}
+
+/* ============================================================
+   LOADER
+   ============================================================ */
+.loader{
+  position:fixed;inset:0;z-index:200;background:var(--bone);
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:var(--gut);
+  clip-path:inset(0 0 0 0);
+}
+.loader__top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.loader__mid{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:24px;
+  padding-bottom:6px;
+}
+.loader__count{
+  font-family:var(--mono);font-weight:500;
+  font-size:clamp(56px,15vw,190px);line-height:.82;letter-spacing:-.045em;
+  font-variant-numeric:tabular-nums;
+}
+.loader__word{
+  font-family:var(--mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ink-3);text-align:right;max-width:200px;line-height:1.9;
+}
+.loader__bar{position:relative;height:26px;border-top:1px solid var(--rule);margin-top:18px}
+.loader__bar i{
+  position:absolute;left:0;top:-1px;height:2px;background:var(--blue);width:0%;
+  display:block;
+}
+.loader__bar em{
+  position:absolute;left:0;top:0;right:0;height:8px;
+  background-image:repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 12px);
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:120;
+  background:rgba(234,231,224,.86);
+  backdrop-filter:saturate(1.1) blur(9px);
+  -webkit-backdrop-filter:saturate(1.1) blur(9px);
+  border-bottom:1px solid var(--rule);
+}
+.nav__in{
+  max-width:1560px;margin:0 auto;padding:0 var(--gut);
+  height:56px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.brand{display:flex;align-items:baseline;gap:10px;flex:0 0 auto}
+.brand b{
+  font-family:var(--sans);font-weight:600;font-size:14px;
+  letter-spacing:.26em;text-transform:uppercase;
+}
+.brand span{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--ink-3)}
+.nav__links{display:flex;gap:26px;align-items:center}
+.nav__links a{
+  font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink-2);position:relative;padding:4px 0;
+}
+.nav__links a::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--blue);
+  transform:scaleX(0);transform-origin:left;transition:transform .28s var(--e-out);
+}
+.nav__links a:hover{color:var(--ink)}
+.nav__links a:hover::after{transform:scaleX(1)}
+.nav__right{display:flex;align-items:center;gap:18px;flex:0 0 auto}
+.nav__cta{
+  font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  border:1px solid var(--ink);padding:8px 14px;position:relative;overflow:hidden;
+  display:inline-block;background:transparent;cursor:pointer;
+}
+.nav__cta span{position:relative;z-index:2;transition:color .3s var(--e-out)}
+.nav__cta::before{
+  content:"";position:absolute;inset:0;background:var(--ink);
+  transform:translateY(101%);transition:transform .38s var(--e-out);
+}
+.nav__cta:hover::before{transform:translateY(0)}
+.nav__cta:hover span{color:var(--bone)}
+
+/* ticking seconds indicator — deadbeat, steps(60) */
+.tick{width:26px;height:26px;flex:0 0 auto}
+.tick circle{fill:none;stroke:var(--rule);stroke-width:1}
+.tick .hand{
+  stroke:var(--blue);stroke-width:1.4;stroke-linecap:round;
+  transform-origin:13px 13px;
+  animation:sweep 60s steps(60,end) infinite;
+}
+@keyframes sweep{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;z-index:2;padding-top:56px}
+.hero__rule{padding:0 var(--gut)}
+.hero__rule .wrapper{max-width:1560px;margin:0 auto}
+.hero__grid{
+  max-width:1560px;margin:0 auto;padding:0 var(--gut);
+  display:grid;grid-template-columns:repeat(12,1fr);
+  gap:0 clamp(12px,1.6vw,26px);
+  align-items:start;
+}
+.hero__eyebrow{
+  grid-column:1/13;display:flex;justify-content:space-between;gap:16px;
+  padding:20px 0 12px;border-bottom:1px solid var(--rule-2);flex-wrap:wrap;
+}
+.hero__title{grid-column:1/9;padding-top:clamp(20px,4vh,54px)}
+h1.display{
+  margin:0;font-weight:600;
+  font-size:clamp(52px,10.6vw,178px);
+  line-height:.855;letter-spacing:-.045em;
+  text-transform:uppercase;
+}
+h1.display .lni{font-kerning:normal}
+h1.display i{font-style:normal;color:var(--steel)}
+.hero__sub{
+  grid-column:1/6;margin-top:clamp(20px,3.4vh,40px);
+  font-size:clamp(14px,1.15vw,17px);line-height:1.62;color:var(--ink-2);max-width:46ch;
+}
+.hero__sub strong{font-weight:600;color:var(--ink)}
+.hero__actions{grid-column:1/6;margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  padding:13px 20px;border:1px solid var(--ink);position:relative;overflow:hidden;
+  display:inline-flex;align-items:center;gap:10px;cursor:pointer;background:transparent;
+}
+.btn span{position:relative;z-index:2;transition:color .32s var(--e-out)}
+.btn::before{
+  content:"";position:absolute;inset:0;background:var(--ink);
+  transform:translateY(101%);transition:transform .42s var(--e-out);
+}
+.btn:hover::before{transform:translateY(0)}
+.btn:hover span{color:var(--bone)}
+.btn--blue{border-color:var(--blue);color:var(--blue)}
+.btn--blue::before{background:var(--blue)}
+
+/* spec rail */
+.rail{grid-column:9/13;padding-top:clamp(20px,4vh,54px);border-left:1px solid var(--rule-2);padding-left:clamp(14px,1.6vw,26px)}
+.rail__h{display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--ink)}
+.rail__row{
+  display:flex;align-items:baseline;gap:8px;
+  padding:9px 0;border-bottom:1px solid var(--rule-2);
+  font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;
+}
+.rail__row dt{color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;font-size:9.5px;white-space:nowrap}
+.rail__row .dots{flex:1;border-bottom:1px dotted var(--rule);transform:translateY(-3px)}
+.rail__row dd{margin:0;color:var(--ink);white-space:nowrap;font-weight:500}
+.rail__row dd em{font-style:normal;color:var(--blue)}
+.rail dl{margin:0}
+
+/* hero figure */
+.hero__fig{
+  grid-column:6/13;position:relative;margin-top:clamp(26px,5vh,56px);
+  aspect-ratio:16/9;border:1px solid var(--rule);overflow:hidden;background:var(--shade);
+}
+.hero__fig img{
+  width:100%;height:100%;object-fit:cover;
+  filter:grayscale(1) sepia(.14) contrast(1.06) brightness(1.03);
+}
+.hero__fig .cross{position:absolute;width:14px;height:14px;pointer-events:none}
+.hero__fig .cross::before,.hero__fig .cross::after{
+  content:"";position:absolute;background:var(--ink);opacity:.55;
+}
+.hero__fig .cross::before{left:50%;top:0;bottom:0;width:1px;transform:translateX(-.5px)}
+.hero__fig .cross::after{top:50%;left:0;right:0;height:1px;transform:translateY(-.5px)}
+.hero__fig .c1{left:12px;top:12px}.hero__fig .c2{right:12px;top:12px}
+.hero__fig .c3{left:12px;bottom:12px}.hero__fig .c4{right:12px;bottom:12px}
+.hero__cap{
+  position:absolute;left:0;bottom:0;right:0;
+  display:flex;justify-content:space-between;gap:12px;
+  padding:10px 14px;background:rgba(234,231,224,.9);border-top:1px solid var(--rule);
+}
+.hero__foot{
+  grid-column:1/13;margin-top:clamp(22px,4vh,46px);padding:14px 0 22px;
+  border-top:1px solid var(--rule);
+  display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+}
+.hero__dial{display:flex;align-items:center;gap:12px}
+.dial-big{width:52px;height:52px}
+.dial-big circle{fill:none;stroke:var(--rule);stroke-width:1}
+.dial-big line.t{stroke:var(--ink-3);stroke-width:1}
+.dial-big .hand{
+  stroke:var(--blue);stroke-width:1.6;stroke-linecap:round;
+  transform-origin:26px 26px;animation:sweep 60s steps(60,end) infinite;
+}
+
+/* ============================================================
+   SECTION SHELL
+   ============================================================ */
+section{position:relative;z-index:2}
+.sec-head{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:0 clamp(12px,1.6vw,26px);
+  padding:clamp(56px,9vh,120px) 0 clamp(24px,4vh,48px);
+  align-items:end;
+}
+.sec-head__n{grid-column:1/3}
+.sec-head__t{grid-column:3/10}
+.sec-head__m{grid-column:10/13;padding-left:clamp(14px,1.6vw,26px);border-left:1px solid var(--rule-2)}
+h2.sec-t{
+  margin:0;font-weight:600;font-size:clamp(28px,4.4vw,68px);
+  line-height:.95;letter-spacing:-.035em;text-transform:uppercase;
+}
+h2.sec-t i{font-style:normal;color:var(--steel)}
+.sec-head__m p{margin:0;font-family:var(--mono);font-size:11px;line-height:1.75;color:var(--ink-2)}
+
+/* ============================================================
+   §02 — PINNED SCRUBBED EXPLODED ASSEMBLY  (signature motion)
+   ============================================================ */
+.explode{background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.exp-pin{height:100vh;min-height:620px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.exp-bar{
+  flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:12px var(--gut);border-bottom:1px solid var(--rule);
+}
+.exp-stage{flex:1 1 auto;position:relative;perspective:1400px;perspective-origin:50% 50%}
+.assembly{
+  position:absolute;left:50%;top:50%;width:0;height:0;
+  transform-style:preserve-3d;
+}
+.layer{
+  position:absolute;left:0;top:0;
+  width:var(--disc);height:var(--disc);
+  margin-left:calc(var(--disc) / -2);margin-top:calc(var(--disc) / -2);
+  transform-style:preserve-3d;will-change:transform;
+}
+.layer svg{width:100%;height:100%;display:block;overflow:visible}
+:root{--disc:clamp(210px,29vh,332px)}
+
+.leaders{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;overflow:visible}
+.leaders path{
+  fill:none;stroke:var(--blue);stroke-width:1;
+  stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;
+}
+.leaders circle.dot{fill:var(--blue);stroke:none}
+.lbls{position:absolute;inset:0;pointer-events:none;z-index:7}
+.lbl{
+  position:absolute;font-family:var(--mono);font-variant-numeric:tabular-nums;
+  white-space:nowrap;line-height:1.35;
+}
+.lbl b{
+  display:block;font-size:10px;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--blue);
+}
+.lbl span{display:block;font-size:9.5px;color:var(--ink-3);letter-spacing:.06em}
+.lbl--l{transform:translate(-100%,-50%);padding-right:8px;text-align:right}
+.lbl--r{transform:translate(0,-50%);padding-left:8px;text-align:left}
+
+.exp-hud{
+  flex:0 0 auto;display:flex;align-items:center;gap:clamp(12px,2vw,34px);
+  padding:11px var(--gut);border-top:1px solid var(--rule);
+}
+.exp-hud__phase{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);min-width:20ch}
+.exp-hud__track{flex:1 1 auto;position:relative;height:8px}
+.exp-hud__track em{
+  position:absolute;inset:0;
+  background-image:repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 14px);
+}
+.exp-hud__track i{position:absolute;left:0;top:-1px;height:2px;background:var(--blue);width:0%}
+.exp-hud__pct{font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;font-weight:500;min-width:5ch;text-align:right}
+
+.exp-list{display:none}
+
+/* ============================================================
+   §03 — SECONDE MORTE (broken-grid editorial)
+   ============================================================ */
+.morte{padding-bottom:clamp(60px,10vh,130px);position:relative}
+.morte__grid{
+  display:grid;grid-template-columns:repeat(12,1fr);
+  gap:0 clamp(12px,1.6vw,26px);position:relative;
+}
+.vlabel{
+  grid-column:1/2;position:relative;
+}
+.vlabel span{
+  position:sticky;top:100px;display:block;
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-family:var(--mono);font-size:10px;letter-spacing:.36em;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap;
+}
+.morte__fig{grid-column:2/7;margin-top:12px;position:relative;z-index:1}
+.figbox{border:1px solid var(--rule);background:var(--bone);padding:18px}
+.figbox__h{display:flex;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--rule-2);margin-bottom:14px}
+.diagram{width:100%;height:auto;display:block;overflow:visible}
+.diagram .dr{fill:none;stroke:var(--ink);stroke-width:1;vector-effect:non-scaling-stroke}
+.diagram .dr-2{fill:none;stroke:var(--ink-3);stroke-width:1;vector-effect:non-scaling-stroke}
+.diagram .dim{fill:none;stroke:var(--blue);stroke-width:1;vector-effect:non-scaling-stroke}
+.diagram text{font-family:var(--mono);font-size:7.4px;letter-spacing:.09em;fill:var(--blue)}
+.diagram text.g{fill:var(--ink-3)}
+.figbox__cap{margin-top:14px;padding-top:12px;border-top:1px solid var(--rule-2);font-family:var(--mono);font-size:10px;line-height:1.7;color:var(--ink-2)}
+
+.morte__lede{
+  grid-column:6/13;margin-top:clamp(40px,9vh,110px);position:relative;z-index:2;
+  mix-blend-mode:normal;
+}
+.lede{
+  margin:0;font-weight:600;font-size:clamp(24px,3.5vw,54px);
+  line-height:1.02;letter-spacing:-.03em;
+}
+.lede i{font-style:normal;color:var(--blue)}
+.morte__cols{
+  grid-column:6/13;margin-top:clamp(30px,5vh,64px);
+  display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(18px,2.6vw,44px);
+}
+.morte__cols > div:nth-child(2){margin-top:clamp(30px,7vh,96px)}
+.body-mono{font-family:var(--mono);font-size:12px;line-height:1.85;color:var(--ink-2)}
+.body-mono p{margin:0 0 1.1em}
+.body-mono p:last-child{margin-bottom:0}
+.body-mono strong{color:var(--ink);font-weight:600}
+.body-mono .anno{color:var(--blue)}
+.dropnum{
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-3);
+  display:block;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--rule-2);
+}
+.morte__img{
+  grid-column:2/8;margin-top:clamp(36px,6vh,84px);
+  border:1px solid var(--rule);overflow:hidden;position:relative;aspect-ratio:4/3;background:var(--shade);
+}
+.morte__img img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.14) contrast(1.06)}
+.morte__imgcap{
+  grid-column:8/13;margin-top:clamp(36px,6vh,84px);
+  align-self:end;padding-bottom:6px;
+}
+
+/* ============================================================
+   §04 — ATELIER (horizontal scroll showcase)
+   ============================================================ */
+.atelier{background:var(--sand);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow:hidden}
+.hz-pin{height:100vh;min-height:600px;display:flex;flex-direction:column}
+.hz-top{
+  display:flex;justify-content:space-between;align-items:center;gap:20px;
+  padding:16px var(--gut);border-bottom:1px solid var(--rule);
+}
+.hz-view{flex:1 1 auto;position:relative;overflow:hidden}
+.hz-track{
+  position:absolute;top:0;left:0;height:100%;display:flex;align-items:stretch;
+  padding:0 var(--gut);gap:clamp(14px,2vw,34px);will-change:transform;
+}
+.panel{
+  flex:0 0 auto;width:clamp(280px,30vw,440px);
+  display:flex;flex-direction:column;padding:clamp(18px,2.4vh,30px) 0;
+}
+.panel__n{display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--ink)}
+.panel__img{
+  margin-top:14px;flex:1 1 auto;min-height:0;overflow:hidden;border:1px solid var(--rule);
+  background:var(--shade);
+}
+.panel__img img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.14) contrast(1.08)}
+.panel h3{
+  margin:16px 0 8px;font-weight:600;font-size:clamp(17px,1.5vw,24px);
+  letter-spacing:-.015em;text-transform:uppercase;
+}
+.panel p{margin:0;font-family:var(--mono);font-size:10.5px;line-height:1.78;color:var(--ink-2)}
+.panel__spec{
+  margin-top:12px;padding-top:10px;border-top:1px solid var(--rule-2);
+  display:flex;justify-content:space-between;
+}
+.hz-bot{
+  padding:11px var(--gut);border-top:1px solid var(--rule);
+  display:flex;align-items:center;gap:clamp(12px,2vw,28px);
+}
+.hz-bot__track{flex:1 1 auto;position:relative;height:8px}
+.hz-bot__track em{position:absolute;inset:0;background-image:repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 14px)}
+.hz-bot__track i{position:absolute;left:0;top:-1px;height:2px;background:var(--blue);width:0%}
+
+/* ============================================================
+   §05 — SPECIFICATION (count-up + dense table)
+   ============================================================ */
+.spec{padding-bottom:clamp(60px,10vh,120px)}
+.stats{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:0;
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);
+}
+.stat{padding:22px clamp(10px,1.4vw,20px) 20px;border-left:1px solid var(--rule-2)}
+.stat:first-child{border-left:0;padding-left:0}
+.stat b{
+  display:block;font-family:var(--mono);font-weight:500;
+  font-size:clamp(28px,3.5vw,54px);line-height:1;letter-spacing:-.04em;
+  font-variant-numeric:tabular-nums;
+}
+.stat b sup{font-size:.34em;vertical-align:super;letter-spacing:.06em;color:var(--ink-3);font-weight:400;top:0}
+.stat span{display:block;margin-top:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+
+.tbl{margin-top:clamp(34px,6vh,72px)}
+.tbl__group{margin-bottom:clamp(26px,4vh,52px)}
+.tbl__gh{
+  display:flex;align-items:baseline;gap:14px;
+  padding-bottom:10px;border-bottom:1px solid var(--ink);
+}
+.tbl__gh h3{margin:0;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase}
+.tbl__gh .dots{flex:1;border-bottom:1px dotted var(--rule);transform:translateY(-3px)}
+.row{
+  display:grid;grid-template-columns:minmax(150px,2.2fr) minmax(0,4fr) minmax(90px,1.2fr);
+  gap:clamp(10px,2vw,32px);align-items:baseline;
+  padding:11px 12px 11px 12px;margin-left:-12px;margin-right:-12px;
+  border-bottom:1px solid var(--rule-2);
+  position:relative;transition:background .28s var(--e-out);
+}
+.row::before{
+  content:"";position:absolute;left:0;top:-1px;bottom:0;width:2px;background:var(--blue);
+  transform:scaleY(0);transform-origin:top;transition:transform .34s var(--e-out);
+}
+.row:hover{background:var(--paper)}
+.row:hover::before{transform:scaleY(1)}
+.row dt{
+  font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);
+}
+.row dd{margin:0;font-family:var(--mono);font-size:12px;color:var(--ink);font-variant-numeric:tabular-nums}
+.row dd.val{font-weight:500}
+.row .note{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;color:var(--blue);
+  text-align:right;text-transform:uppercase;opacity:.72;
+}
+.tbl dl{margin:0}
+
+/* ============================================================
+   §06 — CTA + FOOTER
+   ============================================================ */
+.cta{
+  border-top:1px solid var(--ink);background:var(--paper);
+  padding:clamp(56px,10vh,130px) 0 clamp(48px,8vh,100px);
+}
+.cta__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(24px,3vw,56px) clamp(12px,1.6vw,26px)}
+.cta__l{grid-column:1/7}
+.cta__r{grid-column:8/13}
+h2.cta-t{
+  margin:0;font-weight:600;font-size:clamp(30px,4.6vw,74px);
+  line-height:.94;letter-spacing:-.038em;text-transform:uppercase;
+}
+h2.cta-t i{font-style:normal;color:var(--steel)}
+.cta__l p{margin:22px 0 0;font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--ink-2);max-width:46ch}
+.form{display:grid;gap:0}
+.field{display:flex;flex-direction:column;gap:6px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.field label{font-family:var(--mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3)}
+.field input,.field select{
+  border:0;background:transparent;outline:none;
+  font-family:var(--mono);font-size:13px;padding:2px 0;width:100%;
+}
+.field input::placeholder{color:var(--rule)}
+.field:focus-within{border-bottom-color:var(--blue)}
+.field:focus-within label{color:var(--blue)}
+.form__foot{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:20px;flex-wrap:wrap}
+
+.foot{border-top:1px solid var(--rule);padding:clamp(40px,6vh,72px) 0 26px;background:var(--bone)}
+.foot__grid{
+  display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1.3fr;
+  gap:clamp(20px,2.6vw,44px);
+}
+.foot__brand b{
+  display:block;font-weight:600;font-size:15px;letter-spacing:.28em;text-transform:uppercase;
+}
+.foot__brand p{margin:16px 0 0;font-family:var(--mono);font-size:10.5px;line-height:1.85;color:var(--ink-2);max-width:34ch}
+.foot h4{
+  margin:0 0 14px;font-family:var(--mono);font-size:9.5px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
+  padding-bottom:10px;border-bottom:1px solid var(--rule-2);
+}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.foot ul a{font-family:var(--mono);font-size:11px;color:var(--ink-2);transition:color .22s var(--e-out)}
+.foot ul a:hover{color:var(--blue)}
+.foot__bar{
+  margin-top:clamp(38px,6vh,70px);padding-top:16px;border-top:1px solid var(--rule);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1279px){
+  .hero__title{grid-column:1/13}
+  .hero__sub,.hero__actions{grid-column:1/8}
+  .rail{grid-column:1/13;border-left:0;padding-left:0;margin-top:34px;border-top:1px solid var(--rule);padding-top:20px}
+  .hero__fig{grid-column:1/13}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .stat:nth-child(4){border-left:0;padding-left:0}
+  .stat:nth-child(n+4){border-top:1px solid var(--rule-2)}
+  .foot__grid{grid-template-columns:1fr 1fr 1fr}
+  .foot__brand{grid-column:1/4}
+  .morte__lede,.morte__cols{grid-column:5/13}
+}
+@media (max-width:1023px){
+  .nav__links{display:none}
+  .sec-head{grid-template-columns:1fr;gap:18px}
+  .sec-head__n,.sec-head__t,.sec-head__m{grid-column:auto}
+  .sec-head__m{border-left:0;padding-left:0;border-top:1px solid var(--rule-2);padding-top:14px}
+
+  /* exploded view degrades: closed assembly, annotations become a list */
+  .exp-pin{height:auto;min-height:0}
+  .exp-stage{height:min(62vh,420px);perspective:none}
+  .leaders,.lbls{display:none}
+  .exp-hud{display:none}
+  .exp-list{
+    display:block;padding:0 0 clamp(40px,7vh,80px);
+  }
+  .exp-list ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+  .exp-list li{
+    display:grid;grid-template-columns:44px 1fr;gap:14px;
+    padding:13px 0;border-bottom:1px solid var(--rule-2);
+  }
+  .exp-list li b{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);display:block}
+  .exp-list li span{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);display:block;margin-top:4px}
+  .exp-list li i{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+
+  /* horizontal showcase degrades to vertical stack */
+  .hz-pin{height:auto;min-height:0}
+  .hz-view{overflow:visible}
+  .hz-track{position:relative;flex-direction:column;padding:0;gap:34px;transform:none!important;height:auto}
+  .panel{width:100%}
+  .panel__img{height:min(52vh,340px);flex:0 0 auto}
+  .hz-bot{display:none}
+
+  .morte__grid{grid-template-columns:1fr}
+  .vlabel{display:none}
+  .morte__fig,.morte__lede,.morte__cols,.morte__img,.morte__imgcap{grid-column:auto;margin-top:28px}
+  .morte__cols{grid-template-columns:1fr;gap:26px}
+  .morte__cols > div:nth-child(2){margin-top:0}
+  .cta__l,.cta__r{grid-column:1/13}
+  .row{grid-template-columns:1fr;gap:4px}
+  .row .note{text-align:left}
+}
+@media (max-width:639px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat{border-left:1px solid var(--rule-2);padding-left:14px}
+  .stat:nth-child(odd){border-left:0;padding-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--rule-2)}
+  .foot__grid{grid-template-columns:1fr 1fr}
+  .foot__brand{grid-column:1/3}
+  .hero__eyebrow .tag:nth-child(3){display:none}
+  .plate__inner{grid-template-columns:repeat(2,1fr)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important;
+  }
+  .tick .hand,.dial-big .hand{animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     SHARED SVG DEFS — finishing textures used by the exploded view
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="p-cotes" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(26)">
+      <rect width="9" height="9" fill="#DFDBD2"/>
+      <rect width="4.4" height="9" fill="#D0CBC0"/>
+      <rect x="4.4" width="0.6" height="9" fill="#BDB8AC"/>
+    </pattern>
+    <pattern id="p-perlage" width="11" height="11" patternUnits="userSpaceOnUse">
+      <rect width="11" height="11" fill="#DAD6CB"/>
+      <circle cx="5.5" cy="5.5" r="5.1" fill="none" stroke="#C2BDB1" stroke-width=".7"/>
+      <circle cx="0" cy="0" r="5.1" fill="none" stroke="#C2BDB1" stroke-width=".7"/>
+      <circle cx="11" cy="11" r="5.1" fill="none" stroke="#C2BDB1" stroke-width=".7"/>
+    </pattern>
+    <pattern id="p-azur" width="200" height="200" patternUnits="userSpaceOnUse">
+      <rect width="200" height="200" fill="#E4E0D7"/>
+    </pattern>
+    <radialGradient id="g-crystal" cx="34%" cy="26%" r="78%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity=".06"/>
+    </radialGradient>
+    <clipPath id="clip-disc"><circle cx="100" cy="100" r="88"/></clipPath>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     LOADER — counter + measurement rule, then curtain wipe
+     ============================================================ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__top">
+    <div class="tag">Meridian &amp; Cie · Le Sentier · Vallée de Joux</div>
+    <div class="tag" id="load-status">Initialising · calibrating</div>
+  </div>
+  <div>
+    <div class="loader__mid">
+      <div class="loader__count mono" id="load-count">000</div>
+      <div class="loader__word">
+        Réf. MO-39.02B<br>
+        Cal. MC-7 « Sablier »<br>
+        60 pièces / an
+      </div>
+    </div>
+    <div class="loader__bar"><em></em><i id="load-bar"></i></div>
+  </div>
+</div>
+
+<!-- instrument plate grid -->
+<div class="plate" aria-hidden="true">
+  <div class="plate__inner"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+</div>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<header class="nav">
+  <div class="nav__in">
+    <a class="brand" href="#top">
+      <b>Meridian</b><span>&amp; Cie · EST. 2011</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#assembly">Assembly</a>
+      <a href="#seconde">Seconde Morte</a>
+      <a href="#atelier">Atelier</a>
+      <a href="#spec">Specification</a>
+    </nav>
+    <div class="nav__right">
+      <svg class="tick" viewBox="0 0 26 26" aria-hidden="true">
+        <circle cx="13" cy="13" r="11.5"/>
+        <line class="hand" x1="13" y1="13" x2="13" y2="3.6"/>
+        <circle cx="13" cy="13" r="1.1" fill="#1E3A63" stroke="none"/>
+      </svg>
+      <a class="nav__cta" href="#enquire"><span>Register interest</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================================================
+     §01 — HERO
+     ============================================================ -->
+<section class="hero" id="hero">
+  <div class="hero__rule">
+    <div class="wrapper">
+      <div class="ruler" aria-hidden="true">
+        <div class="ruler__ticks"></div>
+        <div class="ruler__nums mono">
+          <b>000</b><b>010</b><b>020</b><b>030</b><b>040</b><b>050</b>
+          <b>060</b><b>070</b><b>080</b><b>090</b><b>100</b><b>110</b>
+          <b>120</b><b>130</b><b>140</b><b>150</b>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__grid">
+    <div class="hero__eyebrow">
+      <div class="tag" data-reveal>Réf. MO-39.02B</div>
+      <div class="tag" data-reveal>Manual winding · Seconde morte</div>
+      <div class="tag" data-reveal>Le Sentier, CH — 46.5083° N, 6.2306° E</div>
+      <div class="tag tag--blue" data-reveal>Série limitée — 180 pièces</div>
+    </div>
+
+    <div class="hero__title">
+      <h1 class="display">
+        <span class="ln"><span class="lni">Observatoire</span></span>
+        <span class="ln"><span class="lni">Thirty<i>—</i>Nine</span></span>
+      </h1>
+    </div>
+
+    <p class="hero__sub" data-split="words">
+      A hand-wound observation watch with a true dead-beat seconds. The hand does not sweep; it steps, once per second, released by a jewelled flirt off the fourth wheel. 214 components, 31 jewels, 72 hours in two barrels coupled in series.
+    </p>
+
+    <div class="hero__actions">
+      <a class="btn btn--blue" href="#assembly" data-reveal><span>Open the assembly ↓</span></a>
+      <a class="btn" href="#spec" data-reveal><span>Full specification</span></a>
+    </div>
+
+    <aside class="rail" aria-label="Headline specification">
+      <div class="rail__h">
+        <span class="tag">Sheet 01 / Summary</span>
+        <span class="tag tag--blue">Rev. B</span>
+      </div>
+      <dl>
+        <div class="rail__row"><dt>Calibre</dt><span class="dots"></span><dd>MC-7 SABLIER</dd></div>
+        <div class="rail__row"><dt>Reserve</dt><span class="dots"></span><dd class="num">72<em> h</em></dd></div>
+        <div class="rail__row"><dt>Jewels</dt><span class="dots"></span><dd class="num">31</dd></div>
+        <div class="rail__row"><dt>Frequency</dt><span class="dots"></span><dd class="num">21 600<em> A/h</em></dd></div>
+        <div class="rail__row"><dt>Diameter</dt><span class="dots"></span><dd class="num">39.00<em> mm</em></dd></div>
+        <div class="rail__row"><dt>Height</dt><span class="dots"></span><dd class="num">9.62<em> mm</em></dd></div>
+        <div class="rail__row"><dt>Water res.</dt><span class="dots"></span><dd class="num">50<em> m</em></dd></div>
+        <div class="rail__row"><dt>Rate</dt><span class="dots"></span><dd class="num">−1 / +4<em> s/d</em></dd></div>
+        <div class="rail__row"><dt>Price</dt><span class="dots"></span><dd class="num">CHF 42 800</dd></div>
+      </dl>
+    </aside>
+
+    <figure class="hero__fig" data-reveal>
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <img src="https://images.unsplash.com/photo-1622434641406-a158123450f9?auto=format&fit=crop&w=1800&q=80"
+           alt="Macro photograph of the Observatoire 39 dial and blued steel hands">
+      <span class="cross c1"></span><span class="cross c2"></span>
+      <span class="cross c3"></span><span class="cross c4"></span>
+      <figcaption class="hero__cap">
+        <span class="tag">Fig. 01 — Dial side, silvered German silver, azurage at VI</span>
+        <span class="tag tag--blue">Scale 2.4 : 1</span>
+      </figcaption>
+    </figure>
+
+    <div class="hero__foot">
+      <div class="hero__dial">
+        <svg class="dial-big" viewBox="0 0 52 52" aria-label="Dead-beat seconds indicator">
+          <circle cx="26" cy="26" r="24.5"/>
+          <circle cx="26" cy="26" r="20" stroke="#D8D4C9" fill="none" stroke-width="1"/>
+          <line class="t" x1="26" y1="3" x2="26" y2="8"/>
+          <line class="t" x1="49" y1="26" x2="44" y2="26"/>
+          <line class="t" x1="26" y1="49" x2="26" y2="44"/>
+          <line class="t" x1="3" y1="26" x2="8" y2="26"/>
+          <line class="hand" x1="26" y1="26" x2="26" y2="8"/>
+          <circle cx="26" cy="26" r="1.6" fill="#1E3A63" stroke="none"/>
+        </svg>
+        <div>
+          <div class="tag">Beat — 1 step / second</div>
+          <div class="tag tag--blue" id="clock">--:--:-- UTC</div>
+        </div>
+      </div>
+      <div class="tag">Scroll to disassemble &nbsp;↓</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §02 — PINNED SCRUB: EXPLODED ASSEMBLY + SVG LEADER DRAW
+     ============================================================ -->
+<section class="explode" id="assembly">
+  <div class="exp-pin" id="expPin">
+
+    <div class="exp-bar">
+      <div class="tag">Sequence 02 — Exploded assembly, 8 planes</div>
+      <div class="tag">Cal. MC-7 · Ø 30.60 mm · H 4.12 mm</div>
+      <div class="tag tag--blue">Section A–A · scrubbed</div>
+    </div>
+
+    <div class="exp-stage" id="expStage">
+      <div class="assembly" id="assemblyEl">
+
+        <!-- 1 · SAPPHIRE CRYSTAL -->
+        <div class="layer" data-part="0">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="88" fill="url(#g-crystal)" stroke="#9EA1A6" stroke-width="1.1"/>
+            <circle cx="100" cy="100" r="83" fill="none" stroke="#BDB8AC" stroke-width=".7"/>
+            <path d="M46 68 A 66 66 0 0 1 116 40" fill="none" stroke="#ffffff" stroke-width="4" opacity=".75" stroke-linecap="round"/>
+            <path d="M52 82 A 60 60 0 0 1 96 48" fill="none" stroke="#ffffff" stroke-width="1.6" opacity=".55" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- 2 · BEZEL -->
+        <div class="layer" data-part="1">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="94" fill="#DCD8CE" stroke="#8A8B8F" stroke-width="1"/>
+            <circle cx="100" cy="100" r="88" fill="#CFCAC0" stroke="#8A8B8F" stroke-width=".8"/>
+            <circle cx="100" cy="100" r="80" fill="#EAE7E0" stroke="#A2A5AA" stroke-width=".8"/>
+            <g stroke="#B4AFA3" stroke-width=".6">
+              <line x1="100" y1="6" x2="100" y2="12"/><line x1="194" y1="100" x2="188" y2="100"/>
+              <line x1="100" y1="194" x2="100" y2="188"/><line x1="6" y1="100" x2="12" y2="100"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- 3 · HANDS (heat-blued steel) -->
+        <div class="layer" data-part="2">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <g fill="#1E3A63">
+              <path d="M100 100 L96.4 92 L100 42 L103.6 92 Z"/>
+              <path d="M100 100 L97.2 94 L100 62 L102.8 94 Z" opacity=".92" transform="rotate(112 100 100)"/>
+            </g>
+            <circle cx="100" cy="100" r="3.1" fill="#1E3A63"/>
+            <circle cx="100" cy="100" r="1.1" fill="#EAE7E0"/>
+            <g transform="translate(100,148)">
+              <path d="M0 0 L-1.5 -3 L0 -22 L1.5 -3 Z" fill="#1E3A63" transform="rotate(38)"/>
+              <circle r="1.7" fill="#1E3A63"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- 4 · DIAL -->
+        <div class="layer" data-part="3">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="82" fill="#E7E3DA" stroke="#B4AFA3" stroke-width=".9"/>
+            <circle cx="100" cy="100" r="74" fill="none" stroke="#C7C2B7" stroke-width=".6"/>
+            <circle cx="100" cy="100" r="70" fill="none" stroke="#C7C2B7" stroke-width=".6"
+                    stroke-dasharray="0.9 5.43"/>
+            <g stroke="#131418" stroke-width="1.9" stroke-linecap="butt">
+              <line x1="100" y1="22" x2="100" y2="34"/>
+              <line x1="178" y1="100" x2="166" y2="100"/>
+              <line x1="22" y1="100" x2="34" y2="100"/>
+            </g>
+            <g stroke="#4C4E54" stroke-width="1.2">
+              <line x1="139" y1="32.5" x2="133" y2="42.9"/>
+              <line x1="167.5" y1="61" x2="157.1" y2="67"/>
+              <line x1="167.5" y1="139" x2="157.1" y2="133"/>
+              <line x1="61" y1="167.5" x2="67" y2="157.1"/>
+              <line x1="32.5" y1="139" x2="42.9" y2="133"/>
+              <line x1="32.5" y1="61" x2="42.9" y2="67"/>
+              <line x1="61" y1="32.5" x2="67" y2="42.9"/>
+            </g>
+            <!-- sub-seconds register at VI, azurage -->
+            <g transform="translate(100,148)">
+              <circle r="26" fill="#E1DDD3" stroke="#B4AFA3" stroke-width=".8"/>
+              <circle r="22" fill="none" stroke="#C7C2B7" stroke-width=".5"/>
+              <circle r="18" fill="none" stroke="#C7C2B7" stroke-width=".5"/>
+              <circle r="14" fill="none" stroke="#C7C2B7" stroke-width=".5"/>
+              <circle r="10" fill="none" stroke="#C7C2B7" stroke-width=".5"/>
+              <circle r="24" fill="none" stroke="#8A8B8F" stroke-width=".6" stroke-dasharray="0.7 1.81"/>
+            </g>
+            <text x="100" y="78" text-anchor="middle" font-family="IBM Plex Mono, monospace"
+                  font-size="6.4" letter-spacing="1.6" fill="#131418">MERIDIAN</text>
+            <text x="100" y="88" text-anchor="middle" font-family="IBM Plex Mono, monospace"
+                  font-size="4.4" letter-spacing="1.1" fill="#8A8B8F">LE SENTIER</text>
+          </svg>
+        </div>
+
+        <!-- 5 · MOTION WORK / GOING TRAIN -->
+        <div class="layer" data-part="4">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="84" fill="none" stroke="#C7C2B7" stroke-width=".7" stroke-dasharray="3 3"/>
+            <g fill="none" stroke="#8A8B8F">
+              <circle cx="100" cy="100" r="26" stroke-width="5" stroke-dasharray="2.6 3.5"/>
+              <circle cx="100" cy="100" r="20" stroke-width=".8"/>
+              <circle cx="62"  cy="76"  r="19" stroke-width="4.4" stroke-dasharray="2.3 3.1"/>
+              <circle cx="62"  cy="76"  r="13" stroke-width=".8"/>
+              <circle cx="140" cy="72"  r="16" stroke-width="4" stroke-dasharray="2.1 2.9"/>
+              <circle cx="140" cy="72"  r="10" stroke-width=".8"/>
+              <circle cx="132" cy="140" r="14" stroke-width="3.6" stroke-dasharray="2 2.7"/>
+              <circle cx="132" cy="140" r="9"  stroke-width=".8"/>
+            </g>
+            <g fill="#1E3A63">
+              <circle cx="100" cy="100" r="2.6"/><circle cx="62" cy="76" r="2.2"/>
+              <circle cx="140" cy="72" r="2"/><circle cx="132" cy="140" r="2"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- 6 · BRIDGES, CÔTES DE GENÈVE -->
+        <div class="layer" data-part="5">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="86" fill="#E1DDD3" stroke="#A2A5AA" stroke-width=".9"/>
+            <g clip-path="url(#clip-disc)">
+              <path d="M22 62 C60 40 118 38 168 56 L178 96 C140 84 84 86 34 106 Z"
+                    fill="url(#p-cotes)" stroke="#8A8B8F" stroke-width="1"/>
+              <path d="M40 122 C82 106 140 108 176 124 L170 158 C132 142 82 146 46 160 Z"
+                    fill="url(#p-cotes)" stroke="#8A8B8F" stroke-width="1"/>
+            </g>
+            <!-- balance wheel + overcoil -->
+            <g transform="translate(66,142)">
+              <circle r="24" fill="none" stroke="#4C4E54" stroke-width="2.4"/>
+              <circle r="19" fill="none" stroke="#C7C2B7" stroke-width=".6"/>
+              <path d="M-24 0 L24 0 M-12 -20.8 L12 20.8 M12 -20.8 L-12 20.8"
+                    stroke="#4C4E54" stroke-width="1.5"/>
+              <g fill="#8A7A46">
+                <circle cx="24" cy="0" r="2.4"/><circle cx="-24" cy="0" r="2.4"/>
+                <circle cx="0" cy="24" r="2.4"/><circle cx="0" cy="-24" r="2.4"/>
+              </g>
+              <path d="M0 0 A3 3 0 1 1 5 4 A7 7 0 1 1 -6 8 A11 11 0 1 1 8 12 A15 15 0 1 1 -10 15"
+                    fill="none" stroke="#1E3A63" stroke-width=".8"/>
+              <circle r="2" fill="#1E3A63"/>
+            </g>
+            <!-- blued screws -->
+            <g fill="#1E3A63">
+              <circle cx="150" cy="52" r="3.2"/><circle cx="40" cy="70" r="3.2"/>
+              <circle cx="160" cy="130" r="3.2"/><circle cx="118" cy="164" r="3.2"/>
+            </g>
+            <g stroke="#EAE7E0" stroke-width=".9">
+              <line x1="147" y1="52" x2="153" y2="52"/><line x1="37" y1="70" x2="43" y2="70"/>
+              <line x1="157" y1="130" x2="163" y2="130"/><line x1="115" y1="164" x2="121" y2="164"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- 7 · MAINPLATE, PERLAGE -->
+        <div class="layer" data-part="6">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="88" fill="url(#p-perlage)" stroke="#8A8B8F" stroke-width="1"/>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="#B4AFA3" stroke-width=".6"/>
+            <!-- twin barrels in series -->
+            <g fill="none" stroke="#4C4E54" stroke-width="1.4">
+              <circle cx="72" cy="72" r="27"/><circle cx="132" cy="88" r="27"/>
+            </g>
+            <g fill="none" stroke="#A2A5AA" stroke-width=".6">
+              <circle cx="72" cy="72" r="21"/><circle cx="132" cy="88" r="21"/>
+              <circle cx="72" cy="72" r="15"/><circle cx="132" cy="88" r="15"/>
+            </g>
+            <g fill="#8A7A46" stroke="#4C4E54" stroke-width=".6">
+              <circle cx="72" cy="72" r="4.6"/><circle cx="132" cy="88" r="4.6"/>
+            </g>
+            <g fill="none" stroke="#C7C2B7" stroke-width=".7" stroke-dasharray="2.5 2.5">
+              <circle cx="100" cy="145" r="22"/>
+            </g>
+            <text x="100" y="180" text-anchor="middle" font-family="IBM Plex Mono, monospace"
+                  font-size="5.4" letter-spacing="1.3" fill="#8A8B8F">MC-7 · SWISS MADE</text>
+          </svg>
+        </div>
+
+        <!-- 8 · CASEBACK -->
+        <div class="layer" data-part="7">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="96" fill="#D5D1C6" stroke="#8A8B8F" stroke-width="1.1"/>
+            <circle cx="100" cy="100" r="86" fill="#DFDBD2" stroke="#A2A5AA" stroke-width=".8"/>
+            <circle cx="100" cy="100" r="72" fill="rgba(255,255,255,.25)" stroke="#B4AFA3" stroke-width=".7"/>
+            <g fill="#1E3A63">
+              <circle cx="100" cy="14" r="3.4"/><circle cx="174" cy="57" r="3.4"/>
+              <circle cx="174" cy="143" r="3.4"/><circle cx="100" cy="186" r="3.4"/>
+              <circle cx="26" cy="143" r="3.4"/><circle cx="26" cy="57" r="3.4"/>
+            </g>
+            <text x="100" y="34" text-anchor="middle" font-family="IBM Plex Mono, monospace"
+                  font-size="5.6" letter-spacing="1.5" fill="#4C4E54">OBSERVATOIRE 39 · MO-39.02B</text>
+            <text x="100" y="176" text-anchor="middle" font-family="IBM Plex Mono, monospace"
+                  font-size="5.6" letter-spacing="1.5" fill="#4C4E54">N° 042 / 180 · 50 M</text>
+          </svg>
+        </div>
+
+      </div>
+
+      <svg class="leaders" id="leaders" aria-hidden="true" preserveAspectRatio="none"></svg>
+      <div class="lbls" id="lbls" aria-hidden="true"></div>
+    </div>
+
+    <div class="exp-hud">
+      <div class="exp-hud__phase mono" id="expPhase">00 — Closed case</div>
+      <div class="exp-hud__track"><em></em><i id="expFill"></i></div>
+      <div class="exp-hud__pct mono" id="expPct">000%</div>
+    </div>
+
+  </div>
+
+  <!-- mobile / reduced-motion equivalent of the annotated callouts -->
+  <div class="exp-list wrap">
+    <ol>
+      <li><i>01</i><div><b>Sapphire crystal</b><span>Box-form, 1.85 mm, six-layer AR on the inner face only</span></div></li>
+      <li><i>02</i><div><b>Bezel</b><span>316L, hand-polished flank against a brushed top, 0.15 mm chamfer</span></div></li>
+      <li><i>03</i><div><b>Hands</b><span>Heat-blued steel, drawn at 290 °C, hand-polished then re-flattened</span></div></li>
+      <li><i>04</i><div><b>Dial</b><span>Solid German silver 0.60 mm, hand-frosted, galvanic silvering</span></div></li>
+      <li><i>05</i><div><b>Going train</b><span>Circular-grained wheels, cut teeth burnished, 0.087 module</span></div></li>
+      <li><i>06</i><div><b>Bridges</b><span>Côtes de Genève at 0.9 mm pitch, nine hand-cut inward angles</span></div></li>
+      <li><i>07</i><div><b>Mainplate</b><span>Perlage 0.6 mm, twin barrels in series, gold chatons at both arbors</span></div></li>
+      <li><i>08</i><div><b>Caseback</b><span>Sapphire in a screwed steel ring, six blued screws, numbered</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================================================
+     §03 — SECONDE MORTE (broken-grid editorial + SVG diagram)
+     ============================================================ -->
+<section class="morte wrap" id="seconde">
+  <div class="sec-head">
+    <div class="sec-head__n"><span class="tag">Chapter 03</span></div>
+    <div class="sec-head__t">
+      <h2 class="sec-t">
+        <span class="ln"><span class="lni">The second,</span></span>
+        <span class="ln"><span class="lni"><i>held</i> still</span></span>
+      </h2>
+    </div>
+    <div class="sec-head__m">
+      <p>Every conventional wristwatch smears the second across six balance beats. The MC-7 stores those beats and releases them whole.</p>
+    </div>
+  </div>
+
+  <div class="morte__grid">
+    <div class="vlabel"><span>Fig. 02 — Flirt &amp; star, section</span></div>
+
+    <div class="morte__fig">
+      <div class="figbox">
+        <div class="figbox__h">
+          <span class="tag">Fig. 02 — Dead-beat module</span>
+          <span class="tag tag--blue">Scale 6 : 1</span>
+        </div>
+        <svg class="diagram" id="fig2" viewBox="0 0 320 250" role="img"
+             aria-label="Schematic of the dead-beat seconds module: fourth wheel, two-armed star, flirt spring and seconds pinion">
+          <!-- baseline / datum -->
+          <path class="dr-2 d" d="M14 226 H306"/>
+          <path class="dr-2 d" d="M14 24 H306"/>
+
+          <!-- fourth wheel -->
+          <path class="dr d" d="M104 125 m-52 0 a52 52 0 1 0 104 0 a52 52 0 1 0 -104 0"/>
+          <path class="dr-2 d" d="M104 125 m-42 0 a42 42 0 1 0 84 0 a42 42 0 1 0 -84 0"/>
+          <path class="dr-2 d" d="M104 125 m-9 0 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0"/>
+          <path class="dr d" d="M104 73 V177 M52 125 H156 M67 88 L141 162 M141 88 L67 162"/>
+
+          <!-- two-armed star on the same arbor -->
+          <path class="dim d" d="M104 125 L104 96 M104 125 L104 154"/>
+          <path class="dim d" d="M99 96 L109 96 M99 154 L109 154"/>
+
+          <!-- flirt arm, pivoted right -->
+          <path class="dr d" d="M232 125 L146 112 L146 138 Z"/>
+          <path class="dr d" d="M232 125 m-11 0 a11 11 0 1 0 22 0 a11 11 0 1 0 -22 0"/>
+          <path class="dr-2 d" d="M232 125 m-3.2 0 a3.2 3.2 0 1 0 6.4 0 a3.2 3.2 0 1 0 -6.4 0"/>
+
+          <!-- flirt hairspring -->
+          <path class="dim d" d="M232 125 a7 7 0 1 1 6 -6 a14 14 0 1 1 -13 -13 a21 21 0 1 1 20 -19"/>
+
+          <!-- seconds pinion + arbor to dial -->
+          <path class="dr d" d="M232 125 V52"/>
+          <path class="dr d" d="M222 52 H242 M222 44 H242"/>
+          <path class="dim d" d="M232 44 V26"/>
+
+          <!-- dimension line: centre distance -->
+          <path class="dim d" d="M104 202 H232"/>
+          <path class="dim d" d="M104 196 V208 M232 196 V208"/>
+          <text x="152" y="216">7.42 MM</text>
+
+          <!-- annotations -->
+          <text class="g" x="60" y="66">FOURTH WHEEL</text>
+          <text class="g" x="60" y="76">21 600 A/H</text>
+          <text x="246" y="100">FLIRT</text>
+          <text x="246" y="110">+ SPIRAL</text>
+          <text x="246" y="40">SECONDS</text>
+          <text x="246" y="50">PINION</text>
+          <text class="g" x="118" y="150">STAR, 2 ARMS</text>
+        </svg>
+        <div class="figbox__cap">
+          The star turns with the fourth wheel and holds the flirt under tension. Once per revolution
+          of the star the flirt slips the arm, snaps 6° under its own spiral, and the seconds pinion
+          advances one whole division. Cost to the going train: 2 h 10 min of reserve.
+        </div>
+      </div>
+    </div>
+
+    <div class="morte__lede">
+      <p class="lede">
+        <span class="ln"><span class="lni">A sweeping hand is</span></span>
+        <span class="ln"><span class="lni">an <i>approximation</i>.</span></span>
+        <span class="ln"><span class="lni">Ours refuses to</span></span>
+        <span class="ln"><span class="lni">round anything off.</span></span>
+      </p>
+    </div>
+
+    <div class="morte__cols">
+      <div class="body-mono" data-reveal>
+        <span class="dropnum">§ 03.1 — Why it steps</span>
+        <p>
+          The balance of the MC-7 oscillates at <strong>3 Hz</strong> — six vibrations, six escapement
+          releases, every second. In an ordinary watch each of those releases nudges the seconds hand
+          forward by a sixth of a division, so what you actually read is a blur that only <em>averages</em>
+          a second.
+        </p>
+        <p>
+          The <strong>seconde morte</strong> takes a second branch off the fourth wheel. A two-armed steel
+          star, hardened to 58 HRC and mirror-polished on its flanks, winds a light spiral spring on the
+          flirt through 180° of its travel. At the release point the arm falls away and the flirt
+          discharges in <span class="anno">under 12 ms</span>, carrying the seconds pinion exactly one
+          division and stopping dead against its banking pin.
+        </p>
+        <p>
+          You hear it before you see it: a dry, single report rather than the whisper of a free train.
+        </p>
+      </div>
+      <div class="body-mono" data-reveal>
+        <span class="dropnum">§ 03.2 — What it costs</span>
+        <p>
+          The module is parasitic. Winding a spring sixty times a minute takes torque that would otherwise
+          be running the escapement, so we build the reserve back with <strong>two barrels coupled in
+          series</strong> — a flatter torque curve across 72 hours rather than a taller one across 40.
+        </p>
+        <p>
+          Amplitude at full wind is <span class="anno">297° dial-up</span>, and we accept nothing below
+          <span class="anno">255°</span> at the 60-hour mark. Each movement is regulated in six positions
+          across 21 days on the bench in Le Sentier before it ever sees a case.
+        </p>
+        <p>
+          Élise Charrat, who cuts and finishes every flirt herself, will assemble roughly
+          <strong>five movements a month</strong>. That is the ceiling, and it is the reason the run is
+          capped at 180 pieces.
+        </p>
+      </div>
+    </div>
+
+    <figure class="morte__img" data-reveal>
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <img loading="lazy"
+           src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1400&q=80"
+           alt="Watchmaker's bench with movement components under magnification">
+    </figure>
+    <div class="morte__imgcap">
+      <div class="tag">Fig. 03 — Bench 4, Le Sentier</div>
+      <div class="rule" style="margin:12px 0"></div>
+      <p class="body-mono" style="margin:0">
+        Flirt blanks are cut from 0.42 mm blued spring steel, filed to profile against a brass template,
+        then poised on a Bergeon truing calliper until the arm holds level at any angle. Six blanks are
+        made for every one that is kept.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §04 — ATELIER: HORIZONTAL SCROLL SHOWCASE
+     ============================================================ -->
+<section class="atelier" id="atelier">
+  <div class="hz-pin" id="hzPin">
+    <div class="hz-top">
+      <div class="tag">Chapter 04 — Six finishes, none of them optional</div>
+      <div class="tag">Total hand-finishing: 61 h per movement</div>
+      <div class="tag tag--blue">Drag / scroll →</div>
+    </div>
+
+    <div class="hz-view">
+      <div class="hz-track" id="hzTrack">
+
+        <article class="panel">
+          <div class="panel__n"><span class="tag">01</span><span class="tag tag--blue">14 h</span></div>
+          <div class="panel__img">
+            <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+            <img loading="lazy" src="https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1000&q=80" alt="Striped movement bridge detail">
+          </div>
+          <h3>Côtes de Genève</h3>
+          <p>Struck on the bridges with a boxwood peg under a rotating abrasive, 0.9 mm pitch, each stripe laid in one unbroken pass so it never doubles back on itself. The plate is re-frosted and re-struck if a single stripe wanders.</p>
+          <div class="panel__spec"><span class="tag">Pitch</span><span class="tag tag--blue">0.90 mm</span></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__n"><span class="tag">02</span><span class="tag tag--blue">21 h</span></div>
+          <div class="panel__img">
+            <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+            <img loading="lazy" src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1000&q=80" alt="Bevelled bridge edge under magnification">
+          </div>
+          <h3>Anglage</h3>
+          <p>Every bridge edge bevelled at 45° with a jacot file, then burnished with gentian wood until it throws a clean line of light. There are nine inward angles in this calibre — a rotating tool cannot cut an inward angle, which is exactly why we specify them.</p>
+          <div class="panel__spec"><span class="tag">Inward angles</span><span class="tag tag--blue">9</span></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__n"><span class="tag">03</span><span class="tag tag--blue">7 h</span></div>
+          <div class="panel__img">
+            <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+            <img loading="lazy" src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?auto=format&fit=crop&w=1000&q=80" alt="Circular-grained mainplate">
+          </div>
+          <h3>Perlage</h3>
+          <p>Overlapping circular graining across the mainplate — 0.6 mm pearls at 60% overlap, laid on a strict rectilinear grid rather than following the plate outline. Roughly 1 940 impressions, none of them repeated.</p>
+          <div class="panel__spec"><span class="tag">Pearl Ø</span><span class="tag tag--blue">0.60 mm</span></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__n"><span class="tag">04</span><span class="tag tag--blue">9 h</span></div>
+          <div class="panel__img">
+            <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+            <img loading="lazy" src="https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=1000&q=80" alt="Mirror-polished steel component">
+          </div>
+          <h3>Poli noir</h3>
+          <p>The click, the flirt and the escape-wheel bridge are black-polished: rubbed on a tin plate with diamantine until the surface is flat to within a wavelength of light and reads as pure black from one angle, pure white from the next.</p>
+          <div class="panel__spec"><span class="tag">Flatness</span><span class="tag tag--blue">&lt; 0.6 µm</span></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__n"><span class="tag">05</span><span class="tag tag--blue">4 h</span></div>
+          <div class="panel__img">
+            <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+            <img loading="lazy" src="https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1000&q=80" alt="Concentric snailed dial register">
+          </div>
+          <h3>Azurage</h3>
+          <p>The seconds register is snailed on a rose engine turning at 220 rpm — 84 concentric grooves between the centre and the minute track, cut in a single sitting because the tool cannot be reset mid-dial without leaving a witness line.</p>
+          <div class="panel__spec"><span class="tag">Grooves</span><span class="tag tag--blue">84</span></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__n"><span class="tag">06</span><span class="tag tag--blue">6 h</span></div>
+          <div class="panel__img">
+            <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+            <img loading="lazy" src="https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?auto=format&fit=crop&w=1000&q=80" alt="Blued steel watch hands">
+          </div>
+          <h3>Bleuissage</h3>
+          <p>Hands and screws are heat-blued over a bed of brass filings and drawn to 290 °C, then quenched at the instant the straw yellow turns. No chemical blue, no coating — the colour is an oxide 40 nm thick and it will never chip.</p>
+          <div class="panel__spec"><span class="tag">Draw temp.</span><span class="tag tag--blue">290 °C</span></div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="hz-bot">
+      <span class="tag mono" id="hzIdx">01 / 06</span>
+      <div class="hz-bot__track"><em></em><i id="hzFill"></i></div>
+      <span class="tag">Atelier Meridian · Le Sentier</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §05 — SPECIFICATION (count-up + dense spec table)
+     ============================================================ -->
+<section class="spec wrap" id="spec">
+  <div class="sec-head">
+    <div class="sec-head__n"><span class="tag">Chapter 05</span></div>
+    <div class="sec-head__t">
+      <h2 class="sec-t">
+        <span class="ln"><span class="lni">Technical</span></span>
+        <span class="ln"><span class="lni"><i>specification</i></span></span>
+      </h2>
+    </div>
+    <div class="sec-head__m">
+      <p>Sheet 05 / Rev. B — issued 14.03.2026. All figures measured on serial 042, dial-up, 24 °C, full wind.</p>
+    </div>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat"><b class="num" data-count="72">0</b><span>Hours reserve</span></div>
+    <div class="stat"><b class="num" data-count="31">0</b><span>Jewels</span></div>
+    <div class="stat"><b class="num" data-count="39" data-dec="2">0</b><span>MM diameter</span></div>
+    <div class="stat"><b class="num" data-count="214">0</b><span>Components</span></div>
+    <div class="stat"><b class="num" data-count="21600" data-group="1">0</b><span>A/H frequency</span></div>
+    <div class="stat"><b class="num" data-count="180">0</b><span>Pieces total</span></div>
+  </div>
+
+  <div class="tbl">
+
+    <div class="tbl__group">
+      <div class="tbl__gh"><h3>A — Movement</h3><span class="dots"></span><span class="tag">09 rows</span></div>
+      <dl>
+        <div class="row"><dt>Calibre</dt><dd class="val">MC-7 « Sablier », manual winding</dd><span class="note">In-house</span></div>
+        <div class="row"><dt>Dimensions</dt><dd class="val">Ø 30.60 mm (13½ lignes) × 4.12 mm</dd><span class="note">Measured</span></div>
+        <div class="row"><dt>Components</dt><dd class="val">214, of which 41 in the dead-beat module</dd><span class="note">Incl. screws</span></div>
+        <div class="row"><dt>Jewels</dt><dd class="val">31 — gold chatons at both barrel arbors and the centre</dd><span class="note">Ruby</span></div>
+        <div class="row"><dt>Frequency</dt><dd class="val">21 600 A/h — 3 Hz, 6 vibrations per second</dd><span class="note">3 Hz</span></div>
+        <div class="row"><dt>Escapement</dt><dd class="val">Swiss lever; steel escape wheel, poli-noir finish, 15 teeth</dd><span class="note">Lever</span></div>
+        <div class="row"><dt>Balance</dt><dd class="val">Free-sprung, variable inertia, 4 × 18 k gold timing weights</dd><span class="note">Ø 10.60 mm</span></div>
+        <div class="row"><dt>Hairspring</dt><dd class="val">Nivarox 1, Breguet overcoil with a Phillips terminal curve</dd><span class="note">Overcoil</span></div>
+        <div class="row"><dt>Barrels</dt><dd class="val">Twin, coupled in series — 72 h, 34 turns of the crown</dd><span class="note">Series</span></div>
+      </dl>
+    </div>
+
+    <div class="tbl__group">
+      <div class="tbl__gh"><h3>B — Chronometry</h3><span class="dots"></span><span class="tag">05 rows</span></div>
+      <dl>
+        <div class="row"><dt>Rate</dt><dd class="val">−1 / +4 s per day, mean over 21 days</dd><span class="note">Certified</span></div>
+        <div class="row"><dt>Positions</dt><dd class="val">6 — DU, DD, CU, CL, CD, CR</dd><span class="note">Regulated</span></div>
+        <div class="row"><dt>Amplitude</dt><dd class="val">297° dial-up at full wind; 255° minimum at 60 h</dd><span class="note">Bench</span></div>
+        <div class="row"><dt>Beat error</dt><dd class="val">≤ 0.3 ms in all six positions</dd><span class="note">Max</span></div>
+        <div class="row"><dt>Seconds step</dt><dd class="val">1.000 s ± 0.008 s, discharge under 12 ms</dd><span class="note">Dead-beat</span></div>
+      </dl>
+    </div>
+
+    <div class="tbl__group">
+      <div class="tbl__gh"><h3>C — Case</h3><span class="dots"></span><span class="tag">08 rows</span></div>
+      <dl>
+        <div class="row"><dt>Material</dt><dd class="val">316L stainless steel, cold-forged from billet</dd><span class="note">Steel</span></div>
+        <div class="row"><dt>Diameter</dt><dd class="val">39.00 mm</dd><span class="note">±0.02</span></div>
+        <div class="row"><dt>Height</dt><dd class="val">9.62 mm including crystal</dd><span class="note">±0.02</span></div>
+        <div class="row"><dt>Lug to lug</dt><dd class="val">46.20 mm, lugs drilled through at 20.00 mm</dd><span class="note">Drilled</span></div>
+        <div class="row"><dt>Crystal</dt><dd class="val">Box-form sapphire, 1.85 mm, 6-layer AR on the inner face</dd><span class="note">Sapphire</span></div>
+        <div class="row"><dt>Caseback</dt><dd class="val">Sapphire in a screwed steel ring, 6 blued screws</dd><span class="note">Exhibition</span></div>
+        <div class="row"><dt>Water resistance</dt><dd class="val">50 m / 5 ATM, tested wet and dry at 6 bar</dd><span class="note">ISO 22810</span></div>
+        <div class="row"><dt>Finishing</dt><dd class="val">11 h by hand per case — brushed top, polished flank, 0.15 mm chamfer</dd><span class="note">Hand</span></div>
+      </dl>
+    </div>
+
+    <div class="tbl__group">
+      <div class="tbl__gh"><h3>D — Dial, hands &amp; strap</h3><span class="dots"></span><span class="tag">06 rows</span></div>
+      <dl>
+        <div class="row"><dt>Dial base</dt><dd class="val">Solid German silver, 0.60 mm, hand-frosted then galvanically silvered</dd><span class="note">Maillechort</span></div>
+        <div class="row"><dt>Sub-register</dt><dd class="val">Azurage, Ø 9.40 mm, at 6 o'clock — 84 grooves</dd><span class="note">Rose engine</span></div>
+        <div class="row"><dt>Printing</dt><dd class="val">Tampographie, three passes, minute track at 0.09 mm</dd><span class="note">Pad</span></div>
+        <div class="row"><dt>Hands</dt><dd class="val">Heat-blued steel, drawn at 290 °C, hand-polished before blueing</dd><span class="note">Blued</span></div>
+        <div class="row"><dt>Strap</dt><dd class="val">Horween shell cordovan, 20 → 16 mm taper, hand-stitched at 9 spi</dd><span class="note">Cordovan</span></div>
+        <div class="row"><dt>Buckle</dt><dd class="val">316L pin buckle, polished, engraved M</dd><span class="note">Steel</span></div>
+      </dl>
+    </div>
+
+    <div class="tbl__group">
+      <div class="tbl__gh"><h3>E — Delivery</h3><span class="dots"></span><span class="tag">05 rows</span></div>
+      <dl>
+        <div class="row"><dt>Reference</dt><dd class="val">MO-39.02B — silvered dial, blued hands</dd><span class="note">Rev. B</span></div>
+        <div class="row"><dt>Production</dt><dd class="val">60 pieces per annum, 5 movements per month, one bench</dd><span class="note">Capped</span></div>
+        <div class="row"><dt>Total run</dt><dd class="val">180 pieces, numbered on the caseback ring</dd><span class="note">Closed</span></div>
+        <div class="row"><dt>Price</dt><dd class="val">CHF 42 800 excl. VAT, ex-atelier</dd><span class="note">2026</span></div>
+        <div class="row"><dt>Lead time</dt><dd class="val">14 – 18 months from allocation</dd><span class="note">Est.</span></div>
+      </dl>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     §06 — CTA
+     ============================================================ -->
+<section class="cta" id="enquire">
+  <div class="wrap">
+    <div class="cta__grid">
+      <div class="cta__l">
+        <h2 class="cta-t">
+          <span class="ln"><span class="lni">Register</span></span>
+          <span class="ln"><span class="lni"><i>interest</i></span></span>
+        </h2>
+        <p>
+          There is no waiting list in the usual sense — there is a ledger, kept by hand, and 180 lines in it.
+          Allocations for the 2027 series open in November. Tell us which serial band you would like to be
+          considered for and we will write to you directly from Le Sentier.
+        </p>
+        <div class="rule" style="margin:26px 0 16px"></div>
+        <div style="display:flex;gap:26px;flex-wrap:wrap">
+          <span class="tag">Allocated to date — 042 / 180</span>
+          <span class="tag tag--blue">Next release — 11.2026</span>
+        </div>
+      </div>
+
+      <div class="cta__r">
+        <form class="form" id="enquiryForm" novalidate>
+          <div class="field">
+            <label for="f-name">Full name</label>
+            <input id="f-name" name="name" type="text" placeholder="Élise Charrat" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="f-mail">Email</label>
+            <input id="f-mail" name="email" type="email" placeholder="you@domain.ch" autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="f-band">Preferred serial band</label>
+            <select id="f-band" name="band">
+              <option>043 – 072 · 2026 series</option>
+              <option>073 – 122 · 2027 series</option>
+              <option>123 – 180 · 2028 series</option>
+              <option>No preference</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-note">Note to the atelier</label>
+            <input id="f-note" name="note" type="text" placeholder="Optional — wrist size, strap preference">
+          </div>
+          <div class="form__foot">
+            <span class="tag" id="formMsg">We reply to every enquiry within 5 working days.</span>
+            <button class="btn btn--blue" type="submit"><span>Submit to ledger</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__brand">
+        <b>Meridian &amp; Cie</b>
+        <p>
+          Rue de l'Orient 14, 1347 Le Sentier, Vallée de Joux, Switzerland.
+          Founded 2011 by Élise Charrat and Tomas Rüegg. One bench, two hands,
+          sixty movements a year.
+        </p>
+        <div class="rule" style="margin:20px 0 14px"></div>
+        <div class="tag">46.5083° N · 6.2306° E · 1 020 m</div>
+      </div>
+
+      <div>
+        <h4>Collection</h4>
+        <ul>
+          <li><a href="#assembly">Observatoire 39</a></li>
+          <li><a href="#spec">Réf. MO-39.02B</a></li>
+          <li><a href="#seconde">Calibre MC-7</a></li>
+          <li><a href="#atelier">Finishing register</a></li>
+          <li><a href="#hero">Serial ledger</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Atelier</h4>
+        <ul>
+          <li><a href="#seconde">The bench</a></li>
+          <li><a href="#atelier">Six finishes</a></li>
+          <li><a href="#spec">Regulation protocol</a></li>
+          <li><a href="#enquire">Visit Le Sentier</a></li>
+          <li><a href="#top">Apprenticeship</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Service</h4>
+        <ul>
+          <li><a href="#enquire">Full overhaul — 6 yr</a></li>
+          <li><a href="#enquire">Refinishing</a></li>
+          <li><a href="#spec">Warranty — 5 yr</a></li>
+          <li><a href="#enquire">Strap &amp; buckle</a></li>
+          <li><a href="#enquire">Authenticate a piece</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Correspondence</h4>
+        <ul>
+          <li><a href="#enquire">atelier@meridian-cie.ch</a></li>
+          <li><a href="#enquire">+41 21 000 00 00</a></li>
+          <li><a href="#enquire">Mon – Thu, 08:00 – 17:00</a></li>
+          <li><a href="#enquire">Press &amp; imagery</a></li>
+          <li><a href="#enquire">Journal — quarterly</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot__bar">
+      <span class="tag">© 2026 Meridian &amp; Cie SA — Registered CH-550.1.204.887-2</span>
+      <span class="tag">Template 11 · Design reference build</span>
+      <span class="tag tag--blue">Swiss made · Poinçon de l'atelier</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var hasGSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!hasGSAP) { root.classList.remove('pre'); root.classList.add('no-anim'); }
+  if (hasGSAP) { gsap.registerPlugin(ScrollTrigger); }
+
+  /* ---------------------------------------------------------
+     LENIS  ×  SCROLLTRIGGER
+     --------------------------------------------------------- */
+  var lenis = null;
+  if (hasGSAP && !reduce && typeof window.Lenis !== 'undefined') {
+    lenis = new Lenis({
+      lerp: 0.09,
+      wheelMultiplier: 1,
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // anchor links routed through Lenis
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href');
+        if (!id || id === '#') return;
+        var t = document.querySelector(id);
+        if (!t) return;
+        e.preventDefault();
+        lenis.scrollTo(t, { offset: -56, duration: 1.25 });
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     HAND-ROLLED TEXT SPLITTING (no paid SplitText)
+     --------------------------------------------------------- */
+  function splitWords(el) {
+    var words = el.textContent.trim().split(/\s+/);
+    el.textContent = '';
+    var frag = document.createDocumentFragment();
+    words.forEach(function (word) {
+      var outer = document.createElement('span'); outer.className = 'w';
+      var inner = document.createElement('span'); inner.className = 'wi';
+      inner.textContent = word;
+      outer.appendChild(inner);
+      frag.appendChild(outer);
+      frag.appendChild(document.createTextNode(' '));
+    });
+    el.appendChild(frag);
+    return Array.prototype.slice.call(el.querySelectorAll('.wi'));
+  }
+
+  var splitTargets = [];
+  document.querySelectorAll('[data-split="words"]').forEach(function (el) {
+    splitTargets.push({ el: el, items: splitWords(el) });
+  });
+
+  /* ---------------------------------------------------------
+     LIVE UTC READOUT (supporting detail)
+     --------------------------------------------------------- */
+  var clockEl = document.getElementById('clock');
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function tickClock() {
+    if (!clockEl) return;
+    var d = new Date();
+    clockEl.textContent = pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + ' UTC';
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  /* ---------------------------------------------------------
+     EXPLODED ASSEMBLY — geometry
+     Screen projection of a layer at translateZ(z) inside a
+     parent rotated rotateX(TILT) under `perspective: PERSP`.
+       rotateX:  y' = -z * sin(TILT)      z' = z * cos(TILT)
+       perspective scale: s = P / (P - z')
+     --------------------------------------------------------- */
+  var TILT = 58;                       // degrees, final assembly rotation
+  var PERSP = 1400;                    // must match CSS `perspective`
+  var RAD = TILT * Math.PI / 180;
+  var SIN = Math.sin(RAD), COS = Math.cos(RAD);
+
+  var stage = document.getElementById('expStage');
+  var assembly = document.getElementById('assemblyEl');
+  var layers = assembly ? Array.prototype.slice.call(assembly.querySelectorAll('.layer')) : [];
+  var leadersSVG = document.getElementById('leaders');
+  var lblsWrap = document.getElementById('lbls');
+
+  var PARTS = [
+    { name: 'Sapphire crystal', spec: 'Box-form · 1.85 mm · AR ×6 inner', side: -1, spin: -8 },
+    { name: 'Bezel',            spec: '316L · polished flank · 0.15 chamfer', side: 1,  spin: 14 },
+    { name: 'Hands',            spec: 'Heat-blued steel · drawn 290 °C', side: -1, spin: 128 },
+    { name: 'Dial',             spec: 'German silver 0.60 · azurage at VI', side: 1,  spin: -6 },
+    { name: 'Going train',      spec: '0.087 module · circular-grained', side: -1, spin: 96 },
+    { name: 'Bridges',          spec: 'Côtes 0.9 mm · 9 inward angles', side: 1,  spin: -22 },
+    { name: 'Mainplate',        spec: 'Perlage 0.6 mm · twin barrels', side: -1, spin: 10 },
+    { name: 'Caseback',         spec: 'Sapphire · 6 blued screws · N° 042', side: 1,  spin: -14 }
+  ];
+
+  var zTargets = [];   // translateZ per layer at full explosion
+  var labelEls = [];
+  var pathEls = [];
+  var dotEls = [];
+
+  function layerStep() {
+    if (!layers.length) return 70;
+    var disc = layers[0].offsetWidth || 300;
+    return disc * 0.215;
+  }
+
+  function computeZ() {
+    var step = layerStep();
+    var mid = (PARTS.length - 1) / 2;    // 3.5 for 8 layers
+    zTargets = PARTS.map(function (p, i) { return (mid - i) * step; });
+  }
+
+  /* Build the SVG leader lines + HTML labels against the CURRENT
+     stage size, using the exploded (final) projection. */
+  function buildLeaders() {
+    if (!stage || !leadersSVG || !lblsWrap || !layers.length) return;
+
+    var W = stage.clientWidth;
+    var H = stage.clientHeight;
+    if (!W || !H) return;
+
+    computeZ();
+
+    var cx = W / 2, cy = H / 2;
+    var disc = layers[0].offsetWidth || 300;
+    var gutter = Math.min(220, Math.max(110, W * 0.15));
+
+    leadersSVG.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    leadersSVG.setAttribute('width', W);
+    leadersSVG.setAttribute('height', H);
+    leadersSVG.innerHTML = '';
+    lblsWrap.innerHTML = '';
+    pathEls = []; dotEls = []; labelEls = [];
+
+    var NS = 'http://www.w3.org/2000/svg';
+
+    PARTS.forEach(function (part, i) {
+      var z = zTargets[i];
+      var zr = z * COS;
+      var s = PERSP / (PERSP - zr);          // perspective scale at this depth
+      var yr = -z * SIN;
+
+      var ty = cy + yr * s;                   // target y on screen
+      var tx = cx + part.side * (disc / 2) * s * 0.96;
+
+      var kink = part.side < 0 ? -16 : 16;
+      var kx = tx + part.side * 46;
+      var ky = ty + kink;
+      var lx = part.side < 0 ? gutter : W - gutter;
+
+      var d = 'M ' + tx.toFixed(1) + ' ' + ty.toFixed(1) +
+              ' L ' + kx.toFixed(1) + ' ' + ky.toFixed(1) +
+              ' L ' + lx.toFixed(1) + ' ' + ky.toFixed(1);
+
+      var path = document.createElementNS(NS, 'path');
+      path.setAttribute('d', d);
+      leadersSVG.appendChild(path);
+
+      var len = path.getTotalLength();
+      path.style.strokeDasharray = len + ' ' + len;
+      path.style.strokeDashoffset = len;
+      path.dataset.len = len;
+      pathEls.push(path);
+
+      var dot = document.createElementNS(NS, 'circle');
+      dot.setAttribute('class', 'dot');
+      dot.setAttribute('cx', tx.toFixed(1));
+      dot.setAttribute('cy', ty.toFixed(1));
+      dot.setAttribute('r', '2.6');
+      leadersSVG.appendChild(dot);
+      dotEls.push(dot);
+
+      var lbl = document.createElement('div');
+      lbl.className = 'lbl ' + (part.side < 0 ? 'lbl--l' : 'lbl--r');
+      lbl.style.left = lx + 'px';
+      lbl.style.top = ky + 'px';
+      lbl.innerHTML = '<b>' + String(i + 1).padStart(2, '0') + ' · ' + part.name + '</b>' +
+                      '<span>' + part.spec + '</span>';
+      lblsWrap.appendChild(lbl);
+      labelEls.push(lbl);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     COUNT-UP
+     --------------------------------------------------------- */
+  function runCountUps() {
+    document.querySelectorAll('[data-count]').forEach(function (el) {
+      var end = parseFloat(el.getAttribute('data-count'));
+      var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+      var group = el.getAttribute('data-group') === '1';
+      var fmt = function (v) {
+        var out = dec ? v.toFixed(dec) : String(Math.round(v));
+        if (group) out = out.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        return out;
+      };
+      if (reduce || !hasGSAP) { el.textContent = fmt(end); return; }
+      var obj = { v: 0 };
+      gsap.to(obj, {
+        v: end,
+        duration: 1.9,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        onUpdate: function () { el.textContent = fmt(obj.v); }
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     REDUCED-MOTION / NO-GSAP STATIC PATH
+     --------------------------------------------------------- */
+  function staticFallback() {
+    root.classList.remove('pre');
+    root.classList.add('no-anim');
+    var loader = document.getElementById('loader');
+    if (loader) loader.parentNode.removeChild(loader);
+    document.body.classList.remove('is-locked');
+    runCountUps();
+    // FIG.02 diagram fully drawn
+    document.querySelectorAll('#fig2 .d').forEach(function (p) {
+      p.style.strokeDasharray = 'none';
+      p.style.strokeDashoffset = '0';
+    });
+  }
+
+  if (!hasGSAP || reduce) {
+    staticFallback();
+    return;
+  }
+
+  /* =========================================================
+     ANIMATED PATH
+     ========================================================= */
+  document.body.classList.add('is-locked');
+  if (lenis) lenis.stop();
+
+  // pre-states (set in JS so a JS failure never hides content)
+  gsap.set('[data-reveal]', { opacity: 0, y: 14 });
+  gsap.set('.lni, .wi', { yPercent: 110 });
+  root.classList.remove('pre');
+
+  /* ---------- FIG. 02 diagram: prime every path for draw ---------- */
+  var figPaths = Array.prototype.slice.call(document.querySelectorAll('#fig2 .d'));
+  figPaths.forEach(function (p) {
+    var L = p.getTotalLength();
+    p.style.strokeDasharray = L + ' ' + L;
+    p.style.strokeDashoffset = L;
+  });
+  var figTexts = Array.prototype.slice.call(document.querySelectorAll('#fig2 text'));
+  gsap.set(figTexts, { opacity: 0 });
+
+  /* ---------------------------------------------------------
+     1 · LOADER — counter + rule, then curtain wipe
+     --------------------------------------------------------- */
+  var loader = document.getElementById('loader');
+  var countEl = document.getElementById('load-count');
+  var barEl = document.getElementById('load-bar');
+  var statusEl = document.getElementById('load-status');
+  var STATUS = [
+    'Initialising · calibrating',
+    'Loading calibre MC-7',
+    'Poising the balance',
+    'Setting beat · 0.3 ms',
+    'Ready'
+  ];
+
+  var intro = gsap.timeline({
+    onComplete: function () {
+      document.body.classList.remove('is-locked');
+      if (lenis) lenis.start();
+      if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+      ScrollTrigger.refresh();
+    }
+  });
+
+  var counter = { v: 0 };
+  intro.to(counter, {
+    v: 100,
+    duration: 1.5,
+    ease: 'power2.inOut',
+    onUpdate: function () {
+      var v = Math.round(counter.v);
+      if (countEl) countEl.textContent = String(v).padStart(3, '0');
+      if (barEl) barEl.style.width = v + '%';
+      if (statusEl) {
+        var idx = Math.min(STATUS.length - 1, Math.floor(v / 25));
+        if (statusEl.textContent !== STATUS[idx]) statusEl.textContent = STATUS[idx];
+      }
+    }
+  }, 0);
+
+  intro.to('#load-count', { y: -16, opacity: 0, duration: 0.5, ease: 'power3.in' }, 1.5)
+       .to('.loader__word, #load-status', { opacity: 0, duration: 0.4, ease: 'power2.in' }, 1.55)
+       .to(loader, {
+          clipPath: 'inset(0% 0% 100% 0%)',
+          duration: 1.05,
+          ease: 'power4.inOut'
+       }, 1.72);
+
+  // hero settles as the curtain lifts
+  intro.to('.hero__title .lni', {
+        yPercent: 0, duration: 1.25, ease: 'power4.out', stagger: 0.075
+      }, 2.15)
+      .to('.hero__eyebrow [data-reveal]', {
+        opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.05
+      }, 2.3)
+      .to('.hero__actions [data-reveal], .hero__fig', {
+        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.07
+      }, 2.6);
+
+  if (splitTargets.length) {
+    splitTargets.forEach(function (t) {
+      intro.to(t.items, {
+        yPercent: 0, duration: 1.0, ease: 'power4.out', stagger: 0.014
+      }, 2.42);
+    });
+  }
+
+  intro.from('.rail__row', {
+        opacity: 0, x: 18, duration: 0.6, ease: 'power3.out', stagger: 0.04
+      }, 2.5)
+      .from('.hero__foot', { opacity: 0, duration: 0.6, ease: 'power2.out' }, 2.9);
+
+  /* ---------------------------------------------------------
+     2 · GENERIC SCROLL REVEALS (line masks + fades)
+     --------------------------------------------------------- */
+  document.querySelectorAll('.sec-head h2.sec-t, h2.cta-t, .lede').forEach(function (h) {
+    gsap.to(h.querySelectorAll('.lni'), {
+      yPercent: 0,
+      duration: 1.15,
+      ease: 'power4.out',
+      stagger: 0.07,
+      scrollTrigger: { trigger: h, start: 'top 86%', once: true }
+    });
+  });
+
+  document.querySelectorAll('section:not(.hero) [data-reveal]').forEach(function (el) {
+    gsap.to(el, {
+      opacity: 1, y: 0, duration: 0.95, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+    });
+  });
+
+  // section-head meta + chapter tags
+  gsap.utils.toArray('.sec-head').forEach(function (head) {
+    gsap.from(head.querySelectorAll('.sec-head__n .tag, .sec-head__m p'), {
+      opacity: 0, y: 12, duration: 0.8, ease: 'power3.out', stagger: 0.08,
+      scrollTrigger: { trigger: head, start: 'top 88%', once: true }
+    });
+  });
+
+  // spec table rows — staggered per group
+  gsap.utils.toArray('.tbl__group').forEach(function (grp) {
+    gsap.from(grp.querySelectorAll('.row'), {
+      opacity: 0, y: 16, duration: 0.7, ease: 'power3.out', stagger: 0.035,
+      scrollTrigger: { trigger: grp, start: 'top 85%', once: true }
+    });
+  });
+
+  // footer columns
+  gsap.from('.foot__grid > div', {
+    opacity: 0, y: 20, duration: 0.9, ease: 'power3.out', stagger: 0.06,
+    scrollTrigger: { trigger: '.foot', start: 'top 90%', once: true }
+  });
+
+  /* ---------------------------------------------------------
+     3 · FIG. 02 — SVG PATH DRAW (second instance of the technique)
+     --------------------------------------------------------- */
+  if (figPaths.length) {
+    var figTl = gsap.timeline({
+      scrollTrigger: { trigger: '#fig2', start: 'top 78%', once: true }
+    });
+    figTl.to(figPaths, {
+      strokeDashoffset: 0,
+      duration: 1.15,
+      ease: 'power2.inOut',
+      stagger: 0.055
+    }).to(figTexts, {
+      opacity: 1, duration: 0.5, ease: 'power2.out', stagger: 0.04
+    }, '-=0.5');
+  }
+
+  runCountUps();
+
+  /* ---------------------------------------------------------
+     4 · PARALLAX ON FIGURES (supporting depth)
+     --------------------------------------------------------- */
+  gsap.utils.toArray('.hero__fig img, .morte__img img').forEach(function (img) {
+    gsap.fromTo(img, { yPercent: -6 }, {
+      yPercent: 6, ease: 'none',
+      scrollTrigger: { trigger: img.parentNode, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
+    });
+  });
+
+  /* =========================================================
+     5 · SIGNATURE — PINNED SCRUBBED EXPLODED ASSEMBLY
+        + SVG LEADER-LINE DRAW
+     ========================================================= */
+  var mm = gsap.matchMedia();
+
+  mm.add('(min-width: 1024px)', function () {
+
+    computeZ();
+    buildLeaders();
+
+    var phaseEl = document.getElementById('expPhase');
+    var pctEl = document.getElementById('expPct');
+    var fillEl = document.getElementById('expFill');
+    var PHASES = [
+      [0.00, '00 — Closed case'],
+      [0.16, '01 — Tilt to section A–A'],
+      [0.34, '02 — Crystal & bezel lift'],
+      [0.52, '03 — Dial train separates'],
+      [0.70, '04 — Movement exposed'],
+      [0.86, '05 — Annotation complete']
+    ];
+
+    gsap.set(assembly, { rotateX: 0 });
+    gsap.set(layers, { z: 0, rotateZ: 0 });
+    gsap.set(labelEls, { opacity: 0, x: function (i) { return PARTS[i].side * -12; } });
+    gsap.set(dotEls, { opacity: 0, scale: 0, transformOrigin: 'center' });
+
+    var tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: '#assembly',
+        start: 'top top',
+        end: '+=3400',
+        pin: '#expPin',
+        pinSpacing: true,
+        scrub: 0.85,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: function (self) {
+          var p = self.progress;
+          if (pctEl) pctEl.textContent = String(Math.round(p * 100)).padStart(3, '0') + '%';
+          if (fillEl) fillEl.style.width = (p * 100).toFixed(1) + '%';
+          if (phaseEl) {
+            var label = PHASES[0][1];
+            for (var i = 0; i < PHASES.length; i++) { if (p >= PHASES[i][0]) label = PHASES[i][1]; }
+            if (phaseEl.textContent !== label) phaseEl.textContent = label;
+          }
+        }
+      }
+    });
+
+    // phase 1 (0 → 0.20 of the timeline) — tilt into section view
+    tl.to(assembly, { rotateX: TILT, duration: 0.20, ease: 'power2.inOut' }, 0);
+
+    // phase 2 (0.14 → 0.58) — separate the eight planes, staggered outward
+    tl.to(layers, {
+      z: function (i) { return zTargets[i]; },
+      duration: 0.44,
+      ease: 'power2.inOut',
+      stagger: { each: 0.022, from: 'center' }
+    }, 0.14);
+
+    // rotation of individual components while they separate
+    tl.to(layers, {
+      rotateZ: function (i) { return PARTS[i].spin; },
+      duration: 0.50,
+      ease: 'power1.inOut',
+      stagger: 0.02
+    }, 0.16);
+
+    // phase 3 (0.44 → 0.92) — leader lines draw, dots pop, labels slide in
+    pathEls.forEach(function (path, i) {
+      var at = 0.46 + i * 0.055;
+      tl.to(path, {
+        strokeDashoffset: 0,
+        duration: 0.13,
+        ease: 'power2.out'
+      }, at);
+      tl.to(dotEls[i], {
+        opacity: 1, scale: 1, duration: 0.05, ease: 'back.out(2.4)'
+      }, at);
+      tl.to(labelEls[i], {
+        opacity: 1, x: 0, duration: 0.10, ease: 'power3.out'
+      }, at + 0.07);
+    });
+
+    // hold the fully annotated state to the end of the scrub
+    tl.to({}, { duration: 0.06 }, 0.94);
+
+    var onResize = function () { buildLeaders(); ScrollTrigger.refresh(); };
+    window.addEventListener('resize', onResize);
+
+    return function cleanup() {
+      window.removeEventListener('resize', onResize);
+      gsap.set(assembly, { clearProps: 'all' });
+      gsap.set(layers, { clearProps: 'all' });
+    };
+  });
+
+  // below 1024px: closed assembly, flat, annotations render as the list
+  mm.add('(max-width: 1023px)', function () {
+    gsap.set(assembly, { rotateX: 0, scale: 0.86, transformOrigin: 'center' });
+    gsap.set(layers, { z: 0, rotateZ: 0 });
+    gsap.from('.exp-list li', {
+      opacity: 0, y: 14, duration: 0.7, ease: 'power3.out', stagger: 0.05,
+      scrollTrigger: { trigger: '.exp-list', start: 'top 88%', once: true }
+    });
+    return function () { gsap.set(assembly, { clearProps: 'all' }); };
+  });
+
+  /* =========================================================
+     6 · HORIZONTAL SCROLL SHOWCASE
+     ========================================================= */
+  mm.add('(min-width: 1024px)', function () {
+    var track = document.getElementById('hzTrack');
+    var pin = document.getElementById('hzPin');
+    var fill = document.getElementById('hzFill');
+    var idx = document.getElementById('hzIdx');
+    if (!track || !pin) return;
+
+    var panels = track.querySelectorAll('.panel');
+
+    var getShift = function () {
+      var view = track.parentNode.clientWidth;
+      return Math.max(0, track.scrollWidth - view);
+    };
+
+    var st = gsap.to(track, {
+      x: function () { return -getShift(); },
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#atelier',
+        start: 'top top',
+        end: function () { return '+=' + (getShift() + window.innerHeight * 0.4); },
+        pin: '#hzPin',
+        scrub: 0.7,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: function (self) {
+          var p = self.progress;
+          if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
+          if (idx) {
+            var n = Math.min(panels.length, Math.floor(p * panels.length) + 1);
+            idx.textContent = String(n).padStart(2, '0') + ' / ' + String(panels.length).padStart(2, '0');
+          }
+        }
+      }
+    });
+
+    // panels lift slightly as they cross the centre of the viewport
+    var panelTweens = [];
+    panels.forEach(function (p) {
+      panelTweens.push(gsap.fromTo(p.querySelector('.panel__img'),
+        { scale: 1.12 },
+        {
+          scale: 1, ease: 'none',
+          scrollTrigger: {
+            trigger: p,
+            containerAnimation: st,
+            start: 'left right',
+            end: 'right left',
+            scrub: true
+          }
+        }
+      ));
+    });
+
+    return function () {
+      panelTweens.forEach(function (t) { if (t.scrollTrigger) t.scrollTrigger.kill(); t.kill(); });
+      gsap.set(track, { clearProps: 'all' });
+    };
+  });
+
+  /* ---------------------------------------------------------
+     7 · FORM (no backend — reference build)
+     --------------------------------------------------------- */
+  var form = document.getElementById('enquiryForm');
+  var formMsg = document.getElementById('formMsg');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var mail = document.getElementById('f-mail');
+      if (!mail || !mail.value || mail.value.indexOf('@') === -1) {
+        if (formMsg) formMsg.textContent = 'A valid email is required for the ledger.';
+        gsap.fromTo(form, { x: -5 }, { x: 0, duration: 0.5, ease: 'elastic.out(1,0.35)' });
+        return;
+      }
+      if (formMsg) formMsg.textContent = 'Entered in the ledger — line 043. We will write to you.';
+      gsap.to(form.querySelectorAll('.field'), {
+        opacity: 0.45, duration: 0.5, ease: 'power2.out', stagger: 0.04
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     8 · REFRESH AFTER WEBFONTS
+     --------------------------------------------------------- */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      buildLeaders();
+      ScrollTrigger.refresh();
+    });
+  }
+  window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+
+})();
+</script>
+</body>
+</html>

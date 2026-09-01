@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fernline — Minimal AI Developer Tools Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #f5f3ee;
+    --ink: #17190f;
+    --gray: #6b6a63;
+    --gray-light: #9a988f;
+    --line: #d9d6cc;
+    --accent: #1f2e1a;
+    --accent-light: #37502e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- reveal-on-load ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ---------- nav ---------- */
+  .nav {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 40px 0;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-mark {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    position: relative;
+  }
+  .brand-mark svg { width: 100%; height: 100%; }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+    font-size: 12.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .nav-links a { color: var(--ink); opacity: 0.8; transition: opacity 0.2s ease; }
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #f2f1ea;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: background 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+  }
+  .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 40px;
+    align-items: center;
+    padding: 76px 40px 60px;
+  }
+
+  .hero-copy { max-width: 560px; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 26px;
+  }
+  .badge::after { content: "↗"; font-size: 12px; opacity: 0.7; }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(40px, 4.6vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .hero-copy p {
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--gray);
+    max-width: 460px;
+    margin-bottom: 36px;
+  }
+
+  .cta-row { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #f2f1ea;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: background 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+  .btn-secondary {
+    font-size: 12.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 3px;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-secondary:hover { opacity: 0.6; }
+
+  /* ---------- generative visual ---------- */
+  .visual-wrap {
+    position: relative;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #genfield {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; padding-top: 48px; }
+    .visual-wrap { height: 320px; order: -1; }
+    .nav-links { display: none; }
+  }
+
+  /* ---------- trusted-by ---------- */
+  .trusted {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 50px 40px 90px;
+    border-top: 1px solid var(--line);
+  }
+
+  .trusted-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    margin-bottom: 34px;
+  }
+
+  .logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+    filter: grayscale(1);
+    opacity: 0.55;
+  }
+
+  .logo-row span {
+    font-size: 21px;
+    white-space: nowrap;
+  }
+  .lw-1 { font-family: 'Fraunces', serif; font-weight: 600; }
+  .lw-2 { font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: -0.02em; }
+  .lw-3 { font-family: 'IBM Plex Mono', monospace; font-weight: 500; letter-spacing: -0.01em; }
+  .lw-4 { font-family: 'Inter', sans-serif; font-weight: 400; letter-spacing: 0.02em; }
+  .lw-5 { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; }
+
+  /* ---------- capability strip ---------- */
+  .strip {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px 110px;
+  }
+
+  .strip-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 44px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 28px;
+  }
+
+  .strip-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(26px, 2.6vw, 34px);
+    letter-spacing: -0.01em;
+    max-width: 420px;
+  }
+
+  .strip-head p {
+    color: var(--gray);
+    font-size: 14.5px;
+    max-width: 300px;
+    line-height: 1.6;
+  }
+
+  .cap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .cap-card {
+    background: var(--cream);
+    padding: 32px 30px 34px;
+    transition: background 0.3s ease;
+  }
+  .cap-card:hover { background: #efece3; }
+
+  .cap-index {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-light);
+    margin-bottom: 60px;
+  }
+
+  .cap-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 19px;
+    margin-bottom: 10px;
+  }
+
+  .cap-card p {
+    color: var(--gray);
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 780px) {
+    .cap-grid { grid-template-columns: 1fr; }
+    .strip-head { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M2 14L8 2L14 14" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      </span>
+      Fernline
+    </div>
+    <div class="nav-links">
+      <a href="#">Docs</a>
+      <a href="#">Changelog</a>
+      <a href="#" class="nav-cta">Get Started</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="badge reveal mono" data-d="0">THE SELF-CORRECTING RUNTIME</span>
+      <h1 class="reveal" data-d="1">Ship agents that watch themselves</h1>
+      <p class="reveal" data-d="2">Fernline traces every model call your agents make in production, catches silent failures before customers do, and proposes the fix — so shipping an agent stops feeling like a leap of faith.</p>
+      <div class="cta-row reveal" data-d="3">
+        <a href="#" class="btn-primary">Get Started</a>
+        <a href="#" class="btn-secondary">Read the docs</a>
+      </div>
+    </div>
+
+    <div class="visual-wrap reveal" data-d="1">
+      <canvas id="genfield"></canvas>
+    </div>
+  </section>
+
+  <div class="trusted">
+    <div class="trusted-label mono">TRUSTED BY TEAMS AT</div>
+    <div class="logo-row">
+      <span class="lw-1">Northwind</span>
+      <span class="lw-2">Parallax</span>
+      <span class="lw-3">/vector.io</span>
+      <span class="lw-4">STRATA</span>
+      <span class="lw-5">Kindred</span>
+    </div>
+  </div>
+
+  <section class="strip">
+    <div class="strip-head">
+      <h2>Everything an agent does, made legible</h2>
+      <p>Three primitives underneath every Fernline deployment — no dashboards to configure, no SDK gymnastics.</p>
+    </div>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-index mono">01 / TRACE</div>
+        <h3>Full call graphs</h3>
+        <p>Every prompt, tool call, and retry recorded in order, replayable from a single link.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-index mono">02 / DETECT</div>
+        <h3>Drift detection</h3>
+        <p>Statistical baselines flag output that quietly stops matching yesterday's behavior.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-index mono">03 / REPAIR</div>
+        <h3>Suggested patches</h3>
+        <p>Root-cause diffs to the prompt or tool schema, opened as a pull request automatically.</p>
+      </div>
+    </div>
+  </section>
+
+<script>
+  // ---------- staggered reveal on load ----------
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.reveal').forEach((el) => {
+      const delay = parseInt(el.dataset.d || '0', 10) * 110;
+      setTimeout(() => el.classList.add('in'), 80 + delay);
+    });
+  });
+
+  // ---------- generative hero visual ----------
+  // A continuous, slow-moving field of flow-lines sampled from a
+  // drifting sine/cosine noise function, redrawn as a fine ASCII-style
+  // dot/character grid instead of solid strokes — a nod to adaline.ai's
+  // ASCII line-art hero without copying it verbatim.
+  (function () {
+    const canvas = document.getElementById('genfield');
+    const ctx = canvas.getContext('2d');
+    let w, h, dpr;
+    let t = 0;
+
+    const CHARS = '.,:;+*#';
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = canvas.parentElement.getBoundingClientRect();
+      w = rect.width;
+      h = rect.height;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    // pseudo-noise: sum of a few sine waves at irrational-ish frequencies
+    function field(x, y, t) {
+      const nx = x * 0.012;
+      const ny = y * 0.02;
+      return (
+        Math.sin(nx * 1.3 + t * 0.6) * 0.5 +
+        Math.cos(ny * 1.7 - t * 0.45) * 0.35 +
+        Math.sin((nx + ny) * 0.9 + t * 0.3) * 0.4
+      );
+    }
+
+    function drawGrid() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.font = '9px "IBM Plex Mono", monospace';
+      ctx.textBaseline = 'middle';
+      const step = 13;
+      for (let y = step / 2; y < h; y += step) {
+        for (let x = step / 2; x < w; x += step) {
+          const v = field(x, y, t);
+          const abs = Math.min(Math.abs(v), 1);
+          if (abs < 0.12) continue; // leave open space, keep it airy
+          const idx = Math.min(CHARS.length - 1, Math.floor(abs * CHARS.length));
+          const alpha = 0.14 + abs * 0.5;
+          ctx.fillStyle = `rgba(23, 25, 15, ${alpha})`;
+          ctx.fillText(CHARS[idx], x, y);
+        }
+      }
+
+      // one continuous traced curve drawn over the grid, echoing the
+      // reference's single hand-drawn line threading the noise field
+      ctx.beginPath();
+      ctx.lineWidth = 1.1;
+      ctx.strokeStyle = 'rgba(31, 46, 26, 0.55)';
+      for (let x = 0; x <= w; x += 4) {
+        const y = h / 2 + field(x, h / 2, t * 1.15) * (h * 0.32) + Math.sin(x * 0.01 + t * 0.4) * 18;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+
+    let raf;
+    function loop() {
+      t += 0.006;
+      drawGrid();
+      raf = requestAnimationFrame(loop);
+    }
+
+    function start() {
+      resize();
+      cancelAnimationFrame(raf);
+      loop();
+    }
+
+    window.addEventListener('resize', start);
+    start();
+
+    // pause the animation loop when off-screen to be a good citizen
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          cancelAnimationFrame(raf);
+          loop();
+        } else {
+          cancelAnimationFrame(raf);
+        }
+      });
+    });
+    obs.observe(canvas);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en" class="is-loading">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledger — Treasury Operating System for Multi-Entity Groups</title>
+<meta name="description" content="Ledger is the treasury operating system for groups running more than one balance sheet. Real-time cash positioning across 1,840 entities and 47 currencies, FX exposure captured at booking, settlement confirmed at p50 240 ms.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   LEDGER — Treasury Operating System
+   Palette : near-black navy ground; ONE accent (#3ddc97) reserved
+             strictly for data-positive states + the single CTA.
+   Type    : Inter (prose) / JetBrains Mono (every figure, tabular).
+   Density : dense-information. Bloomberg terminal, refined.
+   ============================================================ */
+
+:root{
+  --ink:#070b12;
+  --ink-2:#0a0f1a;
+  --panel:#0b111c;
+  --panel-2:#0e1523;
+  --panel-3:#121a2a;
+  --line:rgba(255,255,255,.075);
+  --line-2:rgba(255,255,255,.13);
+  --line-3:rgba(255,255,255,.22);
+  --fg:#eef2f7;
+  --fg-2:#96a1b3;
+  --mut:#8c97a9;
+  --dim:#5b6679;
+  --acc:#3ddc97;
+  --acc-dim:rgba(61,220,151,.18);
+  --acc-ghost:rgba(61,220,151,.07);
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --gut:clamp(20px,3.6vw,56px);
+  --maxw:1560px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+html.is-loading{overflow:hidden}
+body{
+  background:var(--ink);
+  color:var(--fg);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  font-feature-settings:"kern" 1,"liga" 1,"calt" 1;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--acc);color:#04140c}
+
+/* ---------- numeric type: the hero of this design ---------- */
+.num,.mono,table,.tnum{
+  font-family:var(--mono);
+  font-variant-numeric:tabular-nums lining-nums;
+  font-feature-settings:"tnum" 1,"lnum" 1,"zero" 1;
+}
+.num{letter-spacing:-.02em}
+
+/* ---------- layout primitives ---------- */
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding-inline:var(--gut)}
+.sec{position:relative}
+.sec-pad{padding-block:clamp(76px,9.5vw,160px)}
+/* grid children must be allowed to shrink below their min-content, or the wide
+   numeric tables push the whole page sideways */
+.viz-grid > *,.proof-split > *,.foot-grid > *,.quote > *,.prod-row > *,
+.countband > *,.statrail > *,.show-track > *{min-width:0}
+.sec-head{display:flex;align-items:baseline;gap:clamp(16px,3vw,44px);padding-bottom:20px;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sec-idx{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--dim);font-variant-numeric:tabular-nums}
+.sec-kick{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+.sec-note{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.07em;color:var(--dim)}
+
+h1,h2,h3,h4{margin:0;font-weight:500;letter-spacing:-.028em;line-height:1.03}
+p{margin:0}
+
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
+.lede{font-size:clamp(15px,1.1vw,17.5px);line-height:1.62;color:var(--fg-2);max-width:58ch}
+.small{font-size:13.5px;line-height:1.6;color:var(--mut)}
+
+/* ---------- hand-split line-mask reveal ---------- */
+.mask{display:block;overflow:hidden}
+.mask > span{display:block;will-change:transform}
+
+/* ---------- page-load intro ---------- */
+.intro{position:fixed;inset:0;z-index:9999;pointer-events:none}
+.intro-pan{position:absolute;left:0;width:100%;height:50.5%;background:var(--ink);will-change:transform}
+.intro-pan--t{top:0}
+.intro-pan--b{bottom:0}
+.intro-core{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding-inline:var(--gut);z-index:2;will-change:opacity}
+.intro-rule{height:1px;background:var(--line-2);transform:scaleX(0);transform-origin:left center}
+.intro-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-block:16px}
+.intro-lab{font-family:var(--mono);font-size:clamp(9px,.85vw,11px);letter-spacing:.2em;
+  text-transform:uppercase;color:var(--dim);padding-bottom:.9em;line-height:1.7}
+.intro-num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;
+  font-size:clamp(46px,12.6vw,184px);line-height:.86;letter-spacing:-.055em;color:var(--fg)}
+.intro-num .u{font-size:.2em;letter-spacing:.1em;color:var(--dim);vertical-align:baseline;margin-left:.5em}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:900;border-bottom:1px solid transparent;
+  transition:background .35s cubic-bezier(.22,1,.36,1),border-color .35s}
+.nav.is-stuck{background:rgba(7,11,18,.84);backdrop-filter:blur(14px) saturate(140%);border-bottom-color:var(--line)}
+.nav-in{display:flex;align-items:center;gap:clamp(16px,2.2vw,36px);height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:700;font-size:14px;letter-spacing:.16em}
+.brand-mk{width:16px;height:16px;position:relative;flex:none}
+.brand-mk i{position:absolute;left:0;height:1.6px;background:var(--fg);display:block}
+.brand-mk i:nth-child(1){top:2px;width:16px}
+.brand-mk i:nth-child(2){top:7.2px;width:10px}
+.brand-mk i:nth-child(3){top:12.4px;width:16px}
+.nav-links{display:flex;gap:clamp(14px,1.6vw,26px);margin-left:clamp(8px,2.6vw,48px)}
+.nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--mut);padding-block:4px;position:relative;transition:color .22s ease}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--fg);
+  transform:scaleX(0);transform-origin:right center;transition:transform .38s cubic-bezier(.22,1,.36,1)}
+.nav-links a:hover{color:var(--fg)}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left center}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.status{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim)}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--acc);flex:none;animation:pulse 2.6s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,220,151,.34)}70%{box-shadow:0 0 0 7px rgba(61,220,151,0)}100%{box-shadow:0 0 0 0 rgba(61,220,151,0)}}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.12em;text-transform:uppercase;padding:11px 18px;border:1px solid var(--line-2);
+  color:var(--fg);transition:border-color .25s ease,background .25s ease,color .25s ease;white-space:nowrap}
+.btn:hover{border-color:var(--line-3);background:rgba(255,255,255,.035)}
+.btn--acc{background:var(--acc);color:#04140c;border-color:var(--acc);font-weight:700}
+.btn--acc:hover{background:#4ef0a8;border-color:#4ef0a8;color:#04140c}
+.btn--lg{padding:16px 26px;font-size:12px}
+.btn .arw{display:inline-block;transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.btn:hover .arw{transform:translateX(4px)}
+.mag{position:relative;will-change:transform}
+.mag > span{display:inline-flex;align-items:center;gap:10px;will-change:transform}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding-top:clamp(92px,11vh,140px);overflow:hidden}
+.hero-rules{position:absolute;inset:0;pointer-events:none;z-index:0;
+  max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gut)}
+.hero-rules span{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.hero-in{position:relative;z-index:1}
+.hero-top{display:flex;align-items:baseline;gap:clamp(14px,2vw,32px);flex-wrap:wrap;
+  padding-bottom:15px;border-bottom:1px solid var(--line)}
+.hero-h1{font-size:clamp(44px,8.9vw,146px);line-height:.94;letter-spacing:-.045em;font-weight:500;
+  padding-block:clamp(24px,4vw,54px)}
+.hero-h1 .mask > span{padding-bottom:.06em}
+.hero-h1 .fig{font-family:var(--mono);font-weight:500;letter-spacing:-.06em}
+.hero-body{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);gap:clamp(28px,4.6vw,84px);
+  align-items:start;padding-top:clamp(16px,2.4vw,32px);border-top:1px solid var(--line)}
+.hero-body > *{min-width:0}
+.hero-copy{display:flex;flex-direction:column;gap:clamp(20px,2.2vw,28px);max-width:60ch}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.hero-copy .fine{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--dim);line-height:1.7}
+
+.statrail{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:clamp(38px,4.6vw,70px)}
+.stat{padding:22px 20px 24px 0;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat:not(:first-child){padding-left:20px}
+.stat-v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(23px,2.5vw,38px);
+  font-weight:500;letter-spacing:-.05em;line-height:1;color:var(--fg)}
+.stat-v small{font-size:.5em;letter-spacing:-.01em;color:var(--mut)}
+.stat-l{margin-top:10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--dim);line-height:1.5}
+
+/* ---------- terminal surface ---------- */
+.term{background:var(--panel);border:1px solid var(--line);position:relative;min-width:0}
+/* wide numeric tables scroll inside their own box — the page never scrolls sideways */
+.dt-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;min-width:0}
+.term-bar{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mut)}
+.term-bar .sp{margin-left:auto;color:var(--dim);letter-spacing:.06em;text-transform:none}
+
+table.dt{width:100%;border-collapse:collapse;font-family:var(--mono);
+  font-variant-numeric:tabular-nums lining-nums;font-size:12px}
+table.dt th{font-weight:400;text-align:left;color:var(--dim);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;padding:10px 14px;border-bottom:1px solid var(--line-2);white-space:nowrap}
+table.dt td{padding:9px 14px;border-bottom:1px solid var(--line);color:var(--fg-2);white-space:nowrap}
+table.dt tbody tr{transition:background .2s ease}
+table.dt tbody tr:hover{background:rgba(255,255,255,.03)}
+table.dt tbody tr:hover td:not(.pos):not(.neg){color:var(--fg)}
+table.dt .r{text-align:right}
+table.dt .ent{color:var(--fg);font-family:var(--sans);font-size:13px;letter-spacing:-.005em}
+/* the single accent — data-positive states only. Specificity must beat `table.dt td`. */
+.pos,table.dt td.pos{color:var(--acc)}
+.neg,table.dt td.neg{color:var(--mut)}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--line-2);padding:2.5px 6px;color:var(--mut);display:inline-block}
+.tag--ok{border-color:var(--acc-dim);color:var(--acc);background:var(--acc-ghost)}
+
+/* ---------- ticker (supporting element only) ---------- */
+.ticker{border-block:1px solid var(--line);overflow:hidden;margin-top:clamp(38px,4.6vw,68px);background:var(--ink-2)}
+.ticker-tr{display:flex;width:max-content;will-change:transform}
+.ticker-set{display:flex;flex:none}
+.tk{display:flex;align-items:center;gap:9px;padding:10px 22px;border-right:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;letter-spacing:.04em;font-variant-numeric:tabular-nums;
+  color:var(--mut);white-space:nowrap}
+.tk b{font-weight:500;color:var(--fg-2);letter-spacing:.11em}
+
+/* ---------- 02 : pinned scroll-driven data visualisation ---------- */
+.viz{background:var(--ink-2);border-top:1px solid var(--line)}
+.viz-pin{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding-block:clamp(70px,7vw,96px)}
+.viz-grid{display:grid;grid-template-columns:minmax(280px,.66fr) minmax(0,2fr);gap:clamp(28px,3.6vw,64px);align-items:stretch}
+.viz-steps{position:relative;min-height:320px;display:flex;flex-direction:column}
+/* short-viewport guard: cap the composition so the pinned panel always fits.
+   2.84 keeps the chart's intrinsic 1000:468 ratio inside the 0.66fr/2fr grid. */
+@media (min-width:1024px){
+  .viz-pin{padding-block:clamp(36px,5vh,88px)}
+  .viz-grid{max-width:calc((100vh - 380px) * 2.84 + 64px);margin-inline:auto}
+}
+.viz-step{position:absolute;inset:0;display:flex;flex-direction:column;gap:18px;opacity:0}
+.viz-step:first-child{opacity:1}
+.viz-step h3{font-size:clamp(26px,2.5vw,40px);line-height:1.06;letter-spacing:-.035em}
+.viz-step p{font-size:14.5px;line-height:1.66;color:var(--fg-2);max-width:42ch}
+.viz-step .kv{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line);margin-top:4px}
+.viz-step .kv div{display:flex;justify-content:space-between;gap:16px;padding:9px 0;
+  border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11.5px;
+  font-variant-numeric:tabular-nums;color:var(--dim)}
+.viz-step .kv b{font-weight:500;color:var(--fg)}
+.viz-prog{display:flex;gap:6px;margin-top:auto;padding-top:26px}
+.viz-prog i{height:2px;flex:1;background:var(--line-2);position:relative;overflow:hidden}
+.viz-prog i::after{content:"";position:absolute;inset:0;background:var(--fg);transform:scaleX(0);transform-origin:left}
+.viz-prog i.on::after{transform:scaleX(1);transition:transform .5s cubic-bezier(.22,1,.36,1)}
+
+.chart-wrap{padding:0}
+.chart-head{display:flex;align-items:flex-end;gap:clamp(18px,2.6vw,44px);flex-wrap:wrap;padding:18px 18px 16px}
+.chart-read{display:flex;flex-direction:column;gap:6px}
+.chart-read .lab{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.chart-read .val{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(28px,3.1vw,50px);
+  font-weight:500;letter-spacing:-.05em;line-height:1;color:var(--fg)}
+.chart-read .val .u{font-size:.42em;color:var(--mut);letter-spacing:0;margin-left:.25em}
+.chart-read .val.is-acc{color:var(--acc)}
+.legend{margin-left:auto;display:flex;gap:18px;flex-wrap:wrap;padding-bottom:6px}
+.legend span{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.06em;color:var(--dim);white-space:nowrap}
+.legend i{width:14px;height:2px;flex:none}
+.svg-box{padding:0 4px 4px}
+.chart-svg{display:block;width:100%;height:auto}
+.gridline{stroke:rgba(255,255,255,.07);stroke-width:1}
+.axlab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;fill:#5b6679}
+.axlab.r{text-anchor:end}
+.line-a{fill:none;stroke:var(--acc);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.line-b{fill:none;stroke:rgba(255,255,255,.34);stroke-width:1.5;stroke-dasharray:3 4;stroke-linecap:round}
+.bar{fill:rgba(255,255,255,.16);transform-box:fill-box;transform-origin:50% 100%}
+.bar.is-acc{fill:var(--acc)}
+.barlab{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.06em;fill:#5b6679;text-anchor:middle}
+.bars-head{display:flex;align-items:baseline;gap:14px;padding:16px 18px 4px;border-top:1px solid var(--line);margin-top:6px}
+.bars-head .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mut)}
+.bars-head .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* ---------- 03 : broken-grid product section ---------- */
+.prod-row{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(14px,1.6vw,26px);
+  align-items:start;padding-block:clamp(46px,5.4vw,86px);border-bottom:1px solid var(--line);position:relative}
+.prod-row:last-of-type{border-bottom:0}
+.prod-id{grid-column:1/2;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--dim);
+  padding-top:.5em;font-variant-numeric:tabular-nums}
+.prod-name{grid-column:2/6}
+.prod-name h3{font-size:clamp(28px,3.4vw,56px);letter-spacing:-.04em;line-height:1}
+.prod-name .sub{margin-top:14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mut)}
+.prod-copy{grid-column:6/10;display:flex;flex-direction:column;gap:16px}
+.prod-copy p{font-size:14.5px;line-height:1.68;color:var(--fg-2)}
+.prod-spec{grid-column:10/13;border-top:1px solid var(--line-2)}
+.prod-spec div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;color:var(--dim);letter-spacing:.02em}
+.prod-spec b{font-weight:500;color:var(--fg)}
+/* offset each row to break the grid */
+.prod-row:nth-child(2) .prod-name{grid-column:2/6}
+.prod-row:nth-child(3) .prod-name{grid-column:3/7}
+.prod-row:nth-child(3) .prod-copy{grid-column:7/11}
+.prod-row:nth-child(3) .prod-spec{grid-column:11/13}
+.prod-row:nth-child(4) .prod-name{grid-column:2/7}
+.prod-row:nth-child(4) .prod-copy{grid-column:7/10}
+.prod-ghost{position:absolute;right:0;top:8%;font-family:var(--mono);font-weight:700;
+  font-size:clamp(90px,14vw,230px);line-height:1;letter-spacing:-.07em;color:rgba(255,255,255,.022);
+  pointer-events:none;user-select:none;z-index:0}
+.prod-row > *{position:relative;z-index:1}
+
+/* ---------- 04 : horizontal showcase ---------- */
+.show{background:var(--ink-2);border-block:1px solid var(--line);overflow:hidden}
+@media (min-width:1024px){
+  .show{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+}
+.show-head{padding-top:clamp(58px,6vw,96px)}
+.show-vp{padding-block:clamp(36px,4vw,60px)}
+.show-track{display:flex;gap:clamp(16px,1.8vw,30px);width:max-content;padding-inline:var(--gut);will-change:transform}
+.card{width:clamp(320px,42vw,660px);flex:none;min-width:0;background:var(--panel);border:1px solid var(--line);
+  display:flex;flex-direction:column}
+.card-hd{display:flex;align-items:baseline;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.card-hd .n{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--dim)}
+.card-hd .t{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--fg)}
+.card-hd .sp{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.07em;color:var(--dim)}
+.card-bd{padding:0;flex:1;min-width:0;overflow-x:auto}
+.card-ft{padding:13px 16px;border-top:1px solid var(--line);font-size:13px;color:var(--mut);line-height:1.55}
+.card-ft b{color:var(--fg);font-weight:500}
+.card--img{background:var(--panel-2)}
+.card--img .ph{aspect-ratio:16/10;width:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.62)}
+
+/* mini bar rows inside cards */
+.mbar{display:flex;align-items:center;gap:12px;padding:9px 16px;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;color:var(--fg-2)}
+.mbar .k{width:86px;flex:none;color:var(--mut);letter-spacing:.06em}
+.mbar .tr{flex:1;height:6px;background:rgba(255,255,255,.05);position:relative}
+.mbar .tr i{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.24)}
+.mbar .tr i.on{background:var(--acc)}
+.mbar .v{width:76px;text-align:right;flex:none;color:var(--fg)}
+.chk{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);
+  font-size:13px;color:var(--fg-2)}
+.chk .st{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;width:74px;flex:none}
+.chk .tm{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* ---------- 05 : proof ---------- */
+.countband{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line)}
+.cu{padding:clamp(26px,3vw,44px) 22px clamp(26px,3vw,44px) 0;border-right:1px solid var(--line)}
+.cu:last-child{border-right:0}
+.cu:not(:first-child){padding-left:22px}
+.cu .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(30px,4vw,68px);
+  font-weight:500;letter-spacing:-.055em;line-height:.96;color:var(--fg)}
+.cu .v .u{font-size:.44em;color:var(--mut);letter-spacing:-.01em}
+.cu .l{margin-top:12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--dim);line-height:1.55}
+.cu .d{margin-top:8px;font-size:13px;color:var(--mut);line-height:1.55;max-width:30ch}
+
+.proof-split{display:grid;grid-template-columns:minmax(0,2.15fr) minmax(260px,1fr);gap:clamp(24px,3vw,52px);
+  align-items:start;margin-top:clamp(38px,4.4vw,70px)}
+.tbl-scroll{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
+.certs{border-top:1px solid var(--line-2)}
+.certs div{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.certs .c-n{font-size:13.5px;color:var(--fg)}
+.certs .c-s{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--dim)}
+.quote{margin-top:clamp(38px,4.4vw,72px);border-top:1px solid var(--line);padding-top:clamp(28px,3vw,48px);
+  display:grid;grid-template-columns:minmax(0,2fr) minmax(240px,1fr);gap:clamp(24px,3vw,56px);align-items:end}
+.quote blockquote{margin:0;font-size:clamp(20px,2.35vw,38px);line-height:1.24;letter-spacing:-.03em;
+  color:var(--fg);font-weight:500;text-wrap:balance}
+.quote blockquote .fig{font-family:var(--mono);letter-spacing:-.05em}
+.quote cite{font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  color:var(--dim);line-height:1.8;display:block}
+.quote cite b{color:var(--fg-2);font-weight:500;display:block}
+.logos{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--line);margin-top:clamp(38px,4.4vw,68px)}
+.logos span{flex:1 1 20%;min-width:150px;padding:20px 16px 20px 0;border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--mut);transition:color .25s ease}
+.logos span:hover{color:var(--fg)}
+.logos span em{display:block;font-style:normal;font-size:10px;letter-spacing:.1em;color:var(--dim);margin-top:7px}
+
+/* ---------- 06 : closing CTA ---------- */
+.cta{border-top:1px solid var(--line);background:var(--ink-2)}
+.cta-h{font-size:clamp(38px,7vw,116px);line-height:.96;letter-spacing:-.048em;font-weight:500;
+  padding-block:clamp(24px,3.4vw,52px)}
+.cta-h .fig{font-family:var(--mono);letter-spacing:-.06em}
+.cta-row{display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(24px,4vw,70px);
+  flex-wrap:wrap;padding-top:clamp(18px,2.4vw,34px);border-top:1px solid var(--line)}
+.cta-row .lede{max-width:46ch}
+.cta-acts{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--line);padding-top:clamp(46px,5vw,80px);padding-bottom:26px}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(4,minmax(0,1fr));gap:clamp(22px,2.6vw,44px)}
+.foot-brand{display:flex;flex-direction:column;gap:16px}
+.foot-brand .bd{font-size:13.5px;color:var(--mut);line-height:1.6;max-width:34ch}
+.fcol h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--dim);font-weight:400;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.fcol ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.fcol a{font-size:13.5px;color:var(--fg-2);transition:color .2s ease}
+.fcol a:hover{color:var(--fg)}
+.foot-bot{margin-top:clamp(44px,5vw,80px);padding-top:20px;border-top:1px solid var(--line);
+  display:flex;gap:clamp(18px,3vw,48px);justify-content:space-between;flex-wrap:wrap;align-items:flex-start}
+.foot-bot p{font-family:var(--mono);font-size:10.5px;line-height:1.75;letter-spacing:.03em;color:var(--dim);max-width:82ch}
+.foot-bot .rt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);white-space:nowrap}
+
+/* ============================================================
+   RESPONSIVE — degrade below 1024px: no pin, no horizontal scroll
+   ============================================================ */
+@media (max-width:1180px){
+  .prod-row{gap:18px}
+  .prod-name,.prod-row:nth-child(3) .prod-name,.prod-row:nth-child(4) .prod-name{grid-column:2/7}
+  .prod-copy,.prod-row:nth-child(3) .prod-copy,.prod-row:nth-child(4) .prod-copy{grid-column:7/13}
+  .prod-spec,.prod-row:nth-child(3) .prod-spec{grid-column:7/13;margin-top:6px}
+}
+@media (max-width:1023px){
+  .nav-links{display:none}
+  .nav-right .status{display:none}
+  .hero-body{grid-template-columns:1fr;gap:34px}
+  .statrail{grid-template-columns:repeat(2,1fr)}
+  .stat{border-bottom:1px solid var(--line)}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(odd){padding-left:0}
+  .stat:nth-child(even){padding-left:20px;border-right:0}
+  .viz-pin{min-height:0;display:block;padding-block:0}
+  .viz-grid{grid-template-columns:1fr;gap:30px}
+  .viz-steps{position:static;min-height:0;display:flex;flex-direction:column;gap:34px}
+  .viz-step{position:static;opacity:1!important}
+  .viz-prog{display:none}
+  .show-track{width:auto;flex-direction:column;padding-inline:0}
+  .card{width:100%}
+  .proof-split{grid-template-columns:1fr}
+  .countband{grid-template-columns:repeat(2,1fr)}
+  .cu{border-bottom:1px solid var(--line)}
+  .cu:nth-child(even){border-right:0;padding-left:22px}
+  .cu:nth-child(odd){padding-left:0}
+  .quote{grid-template-columns:1fr;gap:26px;align-items:start}
+  .foot-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+  .foot-brand{grid-column:1/-1}
+  .prod-ghost{display:none}
+}
+@media (max-width:640px){
+  .nav .btn--acc{padding:9px 12px;font-size:10px;letter-spacing:.07em}
+  .brand{font-size:12.5px;letter-spacing:.12em}
+  .hero-h1{font-size:clamp(38px,10.4vw,62px)}
+  .statrail{grid-template-columns:1fr}
+  .stat,.stat:nth-child(even){border-right:0;padding-left:0}
+  .countband{grid-template-columns:1fr}
+  .cu,.cu:nth-child(even){border-right:0;padding-left:0}
+  .prod-row{grid-template-columns:1fr;gap:14px}
+  .prod-id,.prod-name,.prod-copy,.prod-spec,
+  .prod-row:nth-child(3) .prod-name,.prod-row:nth-child(3) .prod-copy,.prod-row:nth-child(3) .prod-spec,
+  .prod-row:nth-child(4) .prod-name,.prod-row:nth-child(4) .prod-copy{grid-column:1/-1}
+  .foot-grid{grid-template-columns:1fr}
+  .chart-head{gap:20px}
+  .legend{margin-left:0;width:100%}
+}
+
+/* ============================================================
+   REDUCED MOTION — final state, no scrub, no pin, no ticker
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .intro{display:none!important}
+  .mask > span{transform:none!important}
+  .viz-step{position:static;opacity:1!important}
+  .viz-steps{position:static;min-height:0;display:flex;flex-direction:column;gap:32px}
+  .show-track{transform:none!important}
+  .line-a,.line-b{stroke-dasharray:none!important;stroke-dashoffset:0!important}
+  .bar{transform:none!important}
+  .dot{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE-LOAD INTRO : counter + split curtain ============ -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-pan intro-pan--t" data-pan="t"></div>
+  <div class="intro-pan intro-pan--b" data-pan="b"></div>
+  <div class="intro-core" id="introCore">
+    <div class="intro-rule" data-irule></div>
+    <div class="intro-row">
+      <span class="intro-lab">Ledger&nbsp;/ Settled&nbsp;volume<br>Trailing twelve&nbsp;months</span>
+      <span class="intro-num"><span id="introNum">0.0</span><span class="u">USD BN</span></span>
+    </div>
+    <div class="intro-rule" data-irule></div>
+  </div>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <span class="brand-mk" aria-hidden="true"><i></i><i></i><i></i></span>LEDGER
+    </a>
+    <nav class="nav-links">
+      <a href="#platform">Platform</a>
+      <a href="#volume">Volume</a>
+      <a href="#surface">Product</a>
+      <a href="#proof">Coverage</a>
+      <a href="#compliance">Compliance</a>
+    </nav>
+    <div class="nav-right">
+      <span class="status"><i class="dot"></i>ALL RAILS OPERATIONAL</span>
+      <a class="btn btn--acc" href="#cta">Book a walkthrough</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ 01 · HERO ============ -->
+<section class="sec hero">
+  <div class="hero-rules" aria-hidden="true">
+    <span style="left:calc(var(--gut) + 25%)"></span>
+    <span style="left:calc(var(--gut) + 50%)"></span>
+    <span style="left:calc(var(--gut) + 75%)"></span>
+  </div>
+  <div class="wrap hero-in">
+
+    <div class="hero-top">
+      <span class="eyebrow">Ledger — Treasury Operating System</span>
+      <span class="eyebrow" style="color:var(--dim)">Est. 2019 · London · Singapore · Chicago</span>
+      <span class="sec-note">v4.2 · Released 14 Aug 2025</span>
+    </div>
+
+    <h1 class="hero-h1" data-lines>
+      <span class="mask"><span>Multi-entity treasury,</span></span>
+      <span class="mask"><span>settled in <span class="fig">240</span> ms.</span></span>
+    </h1>
+
+    <div class="hero-body">
+      <div class="hero-copy">
+        <p class="lede" data-fade>
+          Ledger is the treasury operating system for groups running more than one balance sheet.
+          Live cash positioning across <span class="tnum">1,840</span> legal entities and
+          <span class="tnum">47</span> currencies, FX exposure captured the moment an invoice is raised,
+          and settlement that confirms on rails we operate and hold licences for — not on a
+          correspondent chain you cannot see into.
+        </p>
+        <div class="hero-cta" data-fade>
+          <a class="btn btn--acc btn--lg mag" href="#cta" data-mag><span>Book a walkthrough <i class="arw">→</i></span></a>
+          <a class="btn btn--lg" href="#proof">Read the coverage map</a>
+        </div>
+        <p class="fine" data-fade>
+          SOC&nbsp;2 Type&nbsp;II · ISO/IEC&nbsp;27001:2022 · PCI&nbsp;DSS&nbsp;v4.0 Level&nbsp;1<br>
+          FCA-authorised EMI (FRN&nbsp;927341) · DNB-registered · MAS Major Payment Institution
+        </p>
+      </div>
+
+      <!-- live-position mini surface -->
+      <div class="term" data-fade>
+        <div class="term-bar">
+          <span>Group cash position</span>
+          <span class="sp">Consolidated · USD · 14:32:07 UTC</span>
+        </div>
+        <div class="dt-scroll">
+        <table class="dt">
+          <thead>
+            <tr><th>Entity</th><th>Ccy</th><th class="r">Available</th><th class="r">Δ 24h</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="ent">Kestrel Freight Group PLC</td><td>GBP</td><td class="r">84,210,553</td><td class="r pos">+2.14%</td></tr>
+            <tr><td class="ent">Kestrel Logistics BV</td><td>EUR</td><td class="r">41,806,204</td><td class="r pos">+0.87%</td></tr>
+            <tr><td class="ent">Kestrel Freight SG Pte</td><td>SGD</td><td class="r">22,470,118</td><td class="r neg">−0.31%</td></tr>
+            <tr><td class="ent">Kestrel Air Cargo Inc</td><td>USD</td><td class="r">68,932,470</td><td class="r pos">+1.06%</td></tr>
+            <tr><td class="ent">Kestrel Maritime AS</td><td>NOK</td><td class="r">19,540,882</td><td class="r neg">−0.12%</td></tr>
+            <tr><td class="ent">Kestrel Andina S.A.S.</td><td>COP</td><td class="r">7,318,655</td><td class="r pos">+4.02%</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="term-bar" style="border-bottom:0;border-top:1px solid var(--line)">
+          <span>Total available</span>
+          <span class="sp tnum" style="color:var(--fg);font-size:13px;letter-spacing:-.02em">USD 244,278,882</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- stat rail -->
+    <div class="statrail" data-stagger>
+      <div class="stat">
+        <div class="stat-v">$412.8<small>bn</small></div>
+        <div class="stat-l">Settled volume<br>trailing 12 months</div>
+      </div>
+      <div class="stat">
+        <div class="stat-v">240<small>ms</small></div>
+        <div class="stat-l">p50 settlement<br>confirmation</div>
+      </div>
+      <div class="stat">
+        <div class="stat-v">47</div>
+        <div class="stat-l">Currencies<br>31 domestic rails</div>
+      </div>
+      <div class="stat">
+        <div class="stat-v">99.995<small>%</small></div>
+        <div class="stat-l">Platform uptime<br>trailing 12 months</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- supporting marquee -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-tr" id="ticker">
+      <div class="ticker-set">
+        <span class="tk"><b>EUR/USD</b>1.0842 <span class="pos">▲0.12%</span></span>
+        <span class="tk"><b>GBP/USD</b>1.2714 <span class="neg">▼0.04%</span></span>
+        <span class="tk"><b>USD/JPY</b>147.36 <span class="pos">▲0.28%</span></span>
+        <span class="tk"><b>USD/SGD</b>1.3418 <span class="neg">▼0.09%</span></span>
+        <span class="tk"><b>USD/CHF</b>0.8792 <span class="pos">▲0.06%</span></span>
+        <span class="tk"><b>AUD/USD</b>0.6631 <span class="pos">▲0.19%</span></span>
+        <span class="tk"><b>USD/CAD</b>1.3585 <span class="neg">▼0.02%</span></span>
+        <span class="tk"><b>USD/MXN</b>18.412 <span class="pos">▲0.34%</span></span>
+        <span class="tk"><b>USD/BRL</b>5.4108 <span class="neg">▼0.21%</span></span>
+        <span class="tk"><b>USD/INR</b>83.214 <span class="pos">▲0.03%</span></span>
+        <span class="tk"><b>SEK/EUR</b>0.0872 <span class="pos">▲0.11%</span></span>
+        <span class="tk"><b>USD/ZAR</b>18.074 <span class="neg">▼0.16%</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 · PINNED SCROLL-DRIVEN DATA VISUALISATION ============ -->
+<section class="sec viz" id="volume">
+  <div class="viz-pin" id="vizPin">
+    <div class="wrap">
+      <div class="sec-head" style="margin-bottom:clamp(16px,2.4vh,40px)">
+        <span class="sec-idx">02</span>
+        <span class="sec-kick">Settlement volume</span>
+        <span class="sec-note">Source: Ledger internal ledger · Sep 2023 – Aug 2025 · unaudited</span>
+      </div>
+
+      <div class="viz-grid">
+
+        <!-- narrative steps -->
+        <div class="viz-steps" id="vizSteps">
+          <article class="viz-step" data-step="0">
+            <h3>Twenty-four months.<br><span class="tnum" style="letter-spacing:-.05em">$412.8bn</span> settled.</h3>
+            <p>Volume on Ledger-operated rails grew <span class="tnum">5.04×</span> while the same clients' correspondent-banking volume grew <span class="tnum">2.03×</span>. Same treasury headcount. One fewer reconciliation cycle per day.</p>
+            <div class="kv">
+              <div><span>Aug 2025 · Ledger rails</span><b>41.3 bn</b></div>
+              <div><span>Aug 2025 · Correspondent</span><b>16.0 bn</b></div>
+              <div><span>Share on own rails</span><b>72.1%</b></div>
+            </div>
+          </article>
+          <article class="viz-step" data-step="1">
+            <h3>Latency is a<br>balance-sheet item.</h3>
+            <p>At p50 <span class="tnum">240 ms</span> a payment lands inside the intraday window it left, so the buffer you hold against float stops earning its keep. Kestrel Freight retired <span class="tnum">$46m</span> of precautionary liquidity across two quarters.</p>
+            <div class="kv">
+              <div><span>p50 confirmation</span><b>240 ms</b></div>
+              <div><span>p99 confirmation</span><b>890 ms</b></div>
+              <div><span>Failed / returned</span><b>0.007%</b></div>
+            </div>
+          </article>
+          <article class="viz-step" data-step="2">
+            <h3>Exposure captured<br>at the point of booking.</h3>
+            <p>Every invoice writes an FX position the moment it is raised, not at month-end. Hedge ratios hold within <span class="tnum">2pp</span> of treasury policy without a manual roll, across <span class="tnum">47</span> currencies and <span class="tnum">8</span> reporting quarters.</p>
+            <div class="kv">
+              <div><span>Notional hedged · Q2 25</span><b>18.4 bn</b></div>
+              <div><span>Policy hedge ratio</span><b>85.0%</b></div>
+              <div><span>Realised ratio</span><b>84.2%</b></div>
+            </div>
+          </article>
+          <div class="viz-prog" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+        </div>
+
+        <!-- chart surface -->
+        <div class="term chart-wrap">
+          <div class="term-bar">
+            <span>Monthly settled volume</span>
+            <span class="sp">USD bn · 24 months to Aug 2025</span>
+          </div>
+
+          <div class="chart-head">
+            <div class="chart-read">
+              <span class="lab">Ledger rails · month</span>
+              <span class="val is-acc"><span id="readA">8.2</span><span class="u">bn</span></span>
+            </div>
+            <div class="chart-read">
+              <span class="lab">Correspondent · month</span>
+              <span class="val"><span id="readB">7.9</span><span class="u">bn</span></span>
+            </div>
+            <div class="chart-read">
+              <span class="lab">Period</span>
+              <span class="val" style="font-size:clamp(18px,1.7vw,26px)"><span id="readM">SEP 2023</span></span>
+            </div>
+            <div class="legend">
+              <span><i style="background:#3ddc97"></i>Ledger rails</span>
+              <span><i style="background:rgba(255,255,255,.34)"></i>Correspondent banking</span>
+            </div>
+          </div>
+
+          <div class="svg-box">
+            <!-- hand-authored inline SVG. No charting library. -->
+            <svg class="chart-svg" viewBox="0 0 1000 336" preserveAspectRatio="none" role="img"
+                 aria-label="Monthly settled volume in USD billions, September 2023 to August 2025. Ledger rails rise from 8.2 to 41.3 billion; correspondent banking rises from 7.9 to 16.0 billion.">
+              <defs>
+                <linearGradient id="areaFade" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3ddc97" stop-opacity=".20"/>
+                  <stop offset="100%" stop-color="#3ddc97" stop-opacity="0"/>
+                </linearGradient>
+                <clipPath id="areaClip"><rect id="areaRect" x="72" y="20" width="0" height="284"/></clipPath>
+              </defs>
+
+              <!-- gridlines + y labels -->
+              <g>
+                <line class="gridline" x1="72" y1="300" x2="944" y2="300"/>
+                <line class="gridline" x1="72" y1="232" x2="944" y2="232"/>
+                <line class="gridline" x1="72" y1="164" x2="944" y2="164"/>
+                <line class="gridline" x1="72" y1="96"  x2="944" y2="96"/>
+                <line class="gridline" x1="72" y1="28"  x2="944" y2="28"/>
+                <text class="axlab r" x="60" y="303">0</text>
+                <text class="axlab r" x="60" y="235">11</text>
+                <text class="axlab r" x="60" y="167">22</text>
+                <text class="axlab r" x="60" y="99">33</text>
+                <text class="axlab r" x="60" y="31">44</text>
+              </g>
+
+              <!-- area fill, revealed by clip rect -->
+              <g clip-path="url(#areaClip)">
+                <path id="areaA" fill="url(#areaFade)" stroke="none" d="M 72.0 249.3 C 77.9 248.4, 98.1 245.9, 109.9 243.7 C 121.8 241.6, 136.0 239.3, 147.8 235.7 C 159.7 232.1, 173.9 222.0, 185.7 220.9 C 197.6 219.7, 211.8 228.7, 223.7 228.3 C 235.5 227.9, 249.7 221.6, 261.6 218.4 C 273.4 215.2, 287.6 210.7, 299.5 207.9 C 311.3 205.1, 325.5 201.0, 337.4 200.5 C 349.2 200.0, 363.5 206.9, 375.3 204.8 C 387.2 202.7, 401.4 191.0, 413.2 186.9 C 425.1 182.7, 439.3 181.0, 451.1 178.2 C 463.0 175.4, 477.2 169.8, 489.0 168.9 C 500.9 168.1, 515.1 175.2, 527.0 172.7 C 538.8 170.1, 553.0 157.5, 564.9 152.9 C 576.7 148.2, 590.9 146.2, 602.8 143.0 C 614.6 139.8, 628.8 133.3, 640.7 132.5 C 652.5 131.6, 666.8 140.0, 678.6 137.4 C 690.5 134.8, 704.7 120.9, 716.5 115.8 C 728.4 110.7, 742.6 107.9, 754.4 104.7 C 766.3 101.4, 780.5 95.5, 792.3 94.8 C 804.2 94.0, 818.4 102.5, 830.3 99.7 C 842.1 96.9, 856.3 82.9, 868.2 76.8 C 880.0 70.8, 894.2 65.8, 906.1 60.8 C 917.9 55.7, 938.1 47.2, 944.0 44.7 L 944 300 L 72 300 Z"/>
+              </g>
+
+              <!-- correspondent banking, dashed grey -->
+              <path id="lineB" class="line-b" d="M 72.0 251.2 C 77.9 250.8, 98.1 249.4, 109.9 248.7 C 121.8 248.0, 136.0 247.9, 147.8 246.8 C 159.7 245.8, 173.9 242.4, 185.7 241.9 C 197.6 241.4, 211.8 243.8, 223.7 243.7 C 235.5 243.6, 249.7 242.3, 261.6 241.3 C 273.4 240.2, 287.6 238.0, 299.5 236.9 C 311.3 235.9, 325.5 234.7, 337.4 234.5 C 349.2 234.3, 363.5 236.4, 375.3 235.7 C 387.2 235.0, 401.4 231.5, 413.2 230.1 C 425.1 228.8, 439.3 227.8, 451.1 227.1 C 463.0 226.3, 477.2 225.3, 489.0 225.2 C 500.9 225.1, 515.1 226.9, 527.0 226.4 C 538.8 226.0, 553.0 223.2, 564.9 222.1 C 576.7 221.0, 590.9 220.4, 602.8 219.6 C 614.6 218.9, 628.8 217.3, 640.7 217.2 C 652.5 217.1, 666.8 219.5, 678.6 219.0 C 690.5 218.5, 704.7 215.2, 716.5 214.1 C 728.4 212.9, 742.6 212.3, 754.4 211.6 C 766.3 210.9, 780.5 209.8, 792.3 209.7 C 804.2 209.6, 818.4 211.6, 830.3 211.0 C 842.1 210.4, 856.3 207.2, 868.2 206.0 C 880.0 204.9, 894.2 204.3, 906.1 203.6 C 917.9 202.8, 938.1 201.5, 944.0 201.1"/>
+
+              <!-- Ledger rails, accent, stroke-dashoffset draw -->
+              <path id="lineA" class="line-a" d="M 72.0 249.3 C 77.9 248.4, 98.1 245.9, 109.9 243.7 C 121.8 241.6, 136.0 239.3, 147.8 235.7 C 159.7 232.1, 173.9 222.0, 185.7 220.9 C 197.6 219.7, 211.8 228.7, 223.7 228.3 C 235.5 227.9, 249.7 221.6, 261.6 218.4 C 273.4 215.2, 287.6 210.7, 299.5 207.9 C 311.3 205.1, 325.5 201.0, 337.4 200.5 C 349.2 200.0, 363.5 206.9, 375.3 204.8 C 387.2 202.7, 401.4 191.0, 413.2 186.9 C 425.1 182.7, 439.3 181.0, 451.1 178.2 C 463.0 175.4, 477.2 169.8, 489.0 168.9 C 500.9 168.1, 515.1 175.2, 527.0 172.7 C 538.8 170.1, 553.0 157.5, 564.9 152.9 C 576.7 148.2, 590.9 146.2, 602.8 143.0 C 614.6 139.8, 628.8 133.3, 640.7 132.5 C 652.5 131.6, 666.8 140.0, 678.6 137.4 C 690.5 134.8, 704.7 120.9, 716.5 115.8 C 728.4 110.7, 742.6 107.9, 754.4 104.7 C 766.3 101.4, 780.5 95.5, 792.3 94.8 C 804.2 94.0, 818.4 102.5, 830.3 99.7 C 842.1 96.9, 856.3 82.9, 868.2 76.8 C 880.0 70.8, 894.2 65.8, 906.1 60.8 C 917.9 55.7, 938.1 47.2, 944.0 44.7"/>
+
+              <!-- scrubbing readhead -->
+              <line id="scanline" class="gridline" x1="72" y1="20" x2="72" y2="304" stroke="rgba(255,255,255,.22)" opacity="0"/>
+              <circle id="scanDotA" cx="72" cy="249.3" r="3.5" fill="#3ddc97" opacity="0"/>
+              <circle id="scanDotB" cx="72" cy="251.2" r="2.75" fill="rgba(255,255,255,.5)" opacity="0"/>
+
+              <!-- x axis labels -->
+              <g>
+                <text class="axlab" x="72"    y="324" text-anchor="start">SEP 23</text>
+                <text class="axlab" x="299.5" y="324" text-anchor="middle">MAR 24</text>
+                <text class="axlab" x="527"   y="324" text-anchor="middle">SEP 24</text>
+                <text class="axlab" x="754.4" y="324" text-anchor="middle">MAR 25</text>
+                <text class="axlab" x="944"   y="324" text-anchor="end">AUG 25</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- growing bars -->
+          <div class="bars-head">
+            <span class="t">FX notional hedged · by quarter</span>
+            <span class="n">USD bn · Q3 23 → Q2 25</span>
+          </div>
+          <div class="svg-box">
+            <svg class="chart-svg" viewBox="0 0 1000 132" preserveAspectRatio="none" role="img"
+                 aria-label="Quarterly FX notional hedged in USD billions, rising from 3.1 in Q3 2023 to 18.4 in Q2 2025.">
+              <line class="gridline" x1="72" y1="104" x2="944" y2="104"/>
+              <g id="barGroup">
+                <rect class="bar" x="80"  y="24" width="86" height="80" data-h="14"/>
+                <rect class="bar" x="188" y="24" width="86" height="80" data-h="21"/>
+                <rect class="bar" x="296" y="24" width="86" height="80" data-h="29"/>
+                <rect class="bar" x="404" y="24" width="86" height="80" data-h="38"/>
+                <rect class="bar" x="512" y="24" width="86" height="80" data-h="47"/>
+                <rect class="bar" x="620" y="24" width="86" height="80" data-h="58"/>
+                <rect class="bar" x="728" y="24" width="86" height="80" data-h="70"/>
+                <rect class="bar is-acc" x="836" y="24" width="86" height="80" data-h="80"/>
+              </g>
+              <g>
+                <text class="barlab" x="123" y="122">Q3 23 · 3.1</text>
+                <text class="barlab" x="231" y="122">Q4 23 · 4.8</text>
+                <text class="barlab" x="339" y="122">Q1 24 · 6.7</text>
+                <text class="barlab" x="447" y="122">Q2 24 · 8.8</text>
+                <text class="barlab" x="555" y="122">Q3 24 · 10.9</text>
+                <text class="barlab" x="663" y="122">Q4 24 · 13.4</text>
+                <text class="barlab" x="771" y="122">Q1 25 · 16.1</text>
+                <text class="barlab" x="879" y="122">Q2 25 · 18.4</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · BROKEN-GRID PRODUCT SECTION ============ -->
+<section class="sec sec-pad" id="platform">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-idx">03</span>
+      <span class="sec-kick">Three ledgers, one truth</span>
+      <span class="sec-note">Deployed as one platform · single entity graph · single audit trail</span>
+    </div>
+
+    <div class="prod-row">
+      <div class="prod-ghost" aria-hidden="true">01</div>
+      <div class="prod-id">01 / CASH</div>
+      <div class="prod-name">
+        <h3 data-lines><span class="mask"><span>Ledger</span></span><span class="mask"><span>Cash</span></span></h3>
+        <div class="sub">Positioning &amp; forecasting</div>
+      </div>
+      <div class="prod-copy">
+        <p>Direct API and ISO&nbsp;20022 connections to 214 banks in 38 markets, normalised into one entity graph. Balances refresh on webhook, not on a nightly MT940 batch, so the 09:00 position is the position — including the accounts your subsidiaries opened without telling you.</p>
+        <p>Rolling 13-week forecasts reconcile actuals against plan daily and attribute variance to entity, counterparty and currency. Median forecast error at week&nbsp;4 across the client base is 3.8%.</p>
+      </div>
+      <div class="prod-spec">
+        <div><span>Bank connections</span><b>214</b></div>
+        <div><span>Markets</span><b>38</b></div>
+        <div><span>Balance refresh</span><b>&lt; 90 s</b></div>
+        <div><span>Wk-4 forecast error</span><b>3.8%</b></div>
+      </div>
+    </div>
+
+    <div class="prod-row">
+      <div class="prod-ghost" aria-hidden="true">02</div>
+      <div class="prod-id">02 / FX</div>
+      <div class="prod-name">
+        <h3 data-lines><span class="mask"><span>Ledger</span></span><span class="mask"><span>FX</span></span></h3>
+        <div class="sub">Exposure &amp; hedging</div>
+      </div>
+      <div class="prod-copy">
+        <p>Exposure is written at booking. Every AR and AP document raised in your ERP creates a dated FX position in the same second, so the hedge programme runs against transactions rather than against a month-end snapshot of them.</p>
+        <p>Policy is expressed as code — ratio bands, tenor limits, counterparty caps — and enforced pre-trade. Execution routes to seven liquidity providers with full RFQ records retained for seven years against IFRS&nbsp;9 hedge documentation.</p>
+      </div>
+      <div class="prod-spec">
+        <div><span>Currencies</span><b>47</b></div>
+        <div><span>Liquidity providers</span><b>7</b></div>
+        <div><span>Policy drift, realised</span><b>0.8 pp</b></div>
+        <div><span>IFRS 9 docs</span><b>Automated</b></div>
+      </div>
+    </div>
+
+    <div class="prod-row">
+      <div class="prod-ghost" aria-hidden="true">03</div>
+      <div class="prod-id">03 / RAIL</div>
+      <div class="prod-name">
+        <h3 data-lines><span class="mask"><span>Ledger</span></span><span class="mask"><span>Rail</span></span></h3>
+        <div class="sub">Settlement &amp; orchestration</div>
+      </div>
+      <div class="prod-copy">
+        <p>We hold the licences and the scheme memberships — FPS and CHAPS in the UK, SEPA Inst in the euro area, FedNow and RTP in the US, FAST in Singapore — so a payment is settled by us, not handed to a correspondent and tracked by inference.</p>
+        <p>Intercompany nets before it moves: 4,118 gross transfers collapsed to 372 external settlements last quarter for one client, removing $1.9m of annual wire and FX spread cost.</p>
+      </div>
+      <div class="prod-spec">
+        <div><span>Domestic rails</span><b>31</b></div>
+        <div><span>p50 / p99</span><b>240 / 890 ms</b></div>
+        <div><span>Return rate</span><b>0.007%</b></div>
+        <div><span>Netting ratio</span><b>11.1 : 1</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 · HORIZONTAL SHOWCASE ============ -->
+<section class="sec show" id="surface">
+  <div class="wrap show-head">
+    <div class="sec-head">
+      <span class="sec-idx">04</span>
+      <span class="sec-kick">The product surface</span>
+      <span class="sec-note">Five views from a live tenant · figures redacted &amp; resampled</span>
+    </div>
+  </div>
+  <div class="show-vp" id="showVp">
+    <div class="show-track" id="showTrack">
+
+      <article class="card">
+        <div class="card-hd"><span class="n">01</span><span class="t">Group position</span><span class="sp">14:32 UTC</span></div>
+        <div class="card-bd">
+          <table class="dt">
+            <thead><tr><th>Region</th><th class="r">Accounts</th><th class="r">Available</th><th class="r">Δ 24h</th></tr></thead>
+            <tbody>
+              <tr><td class="ent">United Kingdom</td><td class="r">61</td><td class="r">84,210,553</td><td class="r pos">+2.14%</td></tr>
+              <tr><td class="ent">Euro area</td><td class="r">88</td><td class="r">41,806,204</td><td class="r pos">+0.87%</td></tr>
+              <tr><td class="ent">North America</td><td class="r">74</td><td class="r">68,932,470</td><td class="r pos">+1.06%</td></tr>
+              <tr><td class="ent">APAC</td><td class="r">59</td><td class="r">22,470,118</td><td class="r neg">−0.31%</td></tr>
+              <tr><td class="ent">Nordics</td><td class="r">33</td><td class="r">19,540,882</td><td class="r neg">−0.12%</td></tr>
+              <tr><td class="ent">LatAm</td><td class="r">25</td><td class="r">7,318,655</td><td class="r pos">+4.02%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-ft">340 accounts across 214 banks, normalised to one entity graph. <b>Trapped cash flagged in 6 jurisdictions.</b></div>
+      </article>
+
+      <article class="card">
+        <div class="card-hd"><span class="n">02</span><span class="t">FX exposure</span><span class="sp">Policy 85.0% ±5</span></div>
+        <div class="card-bd">
+          <div class="mbar"><span class="k">EUR</span><span class="tr"><i class="on" style="width:88%"></i></span><span class="v">88.1%</span></div>
+          <div class="mbar"><span class="k">GBP</span><span class="tr"><i class="on" style="width:86%"></i></span><span class="v">86.4%</span></div>
+          <div class="mbar"><span class="k">SGD</span><span class="tr"><i class="on" style="width:84%"></i></span><span class="v">83.9%</span></div>
+          <div class="mbar"><span class="k">NOK</span><span class="tr"><i class="on" style="width:87%"></i></span><span class="v">87.2%</span></div>
+          <div class="mbar"><span class="k">COP</span><span class="tr"><i style="width:71%"></i></span><span class="v">71.0%</span></div>
+          <div class="mbar"><span class="k">MXN</span><span class="tr"><i class="on" style="width:82%"></i></span><span class="v">81.6%</span></div>
+          <div class="mbar"><span class="k">JPY</span><span class="tr"><i class="on" style="width:85%"></i></span><span class="v">85.3%</span></div>
+        </div>
+        <div class="card-ft">Six of seven pairs inside policy band. <b>COP breach raised at 09:14, hedge queued for LP rotation.</b></div>
+      </article>
+
+      <article class="card">
+        <div class="card-hd"><span class="n">03</span><span class="t">Settlement monitor</span><span class="sp">Last 60 s</span></div>
+        <div class="card-bd">
+          <table class="dt">
+            <thead><tr><th>Reference</th><th>Rail</th><th class="r">Amount</th><th class="r">Conf.</th><th class="r">State</th></tr></thead>
+            <tbody>
+              <tr><td>LX-84402193</td><td>FPS</td><td class="r">1,240,000</td><td class="r">214 ms</td><td class="r"><span class="tag tag--ok">Settled</span></td></tr>
+              <tr><td>LX-84402194</td><td>SEPA-INST</td><td class="r">486,300</td><td class="r">238 ms</td><td class="r"><span class="tag tag--ok">Settled</span></td></tr>
+              <tr><td>LX-84402195</td><td>FEDNOW</td><td class="r">2,905,110</td><td class="r">271 ms</td><td class="r"><span class="tag tag--ok">Settled</span></td></tr>
+              <tr><td>LX-84402196</td><td>FAST</td><td class="r">318,940</td><td class="r">226 ms</td><td class="r"><span class="tag tag--ok">Settled</span></td></tr>
+              <tr><td>LX-84402197</td><td>CHAPS</td><td class="r">14,700,000</td><td class="r">— </td><td class="r"><span class="tag">In flight</span></td></tr>
+              <tr><td>LX-84402198</td><td>RTP</td><td class="r">92,415</td><td class="r">249 ms</td><td class="r"><span class="tag tag--ok">Settled</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-ft">18,402 payments in the last hour. <b>p50 240 ms · p99 890 ms · 2 returned.</b></div>
+      </article>
+
+      <article class="card">
+        <div class="card-hd"><span class="n">04</span><span class="t">Close &amp; controls</span><span class="sp">Aug 2025 · day 2</span></div>
+        <div class="card-bd">
+          <div class="chk"><span class="st tag tag--ok">Complete</span>Bank statement ingestion · 340 accounts<span class="tm">02:41</span></div>
+          <div class="chk"><span class="st tag tag--ok">Complete</span>Auto-reconciliation · 99.2% matched<span class="tm">03:08</span></div>
+          <div class="chk"><span class="st tag tag--ok">Complete</span>Intercompany netting · 372 settlements<span class="tm">04:15</span></div>
+          <div class="chk"><span class="st tag tag--ok">Complete</span>IFRS 9 hedge effectiveness test<span class="tm">05:02</span></div>
+          <div class="chk"><span class="st tag">Review</span>Exceptions queue · 61 items<span class="tm">05:44</span></div>
+          <div class="chk"><span class="st tag">Pending</span>Group consolidation sign-off<span class="tm">—</span></div>
+        </div>
+        <div class="card-ft">Close cycle down from 9 days to 3. <b>Every control step is an immutable, exportable audit record.</b></div>
+      </article>
+
+      <article class="card card--img">
+        <div class="card-hd"><span class="n">05</span><span class="t">Operations floor</span><span class="sp">London EC2 · 24/5 coverage</span></div>
+        <div class="card-bd">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img class="ph" loading="lazy" decoding="async"
+               src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1400&q=70"
+               alt="Ledger treasury operations floor">
+        </div>
+        <div class="card-ft">Named treasury engineer per account, 24/5. <b>Median first response 4 min 20 s; no tiered ticket queue.</b></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 · PROOF / DETAIL ============ -->
+<section class="sec sec-pad" id="proof">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:clamp(30px,3.4vw,54px)">
+      <span class="sec-idx">05</span>
+      <span class="sec-kick">Coverage &amp; evidence</span>
+      <span class="sec-note">Figures to 31 Jul 2025 · methodology at ledger.com/metrics</span>
+    </div>
+
+    <div class="countband" data-countband>
+      <div class="cu">
+        <div class="v"><span class="u">$</span><span data-count="412.8" data-dec="1">0.0</span><span class="u">bn</span></div>
+        <div class="l">Settled volume · TTM</div>
+        <div class="d">Up from $81.9bn in the twelve months to Jul 2023.</div>
+      </div>
+      <div class="cu">
+        <div class="v"><span data-count="1840" data-dec="0">0</span></div>
+        <div class="l">Legal entities live</div>
+        <div class="d">Across 128 client groups in 38 markets.</div>
+      </div>
+      <div class="cu">
+        <div class="v"><span data-count="240" data-dec="0">0</span><span class="u">ms</span></div>
+        <div class="l">p50 settlement confirmation</div>
+        <div class="d">p99 890 ms, measured instruction to scheme acknowledgement.</div>
+      </div>
+      <div class="cu">
+        <div class="v"><span data-count="99.995" data-dec="3">0.000</span><span class="u">%</span></div>
+        <div class="l">Platform uptime · TTM</div>
+        <div class="d">26 minutes of degraded service, zero unplanned full outages.</div>
+      </div>
+    </div>
+
+    <div class="proof-split">
+      <div>
+        <div class="term-bar" style="border:1px solid var(--line);border-bottom:0;background:var(--panel)">
+          <span>Settlement corridors</span>
+          <span class="sp">Top 8 by 30-day volume · confirmation latency, milliseconds</span>
+        </div>
+        <div class="tbl-scroll">
+          <table class="dt">
+            <thead>
+              <tr><th>Corridor</th><th>Pair</th><th>Rail</th><th class="r">p50</th><th class="r">p99</th><th class="r">30d volume</th><th class="r">Cut-off</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="ent">UK → UK</td><td>GBP/GBP</td><td>FPS</td><td class="r pos">188</td><td class="r">640</td><td class="r">9,412,800,000</td><td class="r">24/7</td></tr>
+              <tr><td class="ent">Euro area → Euro area</td><td>EUR/EUR</td><td>SEPA INST</td><td class="r pos">214</td><td class="r">705</td><td class="r">8,106,440,000</td><td class="r">24/7</td></tr>
+              <tr><td class="ent">US → US</td><td>USD/USD</td><td>FEDNOW</td><td class="r pos">231</td><td class="r">812</td><td class="r">7,884,190,000</td><td class="r">24/7</td></tr>
+              <tr><td class="ent">Singapore → Singapore</td><td>SGD/SGD</td><td>FAST</td><td class="r pos">226</td><td class="r">690</td><td class="r">3,118,270,000</td><td class="r">24/7</td></tr>
+              <tr><td class="ent">UK → Euro area</td><td>GBP/EUR</td><td>SEPA INST</td><td class="r pos">294</td><td class="r">1,040</td><td class="r">2,940,610,000</td><td class="r">24/7</td></tr>
+              <tr><td class="ent">US → Mexico</td><td>USD/MXN</td><td>SPEI</td><td class="r">402</td><td class="r">1,380</td><td class="r">1,662,050,000</td><td class="r">22:00 CT</td></tr>
+              <tr><td class="ent">Euro area → Norway</td><td>EUR/NOK</td><td>NICS REAL</td><td class="r">368</td><td class="r">1,215</td><td class="r">1,204,880,000</td><td class="r">24/7</td></tr>
+              <tr><td class="ent">US → Colombia</td><td>USD/COP</td><td>TRANSFIYA</td><td class="r">614</td><td class="r">2,060</td><td class="r">418,330,000</td><td class="r">19:00 COT</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small" style="margin-top:14px;max-width:74ch">
+          Latency is measured from accepted instruction to scheme acknowledgement, excluding client-side
+          authorisation. Corridors outside instant-rail coverage settle same-day via partner banks in
+          16 further markets; those are excluded from the p50 above and reported separately.
+        </p>
+      </div>
+
+      <aside id="compliance">
+        <div class="eyebrow" style="padding-bottom:14px">Regulatory &amp; assurance</div>
+        <div class="certs">
+          <div><span class="c-n">SOC 2 Type II</span><span class="c-s">RENEWED 04 / 2025</span></div>
+          <div><span class="c-n">ISO/IEC 27001:2022</span><span class="c-s">CERT 44-1029871</span></div>
+          <div><span class="c-n">PCI DSS v4.0 Level 1</span><span class="c-s">AOC 03 / 2025</span></div>
+          <div><span class="c-n">FCA — E-Money Institution</span><span class="c-s">FRN 927341</span></div>
+          <div><span class="c-n">DNB — Payment Institution</span><span class="c-s">R168204</span></div>
+          <div><span class="c-n">MAS — Major Payment Inst.</span><span class="c-s">PS20240118</span></div>
+          <div><span class="c-n">FinCEN — MSB</span><span class="c-s">31000284417392</span></div>
+          <div><span class="c-n">Client funds safeguarded</span><span class="c-s">100% · 4 banks</span></div>
+        </div>
+        <p class="small" style="margin-top:18px">
+          Client money is safeguarded in segregated accounts at four A-rated institutions and
+          reconciled daily. Ledger does not lend against, invest or rehypothecate client balances.
+        </p>
+      </aside>
+    </div>
+
+    <div class="quote">
+      <blockquote data-lines>
+        <span class="mask"><span>&ldquo;We closed eleven bank relationships and still</span></span>
+        <span class="mask"><span>cut days-to-close from nine to three. The buffer</span></span>
+        <span class="mask"><span>we released paid for Ledger <span class="fig">6.4×</span> over.&rdquo;</span></span>
+      </blockquote>
+      <cite>
+        <b>Ines Okafor-Whitmore</b>
+        Group CFO, Kestrel Freight Group PLC<br>
+        £4.1bn revenue · 61 entities · live since Mar 2023
+      </cite>
+    </div>
+
+    <div class="logos">
+      <span>Kestrel Freight<em>Logistics · 61 entities</em></span>
+      <span>Halden Biosciences<em>Life sciences · 34 entities</em></span>
+      <span>NorthPier Retail<em>Retail · 118 entities</em></span>
+      <span>Aventine Energy<em>Energy · 47 entities</em></span>
+      <span>Trestle Manufacturing<em>Industrials · 92 entities</em></span>
+      <span>Corvus Media Holdings<em>Media · 28 entities</em></span>
+      <span>Linden Health Systems<em>Healthcare · 76 entities</em></span>
+      <span>Sable &amp; Roe<em>Consumer · 22 entities</em></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 · CLOSING CTA ============ -->
+<section class="sec cta sec-pad" id="cta">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-idx">06</span>
+      <span class="sec-kick">Next step</span>
+      <span class="sec-note">Implementation median: 11 weeks to first live entity</span>
+    </div>
+    <h2 class="cta-h" data-lines>
+      <span class="mask"><span>Bring us your <span class="fig">40</span></span></span>
+      <span class="mask"><span>bank portals.</span></span>
+    </h2>
+    <div class="cta-row">
+      <p class="lede">
+        A 45-minute walkthrough against your own entity list and bank map. We will tell you which of
+        your corridors we settle instantly, which we do not, and what your buffer liquidity is
+        actually costing you — before anyone mentions a contract.
+      </p>
+      <div class="cta-acts">
+        <a class="btn btn--acc btn--lg mag" href="#cta" data-mag><span>Book a walkthrough <i class="arw">→</i></span></a>
+        <a class="btn btn--lg" href="#proof">Download the coverage map (PDF)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top"><span class="brand-mk" aria-hidden="true"><i></i><i></i><i></i></span>LEDGER</a>
+        <p class="bd">The treasury operating system for groups running more than one balance sheet. Positioning, exposure and settlement on one entity graph.</p>
+        <span class="status"><i class="dot"></i>ALL RAILS OPERATIONAL · 99.995% TTM</span>
+      </div>
+      <div class="fcol">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#platform">Ledger Cash</a></li>
+          <li><a href="#platform">Ledger FX</a></li>
+          <li><a href="#platform">Ledger Rail</a></li>
+          <li><a href="#proof">Coverage map</a></li>
+          <li><a href="#surface">Bank connectivity</a></li>
+          <li><a href="#platform">Intercompany netting</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4>Developers</h4>
+        <ul>
+          <li><a href="#surface">API reference</a></li>
+          <li><a href="#surface">ISO 20022 mapping</a></li>
+          <li><a href="#surface">Webhooks</a></li>
+          <li><a href="#surface">Sandbox tenant</a></li>
+          <li><a href="#proof">Status &amp; incidents</a></li>
+          <li><a href="#proof">Changelog v4.2</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#platform">About Ledger</a></li>
+          <li><a href="#proof">Customers</a></li>
+          <li><a href="#cta">Careers — 14 open</a></li>
+          <li><a href="#volume">Research</a></li>
+          <li><a href="#cta">Press</a></li>
+          <li><a href="#cta">Contact</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4>Trust</h4>
+        <ul>
+          <li><a href="#compliance">Trust centre</a></li>
+          <li><a href="#compliance">SOC 2 &amp; ISO 27001</a></li>
+          <li><a href="#compliance">Safeguarding policy</a></li>
+          <li><a href="#compliance">Complaints</a></li>
+          <li><a href="#compliance">Privacy notice</a></li>
+          <li><a href="#compliance">Terms of business</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <p>
+        Ledger Financial Technologies Ltd (No. 11840226) is authorised by the Financial Conduct Authority
+        as an Electronic Money Institution, FRN 927341. Ledger Payments B.V. is registered with
+        De Nederlandsche Bank, R168204. Ledger Asia Pte Ltd holds a Major Payment Institution licence
+        from the Monetary Authority of Singapore, PS20240118. Registered office: 30 Finsbury Circus,
+        London EC2M 7DT. Volume, latency and uptime figures are internal, unaudited, measured to
+        31 July 2025; methodology published at ledger.com/metrics. Client names and figures on this
+        page are illustrative.
+      </p>
+      <span class="rt">© 2025 LEDGER · LONDON · SINGAPORE · CHICAGO</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DESKTOP = function(){ return window.innerWidth >= 1024; };
+  var hasGSAP = typeof window.gsap !== 'undefined';
+
+  if (hasGSAP && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------------------------------------------------------
+     LENIS smooth scroll, wired into ScrollTrigger properly
+     --------------------------------------------------------- */
+  var lenis = null;
+  if (!REDUCED && typeof window.Lenis !== 'undefined') {
+    lenis = new Lenis({
+      duration: 1.1,
+      easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  /* anchor links through Lenis */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var el = document.querySelector(id);
+      if (!el) return;
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(el, { offset: -62, duration: 1.2 });
+      else el.scrollIntoView({ behavior: 'auto', block: 'start' });
+    });
+  });
+
+  /* ---------------------------------------------------------
+     Number formatting — tabular figures everywhere
+     --------------------------------------------------------- */
+  function fmt(v, dec){
+    var s = Number(v).toFixed(dec);
+    var parts = s.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
+  }
+
+  /* =========================================================
+     TECHNIQUE 0 · PAGE-LOAD INTRO — counter + split curtain
+     ========================================================= */
+  var intro   = document.getElementById('intro');
+  var introNum= document.getElementById('introNum');
+  var introCore = document.getElementById('introCore');
+
+  function startPage(){
+    document.documentElement.classList.remove('is-loading');
+    if (lenis) lenis.start();
+    heroIn();
+    ScrollTrigger.refresh();
+  }
+
+  if (REDUCED || !hasGSAP) {
+    if (intro) intro.parentNode.removeChild(intro);
+    document.documentElement.classList.remove('is-loading');
+  } else {
+    if (lenis) lenis.stop();
+    gsap.set('[data-lines] .mask > span', { yPercent: 110 });
+    gsap.set('[data-fade]', { opacity: 0, y: 18 });
+    gsap.set('[data-stagger] .stat', { opacity: 0, y: 22 });
+
+    var counter = { v: 0 };
+    var tlIntro = gsap.timeline({ delay: 0.15, onComplete: function(){
+      if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+    }});
+
+    tlIntro
+      .to('[data-irule]', { scaleX: 1, duration: 1.0, ease: 'power4.inOut', stagger: 0.08 }, 0)
+      .to(counter, {
+        v: 412.8, duration: 1.6, ease: 'power2.inOut',
+        onUpdate: function(){ if (introNum) introNum.textContent = fmt(counter.v, 1); }
+      }, 0.1)
+      .to(introCore, { opacity: 0, duration: 0.45, ease: 'power2.in' }, '+=0.22')
+      .to('[data-pan="t"]', { yPercent: -100, duration: 1.05, ease: 'power4.inOut' }, '-=0.2')
+      .to('[data-pan="b"]', { yPercent: 100, duration: 1.05, ease: 'power4.inOut' }, '<')
+      .add(startPage, '-=0.72');
+  }
+
+  /* hero entrance */
+  function heroIn(){
+    if (REDUCED || !hasGSAP) return;
+    var tl = gsap.timeline();
+    tl.to('.hero-h1 .mask > span', { yPercent: 0, duration: 1.15, ease: 'power4.out', stagger: 0.075 })
+      .to('[data-fade]', { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out', stagger: 0.09 }, '-=0.72')
+      .to('[data-stagger] .stat', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.06 }, '-=0.6');
+  }
+
+  /* nav state */
+  var nav = document.getElementById('nav');
+  if (hasGSAP) {
+    ScrollTrigger.create({
+      start: 'top -40',
+      onUpdate: function(self){ nav.classList.toggle('is-stuck', self.scroll() > 40); }
+    });
+  }
+
+  /* =========================================================
+     TECHNIQUE 1 · HAND-SPLIT LINE MASK REVEALS (on scroll)
+     ========================================================= */
+  if (!REDUCED && hasGSAP) {
+    document.querySelectorAll('[data-lines]').forEach(function(el){
+      if (el.closest('.hero-h1')) return;
+      var spans = el.querySelectorAll('.mask > span');
+      gsap.set(spans, { yPercent: 110 });
+      ScrollTrigger.create({
+        trigger: el, start: 'top 86%', once: true,
+        onEnter: function(){
+          gsap.to(spans, { yPercent: 0, duration: 1.1, ease: 'power4.out', stagger: 0.07 });
+        }
+      });
+    });
+
+    /* generic section entrances — supporting, not counted */
+    document.querySelectorAll('.prod-copy, .prod-spec, .certs, .logos, .cta-row, .tbl-scroll').forEach(function(el){
+      gsap.fromTo(el, { opacity: 0, y: 26 }, {
+        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+  }
+
+  /* =========================================================
+     TECHNIQUE 2 · PINNED SECTION + SCROLL-SCRUBBED SVG DRAW
+     (stroke-dasharray / dashoffset, clip-reveal area, bars)
+     ========================================================= */
+  var VOL_A = [8.2,9.1,10.4,12.8,11.6,13.2,14.9,16.1,15.4,18.3,19.7,21.2,20.6,23.8,25.4,27.1,26.3,29.8,31.6,33.2,32.4,36.1,38.7,41.3];
+  var VOL_B = [7.9,8.3,8.6,9.4,9.1,9.5,10.2,10.6,10.4,11.3,11.8,12.1,11.9,12.6,13.0,13.4,13.1,13.9,14.3,14.6,14.4,15.2,15.6,16.0];
+  var MONTHS = ['SEP 2023','OCT 2023','NOV 2023','DEC 2023','JAN 2024','FEB 2024','MAR 2024','APR 2024','MAY 2024','JUN 2024','JUL 2024','AUG 2024','SEP 2024','OCT 2024','NOV 2024','DEC 2024','JAN 2025','FEB 2025','MAR 2025','APR 2025','MAY 2025','JUN 2025','JUL 2025','AUG 2025'];
+
+  var lineA = document.getElementById('lineA');
+  var lineB = document.getElementById('lineB');
+  var areaRect = document.getElementById('areaRect');
+  var scan = document.getElementById('scanline');
+  var dotA = document.getElementById('scanDotA');
+  var dotB = document.getElementById('scanDotB');
+  var readA = document.getElementById('readA');
+  var readB = document.getElementById('readB');
+  var readM = document.getElementById('readM');
+  var bars  = document.querySelectorAll('#barGroup .bar');
+  var steps = document.querySelectorAll('.viz-step');
+  var pips  = document.querySelectorAll('.viz-prog i');
+
+  var lenA = lineA ? lineA.getTotalLength() : 0;
+  var lenB = lineB ? lineB.getTotalLength() : 0;
+
+  function setChartProgress(p){
+    p = Math.max(0, Math.min(1, p));
+    /* dashoffset draw */
+    lineA.style.strokeDashoffset = (lenA * (1 - p)).toFixed(2);
+    lineB.style.strokeDashoffset = (lenB * (1 - Math.max(0, (p - 0.06) / 0.94))).toFixed(2);
+    /* area clip follows the head of the line */
+    areaRect.setAttribute('width', (872 * p).toFixed(2));
+
+    /* readhead + tabular count-up readouts */
+    var fi = p * (VOL_A.length - 1);
+    var i0 = Math.floor(fi), i1 = Math.min(VOL_A.length - 1, i0 + 1), t = fi - i0;
+    var va = VOL_A[i0] + (VOL_A[i1] - VOL_A[i0]) * t;
+    var vb = VOL_B[i0] + (VOL_B[i1] - VOL_B[i0]) * t;
+    readA.textContent = fmt(va, 1);
+    readB.textContent = fmt(vb, 1);
+    readM.textContent = MONTHS[Math.round(fi)];
+
+    var pt = lineA.getPointAtLength(lenA * p);
+    var ptb = lineB.getPointAtLength(lenB * p);
+    scan.setAttribute('x1', pt.x); scan.setAttribute('x2', pt.x);
+    dotA.setAttribute('cx', pt.x); dotA.setAttribute('cy', pt.y);
+    dotB.setAttribute('cx', ptb.x); dotB.setAttribute('cy', ptb.y);
+    var vis = p > 0.015 ? 1 : 0;
+    scan.setAttribute('opacity', vis * 0.55);
+    dotA.setAttribute('opacity', vis);
+    dotB.setAttribute('opacity', vis * 0.8);
+  }
+
+  if (lineA && lineB) {
+    lineA.style.strokeDasharray = lenA;
+    lineB.style.strokeDasharray = lenB;
+  }
+
+  function setBars(p){
+    bars.forEach(function(b, i){
+      var local = Math.max(0, Math.min(1, (p - i * 0.062) / 0.4));
+      var eased = 1 - Math.pow(1 - local, 3);
+      var h = parseFloat(b.getAttribute('data-h'));
+      b.setAttribute('height', (h * eased).toFixed(2));
+      b.setAttribute('y', (104 - h * eased).toFixed(2));
+    });
+  }
+
+  function setStep(idx){
+    steps.forEach(function(s, i){
+      gsap.to(s, { opacity: i === idx ? 1 : 0, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+    });
+    pips.forEach(function(p, i){ p.classList.toggle('on', i <= idx); });
+  }
+
+  var vizST = null;
+  function buildViz(){
+    if (vizST) { vizST.kill(); vizST = null; }
+    if (REDUCED || !hasGSAP) { setChartProgress(1); setBars(1); return; }
+    if (!DESKTOP()) {
+      /* mobile: no pin — draw once on enter */
+      setChartProgress(0); setBars(0);
+      vizST = ScrollTrigger.create({
+        trigger: '#vizPin', start: 'top 72%', once: true,
+        onEnter: function(){
+          gsap.to({ p: 0 }, { p: 1, duration: 1.9, ease: 'power2.out',
+            onUpdate: function(){ var v = this.targets()[0].p; setChartProgress(v); setBars(v); } });
+        }
+      });
+      return;
+    }
+    setChartProgress(0); setBars(0); setStep(0);
+    vizST = ScrollTrigger.create({
+      trigger: '#volume',
+      start: 'top top',
+      end: '+=2800',
+      pin: '#vizPin',
+      pinSpacing: true,
+      scrub: 0.6,
+      invalidateOnRefresh: true,
+      onUpdate: function(self){
+        var p = self.progress;
+        setChartProgress(Math.min(1, p / 0.72));
+        setBars(Math.max(0, (p - 0.26) / 0.6));
+        setStep(p < 0.34 ? 0 : (p < 0.66 ? 1 : 2));
+      }
+    });
+  }
+  buildViz();
+
+  /* =========================================================
+     TECHNIQUE 3 · HORIZONTAL SCROLL PANEL (showcase)
+     ========================================================= */
+  var showST = null;
+  function buildShow(){
+    if (showST) { showST.kill(); showST = null; }
+    var track = document.getElementById('showTrack');
+    if (!track) return;
+    gsap.set(track, { x: 0 });
+    if (REDUCED || !hasGSAP || !DESKTOP()) return;
+    var dist = track.scrollWidth - window.innerWidth;
+    if (dist <= 0) return;
+    showST = ScrollTrigger.create({
+      trigger: '#surface',
+      start: 'top top',
+      end: function(){ return '+=' + (dist + window.innerHeight * 0.4); },
+      pin: '#surface',
+      scrub: 0.7,
+      invalidateOnRefresh: true,
+      animation: gsap.to(track, { x: -dist, ease: 'none' })
+    });
+  }
+  buildShow();
+
+  /* =========================================================
+     TECHNIQUE 4 · COUNT-UP NUMBERS (tabular numerals)
+     ========================================================= */
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+    if (REDUCED || !hasGSAP) { el.textContent = fmt(target, dec); return; }
+    var obj = { v: 0 };
+    ScrollTrigger.create({
+      trigger: el, start: 'top 88%', once: true,
+      onEnter: function(){
+        gsap.to(obj, {
+          v: target, duration: 1.9, ease: 'power3.out',
+          onUpdate: function(){ el.textContent = fmt(obj.v, dec); }
+        });
+      }
+    });
+  });
+
+  /* =========================================================
+     TECHNIQUE 5 · MAGNETIC CTA (rAF lerp, never raw mousemove)
+     ========================================================= */
+  if (!REDUCED && DESKTOP() && window.matchMedia('(hover:hover)').matches) {
+    document.querySelectorAll('[data-mag]').forEach(function(btn){
+      var inner = btn.querySelector('span');
+      var st = { x:0, y:0, tx:0, ty:0, ix:0, iy:0, itx:0, ity:0, active:false };
+      var R = 110;
+
+      function onMove(e){
+        var r = btn.getBoundingClientRect();
+        var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        var dx = e.clientX - cx, dy = e.clientY - cy;
+        var d = Math.hypot(dx, dy);
+        if (d < Math.max(r.width, r.height) / 2 + R) {
+          st.active = true;
+          st.tx = dx * 0.34; st.ty = dy * 0.42;
+          st.itx = dx * 0.14; st.ity = dy * 0.18;
+        } else if (st.active) {
+          st.active = false; st.tx = st.ty = st.itx = st.ity = 0;
+        }
+      }
+      window.addEventListener('mousemove', onMove, { passive: true });
+      btn.addEventListener('mouseleave', function(){
+        st.active = false; st.tx = st.ty = st.itx = st.ity = 0;
+      });
+
+      gsap.ticker.add(function(){
+        st.x  += (st.tx  - st.x)  * 0.14;
+        st.y  += (st.ty  - st.y)  * 0.14;
+        st.ix += (st.itx - st.ix) * 0.14;
+        st.iy += (st.ity - st.iy) * 0.14;
+        btn.style.transform = 'translate3d(' + st.x.toFixed(2) + 'px,' + st.y.toFixed(2) + 'px,0)';
+        if (inner) inner.style.transform = 'translate3d(' + st.ix.toFixed(2) + 'px,' + st.iy.toFixed(2) + 'px,0)';
+      });
+    });
+  }
+
+  /* ---------- supporting: FX ticker marquee ---------- */
+  (function(){
+    var tr = document.getElementById('ticker');
+    if (!tr || REDUCED || !hasGSAP) return;
+    var set = tr.querySelector('.ticker-set');
+    for (var i = 0; i < 3; i++) tr.appendChild(set.cloneNode(true));
+    var w = set.offsetWidth;
+    gsap.to(tr, { x: -w, duration: 34, ease: 'none', repeat: -1 });
+  })();
+
+  /* ---------- resize: rebuild pin-dependent triggers ---------- */
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      buildViz();
+      buildShow();
+      ScrollTrigger.refresh();
+    }, 220);
+  });
+
+  window.addEventListener('load', function(){ if (hasGSAP) ScrollTrigger.refresh(); });
+})();
+</script>
+</body>
+</html>

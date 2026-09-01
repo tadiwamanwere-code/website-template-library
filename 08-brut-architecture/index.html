@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HALDANE ROUX — Architecture &amp; Urbanism, Rotterdam</title>
+<meta name="description" content="Haldane Roux is an architecture and urbanism practice founded in Rotterdam in 2009. Structure as argument.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   HALDANE ROUX — dense brutalist grid, concrete + paper
+   Palette: concrete grey ground / paper white / near-black ink
+   Accent: signal orange #ff3c00 (interactive states only)
+   Type:   Archivo (variable width 62–125) + IBM Plex Mono
+   ============================================================ */
+
+:root{
+  --ground:  #e8e6e1;   /* concrete */
+  --paper:   #f4f2ee;   /* paper white */
+  --slab:    #dedbd4;   /* darker concrete block */
+  --ink:     #111110;   /* near black */
+  --ink-60:  #6e6a62;   /* mid grey text */
+  --ink-40:  #9a958c;
+  --line:    rgba(17,17,16,.14);
+  --line-2:  rgba(17,17,16,.28);
+  --accent:  #ff3c00;   /* signal orange — minimal use only */
+
+  --pad: clamp(14px, 2.2vw, 34px);
+  --nav-h: 46px;
+  --bar-h: 34px;
+
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+
+  --e-out: cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; border-radius:0 !important; }
+html,body{ margin:0; padding:0; }
+html{ -webkit-text-size-adjust:100%; }
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-variation-settings:"wdth" 100,"wght" 400;
+  font-size:15px;
+  line-height:1.45;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body.is-loading{ overflow:hidden; height:100vh; }
+img{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer; }
+table{ border-collapse:collapse; width:100%; }
+::selection{ background:var(--accent); color:var(--paper); }
+
+/* ---------- shared type utilities ---------- */
+.mono{ font-family:var(--mono); }
+.lbl{
+  font-family:var(--mono);
+  font-size:10px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-60);
+}
+.lbl-ink{ color:var(--ink); }
+.num{ font-family:var(--mono); font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+.dsp{
+  font-family:var(--sans);
+  font-variation-settings:"wdth" 118,"wght" 800;
+  text-transform:uppercase;
+  line-height:.84;
+  letter-spacing:-.015em;
+  margin:0;
+}
+.cond{ font-variation-settings:"wdth" 70,"wght" 700; }
+
+/* line-mask reveal primitives (hand split) */
+.line{ display:block; overflow:hidden; }
+.line > span{ display:block; will-change:transform; }
+.w{ display:inline-block; overflow:hidden; vertical-align:top; }
+.w > i{ display:inline-block; font-style:inherit; will-change:transform; }
+
+/* ---------- fixed structural grid overlay ---------- */
+.grid-overlay{
+  position:fixed; inset:0; z-index:3; pointer-events:none;
+  display:grid; grid-template-columns:repeat(12,1fr);
+  padding:0 var(--pad);
+}
+.grid-overlay i{ border-left:1px solid var(--line); }
+.grid-overlay i:last-child{ border-right:1px solid var(--line); }
+
+/* ---------- custom cursor ---------- */
+.cursor{
+  position:fixed; top:0; left:0; z-index:200; pointer-events:none;
+  width:12px; height:12px; margin:-6px 0 0 -6px;
+  border:1px solid var(--ink);
+  mix-blend-mode:multiply;
+  transition:width .25s var(--e-out),height .25s var(--e-out),margin .25s var(--e-out),background .25s var(--e-out),border-color .25s var(--e-out);
+}
+.cursor.is-hot{ width:46px; height:46px; margin:-23px 0 0 -23px; background:var(--accent); border-color:var(--accent); mix-blend-mode:normal; }
+.cursor.is-hot::after{
+  content:attr(data-label); position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:8px; letter-spacing:.12em; color:var(--paper);
+}
+
+/* ============================================================
+   1. LOADER — counter + column curtains
+   ============================================================ */
+/* the container itself must stay transparent — the 6 columns ARE the curtain,
+   so once they scale away the page beneath is revealed */
+.loader{
+  position:fixed; inset:0; z-index:100; background:transparent;
+  display:grid; grid-template-columns:repeat(6,1fr);
+}
+.loader .col{ background:var(--ground); border-right:1px solid var(--line); }
+.loader-face{
+  position:fixed; inset:0; z-index:101; pointer-events:none;
+  display:flex; flex-direction:column; justify-content:space-between;
+  padding:var(--pad);
+}
+.loader-top{ display:flex; justify-content:space-between; align-items:flex-start; }
+.loader-mid{
+  position:absolute; left:var(--pad); right:var(--pad); top:50%; transform:translateY(-50%);
+  display:flex; align-items:baseline; gap:.6em; overflow:hidden;
+}
+.loader-mid .lm-in{ display:flex; align-items:baseline; gap:.5em; }
+.loader-mid h1{
+  font-family:var(--sans); font-variation-settings:"wdth" 122,"wght" 900;
+  text-transform:uppercase; font-size:clamp(30px,6.4vw,104px); line-height:.82; margin:0;
+  letter-spacing:-.02em;
+}
+.loader-bottom{ display:flex; justify-content:space-between; align-items:flex-end; }
+.loader-count{
+  font-family:var(--mono); font-variant-numeric:tabular-nums;
+  font-size:clamp(52px,13vw,190px); line-height:.8; letter-spacing:-.04em; font-weight:500;
+}
+.loader-bar{ position:absolute; left:var(--pad); right:var(--pad); bottom:calc(var(--pad) + 46px); height:1px; background:var(--line-2); }
+.loader-bar i{ position:absolute; inset:0 auto 0 0; width:0%; background:var(--accent); display:block; }
+
+/* ============================================================
+   2. NAV
+   ============================================================ */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  height:var(--nav-h);
+  display:grid; grid-template-columns:repeat(12,1fr);
+  align-items:center;
+  padding:0 var(--pad);
+  background:rgba(232,230,225,.86);
+  backdrop-filter:blur(7px) saturate(1.1);
+  -webkit-backdrop-filter:blur(7px) saturate(1.1);
+  border-bottom:1px solid var(--line-2);
+}
+.nav .brand{ grid-column:1 / span 3; display:flex; align-items:center; gap:9px; }
+.nav .brand b{ font-variation-settings:"wdth" 112,"wght" 800; text-transform:uppercase; letter-spacing:.02em; font-size:14px; }
+.nav .brand .mk{ width:11px; height:11px; background:var(--ink); }
+.nav .nav-links{ grid-column:5 / span 5; display:flex; gap:26px; }
+.nav .nav-links a{ position:relative; }
+.nav .nav-links a::after{
+  content:""; position:absolute; left:0; right:100%; bottom:-4px; height:1px; background:var(--accent);
+  transition:right .35s var(--e-out);
+}
+.nav .nav-links a:hover{ color:var(--ink); }
+.nav .nav-links a:hover::after{ right:0; }
+.nav .nav-meta{ grid-column:11 / span 2; display:flex; justify-content:flex-end; gap:16px; }
+.nav-burger{ display:none; }
+
+/* ============================================================
+   3. HERO
+   ============================================================ */
+.hero{
+  position:relative; z-index:1;
+  padding:calc(var(--nav-h) + 1px) var(--pad) 0;
+  border-bottom:1px solid var(--line-2);
+  background:var(--ground);
+}
+.hero-inner{ display:grid; grid-template-columns:repeat(12,1fr); }
+.hero-title{
+  grid-column:1 / span 12;
+  padding:clamp(26px,4.4vw,68px) 0 clamp(14px,2vw,26px);
+  border-bottom:1px solid var(--line);
+}
+.hero-title h2{
+  font-family:var(--sans);
+  font-variation-settings:"wdth" 124,"wght" 900;
+  text-transform:uppercase;
+  font-size:clamp(46px,12.1vw,196px);
+  line-height:.8; letter-spacing:-.028em; margin:0;
+}
+.hero-title h2 .thin{ font-variation-settings:"wdth" 124,"wght" 200; }
+.hero-title h2 .em{ color:var(--accent); }
+
+.hero-band{
+  grid-column:1 / span 12;
+  display:grid; grid-template-columns:repeat(12,1fr);
+  border-bottom:1px solid var(--line);
+}
+.hero-band > div{ padding:12px 14px 14px 0; }
+.hero-lead{ grid-column:1 / span 4; }
+.hero-lead p{ margin:0; font-size:clamp(14px,1.05vw,17px); max-width:36ch; color:var(--ink); }
+.hero-lead .cta-row{ margin-top:22px; display:flex; gap:10px; flex-wrap:wrap; }
+
+.btn{
+  display:inline-flex; align-items:center; gap:12px;
+  border:1px solid var(--ink); padding:11px 16px;
+  font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  position:relative; overflow:hidden; background:transparent;
+}
+.btn span{ position:relative; z-index:2; transition:color .35s var(--e-out); }
+.btn::before{
+  content:""; position:absolute; inset:0; background:var(--ink);
+  transform:scaleY(0); transform-origin:bottom; transition:transform .45s var(--e-out); z-index:1;
+}
+.btn:hover::before{ transform:scaleY(1); }
+.btn:hover span{ color:var(--paper); }
+.btn.btn-accent{ border-color:var(--accent); color:var(--accent); }
+.btn.btn-accent::before{ background:var(--accent); }
+.btn.btn-accent:hover span{ color:var(--paper); }
+
+.hero-spec{ grid-column:6 / span 3; border-left:1px solid var(--line); padding-left:14px !important; }
+.hero-spec dl{ margin:0; }
+.hero-spec .row{
+  display:flex; justify-content:space-between; gap:10px;
+  padding:6px 0; border-bottom:1px solid var(--line);
+  font-family:var(--mono); font-size:11px;
+}
+.hero-spec .row dt{ color:var(--ink-40); text-transform:uppercase; letter-spacing:.1em; font-size:9.5px; }
+.hero-spec .row dd{ margin:0; font-variant-numeric:tabular-nums; text-align:right; }
+
+.hero-shot{ grid-column:9 / span 4; padding:0 !important; border-left:1px solid var(--line); position:relative; overflow:hidden; }
+.hero-shot .frame{ position:relative; height:100%; min-height:290px; overflow:hidden; background:var(--slab); }
+.hero-shot img{
+  position:absolute; inset:-15% 0 -15%; width:100%; height:130%; object-fit:cover;
+  filter:grayscale(1) contrast(1.12) brightness(1.02);
+  will-change:transform;
+}
+.hero-shot figcaption{
+  position:absolute; left:0; bottom:0; right:0; padding:8px 10px;
+  background:var(--paper); border-top:1px solid var(--line-2);
+  display:flex; justify-content:space-between;
+}
+
+/* running ticker (supporting element only) */
+.ticker{
+  position:relative; z-index:1;
+  border-bottom:1px solid var(--line-2);
+  background:var(--paper); overflow:hidden; white-space:nowrap;
+  padding:9px 0;
+}
+.ticker .tick-in{ display:inline-flex; gap:0; animation:tick 42s linear infinite; }
+.ticker span{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+  padding:0 20px; border-right:1px solid var(--line); color:var(--ink-60);
+}
+.ticker span b{ color:var(--ink); font-weight:500; }
+@keyframes tick{ to{ transform:translate3d(-50%,0,0); } }
+
+/* ============================================================
+   4. MANIFESTO — broken grid + SVG plan draw
+   ============================================================ */
+.sec-head{
+  display:grid; grid-template-columns:repeat(12,1fr);
+  align-items:end; gap:0;
+  padding:16px 0 12px; border-bottom:1px solid var(--line-2);
+}
+.sec-head .sh-no{ grid-column:1 / span 1; }
+.sec-head .sh-ti{ grid-column:2 / span 6; }
+.sec-head .sh-ti h3{
+  margin:0; font-variation-settings:"wdth" 108,"wght" 800; text-transform:uppercase;
+  font-size:clamp(20px,2.7vw,40px); line-height:.9; letter-spacing:-.015em;
+}
+.sec-head .sh-meta{ grid-column:10 / span 3; text-align:right; }
+
+.manifesto{
+  position:relative; z-index:1; background:var(--ground);
+  padding:0 var(--pad) clamp(40px,6vw,96px);
+  border-bottom:1px solid var(--line-2);
+}
+.man-grid{ display:grid; grid-template-columns:repeat(12,1fr); }
+.man-quote{
+  grid-column:1 / span 5; grid-row:1;
+  padding:clamp(28px,4vw,64px) 26px clamp(28px,4vw,54px) 0;
+  border-right:1px solid var(--line);
+}
+.man-quote p{
+  margin:0 0 20px; font-size:clamp(19px,2vw,31px); line-height:1.14;
+  font-variation-settings:"wdth" 96,"wght" 500; letter-spacing:-.01em;
+}
+.man-quote .sig{ display:flex; gap:18px; margin-top:26px; padding-top:12px; border-top:1px solid var(--line-2); }
+
+.man-plan{
+  grid-column:6 / span 7; grid-row:1;
+  padding:clamp(24px,3vw,44px) 0 0 26px;
+  position:relative;
+}
+.plan-wrap{ position:relative; background:var(--paper); border:1px solid var(--line-2); padding:18px; }
+.plan-wrap svg{ width:100%; height:auto; display:block; }
+.plan-wrap .plan-tag{
+  position:absolute; top:-1px; right:-1px; background:var(--ink); color:var(--paper);
+  padding:5px 9px; font-family:var(--mono); font-size:9px; letter-spacing:.14em;
+}
+.plan-legend{ display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line-2); border-top:0; }
+.plan-legend div{ padding:9px 11px; border-right:1px solid var(--line); background:var(--paper); }
+.plan-legend div:last-child{ border-right:0; }
+
+/* NB: no vector-effect here — non-scaling-stroke renders dash lengths in screen
+   units while getTotalLength() returns user units, which desyncs the draw. */
+.pl-stroke{ fill:none; stroke:var(--ink); stroke-width:2; }
+.pl-thin{ fill:none; stroke:var(--ink); stroke-width:1; opacity:.55; }
+.pl-dash{ fill:none; stroke:var(--accent); stroke-width:2.2; }
+.pl-fill{ fill:rgba(17,17,16,.07); stroke:none; }
+
+.principles{ grid-column:1 / span 12; grid-row:2; margin-top:clamp(30px,4vw,60px); border-top:1px solid var(--line-2); }
+.principles .prow{
+  display:grid; grid-template-columns:repeat(12,1fr);
+  border-bottom:1px solid var(--line); padding:16px 0;
+  transition:background .3s var(--e-out);
+}
+.principles .prow:hover{ background:var(--paper); }
+.principles .prow .p-no{ grid-column:1 / span 1; }
+.principles .prow .p-ti{ grid-column:2 / span 3; font-variation-settings:"wdth" 92,"wght" 700; text-transform:uppercase; font-size:clamp(14px,1.35vw,20px); letter-spacing:.01em; }
+.principles .prow .p-bd{ grid-column:6 / span 5; color:var(--ink-60); font-size:13.5px; max-width:56ch; }
+.principles .prow .p-yr{ grid-column:12 / span 1; text-align:right; }
+
+/* ============================================================
+   5. HORIZONTAL WORKS TRACK  (signature motion)
+   ============================================================ */
+.works{
+  position:relative; z-index:1; background:var(--slab);
+  height:100vh; overflow:hidden;
+  border-bottom:1px solid var(--line-2);
+}
+.works-hud{
+  position:absolute; z-index:6; left:var(--pad); right:var(--pad); top:calc(var(--nav-h) + 12px);
+  display:flex; justify-content:space-between; align-items:center; pointer-events:none;
+}
+.works-foot{
+  position:absolute; z-index:6; left:var(--pad); right:var(--pad); bottom:14px;
+  display:flex; align-items:center; gap:14px; pointer-events:none;
+}
+.works-prog{ flex:1; height:1px; background:var(--line-2); position:relative; }
+.works-prog i{ position:absolute; left:0; top:-1px; height:3px; width:0%; background:var(--accent); display:block; }
+
+/* horizontal padding lives on the TRACK, never as margins on the panels —
+   the scroll distance is measured as (sum of panel widths + track padding)
+   and getBoundingClientRect().width does not report margins. */
+.h-track{
+  display:flex; height:100%; align-items:stretch;
+  padding:calc(var(--nav-h) + 56px) var(--pad) 60px;
+  will-change:transform;
+}
+.h-panel{
+  flex:0 0 auto; width:76vw; height:100%;
+  display:grid; grid-template-columns:repeat(12,1fr);
+  border-right:1px solid var(--line-2);
+  padding:0 clamp(16px,2vw,30px);
+  position:relative;
+}
+.h-panel:first-child{ border-left:1px solid var(--line-2); }
+.h-panel.h-intro{ width:44vw; background:var(--ground); }
+
+.h-intro .hi-in{ grid-column:1 / span 12; align-self:center; padding-right:12%; }
+.h-intro h3{
+  margin:0 0 16px; font-variation-settings:"wdth" 120,"wght" 900; text-transform:uppercase;
+  font-size:clamp(34px,4.6vw,78px); line-height:.82; letter-spacing:-.025em;
+}
+.h-intro p{ color:var(--ink-60); font-size:14px; max-width:34ch; margin:0 0 22px; }
+.h-intro .scroll-hint{ display:flex; align-items:center; gap:10px; }
+.h-intro .scroll-hint .arrow{ width:44px; height:1px; background:var(--ink); position:relative; }
+.h-intro .scroll-hint .arrow::after{ content:""; position:absolute; right:0; top:-3px; width:7px; height:7px; border-top:1px solid var(--ink); border-right:1px solid var(--ink); transform:rotate(45deg); }
+
+.h-meta{ grid-column:1 / span 4; display:flex; flex-direction:column; padding:0 18px 0 0; border-right:1px solid var(--line); }
+.h-meta .h-idx{
+  font-family:var(--mono); font-variant-numeric:tabular-nums;
+  font-size:clamp(40px,4.4vw,74px); line-height:.8; letter-spacing:-.05em; font-weight:500;
+  padding-bottom:10px; border-bottom:1px solid var(--line-2);
+}
+.h-meta h4{
+  margin:14px 0 0; font-variation-settings:"wdth" 84,"wght" 800; text-transform:uppercase;
+  font-size:clamp(20px,2.15vw,34px); line-height:.94; letter-spacing:-.005em;
+}
+.h-meta .h-place{ margin-top:6px; }
+.h-meta .h-tbl{ margin-top:auto; }
+.h-meta .h-tbl .r{
+  display:flex; justify-content:space-between; gap:10px; padding:6px 0;
+  border-top:1px solid var(--line); font-family:var(--mono); font-size:11px;
+}
+.h-meta .h-tbl .r span:first-child{ color:var(--ink-40); font-size:9.5px; letter-spacing:.11em; text-transform:uppercase; }
+.h-meta .h-tbl .r span:last-child{ font-variant-numeric:tabular-nums; }
+.h-meta .h-brief{ margin:16px 0 18px; font-size:13px; color:var(--ink-60); max-width:40ch; }
+
+.h-img{ grid-column:5 / span 8; position:relative; overflow:hidden; background:var(--ground); }
+.h-img img{
+  position:absolute; top:0; left:-14%; width:128%; height:100%; object-fit:cover;
+  filter:grayscale(1) contrast(1.1) brightness(1.03);
+  will-change:transform;
+}
+.h-img .h-cap{
+  position:absolute; left:0; bottom:0; right:0; padding:8px 11px;
+  background:var(--paper); border-top:1px solid var(--line-2);
+  display:flex; justify-content:space-between; gap:12px;
+}
+.h-img .h-tags{ position:absolute; top:10px; left:10px; display:flex; gap:6px; flex-wrap:wrap; }
+.h-img .h-tags b{
+  font-family:var(--mono); font-size:9px; font-weight:500; letter-spacing:.13em; text-transform:uppercase;
+  background:var(--paper); border:1px solid var(--line-2); padding:4px 7px;
+}
+
+/* ============================================================
+   6. SHOWCASE — scroll-scrubbed clip-path reveal
+   ============================================================ */
+.showcase{
+  position:relative; z-index:1; background:var(--ground);
+  padding:0 var(--pad) clamp(40px,5vw,88px); border-bottom:1px solid var(--line-2);
+}
+.sc-stage{
+  position:relative; margin-top:22px;
+  height:clamp(400px,74vh,760px); overflow:hidden; background:var(--slab);
+  border:1px solid var(--line-2);
+}
+.sc-stage .sc-img{ position:absolute; inset:0; overflow:hidden; }
+.sc-stage .sc-img img{
+  position:absolute; top:-10%; left:0; width:100%; height:120%; object-fit:cover;
+  filter:grayscale(1) contrast(1.14) brightness(.98);
+  will-change:transform;
+}
+.sc-stage .sc-rule{ position:absolute; left:0; right:0; top:50%; height:1px; background:rgba(244,242,238,.5); }
+.sc-stage .sc-vert{ position:absolute; top:0; bottom:0; left:50%; width:1px; background:rgba(244,242,238,.5); }
+.sc-over{
+  position:absolute; z-index:3; left:0; right:0; bottom:0;
+  display:grid; grid-template-columns:repeat(12,1fr);
+  background:var(--paper); border-top:1px solid var(--line-2);
+}
+.sc-over > div{ padding:12px 14px; border-right:1px solid var(--line); }
+.sc-over > div:last-child{ border-right:0; }
+.sc-over .c1{ grid-column:1 / span 4; }
+.sc-over .c2{ grid-column:5 / span 3; }
+.sc-over .c3{ grid-column:8 / span 2; }
+.sc-over .c4{ grid-column:10 / span 3; text-align:right; }
+.sc-over strong{ display:block; font-variation-settings:"wdth" 90,"wght" 700; text-transform:uppercase; font-size:14px; margin-top:3px; }
+
+.sc-detail{ display:grid; grid-template-columns:repeat(12,1fr); margin-top:0; border-bottom:1px solid var(--line); }
+.sc-detail .d1{ grid-column:1 / span 3; padding:18px 18px 18px 0; border-right:1px solid var(--line); }
+.sc-detail .d2{ grid-column:4 / span 4; padding:18px; border-right:1px solid var(--line); }
+.sc-detail .d3{ grid-column:8 / span 5; padding:18px 0 18px 18px; }
+.sc-detail p{ margin:8px 0 0; font-size:13.5px; color:var(--ink-60); }
+
+/* ============================================================
+   7. NUMBERS + REGISTER ACCORDION
+   ============================================================ */
+.proof{ position:relative; z-index:1; background:var(--paper); padding:0 var(--pad) clamp(40px,5vw,84px); border-bottom:1px solid var(--line-2); }
+.stats{ display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--line-2); }
+.stat{ padding:clamp(22px,3vw,46px) 16px clamp(20px,2.6vw,38px) 0; border-right:1px solid var(--line); }
+.stat:last-child{ border-right:0; }
+.stat .v{
+  font-family:var(--mono); font-variant-numeric:tabular-nums; font-weight:500;
+  font-size:clamp(38px,5.4vw,86px); line-height:.82; letter-spacing:-.05em;
+  display:flex; align-items:baseline; gap:.06em;
+}
+.stat .v .suf{ font-size:.34em; letter-spacing:.06em; color:var(--ink-60); }
+.stat .k{ margin-top:12px; }
+.stat .bar{ margin-top:14px; height:2px; background:var(--line); position:relative; }
+.stat .bar i{ position:absolute; inset:0 auto 0 0; width:0%; background:var(--accent); display:block; }
+
+.register{ margin-top:clamp(34px,4.4vw,70px); }
+.reg-head{
+  display:grid; grid-template-columns:0.7fr 3.2fr 2fr 1fr 1.3fr 1.2fr 0.5fr;
+  border-top:1px solid var(--ink); border-bottom:1px solid var(--line-2); padding:9px 0;
+}
+.reg-head span{ padding-right:10px; }
+.reg-item{ border-bottom:1px solid var(--line); }
+.reg-row{
+  display:grid; grid-template-columns:0.7fr 3.2fr 2fr 1fr 1.3fr 1.2fr 0.5fr;
+  align-items:center; width:100%; text-align:left;
+  padding:14px 0; transition:background .3s var(--e-out),padding .3s var(--e-out);
+}
+.reg-row:hover{ background:var(--ground); }
+.reg-row > *{ padding-right:10px; }
+.reg-row .r-no{ font-family:var(--mono); font-size:11px; color:var(--ink-40); font-variant-numeric:tabular-nums; }
+.reg-row .r-name{ font-variation-settings:"wdth" 88,"wght" 700; text-transform:uppercase; font-size:clamp(14px,1.3vw,19px); letter-spacing:.005em; transition:color .3s var(--e-out); }
+.reg-row:hover .r-name{ color:var(--accent); }
+.reg-row .r-loc,.reg-row .r-yr,.reg-row .r-area,.reg-row .r-typ{ font-family:var(--mono); font-size:11px; color:var(--ink-60); font-variant-numeric:tabular-nums; }
+.reg-row .r-tog{ justify-self:end; width:15px; height:15px; position:relative; }
+.reg-row .r-tog::before,.reg-row .r-tog::after{
+  content:""; position:absolute; background:var(--ink); transition:transform .4s var(--e-out),background .3s;
+}
+.reg-row .r-tog::before{ left:0; right:0; top:7px; height:1px; }
+.reg-row .r-tog::after{ top:0; bottom:0; left:7px; width:1px; }
+.reg-item.is-open .r-tog::after{ transform:scaleY(0); }
+.reg-item.is-open .r-tog::before{ background:var(--accent); }
+.reg-item.is-open .r-name{ color:var(--accent); }
+.reg-body{ height:0; overflow:hidden; }
+.reg-body-in{
+  display:grid; grid-template-columns:repeat(12,1fr);
+  padding:4px 0 26px; gap:0;
+}
+.reg-body-in .b-txt{ grid-column:2 / span 4; padding-right:24px; }
+.reg-body-in .b-txt p{ margin:0; font-size:13.5px; color:var(--ink-60); }
+.reg-body-in .b-spec{ grid-column:6 / span 3; border-left:1px solid var(--line); padding-left:16px; }
+.reg-body-in .b-spec .r{ display:flex; justify-content:space-between; gap:8px; font-family:var(--mono); font-size:10.5px; padding:5px 0; border-bottom:1px solid var(--line); }
+.reg-body-in .b-spec .r span:first-child{ color:var(--ink-40); text-transform:uppercase; letter-spacing:.1em; font-size:9px; }
+.reg-body-in .b-img{ grid-column:9 / span 4; height:190px; overflow:hidden; background:var(--slab); }
+.reg-body-in .b-img img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.1); }
+
+/* ---------- awards ---------- */
+.awards{ position:relative; z-index:1; background:var(--ground); padding:0 var(--pad) clamp(40px,5vw,80px); border-bottom:1px solid var(--line-2); }
+.aw-tbl{ margin-top:6px; }
+.aw-tbl thead th{
+  text-align:left; padding:9px 10px 9px 0; border-top:1px solid var(--ink); border-bottom:1px solid var(--line-2);
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-60); font-weight:500;
+}
+.aw-tbl tbody td{ padding:13px 10px 13px 0; border-bottom:1px solid var(--line); font-size:13.5px; vertical-align:baseline; }
+.aw-tbl tbody tr{ transition:background .3s var(--e-out); }
+.aw-tbl tbody tr:hover{ background:var(--paper); }
+.aw-tbl tbody tr:hover td:first-child{ color:var(--accent); }
+.aw-tbl .t-yr,.aw-tbl .t-cat{ font-family:var(--mono); font-size:11px; color:var(--ink-60); font-variant-numeric:tabular-nums; }
+.aw-tbl .t-award{ font-variation-settings:"wdth" 88,"wght" 700; text-transform:uppercase; transition:color .3s; }
+.aw-tbl .t-res b{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; border:1px solid var(--line-2); padding:3px 6px; font-weight:500; text-transform:uppercase; }
+
+/* ============================================================
+   8. CTA + FOOTER
+   ============================================================ */
+.cta{ position:relative; z-index:1; background:var(--ink); color:var(--paper); padding:clamp(56px,8vw,140px) var(--pad); }
+.cta .grid-line{ position:absolute; inset:0; display:grid; grid-template-columns:repeat(12,1fr); padding:0 var(--pad); pointer-events:none; }
+.cta .grid-line i{ border-left:1px solid rgba(244,242,238,.09); }
+.cta-in{ position:relative; z-index:2; display:grid; grid-template-columns:repeat(12,1fr); }
+.cta-in .c-l{ grid-column:1 / span 8; }
+.cta-in h3{
+  margin:0; font-variation-settings:"wdth" 122,"wght" 900; text-transform:uppercase;
+  font-size:clamp(38px,8.4vw,138px); line-height:.8; letter-spacing:-.03em;
+}
+.cta-in h3 em{ font-style:normal; color:var(--accent); }
+.cta-in .c-r{ grid-column:10 / span 3; align-self:end; text-align:right; }
+.cta .lbl{ color:rgba(244,242,238,.5); }
+.cta .btn{ border-color:var(--paper); color:var(--paper); margin-top:26px; }
+.cta .btn::before{ background:var(--paper); }
+.cta .btn:hover span{ color:var(--ink); }
+.cta .cta-mail{ display:block; margin-top:8px; font-family:var(--mono); font-size:13px; }
+.cta .cta-mail:hover{ color:var(--accent); }
+
+.footer{ position:relative; z-index:1; background:var(--ink); color:var(--paper); padding:0 var(--pad) 0; border-top:1px solid rgba(244,242,238,.18); }
+.f-grid{ display:grid; grid-template-columns:repeat(12,1fr); padding:clamp(30px,3.6vw,54px) 0 clamp(26px,3vw,44px); }
+.f-col{ padding-right:18px; }
+.f-col.fc1{ grid-column:1 / span 4; }
+.f-col.fc2{ grid-column:5 / span 2; }
+.f-col.fc3{ grid-column:7 / span 2; }
+.f-col.fc4{ grid-column:9 / span 2; }
+.f-col.fc5{ grid-column:11 / span 2; }
+.f-col h5{ margin:0 0 14px; font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.45); font-weight:500; }
+.f-col ul{ list-style:none; margin:0; padding:0; }
+.f-col li{ margin-bottom:8px; }
+.f-col a,.f-col p{ font-size:13px; color:rgba(244,242,238,.82); margin:0; transition:color .25s; }
+.f-col a:hover{ color:var(--accent); }
+.f-mark{ display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+.f-mark .mk{ width:13px; height:13px; background:var(--accent); }
+.f-mark b{ font-variation-settings:"wdth" 114,"wght" 800; text-transform:uppercase; font-size:16px; }
+.f-col.fc1 p{ max-width:34ch; color:rgba(244,242,238,.6); font-size:13px; }
+.f-bar{
+  display:grid; grid-template-columns:repeat(12,1fr); align-items:center;
+  border-top:1px solid rgba(244,242,238,.18); padding:12px 0 14px;
+}
+.f-bar .lbl{ color:rgba(244,242,238,.42); }
+.f-bar .b1{ grid-column:1 / span 4; }
+.f-bar .b2{ grid-column:5 / span 4; }
+.f-bar .b3{ grid-column:10 / span 3; text-align:right; }
+
+/* ============================================================
+   RESPONSIVE — vertical stacking below 1024px
+   ============================================================ */
+@media (max-width:1023px){
+  .grid-overlay{ grid-template-columns:repeat(4,1fr); opacity:.7; }
+  .cursor{ display:none; }
+  .nav .nav-links{ display:none; }
+  .nav .brand{ grid-column:1 / span 6; }
+  .nav .nav-meta{ grid-column:9 / span 4; }
+
+  .hero-title h2{ font-size:clamp(40px,13vw,88px); }
+  .hero-lead{ grid-column:1 / span 12; padding-bottom:20px !important; border-bottom:1px solid var(--line); }
+  .hero-spec{ grid-column:1 / span 12; border-left:0; padding-left:0 !important; padding-top:16px !important; }
+  .hero-shot{ grid-column:1 / span 12; border-left:0; border-top:1px solid var(--line); }
+  .hero-shot .frame{ min-height:250px; }
+
+  .sec-head .sh-ti{ grid-column:2 / span 10; }
+  .sec-head .sh-meta{ display:none; }
+
+  .man-quote{ grid-column:1 / span 12; border-right:0; padding-right:0; }
+  .man-plan{ grid-column:1 / span 12; padding-left:0; padding-top:26px; }
+  .principles .prow .p-ti{ grid-column:2 / span 10; margin-bottom:6px; }
+  .principles .prow .p-bd{ grid-column:2 / span 10; }
+  .principles .prow .p-yr{ display:none; }
+
+  /* horizontal track becomes a vertical stack */
+  .works{ height:auto; overflow:visible; padding:0 var(--pad) 30px; }
+  .works-hud{ position:static; padding:calc(var(--nav-h) + 18px) 0 12px; }
+  .works-foot{ display:none; }
+  .h-track{ display:block; height:auto; padding:0; transform:none !important; }
+  .h-panel{ width:100% !important; height:auto; border-right:0; border-top:1px solid var(--line-2); padding:22px 0; margin:0 !important; }
+  .h-panel:first-child{ border-left:0; }
+  .h-panel.h-intro{ background:transparent; padding-bottom:30px; }
+  .h-intro .hi-in{ padding-right:0; }
+  .h-meta{ grid-column:1 / span 12; border-right:0; padding-right:0; }
+  .h-img{ grid-column:1 / span 12; height:56vw; min-height:230px; margin-top:18px; }
+  .h-img img{ left:0; width:100%; transform:none !important; }
+
+  .sc-over .c1{ grid-column:1 / span 6; }
+  .sc-over .c2{ grid-column:7 / span 6; border-right:0; }
+  .sc-over .c3{ grid-column:1 / span 6; border-top:1px solid var(--line); }
+  .sc-over .c4{ grid-column:7 / span 6; border-top:1px solid var(--line); }
+  .sc-detail .d1,.sc-detail .d2,.sc-detail .d3{ grid-column:1 / span 12; border-right:0; padding:16px 0; border-bottom:1px solid var(--line); }
+
+  .stats{ grid-template-columns:repeat(2,1fr); }
+  .stat{ border-bottom:1px solid var(--line); }
+  .stat:nth-child(2n){ border-right:0; }
+
+  .reg-head{ display:none; }
+  .reg-row{ grid-template-columns:0.6fr 4fr 0.6fr; row-gap:4px; }
+  .reg-row .r-loc{ grid-column:2; }
+  .reg-row .r-yr,.reg-row .r-area,.reg-row .r-typ{ display:none; }
+  .reg-body-in .b-txt{ grid-column:1 / span 12; padding-right:0; }
+  .reg-body-in .b-spec{ grid-column:1 / span 12; border-left:0; padding-left:0; margin-top:14px; }
+  .reg-body-in .b-img{ grid-column:1 / span 12; margin-top:14px; height:150px; }
+
+  .aw-tbl .t-cat{ display:none; }
+
+  .cta-in .c-l{ grid-column:1 / span 12; }
+  .cta-in .c-r{ grid-column:1 / span 12; text-align:left; margin-top:28px; }
+  .f-col.fc1{ grid-column:1 / span 12; margin-bottom:26px; }
+  .f-col.fc2,.f-col.fc3{ grid-column:span 6; margin-bottom:22px; }
+  .f-col.fc4,.f-col.fc5{ grid-column:span 6; }
+  .f-bar .b1,.f-bar .b2,.f-bar .b3{ grid-column:1 / span 12; text-align:left; margin:3px 0; }
+}
+@media (max-width:640px){
+  .grid-overlay{ grid-template-columns:repeat(2,1fr); }
+  .hero-title h2{ font-size:clamp(34px,13.5vw,64px); }
+  .stats{ grid-template-columns:1fr; }
+  .stat{ border-right:0; }
+  .plan-legend{ grid-template-columns:1fr; }
+  .plan-legend div{ border-right:0; border-bottom:1px solid var(--line); }
+}
+
+/* ============================================================
+   REDUCED MOTION — everything lands in its final state
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  .loader,.loader-face{ display:none !important; }
+  .line > span,.w > i{ transform:none !important; }
+  .ticker .tick-in{ animation:none; }
+  .cursor{ display:none; }
+  .h-img img,.hero-shot img,.sc-stage img{ transform:none !important; }
+}
+</style>
+</head>
+
+<body class="is-loading">
+
+<!-- ===================== LOADER ===================== -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="col"></div><div class="col"></div><div class="col"></div>
+  <div class="col"></div><div class="col"></div><div class="col"></div>
+</div>
+<div class="loader-face" id="loaderFace" aria-hidden="true">
+  <div class="loader-top">
+    <span class="lbl lbl-ink">Haldane Roux — Architecture &amp; Urbanism</span>
+    <span class="lbl">Est. Rotterdam MMIX</span>
+  </div>
+  <div class="loader-mid">
+    <div class="lm-in">
+      <h1 id="loadWord">Structure as argument</h1>
+    </div>
+  </div>
+  <div class="loader-bar"><i id="loadBar"></i></div>
+  <div class="loader-bottom">
+    <span class="lbl">Loading register — 61 built works</span>
+    <div class="loader-count num" id="loadCount">000</div>
+  </div>
+</div>
+
+<!-- ===================== STRUCTURAL GRID ===================== -->
+<div class="grid-overlay" aria-hidden="true">
+  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+</div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="brand"><span class="mk"></span><b>Haldane&nbsp;Roux</b></div>
+  <nav class="nav-links lbl lbl-ink" aria-label="Primary">
+    <a href="#works" data-hot>Works</a>
+    <a href="#practice" data-hot>Practice</a>
+    <a href="#register" data-hot>Register</a>
+    <a href="#awards" data-hot>Recognition</a>
+    <a href="#contact" data-hot>Contact</a>
+  </nav>
+  <div class="nav-meta lbl">
+    <span>51.9225°N 4.4792°E</span>
+    <span class="num" id="clock">--:--:--</span>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<main>
+<section class="hero" id="top">
+  <div class="hero-inner">
+
+    <div class="hero-title">
+      <h2 data-lines>
+        <span class="line"><span>Structure</span></span>
+        <span class="line"><span class="thin">as&nbsp;<em class="em" style="font-style:normal">argument</em></span></span>
+      </h2>
+    </div>
+
+    <div class="hero-band">
+      <div class="hero-lead">
+        <p data-words>An architecture and urbanism practice working in load-bearing masonry, board-formed concrete and the slow reuse of industrial fabric. Seventeen years, four countries, sixty-one completed works.</p>
+        <div class="cta-row">
+          <a class="btn" href="#works" data-hot data-magnetic><span>View selected works</span></a>
+          <a class="btn btn-accent" href="#contact" data-hot data-magnetic><span>Start a project</span></a>
+        </div>
+      </div>
+
+      <div class="hero-spec">
+        <dl>
+          <div class="row"><dt>Founded</dt><dd>2009</dd></div>
+          <div class="row"><dt>Studio</dt><dd>Rotterdam NL</dd></div>
+          <div class="row"><dt>Principals</dt><dd>I. Haldane / É. Roux</dd></div>
+          <div class="row"><dt>Staff</dt><dd>24</dd></div>
+          <div class="row"><dt>Registration</dt><dd>BNA 09.4471</dd></div>
+          <div class="row"><dt>Built to date</dt><dd>187,400 m²</dd></div>
+        </dl>
+      </div>
+
+      <figure class="hero-shot" style="margin:0">
+        <div class="frame">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img id="heroImg" src="https://images.unsplash.com/photo-1470723710355-95304d8aece4?auto=format&fit=crop&w=1400&q=80" alt="Board-formed concrete stair at Kessel Water Works">
+        </div>
+        <figcaption>
+          <span class="lbl lbl-ink">Kessel Water Works</span>
+          <span class="lbl">Fig. 01 — Rotterdam, 2019</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TICKER ===================== -->
+<div class="ticker" aria-hidden="true">
+  <div class="tick-in">
+    <span><b>Kessel Water Works</b> — Rotterdam 2019</span>
+    <span><b>Silo Vier</b> — Antwerp 2022</span>
+    <span><b>Nordmarka Chapel</b> — Oslo 2023</span>
+    <span><b>Platform Nine Housing</b> — Copenhagen 2024</span>
+    <span><b>House for a Printmaker</b> — Zeeland 2021</span>
+    <span><b>Basalt Pavilion</b> — Reykjavík 2025</span>
+    <span><b>Kessel Water Works</b> — Rotterdam 2019</span>
+    <span><b>Silo Vier</b> — Antwerp 2022</span>
+    <span><b>Nordmarka Chapel</b> — Oslo 2023</span>
+    <span><b>Platform Nine Housing</b> — Copenhagen 2024</span>
+    <span><b>House for a Printmaker</b> — Zeeland 2021</span>
+    <span><b>Basalt Pavilion</b> — Reykjavík 2025</span>
+  </div>
+</div>
+
+<!-- ===================== MANIFESTO ===================== -->
+<section class="manifesto" id="practice">
+  <div class="sec-head">
+    <span class="sh-no lbl">§ 01</span>
+    <div class="sh-ti"><h3 data-lines><span class="line"><span>Position</span></span></h3></div>
+    <span class="sh-meta lbl">Method / Materials / Duty of care</span>
+  </div>
+
+  <div class="man-grid">
+    <div class="man-quote">
+      <p data-words>We do not begin with form. We begin with what is already standing — its span, its bearing capacity, the direction its water runs — and we argue with it until a building appears.</p>
+      <p data-words style="font-size:15px; line-height:1.5; font-variation-settings:'wdth' 100,'wght' 400; color:var(--ink-60)">Every commission opens with a structural survey and a carbon budget agreed before a single plan is drawn. Since 2016 the practice has declined all work requiring demolition of a sound primary structure. Eleven of our last fourteen projects are adaptive reuse.</p>
+      <div class="sig">
+        <div>
+          <div class="lbl lbl-ink">Ingrid Haldane</div>
+          <div class="lbl">Founding partner, RIBA / BNA</div>
+        </div>
+        <div>
+          <div class="lbl lbl-ink">Émile Roux</div>
+          <div class="lbl">Founding partner, structure</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="man-plan">
+      <div class="plan-wrap">
+        <span class="plan-tag">DRG. HR-2019-KWW / LVL 00 / 1:200</span>
+        <!-- Hand-drawn site plan — animated with stroke-dashoffset on scroll -->
+        <svg id="planSvg" viewBox="0 0 820 470" role="img" aria-label="Ground floor plan, Kessel Water Works">
+          <g id="planDraw">
+            <!-- filled cores (static) -->
+            <path class="pl-fill" d="M334 158 H436 V300 H334 Z"/>
+            <path class="pl-fill" d="M96 336 H196 V400 H96 Z"/>
+
+            <!-- outer envelope -->
+            <path class="pl-stroke" d="M60 60 H760 V410 H60 Z"/>
+            <path class="pl-stroke" d="M76 76 H744 V394 H76 Z"/>
+
+            <!-- primary cross walls -->
+            <path class="pl-stroke" d="M250 76 V394"/>
+            <path class="pl-stroke" d="M520 76 V394"/>
+            <path class="pl-stroke" d="M76 240 H250"/>
+            <path class="pl-stroke" d="M520 200 H744"/>
+            <path class="pl-stroke" d="M520 318 H744"/>
+
+            <!-- turbine hall core -->
+            <path class="pl-stroke" d="M334 158 H436 V300 H334 Z"/>
+
+            <!-- stair run -->
+            <path class="pl-stroke" d="M96 336 H196 V400"/>
+            <path class="pl-thin" d="M96 348 H196 M96 360 H196 M96 372 H196 M96 384 H196"/>
+
+            <!-- column grid -->
+            <path class="pl-thin" d="M290 118 h0 M290 118 a5 5 0 1 0 .1 0 M290 240 a5 5 0 1 0 .1 0 M290 362 a5 5 0 1 0 .1 0 M470 118 a5 5 0 1 0 .1 0 M470 240 a5 5 0 1 0 .1 0 M470 362 a5 5 0 1 0 .1 0"/>
+
+            <!-- circulation spine (accent, dashed) -->
+            <path class="pl-dash" d="M76 470 V352 H290 V240 H520 V150 H744"/>
+
+            <!-- dimension line -->
+            <path class="pl-thin" d="M60 436 H760 M60 430 V442 M250 430 V442 M520 430 V442 M760 430 V442"/>
+            <path class="pl-thin" d="M786 60 V410 M780 60 H792 M780 410 H792"/>
+
+            <!-- north arrow -->
+            <path class="pl-stroke" d="M700 442 L710 418 L720 442 L710 434 Z"/>
+          </g>
+          <text x="60" y="458" font-family="IBM Plex Mono, monospace" font-size="11" fill="#6e6a62">14 200 m² GIA</text>
+          <text x="300" y="458" font-family="IBM Plex Mono, monospace" font-size="11" fill="#6e6a62">SPAN 21.4 m CLEAR</text>
+          <text x="560" y="458" font-family="IBM Plex Mono, monospace" font-size="11" fill="#6e6a62">EXISTING FABRIC RETAINED 91 %</text>
+        </svg>
+      </div>
+      <div class="plan-legend">
+        <div><span class="lbl">Retained</span><div class="lbl lbl-ink">Brick + steel truss, 1907</div></div>
+        <div><span class="lbl">Inserted</span><div class="lbl lbl-ink">Board-formed concrete</div></div>
+        <div><span class="lbl">Circulation</span><div class="lbl lbl-ink" style="color:var(--accent)">Public spine, 214 m</div></div>
+      </div>
+    </div>
+
+    <div class="principles">
+      <div class="prow">
+        <span class="p-no lbl">01</span>
+        <div class="p-ti">Survey before sketch</div>
+        <div class="p-bd">Six weeks of measured survey precede the first drawing. We record the building as found — settlement, patch repairs, all of it — and publish that record to the client before design begins.</div>
+        <span class="p-yr lbl">2009</span>
+      </div>
+      <div class="prow">
+        <span class="p-no lbl">02</span>
+        <div class="p-ti">One material, honestly</div>
+        <div class="p-bd">Board-formed concrete, lime-mortared brick, hot-rolled steel, oiled Douglas fir. No cladding that conceals what carries the load. Joints are drawn at 1:5 before the elevation is fixed.</div>
+        <span class="p-yr lbl">2012</span>
+      </div>
+      <div class="prow">
+        <span class="p-no lbl">03</span>
+        <div class="p-ti">Carbon as a client</div>
+        <div class="p-bd">An embodied carbon ceiling is set in the appointment contract, not in the specification. Average across works completed since 2020: 341 kgCO₂e/m², against a Dutch sector mean of 638.</div>
+        <span class="p-yr lbl">2016</span>
+      </div>
+      <div class="prow">
+        <span class="p-no lbl">04</span>
+        <div class="p-ti">Build the detail twice</div>
+        <div class="p-bd">Every project produces at least one full-scale mock-up on site. Formwork board widths, mortar colour and reveal depths are approved in daylight, at size, by the people who will pour them.</div>
+        <span class="p-yr lbl">2018</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HORIZONTAL WORKS TRACK ===================== -->
+<section class="works" id="works">
+  <div class="works-hud">
+    <span class="lbl lbl-ink">§ 02 — Selected works 2019 / 2025</span>
+    <span class="lbl">Scroll to advance →</span>
+  </div>
+
+  <div class="h-track" id="hTrack">
+
+    <article class="h-panel h-intro">
+      <div class="hi-in">
+        <h3 data-lines>
+          <span class="line"><span>Six</span></span>
+          <span class="line"><span>built</span></span>
+          <span class="line"><span>works</span></span>
+        </h3>
+        <p>Drawn from a register of sixty-one. Each was delivered under a fixed embodied-carbon ceiling and a retained-structure clause.</p>
+        <div class="scroll-hint">
+          <span class="lbl lbl-ink">Advance</span>
+          <span class="arrow"></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="h-panel">
+      <div class="h-meta">
+        <div class="h-idx">01</div>
+        <h4>Kessel Water Works</h4>
+        <div class="h-place lbl">Rotterdam, NL — Adaptive reuse</div>
+        <p class="h-brief">A decommissioned 1907 pumping station converted to a civic swimming hall and archive. The original steel truss was retained and stiffened; four board-formed concrete pods were dropped between the bays without touching the brick shell.</p>
+        <div class="h-tbl">
+          <div class="r"><span>Year</span><span>2019</span></div>
+          <div class="r"><span>Area</span><span>14,200 m²</span></div>
+          <div class="r"><span>Client</span><span>Gemeente Rotterdam</span></div>
+          <div class="r"><span>Carbon</span><span>287 kgCO₂e/m²</span></div>
+        </div>
+      </div>
+      <div class="h-img">
+        <div class="h-tags"><b>Civic</b><b>Reuse</b><b>Concrete</b></div>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1600&q=80" alt="Kessel Water Works concrete interior">
+        <div class="h-cap"><span class="lbl lbl-ink">Pool hall, north bay</span><span class="lbl">Ph. M. Oosterhuis</span></div>
+      </div>
+    </article>
+
+    <article class="h-panel">
+      <div class="h-meta">
+        <div class="h-idx">02</div>
+        <h4>House for a Printmaker</h4>
+        <div class="h-place lbl">Zeeland, NL — Private residence</div>
+        <p class="h-brief">A studio-house on a polder dyke for an intaglio printmaker. North light is taken through a single 9-metre clerestory; the press sits on an isolated slab decoupled from the timber frame to keep vibration out of the plate.</p>
+        <div class="h-tbl">
+          <div class="r"><span>Year</span><span>2021</span></div>
+          <div class="r"><span>Area</span><span>218 m²</span></div>
+          <div class="r"><span>Structure</span><span>CLT + brick plinth</span></div>
+          <div class="r"><span>Carbon</span><span>194 kgCO₂e/m²</span></div>
+        </div>
+      </div>
+      <div class="h-img">
+        <div class="h-tags"><b>Residential</b><b>Timber</b></div>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1600&q=80" alt="House for a Printmaker exterior">
+        <div class="h-cap"><span class="lbl lbl-ink">Clerestory, west elevation</span><span class="lbl">Ph. S. Verlinden</span></div>
+      </div>
+    </article>
+
+    <article class="h-panel">
+      <div class="h-meta">
+        <div class="h-idx">03</div>
+        <h4>Silo Vier</h4>
+        <div class="h-place lbl">Antwerp, BE — Mixed use</div>
+        <p class="h-brief">Conversion of grain silo no. 4 at Kattendijkdok into 96 apartments, a market floor and a public roof. Forty-two cylindrical cells were cored on a strict 3.2-metre module; the cut concrete was crushed on site and reused as aggregate in the new floor plates.</p>
+        <div class="h-tbl">
+          <div class="r"><span>Year</span><span>2022</span></div>
+          <div class="r"><span>Area</span><span>31,600 m²</span></div>
+          <div class="r"><span>Units</span><span>96</span></div>
+          <div class="r"><span>Carbon</span><span>309 kgCO₂e/m²</span></div>
+        </div>
+      </div>
+      <div class="h-img">
+        <div class="h-tags"><b>Mixed use</b><b>Reuse</b><b>Housing</b></div>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Silo Vier conversion, Antwerp">
+        <div class="h-cap"><span class="lbl lbl-ink">Cored cells, level 06</span><span class="lbl">Ph. J. Peeters</span></div>
+      </div>
+    </article>
+
+    <article class="h-panel">
+      <div class="h-meta">
+        <div class="h-idx">04</div>
+        <h4>Nordmarka Chapel</h4>
+        <div class="h-place lbl">Oslo, NO — Sacred</div>
+        <p class="h-brief">A funeral chapel and cemetery office at the forest edge. Load-bearing rammed earth from the excavation itself, capped by a single folded larch roof that spans 16 metres without an intermediate support. Built by seven people over eleven months.</p>
+        <div class="h-tbl">
+          <div class="r"><span>Year</span><span>2023</span></div>
+          <div class="r"><span>Area</span><span>640 m²</span></div>
+          <div class="r"><span>Structure</span><span>Rammed earth / larch</span></div>
+          <div class="r"><span>Carbon</span><span>118 kgCO₂e/m²</span></div>
+        </div>
+      </div>
+      <div class="h-img">
+        <div class="h-tags"><b>Sacred</b><b>Earth</b></div>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" src="https://images.unsplash.com/photo-1527576539890-dfa815648363?auto=format&fit=crop&w=1600&q=80" alt="Nordmarka Chapel interior structure">
+        <div class="h-cap"><span class="lbl lbl-ink">Nave, folded larch roof</span><span class="lbl">Ph. A. Dahl</span></div>
+      </div>
+    </article>
+
+    <article class="h-panel">
+      <div class="h-meta">
+        <div class="h-idx">05</div>
+        <h4>Platform Nine Housing</h4>
+        <div class="h-place lbl">Copenhagen, DK — Social housing</div>
+        <p class="h-brief">214 rent-controlled homes bridging a live freight line at Nordhavn. A post-tensioned concrete table carries the whole block clear of the rails; every dwelling gets a 2.4-metre deep loggia cut into the mass rather than bolted onto it.</p>
+        <div class="h-tbl">
+          <div class="r"><span>Year</span><span>2024</span></div>
+          <div class="r"><span>Area</span><span>22,900 m²</span></div>
+          <div class="r"><span>Units</span><span>214</span></div>
+          <div class="r"><span>Carbon</span><span>402 kgCO₂e/m²</span></div>
+        </div>
+      </div>
+      <div class="h-img">
+        <div class="h-tags"><b>Housing</b><b>Infrastructure</b></div>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=1600&q=80" alt="Platform Nine Housing facade">
+        <div class="h-cap"><span class="lbl lbl-ink">South loggias, block B</span><span class="lbl">Ph. K. Lund</span></div>
+      </div>
+    </article>
+
+    <article class="h-panel">
+      <div class="h-meta">
+        <div class="h-idx">06</div>
+        <h4>Basalt Pavilion</h4>
+        <div class="h-place lbl">Reykjavík, IS — Cultural</div>
+        <p class="h-brief">A visitor pavilion for the Reykjanes lava field, built from 1,940 dry-stacked basalt blocks quarried within 4 kilometres of the site. No mortar, no adhesive: the wall is held by geometry and its own weight, and can be taken apart and moved.</p>
+        <div class="h-tbl">
+          <div class="r"><span>Year</span><span>2025</span></div>
+          <div class="r"><span>Area</span><span>1,180 m²</span></div>
+          <div class="r"><span>Blocks</span><span>1,940</span></div>
+          <div class="r"><span>Carbon</span><span>96 kgCO₂e/m²</span></div>
+        </div>
+      </div>
+      <div class="h-img">
+        <div class="h-tags"><b>Cultural</b><b>Stone</b><b>Demountable</b></div>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" src="https://images.unsplash.com/photo-1449157291145-7efd050a4d0e?auto=format&fit=crop&w=1600&q=80" alt="Basalt Pavilion stone wall">
+        <div class="h-cap"><span class="lbl lbl-ink">Dry-stacked north wall</span><span class="lbl">Ph. H. Jónsdóttir</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="works-foot">
+    <span class="lbl lbl-ink num" id="worksIdx">01</span>
+    <div class="works-prog"><i id="worksProg"></i></div>
+    <span class="lbl num">06</span>
+  </div>
+</section>
+
+<!-- ===================== SHOWCASE — clip-path scrub ===================== -->
+<section class="showcase">
+  <div class="sec-head">
+    <span class="sh-no lbl">§ 03</span>
+    <div class="sh-ti"><h3 data-lines><span class="line"><span>In detail — Silo Vier</span></span></h3></div>
+    <span class="sh-meta lbl">Kattendijkdok, Antwerp — 2018 / 2022</span>
+  </div>
+
+  <div class="sc-stage" id="scStage">
+    <div class="sc-img">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <img loading="lazy" id="scImg" src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=2000&q=80" alt="Silo Vier concrete structure, full bleed">
+    </div>
+    <div class="sc-rule"></div>
+    <div class="sc-vert"></div>
+    <div class="sc-over">
+      <div class="c1"><span class="lbl">Project</span><strong>Silo Vier</strong></div>
+      <div class="c2"><span class="lbl">Cells cored</span><strong>42 of 60</strong></div>
+      <div class="c3"><span class="lbl">Module</span><strong>3.2 m</strong></div>
+      <div class="c4"><span class="lbl">Concrete reused on site</span><strong>4,120 t</strong></div>
+    </div>
+  </div>
+
+  <div class="sc-detail">
+    <div class="d1">
+      <span class="lbl lbl-ink">The problem</span>
+      <p>Sixty grain cells, 42 metres tall, 6.4 metres across, with 280 mm slip-formed walls and no openings above level two. Demolition was consented and funded when we were appointed.</p>
+    </div>
+    <div class="d2">
+      <span class="lbl lbl-ink">The move</span>
+      <p>Rather than perforate every cell, we cored 42 of them from the crown down on a single module and left 18 intact as the lateral bracing system — turning the silo's own stiffness into the structure that makes the openings possible. The market floor sits in the void of four merged cells at grade.</p>
+    </div>
+    <div class="d3">
+      <span class="lbl lbl-ink">The result</span>
+      <p>96 apartments, a 1,400 m² covered market and a public roof terrace at 44 metres, delivered for 71% of the tendered demolition-and-rebuild cost. The crushed concrete from coring returned to the building as aggregate in all new floor plates — 4,120 tonnes that never left the quay. Awarded the Belgian Concrete Prize in 2023 and shortlisted for the EU Mies Award the following cycle.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NUMBERS + REGISTER ===================== -->
+<section class="proof" id="register">
+  <div class="sec-head">
+    <span class="sh-no lbl">§ 04</span>
+    <div class="sh-ti"><h3 data-lines><span class="line"><span>Practice in numbers</span></span></h3></div>
+    <span class="sh-meta lbl">Audited to 31 December 2025</span>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat">
+      <div class="v"><span class="num" data-count="61">0</span></div>
+      <div class="k lbl lbl-ink">Works completed</div>
+      <div class="bar"><i data-bar="86"></i></div>
+    </div>
+    <div class="stat">
+      <div class="v"><span class="num" data-count="187400">0</span><span class="suf">m²</span></div>
+      <div class="k lbl lbl-ink">Delivered floor area</div>
+      <div class="bar"><i data-bar="72"></i></div>
+    </div>
+    <div class="stat">
+      <div class="v"><span class="num" data-count="341">0</span><span class="suf">kg/m²</span></div>
+      <div class="k lbl lbl-ink">Mean embodied carbon</div>
+      <div class="bar"><i data-bar="53"></i></div>
+    </div>
+    <div class="stat">
+      <div class="v"><span class="num" data-count="11">0</span></div>
+      <div class="k lbl lbl-ink">Awards &amp; citations</div>
+      <div class="bar"><i data-bar="41"></i></div>
+    </div>
+  </div>
+
+  <div class="register">
+    <div class="reg-head lbl">
+      <span>No.</span><span>Project</span><span>Location</span><span>Year</span><span>Area</span><span>Typology</span><span></span>
+    </div>
+
+    <div class="reg-item">
+      <button class="reg-row" type="button" data-hot aria-expanded="false">
+        <span class="r-no">001</span>
+        <span class="r-name">Kessel Water Works</span>
+        <span class="r-loc">Rotterdam, NL</span>
+        <span class="r-yr">2019</span>
+        <span class="r-area">14,200 m²</span>
+        <span class="r-typ">Civic / reuse</span>
+        <span class="r-tog" aria-hidden="true"></span>
+      </button>
+      <div class="reg-body">
+        <div class="reg-body-in">
+          <div class="b-txt"><p>Municipal pumping station of 1907, out of service since 1994. Retained brick shell and riveted steel truss; four board-formed concrete pods inserted between the bays carry the pool tanks and archive stacks. The original 21.4-metre clear span was never breached.</p></div>
+          <div class="b-spec">
+            <div class="r"><span>Client</span><span>Gemeente Rotterdam</span></div>
+            <div class="r"><span>Structure</span><span>Bureau Vandeweghe</span></div>
+            <div class="r"><span>Contractor</span><span>Wilma Bouw</span></div>
+            <div class="r"><span>Status</span><span>Completed 06/2019</span></div>
+          </div>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <div class="b-img"><img loading="lazy" src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=900&q=75" alt="Kessel Water Works detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reg-item">
+      <button class="reg-row" type="button" data-hot aria-expanded="false">
+        <span class="r-no">002</span>
+        <span class="r-name">House for a Printmaker</span>
+        <span class="r-loc">Zeeland, NL</span>
+        <span class="r-yr">2021</span>
+        <span class="r-area">218 m²</span>
+        <span class="r-typ">Residential</span>
+        <span class="r-tog" aria-hidden="true"></span>
+      </button>
+      <div class="reg-body">
+        <div class="reg-body-in">
+          <div class="b-txt"><p>A studio-house on a polder dyke. The intaglio press sits on a 340 mm isolated slab, structurally decoupled from the CLT frame so that press vibration never reaches drying plates. A single 9-metre clerestory takes all north light.</p></div>
+          <div class="b-spec">
+            <div class="r"><span>Client</span><span>Private</span></div>
+            <div class="r"><span>Structure</span><span>In-house</span></div>
+            <div class="r"><span>Contractor</span><span>Bouwbedrijf De Rijke</span></div>
+            <div class="r"><span>Status</span><span>Completed 11/2021</span></div>
+          </div>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <div class="b-img"><img loading="lazy" src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=75" alt="Printmaker house detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reg-item">
+      <button class="reg-row" type="button" data-hot aria-expanded="false">
+        <span class="r-no">003</span>
+        <span class="r-name">Silo Vier</span>
+        <span class="r-loc">Antwerp, BE</span>
+        <span class="r-yr">2022</span>
+        <span class="r-area">31,600 m²</span>
+        <span class="r-typ">Mixed use</span>
+        <span class="r-tog" aria-hidden="true"></span>
+      </button>
+      <div class="reg-body">
+        <div class="reg-body-in">
+          <div class="b-txt"><p>Grain silo no. 4, Kattendijkdok. 42 of 60 cells cored on a 3.2-metre module; the remaining 18 retained intact as the lateral stability system. 4,120 tonnes of cut concrete crushed on the quay and returned to the building as floor-plate aggregate.</p></div>
+          <div class="b-spec">
+            <div class="r"><span>Client</span><span>Havenbedrijf Antwerpen</span></div>
+            <div class="r"><span>Structure</span><span>Ney &amp; Partners</span></div>
+            <div class="r"><span>Contractor</span><span>Democo</span></div>
+            <div class="r"><span>Status</span><span>Completed 03/2022</span></div>
+          </div>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <div class="b-img"><img loading="lazy" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=75" alt="Silo Vier detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reg-item">
+      <button class="reg-row" type="button" data-hot aria-expanded="false">
+        <span class="r-no">004</span>
+        <span class="r-name">Nordmarka Chapel</span>
+        <span class="r-loc">Oslo, NO</span>
+        <span class="r-yr">2023</span>
+        <span class="r-area">640 m²</span>
+        <span class="r-typ">Sacred</span>
+        <span class="r-tog" aria-hidden="true"></span>
+      </button>
+      <div class="reg-body">
+        <div class="reg-body-in">
+          <div class="b-txt"><p>Funeral chapel and cemetery office at the forest edge. Load-bearing rammed earth compacted from the site's own excavation spoil, capped by a folded larch roof spanning 16 metres clear. 118 kgCO₂e/m² — the lowest figure the practice has recorded.</p></div>
+          <div class="b-spec">
+            <div class="r"><span>Client</span><span>Oslo Gravferdsetaten</span></div>
+            <div class="r"><span>Structure</span><span>Degn Ingeniører</span></div>
+            <div class="r"><span>Contractor</span><span>Bjørnstad Bygg</span></div>
+            <div class="r"><span>Status</span><span>Completed 09/2023</span></div>
+          </div>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <div class="b-img"><img loading="lazy" src="https://images.unsplash.com/photo-1527576539890-dfa815648363?auto=format&fit=crop&w=900&q=75" alt="Nordmarka Chapel detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reg-item">
+      <button class="reg-row" type="button" data-hot aria-expanded="false">
+        <span class="r-no">005</span>
+        <span class="r-name">Platform Nine Housing</span>
+        <span class="r-loc">Copenhagen, DK</span>
+        <span class="r-yr">2024</span>
+        <span class="r-area">22,900 m²</span>
+        <span class="r-typ">Housing</span>
+        <span class="r-tog" aria-hidden="true"></span>
+      </button>
+      <div class="reg-body">
+        <div class="reg-body-in">
+          <div class="b-txt"><p>214 rent-controlled homes bridging a live freight line at Nordhavn. A post-tensioned concrete table lifts the entire block clear of the rails; loggias are cut 2.4 metres into the mass rather than cantilevered from it. Built without a single line closure.</p></div>
+          <div class="b-spec">
+            <div class="r"><span>Client</span><span>AAB Boligforening</span></div>
+            <div class="r"><span>Structure</span><span>Ney &amp; Partners</span></div>
+            <div class="r"><span>Contractor</span><span>Enemærke &amp; Petersen</span></div>
+            <div class="r"><span>Status</span><span>Completed 05/2024</span></div>
+          </div>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <div class="b-img"><img loading="lazy" src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=900&q=75" alt="Platform Nine Housing detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reg-item">
+      <button class="reg-row" type="button" data-hot aria-expanded="false">
+        <span class="r-no">006</span>
+        <span class="r-name">Basalt Pavilion</span>
+        <span class="r-loc">Reykjavík, IS</span>
+        <span class="r-yr">2025</span>
+        <span class="r-area">1,180 m²</span>
+        <span class="r-typ">Cultural</span>
+        <span class="r-tog" aria-hidden="true"></span>
+      </button>
+      <div class="reg-body">
+        <div class="reg-body-in">
+          <div class="b-txt"><p>Visitor pavilion for the Reykjanes lava field. 1,940 dry-stacked basalt blocks quarried within 4 km of site, held by geometry and self-weight with no mortar or adhesive. Fully demountable: the wall can be dismantled and relocated block by block.</p></div>
+          <div class="b-spec">
+            <div class="r"><span>Client</span><span>Reykjanes Geopark</span></div>
+            <div class="r"><span>Structure</span><span>Efla Consulting</span></div>
+            <div class="r"><span>Contractor</span><span>Ístak</span></div>
+            <div class="r"><span>Status</span><span>Completed 08/2025</span></div>
+          </div>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <div class="b-img"><img loading="lazy" src="https://images.unsplash.com/photo-1449157291145-7efd050a4d0e?auto=format&fit=crop&w=900&q=75" alt="Basalt Pavilion detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reg-item">
+      <button class="reg-row" type="button" data-hot aria-expanded="false">
+        <span class="r-no">007</span>
+        <span class="r-name">Vlaardingen Sluice House</span>
+        <span class="r-loc">Vlaardingen, NL</span>
+        <span class="r-yr">2026</span>
+        <span class="r-area">3,400 m²</span>
+        <span class="r-typ">Infrastructure</span>
+        <span class="r-tog" aria-hidden="true"></span>
+      </button>
+      <div class="reg-body">
+        <div class="reg-body-in">
+          <div class="b-txt"><p>Control house and public viewing deck over a new storm-surge sluice on the Nieuwe Maas. Currently on site; primary pour completed February 2026. Formwork boards are reclaimed scaffold planks from the Silo Vier works.</p></div>
+          <div class="b-spec">
+            <div class="r"><span>Client</span><span>Rijkswaterstaat</span></div>
+            <div class="r"><span>Structure</span><span>Bureau Vandeweghe</span></div>
+            <div class="r"><span>Contractor</span><span>Van Hattum en Blankevoort</span></div>
+            <div class="r"><span>Status</span><span>On site — due 11/2026</span></div>
+          </div>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <div class="b-img"><img loading="lazy" src="https://images.unsplash.com/photo-1470723710355-95304d8aece4?auto=format&fit=crop&w=900&q=75" alt="Sluice house detail"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== AWARDS ===================== -->
+<section class="awards" id="awards">
+  <div class="sec-head">
+    <span class="sh-no lbl">§ 05</span>
+    <div class="sh-ti"><h3 data-lines><span class="line"><span>Recognition</span></span></h3></div>
+    <span class="sh-meta lbl">Selected, 2019 — 2025</span>
+  </div>
+
+  <table class="aw-tbl">
+    <thead>
+      <tr><th style="width:8%">Year</th><th style="width:34%">Award</th><th style="width:26%">Project</th><th style="width:18%">Category</th><th style="width:14%">Result</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="t-yr">2025</td><td class="t-award">Nordic Timber Prize</td><td>Nordmarka Chapel</td><td class="t-cat">Structure</td><td class="t-res"><b>Winner</b></td></tr>
+      <tr><td class="t-yr">2024</td><td class="t-award">EU Mies van der Rohe Award</td><td>Silo Vier</td><td class="t-cat">Emerging + Main</td><td class="t-res"><b>Shortlist</b></td></tr>
+      <tr><td class="t-yr">2024</td><td class="t-award">Dutch Design Award</td><td>Platform Nine Housing</td><td class="t-cat">Habitat</td><td class="t-res"><b>Winner</b></td></tr>
+      <tr><td class="t-yr">2023</td><td class="t-award">Belgian Concrete Prize</td><td>Silo Vier</td><td class="t-cat">Reuse</td><td class="t-res"><b>Winner</b></td></tr>
+      <tr><td class="t-yr">2023</td><td class="t-award">AR Emerging Architecture</td><td>Practice</td><td class="t-cat">Body of work</td><td class="t-res"><b>Highly comm.</b></td></tr>
+      <tr><td class="t-yr">2022</td><td class="t-award">RIBA International Prize</td><td>Kessel Water Works</td><td class="t-cat">Civic</td><td class="t-res"><b>Longlist</b></td></tr>
+      <tr><td class="t-yr">2022</td><td class="t-award">BNA Beste Gebouw van het Jaar</td><td>House for a Printmaker</td><td class="t-cat">Small works</td><td class="t-res"><b>Winner</b></td></tr>
+      <tr><td class="t-yr">2020</td><td class="t-award">Rotterdam Architectuurprijs</td><td>Kessel Water Works</td><td class="t-cat">Public vote</td><td class="t-res"><b>Winner</b></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="cta" id="contact">
+  <div class="grid-line" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="cta-in">
+    <div class="c-l">
+      <span class="lbl">§ 06 — Commissions</span>
+      <h3 data-lines style="margin-top:18px">
+        <span class="line"><span>Bring us</span></span>
+        <span class="line"><span>a building</span></span>
+        <span class="line"><span><em>already standing</em></span></span>
+      </h3>
+      <a class="btn" href="mailto:studio@haldaneroux.nl" data-hot data-magnetic><span>Open a commission file</span></a>
+    </div>
+    <div class="c-r">
+      <span class="lbl">Studio</span>
+      <a class="cta-mail" href="mailto:studio@haldaneroux.nl">studio@haldaneroux.nl</a>
+      <a class="cta-mail" href="tel:+31102847190">+31 10 284 7190</a>
+      <div class="lbl" style="margin-top:18px">Katendrechtse Lagedijk 44<br>3082 GN Rotterdam, NL</div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="f-grid">
+    <div class="f-col fc1">
+      <div class="f-mark"><span class="mk"></span><b>Haldane&nbsp;Roux</b></div>
+      <p>Architecture &amp; urbanism. Founded Rotterdam 2009 by Ingrid Haldane and Émile Roux. Registered BNA 09.4471 / Ordre des Architectes 44-812.</p>
+    </div>
+    <div class="f-col fc2">
+      <h5>Work</h5>
+      <ul>
+        <li><a href="#works">Selected works</a></li>
+        <li><a href="#register">Full register</a></li>
+        <li><a href="#">Competitions</a></li>
+        <li><a href="#">On site now</a></li>
+        <li><a href="#">Research</a></li>
+      </ul>
+    </div>
+    <div class="f-col fc3">
+      <h5>Practice</h5>
+      <ul>
+        <li><a href="#practice">Position</a></li>
+        <li><a href="#">People (24)</a></li>
+        <li><a href="#awards">Recognition</a></li>
+        <li><a href="#">Careers — 3 open</a></li>
+        <li><a href="#">Carbon report 2025</a></li>
+      </ul>
+    </div>
+    <div class="f-col fc4">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="mailto:studio@haldaneroux.nl">studio@haldaneroux.nl</a></li>
+        <li><a href="mailto:press@haldaneroux.nl">press@haldaneroux.nl</a></li>
+        <li><a href="tel:+31102847190">+31 10 284 7190</a></li>
+        <li><a href="#">Katendrechtse Lagedijk 44</a></li>
+      </ul>
+    </div>
+    <div class="f-col fc5">
+      <h5>Elsewhere</h5>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Divisare</a></li>
+        <li><a href="#">Newsletter — quarterly</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="f-bar">
+    <span class="b1 lbl">© 2026 Haldane Roux BV — All drawings remain the property of the practice</span>
+    <span class="b2 lbl">Colophon: Archivo / IBM Plex Mono — set on a 12-column grid</span>
+    <span class="b3 lbl">KvK 24418822 — BTW NL8214.55.901.B01</span>
+  </div>
+</footer>
+
+<!-- ===================== SCRIPTS ===================== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasGSAP = typeof window.gsap !== "undefined";
+
+  /* ---------------------------------------------------------
+     Live studio clock (Rotterdam, UTC+2 in summer)
+     --------------------------------------------------------- */
+  var clockEl = document.getElementById("clock");
+  function tickClock() {
+    var d = new Date();
+    var utc = d.getTime() + d.getTimezoneOffset() * 60000;
+    var rdam = new Date(utc + 3600000 * 2);
+    var p = function (n) { return String(n).padStart(2, "0"); };
+    clockEl.textContent = p(rdam.getHours()) + ":" + p(rdam.getMinutes()) + ":" + p(rdam.getSeconds());
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  /* ---------------------------------------------------------
+     Hand-rolled word splitter (no paid SplitText plugin)
+     --------------------------------------------------------- */
+  function splitWords(el) {
+    if (el.dataset.split === "1") return [];
+    var words = el.textContent.trim().split(/\s+/);
+    el.textContent = "";
+    var inners = [];
+    words.forEach(function (w, i) {
+      var wrap = document.createElement("span");
+      wrap.className = "w";
+      var inner = document.createElement("i");
+      inner.textContent = w;
+      wrap.appendChild(inner);
+      el.appendChild(wrap);
+      if (i < words.length - 1) el.appendChild(document.createTextNode(" "));
+      inners.push(inner);
+    });
+    el.dataset.split = "1";
+    return inners;
+  }
+
+  /* If GSAP failed to load, show everything and bail out early. */
+  if (!hasGSAP) {
+    document.body.classList.remove("is-loading");
+    var lf = document.getElementById("loaderFace");
+    var ld = document.getElementById("loader");
+    if (lf) lf.style.display = "none";
+    if (ld) ld.style.display = "none";
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------------------------------------------------------
+     Lenis smooth scroll  ->  ScrollTrigger
+     --------------------------------------------------------- */
+  var lenis = null;
+  if (!REDUCED && typeof window.Lenis !== "undefined") {
+    lenis = new Lenis({
+      lerp: 0.085,
+      wheelMultiplier: 1,
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  /* ---------------------------------------------------------
+     REDUCED MOTION: final state, no scrub, no pin
+     --------------------------------------------------------- */
+  if (REDUCED) {
+    document.body.classList.remove("is-loading");
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("loaderFace").style.display = "none";
+    gsap.set("[data-lines] .line > span, .w > i", { yPercent: 0, opacity: 1 });
+    document.querySelectorAll("[data-count]").forEach(function (el) {
+      el.textContent = Number(el.dataset.count).toLocaleString("en-US");
+    });
+    document.querySelectorAll("[data-bar]").forEach(function (el) {
+      el.style.width = el.dataset.bar + "%";
+    });
+    document.querySelectorAll("#planDraw path").forEach(function (p) {
+      p.style.strokeDashoffset = 0;
+    });
+    initAccordion();
+    return;
+  }
+
+  /* =========================================================
+     TECHNIQUE 1 — page-load intro: counter + column curtains
+     ========================================================= */
+  var loader = document.getElementById("loader");
+  var loaderFace = document.getElementById("loaderFace");
+  var loadCount = document.getElementById("loadCount");
+  var loadBar = document.getElementById("loadBar");
+  var loadWordInners = splitWords(document.getElementById("loadWord"));
+
+  gsap.set(loadWordInners, { yPercent: 110 });
+
+  var counter = { v: 0 };
+  var introTl = gsap.timeline({ delay: 0.15, onComplete: startPage });
+
+  introTl
+    .to(loadWordInners, { yPercent: 0, duration: 1.0, ease: "power4.out", stagger: 0.07 }, 0)
+    .to(loadBar, { width: "100%", duration: 1.85, ease: "power2.inOut" }, 0.1)
+    .to(counter, {
+      v: 100,
+      duration: 1.85,
+      ease: "power2.inOut",
+      onUpdate: function () {
+        loadCount.textContent = String(Math.round(counter.v)).padStart(3, "0");
+      }
+    }, 0.1)
+    .to(loadWordInners, { yPercent: -110, duration: 0.62, ease: "power3.in", stagger: 0.035 }, "+=0.15")
+    .to([loadCount, loadBar.parentNode, loaderFace.querySelector(".loader-top"), loaderFace.querySelector(".loader-bottom .lbl")],
+        { opacity: 0, duration: 0.4, ease: "power2.out" }, "<0.1")
+    .to(loader.querySelectorAll(".col"), {
+      scaleY: 0,
+      transformOrigin: "top center",
+      duration: 1.0,
+      ease: "power4.inOut",
+      stagger: { each: 0.055, from: "start" }
+    }, "-=0.25")
+    .set([loader, loaderFace], { display: "none" });
+
+  function startPage() {
+    document.body.classList.remove("is-loading");
+    ScrollTrigger.refresh();
+    heroTl.play(0);
+  }
+
+  /* =========================================================
+     TECHNIQUE 2 — hand-split line + word mask reveals
+     ========================================================= */
+  // Hero (plays after the intro finishes)
+  var heroLines = document.querySelectorAll(".hero-title .line > span");
+  var heroWords = splitWords(document.querySelector(".hero-lead p[data-words]"));
+  var heroSpecRows = document.querySelectorAll(".hero-spec .row");
+
+  gsap.set(heroLines, { yPercent: 108 });
+  gsap.set(heroWords, { yPercent: 110 });
+  gsap.set(heroSpecRows, { opacity: 0, y: 14 });
+  gsap.set(".hero-shot .frame", { clipPath: "inset(100% 0% 0% 0%)" });
+  gsap.set(".hero-lead .cta-row .btn", { opacity: 0, y: 16 });
+
+  var heroTl = gsap.timeline({ paused: true });
+  heroTl
+    .to(heroLines, { yPercent: 0, duration: 1.15, ease: "power4.out", stagger: 0.085 }, 0)
+    .to(".hero-shot .frame", { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, ease: "power4.inOut" }, 0.25)
+    .to(heroWords, { yPercent: 0, duration: 0.85, ease: "power3.out", stagger: 0.014 }, 0.45)
+    .to(heroSpecRows, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.05 }, 0.55)
+    .to(".hero-lead .cta-row .btn", { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.07 }, 0.8);
+
+  // Section headings + body copy, revealed on scroll
+  document.querySelectorAll("[data-lines]").forEach(function (block) {
+    if (block.closest(".hero-title")) return;
+    var lines = block.querySelectorAll(".line > span");
+    gsap.set(lines, { yPercent: 108 });
+    ScrollTrigger.create({
+      trigger: block,
+      start: "top 88%",
+      once: true,
+      onEnter: function () {
+        gsap.to(lines, { yPercent: 0, duration: 1.05, ease: "power4.out", stagger: 0.075 });
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-words]").forEach(function (p) {
+    if (p.closest(".hero-lead")) return;
+    var inners = splitWords(p);
+    gsap.set(inners, { yPercent: 110 });
+    ScrollTrigger.create({
+      trigger: p,
+      start: "top 88%",
+      once: true,
+      onEnter: function () {
+        gsap.to(inners, { yPercent: 0, duration: 0.9, ease: "power3.out", stagger: 0.012 });
+      }
+    });
+  });
+
+  // Principle rows + table rows: staggered entrance
+  gsap.utils.toArray(".principles .prow").forEach(function (row, i) {
+    gsap.from(row, {
+      opacity: 0, y: 26, duration: 0.85, ease: "power3.out", delay: i * 0.05,
+      scrollTrigger: { trigger: row, start: "top 90%", once: true }
+    });
+  });
+  gsap.from(".aw-tbl tbody tr", {
+    opacity: 0, y: 20, duration: 0.7, ease: "power3.out", stagger: 0.055,
+    scrollTrigger: { trigger: ".aw-tbl", start: "top 82%", once: true }
+  });
+  gsap.from(".reg-item", {
+    opacity: 0, y: 22, duration: 0.7, ease: "power3.out", stagger: 0.05,
+    scrollTrigger: { trigger: ".register", start: "top 82%", once: true }
+  });
+
+  /* =========================================================
+     TECHNIQUE 3 — SVG path draw (floor plan), scroll-scrubbed
+     ========================================================= */
+  var planPaths = document.querySelectorAll("#planDraw path");
+  var drawable = [];
+  planPaths.forEach(function (p) {
+    if (p.classList.contains("pl-fill")) return;
+    var len = 0;
+    try { len = p.getTotalLength(); } catch (e) { len = 0; }
+    if (!len) return;
+    p.style.strokeDasharray = len;
+    p.style.strokeDashoffset = len;
+    p.dataset.len = len;
+    drawable.push(p);
+  });
+  gsap.set(".pl-fill", { opacity: 0 });
+
+  gsap.to(drawable, {
+    strokeDashoffset: 0,
+    ease: "none",
+    stagger: { each: 0.12, from: "start" },
+    scrollTrigger: {
+      trigger: ".plan-wrap",
+      start: "top 78%",
+      end: "bottom 55%",
+      scrub: 0.8
+    }
+  });
+  gsap.to(".pl-fill", {
+    opacity: 1, duration: 0.8, ease: "power2.out",
+    scrollTrigger: { trigger: ".plan-wrap", start: "top 45%", once: true }
+  });
+
+  /* =========================================================
+     TECHNIQUE 4 — count-up statistics
+     ========================================================= */
+  document.querySelectorAll("[data-count]").forEach(function (el) {
+    var target = Number(el.dataset.count);
+    var obj = { v: 0 };
+    ScrollTrigger.create({
+      trigger: el,
+      start: "top 88%",
+      once: true,
+      onEnter: function () {
+        gsap.to(obj, {
+          v: target,
+          duration: 1.9,
+          ease: "power3.out",
+          onUpdate: function () {
+            el.textContent = Math.round(obj.v).toLocaleString("en-US");
+          },
+          onComplete: function () {
+            el.textContent = target.toLocaleString("en-US");
+          }
+        });
+      }
+    });
+  });
+  document.querySelectorAll("[data-bar]").forEach(function (el) {
+    gsap.to(el, {
+      width: el.dataset.bar + "%", duration: 1.5, ease: "power3.inOut",
+      scrollTrigger: { trigger: el, start: "top 92%", once: true }
+    });
+  });
+
+  /* =========================================================
+     TECHNIQUE 5 — parallax layers (hero + showcase image)
+     ========================================================= */
+  gsap.to("#heroImg", {
+    yPercent: 10, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+  });
+
+  /* =========================================================
+     TECHNIQUE 6 — scroll-scrubbed clip-path reveal (showcase)
+     ========================================================= */
+  gsap.fromTo("#scStage .sc-img",
+    { clipPath: "inset(14% 22% 14% 22%)" },
+    {
+      clipPath: "inset(0% 0% 0% 0%)",
+      ease: "none",
+      scrollTrigger: { trigger: "#scStage", start: "top 82%", end: "top 18%", scrub: 0.6 }
+    }
+  );
+  gsap.fromTo("#scImg", { yPercent: -8 }, {
+    yPercent: 8, ease: "none",
+    scrollTrigger: { trigger: "#scStage", start: "top bottom", end: "bottom top", scrub: true }
+  });
+  gsap.from(".sc-over > div", {
+    yPercent: 100, opacity: 0, duration: 0.8, ease: "power4.out", stagger: 0.06,
+    scrollTrigger: { trigger: "#scStage", start: "top 45%", once: true }
+  });
+
+  /* =========================================================
+     SIGNATURE — horizontal scroll track (desktop only)
+     Pin distance === track overflow width, recalculated on resize.
+     ========================================================= */
+  var mm = gsap.matchMedia();
+
+  mm.add("(min-width: 1024px)", function () {
+    var track = document.getElementById("hTrack");
+    var panels = gsap.utils.toArray("#hTrack .h-panel:not(.h-intro)");
+    var progEl = document.getElementById("worksProg");
+    var idxEl = document.getElementById("worksIdx");
+
+    // Distance the track must travel = its own width minus one viewport.
+    var getScrollAmount = function () {
+      return Math.max(0, track.scrollWidth - window.innerWidth);
+    };
+
+    var horizTween = gsap.to(track, {
+      x: function () { return -getScrollAmount(); },
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".works",
+        start: "top top",
+        end: function () { return "+=" + getScrollAmount(); },
+        pin: true,
+        pinSpacing: true,
+        scrub: 1,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: function (self) {
+          var p = self.progress;
+          progEl.style.width = (p * 100).toFixed(2) + "%";
+          var n = Math.min(panels.length, Math.floor(p * panels.length) + 1);
+          idxEl.textContent = String(n).padStart(2, "0");
+        }
+      }
+    });
+
+    // Per-panel parallax on the imagery, driven by the horizontal tween.
+    var subs = [];
+    panels.forEach(function (panel) {
+      var img = panel.querySelector(".h-img img");
+      var meta = panel.querySelector(".h-meta");
+      if (img) {
+        subs.push(gsap.fromTo(img,
+          { xPercent: -9 },
+          {
+            xPercent: 9,
+            ease: "none",
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: horizTween,
+              start: "left right",
+              end: "right left",
+              scrub: true,
+              invalidateOnRefresh: true
+            }
+          }
+        ));
+      }
+      if (meta) {
+        subs.push(gsap.fromTo(meta,
+          { yPercent: 6, opacity: 0.45 },
+          {
+            yPercent: 0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: horizTween,
+              start: "left 88%",
+              end: "left 45%",
+              scrub: true,
+              invalidateOnRefresh: true
+            }
+          }
+        ));
+      }
+    });
+
+    return function cleanup() {
+      subs.forEach(function (t) {
+        if (t.scrollTrigger) t.scrollTrigger.kill();
+        t.kill();
+      });
+      if (horizTween.scrollTrigger) horizTween.scrollTrigger.kill();
+      horizTween.kill();
+      gsap.set(track, { clearProps: "transform" });
+      gsap.set("#hTrack .h-img img, #hTrack .h-meta", { clearProps: "all" });
+    };
+  });
+
+  // Mobile / tablet: clean vertical stacking, simple staggered entrances.
+  mm.add("(max-width: 1023px)", function () {
+    var tweens = gsap.utils.toArray("#hTrack .h-panel").map(function (panel) {
+      return gsap.from(panel, {
+        opacity: 0, y: 30, duration: 0.8, ease: "power3.out",
+        scrollTrigger: { trigger: panel, start: "top 88%", once: true }
+      });
+    });
+    return function () {
+      tweens.forEach(function (t) {
+        if (t.scrollTrigger) t.scrollTrigger.kill();
+        t.kill();
+      });
+      gsap.set("#hTrack .h-panel", { clearProps: "all" });
+    };
+  });
+
+  /* =========================================================
+     Magnetic buttons + custom cursor (desktop, pointer:fine)
+     ========================================================= */
+  mm.add("(min-width: 1024px) and (pointer: fine)", function () {
+    var cursor = document.getElementById("cursor");
+    var pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    var mouse = { x: pos.x, y: pos.y };
+
+    var onMove = function (e) { mouse.x = e.clientX; mouse.y = e.clientY; };
+    window.addEventListener("mousemove", onMove);
+
+    var raf = function () {
+      pos.x += (mouse.x - pos.x) * 0.16;
+      pos.y += (mouse.y - pos.y) * 0.16;
+      gsap.set(cursor, { x: pos.x, y: pos.y });
+    };
+    gsap.ticker.add(raf);
+
+    var hotEls = document.querySelectorAll("[data-hot]");
+    var hotIn = function () { cursor.classList.add("is-hot"); cursor.setAttribute("data-label", "OPEN"); };
+    var hotOut = function () { cursor.classList.remove("is-hot"); };
+    hotEls.forEach(function (el) {
+      el.addEventListener("mouseenter", hotIn);
+      el.addEventListener("mouseleave", hotOut);
+    });
+
+    // magnetic pull within a radius
+    var magnets = document.querySelectorAll("[data-magnetic]");
+    var magHandlers = [];
+    magnets.forEach(function (m) {
+      var move = function (e) {
+        var r = m.getBoundingClientRect();
+        var mx = e.clientX - (r.left + r.width / 2);
+        var my = e.clientY - (r.top + r.height / 2);
+        gsap.to(m, { x: mx * 0.28, y: my * 0.34, duration: 0.5, ease: "power3.out" });
+      };
+      var out = function () {
+        gsap.to(m, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.4)" });
+      };
+      m.addEventListener("mousemove", move);
+      m.addEventListener("mouseleave", out);
+      magHandlers.push({ el: m, move: move, out: out });
+    });
+
+    return function () {
+      window.removeEventListener("mousemove", onMove);
+      gsap.ticker.remove(raf);
+      hotEls.forEach(function (el) {
+        el.removeEventListener("mouseenter", hotIn);
+        el.removeEventListener("mouseleave", hotOut);
+      });
+      magHandlers.forEach(function (h) {
+        h.el.removeEventListener("mousemove", h.move);
+        h.el.removeEventListener("mouseleave", h.out);
+        gsap.set(h.el, { clearProps: "all" });
+      });
+      cursor.classList.remove("is-hot");
+    };
+  });
+
+  /* =========================================================
+     Register accordion (real interaction, height tween)
+     ========================================================= */
+  function initAccordion() {
+    document.querySelectorAll(".reg-item").forEach(function (item) {
+      var btn = item.querySelector(".reg-row");
+      var body = item.querySelector(".reg-body");
+      btn.addEventListener("click", function () {
+        var open = item.classList.contains("is-open");
+
+        // close any other open row
+        document.querySelectorAll(".reg-item.is-open").forEach(function (other) {
+          if (other === item) return;
+          other.classList.remove("is-open");
+          other.querySelector(".reg-row").setAttribute("aria-expanded", "false");
+          if (hasGSAP) {
+            gsap.to(other.querySelector(".reg-body"), {
+              height: 0, duration: 0.5, ease: "power3.inOut",
+              onComplete: function () { ScrollTrigger.refresh(); }
+            });
+          } else {
+            other.querySelector(".reg-body").style.height = "0px";
+          }
+        });
+
+        item.classList.toggle("is-open", !open);
+        btn.setAttribute("aria-expanded", String(!open));
+
+        if (!hasGSAP) {
+          body.style.height = open ? "0px" : "auto";
+          return;
+        }
+
+        if (open) {
+          gsap.to(body, {
+            height: 0, duration: 0.5, ease: "power3.inOut",
+            onComplete: function () { ScrollTrigger.refresh(); }
+          });
+        } else {
+          gsap.to(body, {
+            height: "auto", duration: 0.65, ease: "power3.inOut",
+            onComplete: function () { ScrollTrigger.refresh(); }
+          });
+          gsap.from(body.querySelectorAll(".b-txt, .b-spec, .b-img"), {
+            opacity: 0, y: 18, duration: 0.6, ease: "power3.out", stagger: 0.06, delay: 0.08
+          });
+        }
+      });
+    });
+  }
+  initAccordion();
+
+  /* ---------------------------------------------------------
+     Anchor links routed through Lenis
+     --------------------------------------------------------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var id = a.getAttribute("href");
+      if (!id || id === "#") return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(target, { offset: -46, duration: 1.25 });
+      else target.scrollIntoView({ behavior: "smooth" });
+    });
+  });
+
+  /* Recalculate pin distance once webfonts have settled. */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+  }
+  window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+
+})();
+</script>
+</body>
+</html>

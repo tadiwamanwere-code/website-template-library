@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>orbit — deterministic build cache for polyglot monorepos</title>
+<meta name="description" content="orbit is a content-addressed build cache and task graph runner. Fingerprints inputs to the byte, restores targets from an edge CAS in milliseconds.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   orbit — light technical / mono-forward / documentation layout
+   Accent: #5b5bd6 (primary CTA + syntax highlights ONLY)
+   ============================================================ */
+
+:root{
+  --paper:#fafaf8;
+  --paper-2:#f3f2ed;
+  --ink:#111110;
+  --ink-2:#34342f;
+  --muted:#75756b;
+  --muted-2:#9b9b90;
+  --rule:#e4e3dc;
+  --rule-2:#d2d1c9;
+
+  --code-bg:#edeff2;
+  --code-bg-2:#e5e8ec;
+  --code-bd:#d9dce2;
+
+  --accent:#5b5bd6;
+  --accent-2:#4646a8;
+  --accent-soft:#ecebfb;
+
+  --mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans:"Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --measure:66ch;
+  --gut:clamp(20px, 4.4vw, 64px);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html.is-loading{overflow:hidden}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-variant-numeric:tabular-nums;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent-soft);color:var(--accent-2)}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;font-weight:400}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+svg{display:block}
+
+/* ---------- shell ---------- */
+.wrap{width:100%;max-width:1280px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+.rule-t{border-top:1px solid var(--rule)}
+section{position:relative}
+
+/* ---------- type primitives ---------- */
+.mono{font-family:var(--mono)}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  line-height:1.6;
+}
+.h-display{
+  font-family:var(--mono);font-weight:700;
+  font-size:clamp(2.35rem,6.4vw,5.4rem);
+  line-height:1.02;letter-spacing:-.045em;
+}
+.h-sec{
+  font-family:var(--mono);font-weight:700;
+  font-size:clamp(1.7rem,3.4vw,2.75rem);
+  line-height:1.12;letter-spacing:-.035em;
+}
+.h-sub{
+  font-family:var(--mono);font-weight:700;
+  font-size:clamp(1.05rem,1.5vw,1.22rem);
+  line-height:1.35;letter-spacing:-.02em;
+}
+.prose{color:var(--ink-2);max-width:var(--measure);font-size:1.0625rem;line-height:1.8}
+.prose + .prose{margin-top:1.15em}
+.prose strong{font-weight:600;color:var(--ink)}
+.dim{color:var(--muted)}
+
+/* margin / aside note column — documentation style */
+.note{
+  font-family:var(--mono);font-size:12.5px;line-height:1.72;
+  color:var(--muted);border-left:1px solid var(--rule-2);
+  padding-left:14px;max-width:34ch;
+}
+.note b{color:var(--ink-2);font-weight:500}
+
+/* section anchor rule */
+.anchor{
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  padding:14px 0 34px;
+}
+.anchor .bar{flex:1;height:1px;background:var(--rule)}
+
+/* ---------- split-line reveal ---------- */
+.ln{display:block;overflow:hidden}
+.ln-i{display:block;will-change:transform}
+html.anim-ready .ln-i{transform:translateY(108%)}
+html.anim-ready .fade-up{opacity:0}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.01em;
+  padding:12px 20px;border-radius:3px;border:1px solid transparent;
+  transition:background .22s var(--ease-out),color .22s var(--ease-out),border-color .22s var(--ease-out),transform .22s var(--ease-out);
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-2)}
+.btn-ghost{border-color:var(--rule-2);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink);background:#fff}
+.btn .arw{transition:transform .24s var(--ease-out)}
+.btn:hover .arw{transform:translateX(3px)}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;inset:0 0 auto 0;z-index:60;
+  background:rgba(250,250,248,.82);backdrop-filter:blur(10px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s var(--ease-out),background .3s var(--ease-out);
+}
+.nav.stuck{border-bottom-color:var(--rule)}
+.nav-in{display:flex;align-items:center;gap:28px;height:58px}
+.brand{
+  font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:-.03em;
+  display:flex;align-items:center;gap:9px;
+}
+.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--ink);display:block}
+.brand .ver{font-weight:400;font-size:11px;color:var(--muted);letter-spacing:0}
+.nav-links{display:flex;gap:22px;margin-left:auto}
+.nav-links a{
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+  letter-spacing:.02em;transition:color .2s var(--ease-out);position:relative;
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;right:100%;bottom:-3px;height:1px;background:var(--ink);
+  transition:right .3s var(--ease-out);
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{right:0}
+.nav-cta{padding:8px 15px;font-size:12px}
+.gh{
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+  display:flex;align-items:center;gap:7px;border:1px solid var(--rule-2);
+  padding:6px 11px;border-radius:3px;transition:border-color .2s var(--ease-out),color .2s var(--ease-out);
+}
+.gh:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ---------- intro curtain ---------- */
+.intro{
+  position:fixed;inset:0;z-index:200;background:var(--paper);
+  display:flex;align-items:flex-end;
+  clip-path:inset(0 0 0 0);
+}
+.intro-in{width:100%;padding:0 var(--gut) clamp(28px,6vh,60px);display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.intro-boot{font-family:var(--mono);font-size:12.5px;line-height:2;color:var(--muted)}
+.intro-boot b{color:var(--ink);font-weight:500}
+.intro-boot li{opacity:0}
+.intro-count{font-family:var(--mono);font-weight:700;font-size:clamp(3rem,11vw,8rem);letter-spacing:-.05em;line-height:.85}
+.intro-bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ink);transform:scaleX(0);transform-origin:left}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(96px,15vh,168px);padding-bottom:clamp(56px,9vh,104px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(28px,5vw,72px);align-items:end}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--rule-2);border-radius:99px;padding:5px 13px;margin-bottom:26px;
+}
+.hero-tag i{width:5px;height:5px;border-radius:50%;background:var(--accent);display:block;font-style:normal}
+h1.h-display{max-width:15ch;margin-bottom:26px}
+.hero-lede{max-width:56ch;font-size:1.125rem}
+.hero-meta{
+  display:flex;flex-wrap:wrap;gap:0 26px;margin-top:30px;
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+}
+.hero-meta b{color:var(--ink);font-weight:500}
+
+/* install block */
+.install{margin-top:38px;max-width:640px}
+.install-tabs{display:flex;gap:2px;border-bottom:1px solid var(--rule)}
+.tab{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:9px 14px;border-bottom:1px solid transparent;margin-bottom:-1px;
+  transition:color .2s var(--ease-out),border-color .2s var(--ease-out);
+}
+.tab:hover{color:var(--ink-2)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.install-row{
+  display:flex;align-items:stretch;background:var(--code-bg);border:1px solid var(--code-bd);
+  border-top:0;border-radius:0 0 4px 4px;overflow:hidden;
+}
+.install-cmd{
+  flex:1;min-width:0;font-family:var(--mono);font-size:14px;
+  padding:15px 18px;overflow-x:auto;white-space:nowrap;
+  scrollbar-width:thin;
+}
+.install-cmd .p{color:var(--muted-2);user-select:none}
+.copy{
+  flex:none;display:flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:0 18px;border-left:1px solid var(--code-bd);color:var(--muted);
+  transition:color .2s var(--ease-out),background .2s var(--ease-out);
+}
+.copy:hover{color:var(--ink);background:var(--code-bg-2)}
+.copy.done{color:var(--accent);background:var(--accent-soft)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.hero-aside{padding-bottom:8px}
+.hero-aside .note + .note{margin-top:22px}
+
+/* ---------- generic code surface ---------- */
+.code{
+  background:var(--code-bg);border:1px solid var(--code-bd);border-radius:4px;
+  font-family:var(--mono);font-size:13px;line-height:1.85;
+  overflow-x:auto;
+}
+.code-hd{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 16px;border-bottom:1px solid var(--code-bd);
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  background:var(--code-bg-2);
+}
+.code-hd .fn{color:var(--ink-2)}
+.code-hd .sp{margin-left:auto}
+.code pre{margin:0;padding:16px 18px;font:inherit;white-space:pre;min-width:max-content}
+
+/* hand-rolled syntax tokens — accent used here by design */
+.t-kw{color:var(--accent);font-weight:600}
+.t-fn{color:var(--ink);font-weight:600}
+.t-str{color:var(--accent-2)}
+.t-num{color:var(--ink-2);font-weight:500}
+.t-cm{color:var(--muted-2);font-style:italic}
+.t-op{color:var(--muted)}
+.t-key{color:var(--ink);font-weight:500}
+
+/* ---------- terminal ---------- */
+.term-sec{padding:clamp(56px,9vh,104px) 0}
+.term-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(28px,5vw,72px);align-items:start}
+.term{
+  background:var(--code-bg);border:1px solid var(--code-bd);border-radius:5px;
+  box-shadow:0 1px 0 rgba(17,17,16,.03), 0 18px 44px -30px rgba(17,17,16,.35);
+  overflow:hidden;
+}
+.term-bar{
+  display:flex;align-items:center;gap:12px;padding:10px 16px;
+  border-bottom:1px solid var(--code-bd);background:var(--code-bg-2);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+}
+.term-bar .dots{display:flex;gap:6px}
+.term-bar .dots i{width:8px;height:8px;border-radius:50%;background:var(--rule-2);display:block}
+.term-bar .title{color:var(--ink-2);letter-spacing:.06em;text-transform:none;font-size:12px}
+.term-bar .right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.term-state{display:flex;align-items:center;gap:7px}
+.term-state i{width:6px;height:6px;border-radius:50%;background:var(--accent);display:block}
+.term-state.paused i{background:var(--muted-2)}
+.term-replay{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--rule-2);border-radius:3px;padding:3px 9px;
+  transition:color .2s var(--ease-out),border-color .2s var(--ease-out);
+}
+.term-replay:hover{color:var(--ink);border-color:var(--ink)}
+.term-body{
+  font-family:var(--mono);font-size:13.5px;line-height:1.72;
+  padding:18px 20px 22px;height:clamp(360px,52vh,470px);
+  overflow-y:auto;overflow-x:auto;scrollbar-width:thin;color:var(--ink-2);
+}
+.term-body .l{white-space:pre;min-width:max-content}
+.term-body .l.gap{height:.85em}
+.term-body .l.dim{color:var(--muted)}
+.term-body .l.hd{color:var(--muted);letter-spacing:.04em}
+.term-body .l.ok{color:var(--ink)}
+.term-body .l.res{color:var(--ink);font-weight:700}
+.term-body .l.tree{color:var(--muted)}
+.term-body .prm{color:var(--accent);font-weight:700;user-select:none}
+.cursor{
+  display:inline-block;width:.58em;height:1.05em;background:var(--ink);
+  vertical-align:-.18em;margin-left:1px;animation:blink 1.05s steps(1,end) infinite;
+}
+.cursor.typing{animation:none}
+@keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+
+/* ---------- pinned step section ---------- */
+.steps{padding:clamp(56px,9vh,104px) 0}
+.steps-stage{display:grid;grid-template-columns:340px minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
+.steps-list{display:flex;flex-direction:column;gap:2px}
+.step-item{
+  display:grid;grid-template-columns:34px 1fr;gap:14px;
+  padding:16px 0;border-top:1px solid var(--rule);
+  transition:opacity .4s var(--ease-out);
+}
+.step-item:last-child{border-bottom:1px solid var(--rule)}
+.step-item .n{font-family:var(--mono);font-size:11px;color:var(--muted-2);letter-spacing:.1em;padding-top:4px}
+.step-item .t{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:-.02em}
+.step-item .d{font-size:14px;color:var(--muted);line-height:1.6;margin-top:5px}
+.step-item .track{grid-column:1/-1;height:1px;background:var(--rule-2);margin-top:14px;position:relative;display:none}
+.step-item .track span{position:absolute;inset:0 auto 0 0;background:var(--ink);transform:scaleX(0);transform-origin:left;display:block}
+.step-panels{position:relative}
+.step-panel + .step-panel{margin-top:18px}
+
+/* ---------- benchmark chart ---------- */
+.bench{padding:clamp(56px,9vh,104px) 0}
+.bench-head{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(28px,5vw,72px);align-items:end;margin-bottom:44px}
+.chart{border-top:1px solid var(--rule)}
+.chart-title{
+  display:flex;align-items:baseline;gap:14px;padding:22px 0 14px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);
+}
+.chart-title span{letter-spacing:0;text-transform:none;color:var(--muted);font-size:12px}
+.bar-row{
+  display:grid;grid-template-columns:236px minmax(0,1fr) 96px;gap:18px;align-items:center;
+  padding:9px 0;border-top:1px solid var(--rule);
+}
+.bar-row .lbl{font-family:var(--mono);font-size:13px;color:var(--ink);letter-spacing:-.01em}
+.bar-row .lbl em{display:block;font-style:normal;font-size:11px;color:var(--muted);letter-spacing:.02em}
+.bar-track{height:22px;background:var(--paper-2);border-radius:2px;position:relative;overflow:hidden}
+.bar-fill{
+  position:absolute;inset:0 auto 0 0;height:100%;
+  width:var(--pct);min-width:3px;background:var(--rule-2);border-radius:2px;
+  transform-origin:left center;
+}
+.bar-row.win .bar-fill{background:var(--ink)}
+.bar-row.loss .bar-fill{background:repeating-linear-gradient(135deg,var(--rule-2) 0 5px,var(--paper-2) 5px 10px)}
+.bar-val{font-family:var(--mono);font-size:13.5px;font-weight:500;text-align:right;letter-spacing:-.02em}
+.chart-foot{
+  padding:16px 0 0;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--muted);max-width:78ch;
+}
+.chart-foot b{color:var(--ink-2);font-weight:500}
+.charts{display:grid;gap:52px}
+
+/* ---------- stats strip ---------- */
+.stats{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.stats-in{display:grid;grid-template-columns:repeat(5,1fr)}
+.stat{padding:34px 0 32px;border-left:1px solid var(--rule);padding-left:24px}
+.stat:first-child{border-left:0;padding-left:0}
+.stat .v{font-family:var(--mono);font-weight:700;font-size:clamp(1.6rem,2.7vw,2.3rem);letter-spacing:-.045em;line-height:1}
+.stat .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:12px;line-height:1.5}
+
+/* ---------- invention layout (editorial doc grid) ---------- */
+.doc{padding:clamp(56px,9vh,104px) 0}
+.doc-block{
+  display:grid;grid-template-columns:88px minmax(0,1fr) 268px;
+  gap:clamp(20px,3vw,44px);
+  padding:44px 0;border-top:1px solid var(--rule);align-items:start;
+}
+.doc-block .idx{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted-2);padding-top:8px}
+.doc-block .body > * + *{margin-top:20px}
+.doc-block .aside{padding-top:6px}
+.doc-block.flip{grid-template-columns:268px minmax(0,1fr) 88px}
+.doc-block.flip .aside{order:-1}
+.doc-block.flip .idx{order:3;text-align:right}
+.doc-block.wide{grid-template-columns:88px minmax(0,1fr)}
+.kv{font-family:var(--mono);font-size:12.5px;color:var(--muted);line-height:1.9}
+.kv b{color:var(--ink);font-weight:500}
+
+/* ---------- proof: diagram + table + accordion ---------- */
+.proof{padding:clamp(56px,9vh,104px) 0}
+.diagram{border:1px solid var(--rule);border-radius:4px;background:#fff;padding:clamp(16px,2.6vw,34px);overflow-x:auto}
+.diagram svg{width:100%;min-width:900px;height:auto}
+.dg-node{fill:var(--paper);stroke:var(--ink);stroke-width:1.25;opacity:0}
+.dg-node.soft{fill:var(--paper-2)}
+.dg-t{font-family:var(--mono);font-size:14px;font-weight:700;fill:var(--ink);letter-spacing:-.02em;opacity:0}
+.dg-s{font-family:var(--mono);font-size:11px;fill:var(--muted);letter-spacing:.02em;opacity:0}
+.dg-p{fill:none;stroke:var(--ink);stroke-width:1.25}
+.dg-p.ghost{stroke:var(--muted-2);stroke-dasharray:4 4}
+.dg-l{font-family:var(--mono);font-size:10.5px;fill:var(--muted);letter-spacing:.1em;text-transform:uppercase;opacity:0}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{
+  text-align:left;font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  padding:0 18px 12px 0;border-bottom:1px solid var(--rule-2);
+}
+.tbl td{padding:14px 18px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.tbl tbody tr{transition:background .2s var(--ease-out)}
+.tbl tbody tr:hover{background:var(--paper-2)}
+.tbl .rt{font-family:var(--mono);font-weight:500;color:var(--ink);white-space:nowrap}
+.tbl .mn{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule-2);border-radius:2px;padding:2px 7px;color:var(--muted);white-space:nowrap;
+}
+.badge.on{border-color:var(--ink);color:var(--ink)}
+
+.acc{border-top:1px solid var(--rule)}
+.acc-item{border-bottom:1px solid var(--rule)}
+.acc-q{
+  display:flex;align-items:flex-start;gap:16px;width:100%;text-align:left;
+  padding:20px 0;font-family:var(--mono);font-size:14.5px;font-weight:500;letter-spacing:-.015em;
+  transition:color .2s var(--ease-out);
+}
+.acc-q:hover{color:var(--accent-2)}
+.acc-q .sign{flex:none;width:11px;height:11px;position:relative;margin-top:8px}
+.acc-q .sign::before,.acc-q .sign::after{
+  content:"";position:absolute;background:currentColor;transition:transform .3s var(--ease-out),opacity .3s var(--ease-out);
+}
+.acc-q .sign::before{inset:5px 0 5px 0;height:1px}
+.acc-q .sign::after{inset:0 5px 0 5px;width:1px}
+.acc-item.open .acc-q .sign::after{transform:scaleY(0);opacity:0}
+.acc-p{height:0;overflow:hidden;transition:height .42s cubic-bezier(.22,1,.36,1)}
+.acc-p .in{padding:0 0 24px 27px;max-width:74ch}
+.acc-p .in > * + *{margin-top:14px}
+
+/* ---------- users ---------- */
+.users{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.user{background:var(--paper);padding:22px 24px;transition:background .25s var(--ease-out)}
+.user:hover{background:#fff}
+.user .n{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:-.03em}
+.user .m{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:7px;letter-spacing:.02em}
+
+/* ---------- closing CTA ---------- */
+.cta{padding:clamp(72px,12vh,140px) 0;border-top:1px solid var(--rule);background:var(--paper-2)}
+.cta-in{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(28px,5vw,72px);align-items:end}
+.cta h2{max-width:16ch;margin-bottom:24px}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--rule-2);background:var(--paper)}
+.foot-cols{
+  display:grid;grid-template-columns:1.5fr repeat(4,1fr);
+  gap:clamp(24px,3vw,48px);padding:56px 0 44px;
+}
+.foot-brand .brand{margin-bottom:16px}
+.foot-brand p{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.8;max-width:32ch}
+.foot h4{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;font-weight:500;
+}
+.foot li + li{margin-top:9px}
+.foot li a{
+  font-family:var(--mono);font-size:12.5px;color:var(--ink-2);
+  transition:color .18s var(--ease-out);
+}
+.foot li a:hover{color:var(--accent-2)}
+.foot-bar{
+  display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;
+  padding:18px 0 26px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.02em;
+}
+.foot-bar .st{display:flex;align-items:center;gap:8px;margin-left:auto}
+.foot-bar .st i{width:6px;height:6px;border-radius:50%;background:var(--ink);display:block}
+
+/* ============================================================
+   RESPONSIVE — degrade below 1024px
+   ============================================================ */
+@media (max-width:1180px){
+  .stats-in{grid-template-columns:repeat(3,1fr)}
+  .stat:nth-child(4){border-left:0;padding-left:0}
+  .foot-cols{grid-template-columns:1fr 1fr 1fr}
+}
+@media (min-width:1024px){
+  /* desktop: stacked panels for the pinned step sequence */
+  .step-panels:not(.flow) .step-panel{
+    position:absolute;inset:0 0 auto 0;margin-top:0;
+    opacity:0;pointer-events:none;visibility:hidden;
+  }
+  .step-panels:not(.flow) .step-panel.is-active{opacity:1;pointer-events:auto;visibility:visible}
+  .steps-list:not(.flow) .step-item{opacity:.36}
+  .steps-list:not(.flow) .step-item.is-active{opacity:1}
+  .steps-list:not(.flow) .step-item .track{display:block}
+}
+@media (max-width:1023px){
+  :root{--measure:60ch}
+  .nav-links{display:none}
+  .hero-grid,.term-grid,.bench-head,.cta-in{grid-template-columns:minmax(0,1fr)}
+  .hero-aside{padding-top:8px}
+  .steps-stage{grid-template-columns:minmax(0,1fr);gap:32px}
+  .doc-block,.doc-block.flip,.doc-block.wide{grid-template-columns:minmax(0,1fr);gap:22px}
+  .doc-block.flip .aside,.doc-block.flip .idx{order:0;text-align:left}
+  .users{grid-template-columns:repeat(2,1fr)}
+  .bar-row{grid-template-columns:150px minmax(0,1fr) 78px;gap:12px}
+  .bar-row .lbl{font-size:12px}
+  .term-body{font-size:11.5px;height:clamp(300px,58vh,400px);padding:14px 15px 18px}
+  .term-bar{font-size:10px;gap:9px;padding:9px 13px}
+  .term-bar .dots{display:none}
+  .code{font-size:12px}
+  .install-cmd{font-size:12.5px;padding:13px 14px}
+  .copy{padding:0 13px;font-size:10.5px}
+}
+@media (max-width:680px){
+  .stats-in{grid-template-columns:repeat(2,1fr)}
+  .stat{border-left:0;padding-left:0;border-top:1px solid var(--rule)}
+  .stats-in .stat:first-child,.stats-in .stat:nth-child(2){border-top:0}
+  .users{grid-template-columns:1fr}
+  .foot-cols{grid-template-columns:1fr 1fr}
+  .bar-row{grid-template-columns:1fr auto;gap:6px 12px}
+  .bar-row .bar-track{grid-column:1/-1;order:3}
+  .install-tabs{overflow-x:auto;scrollbar-width:none}
+  .term-body{font-size:11px}
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important;
+  }
+  .cursor{display:none}
+  html.anim-ready .ln-i{transform:none}
+  html.anim-ready .fade-up{opacity:1}
+  .step-panels .step-panel{position:relative !important;opacity:1 !important;visibility:visible !important;pointer-events:auto !important}
+  .steps-list .step-item{opacity:1 !important}
+  .bar-fill{transform:none !important}
+  .dg-node,.dg-t,.dg-s,.dg-l{opacity:1 !important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================ INTRO CURTAIN ============================ -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-in">
+    <ul class="intro-boot" id="bootList">
+      <li>resolving toolchain ......... <b>ok</b></li>
+      <li>mounting workspace .......... <b>helios-kernel</b></li>
+      <li>contacting edge-fra1 ........ <b>11ms</b></li>
+      <li>warm blobs .................. <b>2,412,908</b></li>
+    </ul>
+    <div class="intro-count mono" id="introCount">00</div>
+  </div>
+  <div class="intro-bar" id="introBar"></div>
+</div>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="brand"><span class="dot"></span>orbit <span class="ver">v2.4.1</span></a>
+    <nav class="nav-links">
+      <a href="#replay">Replay</a>
+      <a href="#resolve">How it resolves</a>
+      <a href="#benchmarks">Benchmarks</a>
+      <a href="#runtimes">Runtimes</a>
+      <a href="#faq">Internals</a>
+    </nav>
+    <a href="#top" class="gh" aria-label="GitHub stars">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.22 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.52.56.83 1.28.83 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      21.4k
+    </a>
+    <a href="#install" class="btn btn-primary nav-cta">Install</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="hero-tag"><i></i>v2.4.1 &nbsp;·&nbsp; MIT &nbsp;·&nbsp; 8.2 MB static binary</div>
+      <h1 class="h-display split">Your monorepo already built this.</h1>
+      <p class="prose hero-lede fade-up">
+        <strong>orbit</strong> is a content-addressed build cache and task-graph runner. It fingerprints every
+        input down to the byte — sources, lockfiles, toolchain versions, env allowlist — so any target that has
+        ever been built anywhere in your organisation is restored from an edge CAS instead of rebuilt.
+      </p>
+
+      <div class="install" id="install">
+        <div class="install-tabs" role="tablist" aria-label="Install method">
+          <button class="tab" role="tab" aria-selected="true"  data-cmd="curl -fsSL https://get.orbit.sh | sh">curl</button>
+          <button class="tab" role="tab" aria-selected="false" data-cmd="brew install orbit-sh/tap/orbit">homebrew</button>
+          <button class="tab" role="tab" aria-selected="false" data-cmd="npm i -g @orbit-sh/cli">npm</button>
+          <button class="tab" role="tab" aria-selected="false" data-cmd="cargo install orbit-cli --locked">cargo</button>
+        </div>
+        <div class="install-row">
+          <code class="install-cmd" id="installCmd"><span class="p">$ </span><span id="installText">curl -fsSL https://get.orbit.sh | sh</span></code>
+          <button class="copy" id="copyBtn" type="button" aria-label="Copy install command">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="5.2" y="5.2" width="9" height="9" rx="1.4"/><path d="M10.8 5.2V2.9c0-.6-.5-1.1-1.1-1.1H2.9c-.6 0-1.1.5-1.1 1.1v6.8c0 .6.5 1.1 1.1 1.1h2.3"/></svg>
+            <span id="copyLabel">Copy</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#replay" class="btn btn-primary">Watch a real run <span class="arw">→</span></a>
+        <a href="#benchmarks" class="btn btn-ghost">Benchmarks &amp; methodology</a>
+      </div>
+
+      <div class="hero-meta fade-up">
+        <span><b>21,412</b> stars</span>
+        <span><b>4.1M</b> cached runs / week</span>
+        <span><b>98.3%</b> median hit rate</span>
+        <span><b>0</b> daemons</span>
+      </div>
+    </div>
+
+    <aside class="hero-aside">
+      <p class="note fade-up">
+        <b>// no daemon.</b><br>
+        orbit is one static binary. No background service, no JVM, no gRPC sidecar. The cache protocol is
+        plain HTTP/2 against content-addressed blobs — you can curl it.
+      </p>
+      <p class="note fade-up">
+        <b>// no rewrite.</b><br>
+        Point <span style="color:var(--ink-2)">orbit.toml</span> at the commands you already run.
+        It wraps <span style="color:var(--ink-2)">tsc</span>, <span style="color:var(--ink-2)">cargo</span>,
+        <span style="color:var(--ink-2)">go build</span>, <span style="color:var(--ink-2)">uv</span> and
+        <span style="color:var(--ink-2)">gradle</span> without owning them.
+      </p>
+      <p class="note fade-up">
+        <b>// verified restores.</b><br>
+        Every blob is BLAKE3-addressed and re-verified on write to disk. A corrupt or tampered artifact
+        cannot be restored — it is evicted and rebuilt locally.
+      </p>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================ STATS STRIP ============================ -->
+<section class="stats">
+  <div class="wrap stats-in">
+    <div class="stat"><div class="v"><span class="count" data-to="18.4" data-dec="1">0.0</span>s</div><div class="k">Median warm<br>rebuild</div></div>
+    <div class="stat"><div class="v"><span class="count" data-to="98.3" data-dec="1">0.0</span>%</div><div class="k">Cache hit rate<br>(p50, 30d)</div></div>
+    <div class="stat"><div class="v"><span class="count" data-to="11" data-dec="0">0</span>ms</div><div class="k">Edge CAS<br>lookup p50</div></div>
+    <div class="stat"><div class="v"><span class="count" data-to="41" data-dec="0">0</span>min</div><div class="k">Saved per engineer<br>per day</div></div>
+    <div class="stat"><div class="v"><span class="count" data-to="21412" data-dec="0" data-group="1">0</span></div><div class="k">GitHub<br>stars</div></div>
+  </div>
+</section>
+
+<!-- ============================ TERMINAL REPLAY ============================ -->
+<section class="term-sec" id="replay">
+  <div class="wrap">
+    <div class="anchor"><span>§ 01</span><span class="bar"></span><span>live replay</span></div>
+    <div class="term-grid">
+      <div>
+        <h2 class="h-sec split" style="margin-bottom:20px;max-width:19ch">A real run, replayed byte for byte.</h2>
+        <p class="prose fade-up" style="margin-bottom:34px">
+          This is an unedited transcript from the <strong>helios-kernel</strong> CI pipeline — 14,208 targets,
+          41,902 tracked files, one changed file. Timings below are the recorded latencies, not decoration.
+        </p>
+
+        <div class="term" id="term">
+          <div class="term-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="title mono">ci@helios-kernel — orbit 2.4.1</span>
+            <span class="right">
+              <span class="term-state" id="termState"><i></i><span id="termStateText">live</span></span>
+              <button class="term-replay" type="button" id="termReplay">Replay</button>
+            </span>
+          </div>
+          <div class="term-body" id="termBody" role="log" aria-live="off" aria-label="Terminal replay"></div>
+        </div>
+      </div>
+
+      <aside class="hero-aside">
+        <p class="note fade-up">
+          <b>// what you are watching.</b><br>
+          A rAF-driven state machine types each character with per-token latency jitter, then prints output
+          with the real command's measured pauses. It pauses off-screen and shows the final transcript
+          instantly under <span style="color:var(--ink-2)">prefers-reduced-motion</span>.
+        </p>
+        <p class="note fade-up">
+          <b>// orbit why</b><br>
+          Every rebuild is explainable. <span style="color:var(--ink-2)">orbit why &lt;target&gt;</span>
+          prints the exact input whose hash moved and the downstream set it invalidated. No "cache miss,
+          good luck".
+        </p>
+        <p class="note fade-up">
+          <b>// regions.</b><br>
+          Blobs replicate to fra1, iad1 and sin1 within 400ms of a push. A runner always reads from its
+          nearest region and falls back to origin on a miss.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PINNED STEP SEQUENCE ============================ -->
+<section class="steps" id="resolve">
+  <div class="wrap">
+    <div class="anchor"><span>§ 02</span><span class="bar"></span><span>how a target resolves</span></div>
+    <div class="steps-stage" id="stepsStage">
+      <div>
+        <h2 class="h-sec split" style="margin-bottom:26px;max-width:14ch">Four steps, no magic.</h2>
+        <div class="steps-list" id="stepsList">
+          <div class="step-item is-active">
+            <span class="n">01</span>
+            <div>
+              <div class="t">Declare</div>
+              <div class="d">A task is inputs, a command, and outputs. Globs are resolved against the git index, not the filesystem.</div>
+            </div>
+            <span class="track"><span></span></span>
+          </div>
+          <div class="step-item">
+            <span class="n">02</span>
+            <div>
+              <div class="t">Fingerprint</div>
+              <div class="d">BLAKE3 over file contents, the command string, the resolved toolchain, and the declared env allowlist.</div>
+            </div>
+            <span class="track"><span></span></span>
+          </div>
+          <div class="step-item">
+            <span class="n">03</span>
+            <div>
+              <div class="t">Resolve</div>
+              <div class="d">Local CAS first, then the nearest edge region. A hit is a range request; nothing is decompressed twice.</div>
+            </div>
+            <span class="track"><span></span></span>
+          </div>
+          <div class="step-item">
+            <span class="n">04</span>
+            <div>
+              <div class="t">Restore</div>
+              <div class="d">Outputs are written with verify-on-write. Stdout and stderr of the original run are replayed too.</div>
+            </div>
+            <span class="track"><span></span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-panels" id="stepPanels">
+        <!-- step 1 -->
+        <div class="step-panel is-active">
+          <div class="code">
+            <div class="code-hd"><span class="fn">orbit.toml</span><span class="sp">step 01 — declare</span></div>
+<pre><span class="t-cm"># the task you already run, wrapped — not replaced</span>
+[<span class="t-kw">task</span>.<span class="t-fn">build</span>]
+<span class="t-key">inputs</span>  <span class="t-op">=</span> [<span class="t-str">"src/**/*.ts"</span>, <span class="t-str">"tsconfig.json"</span>, <span class="t-str">"package.json"</span>]
+<span class="t-key">outputs</span> <span class="t-op">=</span> [<span class="t-str">"dist/**"</span>, <span class="t-str">".tsbuildinfo"</span>]
+<span class="t-key">cmd</span>     <span class="t-op">=</span> <span class="t-str">"tsc -p . --incremental"</span>
+<span class="t-key">env</span>     <span class="t-op">=</span> [<span class="t-str">"NODE_ENV"</span>, <span class="t-str">"TARGET_TRIPLE"</span>]
+<span class="t-key">deps</span>    <span class="t-op">=</span> [<span class="t-str">"//packages/schema:codegen"</span>]
+
+<span class="t-cm"># anything not listed is invisible to the hash.</span>
+<span class="t-cm"># anything listed and missing is a hard error.</span></pre>
+          </div>
+        </div>
+        <!-- step 2 -->
+        <div class="step-panel">
+          <div class="code">
+            <div class="code-hd"><span class="fn">fingerprint</span><span class="sp">step 02 — hash</span></div>
+<pre><span class="t-kw">$</span> <span class="t-fn">orbit</span> <span class="t-kw">hash</span> web:build <span class="t-str">--explain</span>
+
+  <span class="t-key">inputs</span>       blake3(<span class="t-num">1,204</span> files, <span class="t-num">88.4 MB</span>)  <span class="t-op">→</span> <span class="t-str">a17f4c2e…</span>
+  <span class="t-key">command</span>      blake3(<span class="t-str">"tsc -p . --incremental"</span>) <span class="t-op">→</span> <span class="t-str">9c0b71da…</span>
+  <span class="t-key">toolchain</span>    node <span class="t-num">22.4.1</span> · tsc <span class="t-num">5.6.2</span>        <span class="t-op">→</span> <span class="t-str">3e5d80ff…</span>
+  <span class="t-key">env</span>          NODE_ENV=production            <span class="t-op">→</span> <span class="t-str">c4a9021b…</span>
+  <span class="t-key">deps</span>         <span class="t-num">1</span> upstream key                 <span class="t-op">→</span> <span class="t-str">77be13a0…</span>
+  <span class="t-op">────────────────────────────────────────────────────</span>
+  <span class="t-key">key</span>          <span class="t-fn">4d9e07c1a8f2ac1b90e6d4437c15aa82</span>
+
+<span class="t-cm"># same five inputs on any machine → same key. that's it.</span></pre>
+          </div>
+        </div>
+        <!-- step 3 -->
+        <div class="step-panel">
+          <div class="code">
+            <div class="code-hd"><span class="fn">cas lookup</span><span class="sp">step 03 — resolve</span></div>
+<pre><span class="t-cm"># 1. local content store</span>
+<span class="t-kw">stat</span> ~/.orbit/blobs/4d/9e07c1a8f2ac1b…      <span class="t-op">→</span> <span class="t-num">ENOENT</span>
+
+<span class="t-cm"># 2. nearest edge region (anycast, HTTP/2, no auth round-trip)</span>
+<span class="t-kw">GET</span> <span class="t-str">/cas/v2/4d9e07c1a8f2ac1b90e6d4437c15aa82</span>
+  <span class="t-key">host</span>            edge-fra1.orbit.sh
+  <span class="t-key">accept</span>          application/vnd.orbit.tree+zstd
+  <span class="t-op">←</span> <span class="t-num">200 OK</span>  <span class="t-num">11ms</span>  <span class="t-num">1.84 MB</span>  x-orbit-hit=<span class="t-num">warm</span>
+
+<span class="t-cm"># 3. verify before it ever touches your working tree</span>
+<span class="t-kw">verify</span> blake3(payload) == key             <span class="t-op">→</span> <span class="t-fn">ok</span></pre>
+          </div>
+        </div>
+        <!-- step 4 -->
+        <div class="step-panel">
+          <div class="code">
+            <div class="code-hd"><span class="fn">restore</span><span class="sp">step 04 — write</span></div>
+<pre><span class="t-kw">$</span> <span class="t-fn">orbit</span> <span class="t-kw">build</span> web:build
+
+  <span class="t-fn">✓</span> web:build          restored    <span class="t-num">0.31s</span>   <span class="t-op">(</span>edge-fra1<span class="t-op">)</span>
+    <span class="t-op">├─</span> dist/**          <span class="t-num">412</span> files   <span class="t-num">1.84 MB</span>
+    <span class="t-op">├─</span> .tsbuildinfo     <span class="t-num">1</span> file      <span class="t-num">96 KB</span>
+    <span class="t-op">└─</span> replayed stdout  <span class="t-num">3</span> lines
+
+  <span class="t-cm">// the original run's diagnostics are replayed verbatim,</span>
+  <span class="t-cm">// so a cached build and a real build read identically in CI logs.</span>
+
+  <span class="t-fn">build ok</span> in <span class="t-num">0.34s</span>  <span class="t-op">·</span>  <span class="t-num">1</span>/<span class="t-num">1</span> cached  <span class="t-op">·</span>  saved <span class="t-num">21.7s</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BENCHMARKS ============================ -->
+<section class="bench" id="benchmarks">
+  <div class="wrap">
+    <div class="anchor"><span>§ 03</span><span class="bar"></span><span>benchmarks</span></div>
+    <div class="bench-head">
+      <div>
+        <h2 class="h-sec split" style="margin-bottom:20px;max-width:17ch">The numbers, including the one we lose.</h2>
+        <p class="prose">
+          Measured on <strong>helios-kernel</strong> @ <span class="mono" style="font-size:.94em">e41c8b2</span> —
+          14,208 targets across TypeScript, Rust and Go — on a 32-core <span class="mono" style="font-size:.94em">c7a.8xlarge</span>
+          runner, 10 consecutive runs, median reported. Scripts to reproduce are in
+          <span class="mono" style="font-size:.94em">bench/</span>.
+        </p>
+      </div>
+      <p class="note fade-up">
+        <b>// why we publish the loss.</b><br>
+        Fingerprinting 41,902 files costs roughly 36s of wall time. On a genuinely cold cache orbit is
+        <b>5.9% slower</b> than plain make. You will hit that on the first CI run after a dependency bump —
+        it is the price of determinism, and hiding it would be dishonest.
+      </p>
+    </div>
+
+    <div class="charts">
+      <div class="chart" data-chart>
+        <div class="chart-title">Warm rebuild — one file changed <span>lower is better · seconds · scale 0–612s</span></div>
+        <div class="bar-row win" data-pct="3.0">
+          <div class="lbl">orbit 2.4.1<em>remote cache, edge-fra1</em></div>
+          <div class="bar-track"><span class="bar-fill"></span></div>
+          <div class="bar-val"><span class="count" data-to="18.4" data-dec="1">0.0</span>s</div>
+        </div>
+        <div class="bar-row" data-pct="11.6">
+          <div class="lbl">Bazel 7 + RBE<em>remote execution, 32 workers</em></div>
+          <div class="bar-track"><span class="bar-fill"></span></div>
+          <div class="bar-val"><span class="count" data-to="71.0" data-dec="1">0.0</span>s</div>
+        </div>
+        <div class="bar-row" data-pct="15.4">
+          <div class="lbl">Task-graph runner + cloud cache<em>hosted, default config</em></div>
+          <div class="bar-track"><span class="bar-fill"></span></div>
+          <div class="bar-val"><span class="count" data-to="94.0" data-dec="1">0.0</span>s</div>
+        </div>
+        <div class="bar-row" data-pct="100">
+          <div class="lbl">make -j32<em>no cache, incremental only</em></div>
+          <div class="bar-track"><span class="bar-fill"></span></div>
+          <div class="bar-val"><span class="count" data-to="612" data-dec="0">0</span>s</div>
+        </div>
+        <div class="chart-foot">
+          <b>Read this as:</b> orbit restored 13,974 of 14,208 targets and rebuilt 234. The 18.4s is almost
+          entirely those 234 targets — cache restore accounted for 1.9s of it.
+        </div>
+      </div>
+
+      <div class="chart" data-chart>
+        <div class="chart-title">Cold build — empty cache, empty CAS <span>lower is better · seconds · scale 0–720s</span></div>
+        <div class="bar-row" data-pct="85.0">
+          <div class="lbl">make -j32<em>baseline</em></div>
+          <div class="bar-track"><span class="bar-fill"></span></div>
+          <div class="bar-val"><span class="count" data-to="612" data-dec="0">0</span>s</div>
+        </div>
+        <div class="bar-row loss" data-pct="90.0">
+          <div class="lbl">orbit 2.4.1<em>+36s fingerprinting overhead</em></div>
+          <div class="bar-track"><span class="bar-fill"></span></div>
+          <div class="bar-val"><span class="count" data-to="648" data-dec="0">0</span>s</div>
+        </div>
+        <div class="bar-row" data-pct="97.8">
+          <div class="lbl">Bazel 7<em>cold, analysis phase included</em></div>
+          <div class="bar-track"><span class="bar-fill"></span></div>
+          <div class="bar-val"><span class="count" data-to="704" data-dec="0">0</span>s</div>
+        </div>
+        <div class="chart-foot">
+          <b>Honest caveat:</b> orbit only pays for itself from the second build onward. If your CI runs
+          exactly one build per day against a cold cache, orbit will cost you 36 seconds and give you nothing.
+          Across 4.1M weekly runs the amortised figure is a <b>21.4× median speedup</b>.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ INVENTION LAYOUT / DOC SECTION ============================ -->
+<section class="doc">
+  <div class="wrap">
+    <div class="anchor"><span>§ 04</span><span class="bar"></span><span>design notes</span></div>
+
+    <div class="doc-block">
+      <div class="idx">4.1</div>
+      <div class="body">
+        <h3 class="h-sub split">Determinism is a property of the inputs, not the tool.</h3>
+        <p class="prose">
+          Most caches key on a lockfile hash and a directory mtime. That is why they silently miss after a
+          rebase, and why they silently <em>hit</em> after a toolchain upgrade. orbit refuses to guess: a task
+          declares its inputs explicitly, and an undeclared file that the command reads is a
+          <span class="mono" style="font-size:.94em">HERMETICITY_VIOLATION</span> under
+          <span class="mono" style="font-size:.94em">--strict</span>, detected via a syscall filter on Linux
+          and a VFS shim on macOS.
+        </p>
+        <div class="code">
+          <div class="code-hd"><span class="fn">strict mode</span><span class="sp">detected drift</span></div>
+<pre><span class="t-kw">$</span> <span class="t-fn">orbit</span> <span class="t-kw">build</span> api:compile <span class="t-str">--strict</span>
+
+  <span class="t-num">✗</span> HERMETICITY_VIOLATION  api:compile
+    read  <span class="t-str">/etc/ssl/openssl.cnf</span>        <span class="t-op">(</span>undeclared<span class="t-op">)</span>
+    read  <span class="t-str">../../.env.local</span>             <span class="t-op">(</span>outside workspace<span class="t-op">)</span>
+
+  <span class="t-cm"># fix: declare it, or drop it. orbit will not cache a lie.</span></pre>
+        </div>
+      </div>
+      <div class="aside">
+        <p class="note">
+          <b>// mtime is not identity.</b><br>
+          orbit never reads mtime. Content only. A <span style="color:var(--ink-2)">touch *</span> across the
+          repo changes nothing and restores everything.
+        </p>
+      </div>
+    </div>
+
+    <div class="doc-block flip">
+      <div class="aside">
+        <p class="note">
+          <b>// eviction.</b><br>
+          Edge regions keep a 30-day LRU with a 2 TB per-org ceiling. Blobs referenced by a protected branch
+          tag are pinned and never evicted.
+        </p>
+      </div>
+      <div class="body">
+        <h3 class="h-sub split">The cache is content-addressed, so it is also a supply chain record.</h3>
+        <p class="prose">
+          Because every artifact is stored under the BLAKE3 of its bytes and every key is derived from a
+          declared input set, the cache doubles as a provenance log. <span class="mono" style="font-size:.94em">orbit
+          attest</span> emits an in-toto v1 statement for any restored target: which key, which inputs, which
+          toolchain, which runner identity signed the push.
+        </p>
+        <div class="kv">
+          <b>orbit attest web:bundle</b><br>
+          subject &nbsp;&nbsp;&nbsp;&nbsp;dist/bundle.js · blake3:8f2ac1d0…<br>
+          predicate&nbsp;&nbsp;&nbsp;&nbsp;https://orbit.sh/attest/v1<br>
+          builder &nbsp;&nbsp;&nbsp;&nbsp;runner://ci-fra1-0e21 (sigstore, keyless)<br>
+          materials&nbsp;&nbsp;&nbsp;&nbsp;1,204 declared inputs<br>
+          pushed &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2026-08-19T09:14:22Z
+        </div>
+      </div>
+      <div class="idx">4.2</div>
+    </div>
+
+    <div class="doc-block">
+      <div class="idx">4.3</div>
+      <div class="body">
+        <h3 class="h-sub split">Adoption is incremental or it does not happen.</h3>
+        <p class="prose">
+          <span class="mono" style="font-size:.94em">orbit init</span> reads your existing package manifests
+          and emits a draft <span class="mono" style="font-size:.94em">orbit.toml</span> covering the tasks it
+          can prove are safe. Everything else stays uncached until you opt it in. Teams typically land the
+          first PR in an afternoon and reach 90% coverage over a few weeks.
+        </p>
+        <p class="prose">
+          There is no server to run. The open-source CLI works fully offline against
+          <span class="mono" style="font-size:.94em">~/.orbit</span>; the hosted edge CAS is the only paid
+          part, and it speaks a documented, implementable protocol. Self-host it with
+          <span class="mono" style="font-size:.94em">orbit-cas</span> — same binary, <span class="mono" style="font-size:.94em">--serve</span>.
+        </p>
+      </div>
+      <div class="aside">
+        <p class="note">
+          <b>// exit cost.</b><br>
+          If you delete orbit tomorrow, your build commands still run. The config is a description of what
+          you already had.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PROOF: DIAGRAM + MATRIX + FAQ ============================ -->
+<section class="proof" id="runtimes">
+  <div class="wrap">
+    <div class="anchor"><span>§ 05</span><span class="bar"></span><span>architecture</span></div>
+
+    <h2 class="h-sec split" style="margin-bottom:20px;max-width:20ch">Five hops from source to restored artifact.</h2>
+    <p class="prose" style="margin-bottom:38px">
+      No coordinator, no scheduler, no lease negotiation. Each runner resolves independently and pushes what
+      it built. The only shared state is immutable, content-addressed bytes.
+    </p>
+
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <figure class="diagram" id="diagram" style="margin:0">
+      <svg viewBox="0 0 1120 300" role="img" aria-label="orbit architecture: workspace, fingerprint, local CAS, edge CAS, CI runners">
+        <g id="dgNodes">
+          <rect class="dg-node" x="10"  y="112" width="190" height="76" rx="3"/>
+          <rect class="dg-node" x="240" y="112" width="190" height="76" rx="3"/>
+          <rect class="dg-node soft" x="470" y="112" width="190" height="76" rx="3"/>
+          <rect class="dg-node soft" x="700" y="112" width="190" height="76" rx="3"/>
+          <rect class="dg-node" x="930" y="112" width="180" height="76" rx="3"/>
+        </g>
+        <g id="dgText">
+          <text class="dg-t" x="28"  y="146">workspace</text>
+          <text class="dg-s" x="28"  y="168">41,902 files · git index</text>
+          <text class="dg-t" x="258" y="146">fingerprint</text>
+          <text class="dg-s" x="258" y="168">BLAKE3 · 36s cold</text>
+          <text class="dg-t" x="488" y="146">local CAS</text>
+          <text class="dg-s" x="488" y="168">~/.orbit/blobs</text>
+          <text class="dg-t" x="718" y="146">edge CAS</text>
+          <text class="dg-s" x="718" y="168">fra1 · iad1 · sin1</text>
+          <text class="dg-t" x="948" y="146">CI runners</text>
+          <text class="dg-s" x="948" y="168">32× c7a.8xlarge</text>
+        </g>
+        <g id="dgPaths">
+          <path class="dg-p" d="M200 150 L228 150"/>
+          <path class="dg-p" d="M222 145 L230 150 L222 155"/>
+          <path class="dg-p" d="M430 150 L458 150"/>
+          <path class="dg-p" d="M452 145 L460 150 L452 155"/>
+          <path class="dg-p" d="M660 150 L688 150"/>
+          <path class="dg-p" d="M682 145 L690 150 L682 155"/>
+          <path class="dg-p" d="M890 150 L918 150"/>
+          <path class="dg-p" d="M912 145 L920 150 L912 155"/>
+          <path class="dg-p ghost" d="M1020 188 C1020 258, 795 268, 795 192"/>
+          <path class="dg-p" d="M800 198 L795 188 L790 198"/>
+        </g>
+        <g id="dgLabels">
+          <text class="dg-l" x="188" y="98">hash</text>
+          <text class="dg-l" x="416" y="98">lookup</text>
+          <text class="dg-l" x="640" y="98">miss</text>
+          <text class="dg-l" x="874" y="98">restore</text>
+          <text class="dg-l" x="828" y="258">push new blobs</text>
+        </g>
+      </svg>
+    </figure>
+
+    <h3 class="h-sub" style="margin:64px 0 22px">Supported runtimes</h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Runtime</th><th>Detected via</th><th>Fingerprint source</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="rt">Node 18 – 24</td><td class="mn">package.json, pnpm-lock.yaml</td><td class="mn">lockfile + tsconfig + declared globs</td><td><span class="badge on">stable</span></td></tr>
+        <tr><td class="rt">Bun 1.1+</td><td class="mn">bun.lockb</td><td class="mn">lockfile + bunfig.toml</td><td><span class="badge on">stable</span></td></tr>
+        <tr><td class="rt">Deno 2.x</td><td class="mn">deno.json, deno.lock</td><td class="mn">lockfile + import map</td><td><span class="badge on">stable</span></td></tr>
+        <tr><td class="rt">Python 3.10+</td><td class="mn">pyproject.toml, uv.lock</td><td class="mn">resolved wheel set + interpreter ABI</td><td><span class="badge on">stable</span></td></tr>
+        <tr><td class="rt">Go 1.22+</td><td class="mn">go.mod, go.sum</td><td class="mn">module graph + GOFLAGS + build tags</td><td><span class="badge on">stable</span></td></tr>
+        <tr><td class="rt">Rust 1.78+</td><td class="mn">Cargo.lock</td><td class="mn">lockfile + feature set + target triple</td><td><span class="badge on">stable</span></td></tr>
+        <tr><td class="rt">JVM / Gradle 8</td><td class="mn">settings.gradle.kts</td><td class="mn">dependency verification file + JDK build</td><td><span class="badge">beta</span></td></tr>
+        <tr><td class="rt">.NET 8</td><td class="mn">*.csproj, packages.lock.json</td><td class="mn">lockfile + RID + SDK band</td><td><span class="badge">preview</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="h-sub" style="margin:64px 0 22px" id="faq">Internals, answered properly</h3>
+    <div class="acc" id="acc">
+      <div class="acc-item">
+        <button class="acc-q" type="button"><span class="sign"></span>How is determinism enforced across two different machines?</button>
+        <div class="acc-p"><div class="in">
+          <p class="prose">It is not enforced — it is measured. orbit hashes the resolved toolchain (compiler version, ABI, target triple), the declared env allowlist, and the byte content of every declared input. If two machines produce the same key they had the same inputs, by construction.</p>
+          <p class="prose">Where builds are genuinely non-deterministic — embedded timestamps, non-sorted map iteration — <span class="mono" style="font-size:.94em">orbit doctor --nondeterminism</span> builds the same target twice on the same machine and diffs the output trees. It reports the offending files rather than pretending the problem does not exist.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-q" type="button"><span class="sign"></span>What actually leaves my machine?</button>
+        <div class="acc-p"><div class="in">
+          <p class="prose">Two things: 32-byte content keys, and the compressed output trees you explicitly declared under <span class="mono" style="font-size:.94em">outputs</span>. Source files are never uploaded. Keys are opaque hashes — the CAS cannot enumerate your file names from them.</p>
+          <p class="prose">Blobs are encrypted at rest with a per-org key, and you can supply your own via <span class="mono" style="font-size:.94em">ORBIT_CAS_KEY</span>, in which case the edge stores ciphertext it cannot read. Push is opt-in per task with <span class="mono" style="font-size:.94em">push = false</span>.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-q" type="button"><span class="sign"></span>Can a poisoned cache entry reach production?</button>
+        <div class="acc-p"><div class="in">
+          <p class="prose">A restore is verified against the key before anything is written to the working tree; a mismatch evicts the blob and falls through to a local rebuild. Because the key is the hash of the content, forging an entry requires a BLAKE3 preimage.</p>
+          <p class="prose">Writes are additionally gated: only runners with a valid OIDC identity for your org can push, and <span class="mono" style="font-size:.94em">--require-attestation</span> makes restores refuse any blob not signed by an allowed builder identity.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-q" type="button"><span class="sign"></span>Do I have to rewrite my build files?</button>
+        <div class="acc-p"><div class="in">
+          <p class="prose">No. orbit shells out to the command you give it. There is no DSL for describing compilation, no Starlark, no ruleset to port. The <span class="mono" style="font-size:.94em">orbit.toml</span> for a 14,000-target monorepo is typically under 400 lines because tasks inherit from workspace-level defaults.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-q" type="button"><span class="sign"></span>What happens when the edge CAS is unreachable?</button>
+        <div class="acc-p"><div class="in">
+          <p class="prose">Every remote call has a 250ms connect budget and a hard fail-open policy: on timeout, orbit logs a warning, falls back to the local store, and builds. A network outage makes your build slower, never broken. <span class="mono" style="font-size:.94em">--offline</span> makes that the default.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <h3 class="h-sub" style="margin:64px 0 22px">Running in the open</h3>
+    <div class="users">
+      <div class="user"><div class="n">helios-kernel</div><div class="m">14,208 targets · rust + go · since 2.0</div></div>
+      <div class="user"><div class="n">quicksilver</div><div class="m">18,772 targets · ts + python · since 1.7</div></div>
+      <div class="user"><div class="n">nebula-ui</div><div class="m">6,340 targets · ts + bun · since 2.2</div></div>
+      <div class="user"><div class="n">pgwire-rs</div><div class="m">2,104 targets · rust · since 1.4</div></div>
+      <div class="user"><div class="n">tessera</div><div class="m">911 targets · go · since 2.1</div></div>
+      <div class="user"><div class="n">strand</div><div class="m">3,488 targets · deno + rust · since 2.3</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CLOSING CTA ============================ -->
+<section class="cta">
+  <div class="wrap cta-in">
+    <div>
+      <div class="anchor" style="padding-top:0"><span>§ 06</span><span class="bar"></span><span>get started</span></div>
+      <h2 class="h-sec split">Stop paying for builds you have already done.</h2>
+      <p class="prose" style="margin-bottom:32px">
+        One binary, one config file, no server. If it does not save your team an hour a week in the first
+        fortnight, delete it — your build commands are exactly where you left them.
+      </p>
+      <div class="hero-cta" style="margin-top:0">
+        <a href="#install" class="btn btn-primary">Install orbit 2.4.1 <span class="arw">→</span></a>
+        <a href="#benchmarks" class="btn btn-ghost">Read the benchmark methodology</a>
+      </div>
+    </div>
+    <p class="note fade-up">
+      <b>// pricing, briefly.</b><br>
+      CLI and local cache: MIT, free forever. Edge CAS: free under 50 GB / month, then $0.04 per GB
+      restored. OSS projects with a public repo get unlimited restores at no cost.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div class="foot-brand">
+        <a href="#top" class="brand"><span class="dot"></span>orbit <span class="ver">v2.4.1</span></a>
+        <p>Deterministic build caching for polyglot monorepos. Built in Rust, distributed as a single 8.2 MB static binary. MIT licensed.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#install">Install</a></li>
+          <li><a href="#benchmarks">Benchmarks</a></li>
+          <li><a href="#runtimes">Runtimes</a></li>
+          <li><a href="#top">Edge CAS pricing</a></li>
+          <li><a href="#top">Self-hosting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Docs</h4>
+        <ul>
+          <li><a href="#top">Quickstart</a></li>
+          <li><a href="#resolve">orbit.toml reference</a></li>
+          <li><a href="#top">CLI commands</a></li>
+          <li><a href="#top">CAS protocol spec</a></li>
+          <li><a href="#top">Migration guides</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Open source</h4>
+        <ul>
+          <li><a href="#top">GitHub · 21.4k</a></li>
+          <li><a href="#top">Changelog</a></li>
+          <li><a href="#top">RFCs</a></li>
+          <li><a href="#top">Discord</a></li>
+          <li><a href="#top">Security policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#top">About</a></li>
+          <li><a href="#top">Engineering blog</a></li>
+          <li><a href="#top">Careers · 4 open</a></li>
+          <li><a href="#top">Trust &amp; SOC 2</a></li>
+          <li><a href="#top">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <span>© 2026 Orbit Systems Ltd.</span>
+      <span>MIT · Apache-2.0 (protocol)</span>
+      <span>Built in Berlin &amp; Lisbon</span>
+      <span class="st"><i></i>all regions operational · 99.99% 90d</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var HAS_GSAP = !!(window.gsap && window.ScrollTrigger);
+  var $  = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  /* ==========================================================
+     0. INTRO CURTAIN  (always removed, even if GSAP fails)
+     ========================================================== */
+  var intro = $('#intro');
+  var introDone = false;
+
+  function killIntro(instant) {
+    if (introDone) return;
+    introDone = true;
+    document.documentElement.classList.remove('is-loading');
+    if (!intro) return;
+    if (instant || !HAS_GSAP) {
+      intro.parentNode && intro.parentNode.removeChild(intro);
+      return;
+    }
+    window.gsap.to(intro, {
+      clipPath: 'inset(0 0 100% 0)',
+      duration: 0.95,
+      ease: 'power4.inOut',
+      onComplete: function () { intro.parentNode && intro.parentNode.removeChild(intro); }
+    });
+  }
+
+  document.documentElement.classList.add('is-loading');
+  // hard safety net — the page can never stay behind the curtain
+  var introFailsafe = setTimeout(function () { killIntro(true); }, 3200);
+
+  /* ==========================================================
+     1. TERMINAL REPLAY — rAF state machine
+     ========================================================== */
+  var SCRIPT = [
+    { k: 'cmd',  t: 'orbit build --scope web,api', speed: 34, pause: 460 },
+    { k: 'line', s: 'orbit 2.4.1 · linux/amd64 · workspace helios-kernel', c: 'dim', d: 90 },
+    { k: 'gap' },
+    { k: 'line', s: '  → resolving task graph .......... 14,208 targets', c: 'dim', d: 430 },
+    { k: 'line', s: '  → fingerprinting inputs ......... 41,902 files / 2.1 GB', c: 'dim', d: 620 },
+    { k: 'line', s: '  → cache: remote (edge-fra1) ..... reachable in 11ms', c: 'dim', d: 380 },
+    { k: 'gap' },
+    { k: 'line', s: '  ✓ restored   13,974 targets   from cache        1.9s', c: 'ok', d: 240 },
+    { k: 'line', s: '  ↻ rebuilt       234 targets   input drift      16.5s', c: 'ok', d: 700 },
+    { k: 'gap' },
+    { k: 'line', s: '  build ok in 18.4s  ·  hit 98.3%  ·  saved ≈ 9m 51s', c: 'res', d: 200 },
+    { k: 'gap' },
+    { k: 'wait', ms: 1250 },
+
+    { k: 'cmd',  t: 'orbit why web:bundle', speed: 38, pause: 400 },
+    { k: 'line', s: '  web:bundle   rebuilt   (1 of 234)', c: 'ok', d: 260 },
+    { k: 'line', s: '  └─ input changed: src/routes/session.ts', c: 'tree', d: 170 },
+    { k: 'line', s: '     blake3  8f2ac1d0…  →  4d9e07c1…', c: 'tree', d: 170 },
+    { k: 'line', s: '  └─ 3 downstream targets invalidated', c: 'tree', d: 170 },
+    { k: 'line', s: '     web:typecheck · web:test · release:tarball', c: 'tree', d: 200 },
+    { k: 'gap' },
+    { k: 'wait', ms: 1150 },
+
+    { k: 'cmd',  t: 'orbit cache stats --remote', speed: 36, pause: 420 },
+    { k: 'line', s: '  region       hit      p50     p99     blobs', c: 'hd', d: 130 },
+    { k: 'line', s: '  edge-fra1    98.3%    11ms    38ms    2.41M', c: 'ok', d: 110 },
+    { k: 'line', s: '  edge-iad1    97.1%    14ms    52ms    3.09M', c: 'ok', d: 110 },
+    { k: 'line', s: '  edge-sin1    96.4%    22ms    61ms    1.72M', c: 'ok', d: 110 },
+    { k: 'gap' },
+    { k: 'line', s: '  30d egress 4.2 TB  ·  0 verification failures', c: 'dim', d: 160 },
+    { k: 'gap' },
+    { k: 'wait', ms: 2200 },
+    { k: 'clear' }
+  ];
+
+  var termBody   = $('#termBody');
+  var termState  = $('#termState');
+  var termStateT = $('#termStateText');
+  var termReplay = $('#termReplay');
+
+  // ---- hand-rolled highlighters (DOM nodes only — never innerHTML) ----
+  function span(cls, text) {
+    var s = document.createElement('span');
+    if (cls) s.className = cls;
+    s.textContent = text;
+    return s;
+  }
+
+  function highlightCommand(text) {
+    var frag = document.createDocumentFragment();
+    var parts = text.split(/(\s+)/);
+    var word = 0;
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i];
+      if (p === '') continue;
+      if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); continue; }
+      word++;
+      if (word === 1) { frag.appendChild(span('t-fn', p)); }
+      else if (word === 2 && p.charAt(0) !== '-') { frag.appendChild(span('t-kw', p)); }
+      else if (p.charAt(0) === '-') {
+        var eq = p.indexOf('=');
+        if (eq > -1) {
+          frag.appendChild(span('t-str', p.slice(0, eq)));
+          frag.appendChild(span('t-op', '='));
+          frag.appendChild(span('t-num', p.slice(eq + 1)));
+        } else {
+          frag.appendChild(span('t-str', p));
+        }
+      } else { frag.appendChild(span('t-num', p)); }
+    }
+    return frag;
+  }
+
+  var NUM_RE = /(\d[\d.,]*\s?(?:ms|s|%|TB|GB|MB|KB|M|k)?)/g;
+  function highlightOutput(text) {
+    var frag = document.createDocumentFragment();
+    var last = 0, m;
+    NUM_RE.lastIndex = 0;
+    while ((m = NUM_RE.exec(text)) !== null) {
+      if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+      frag.appendChild(span('t-num', m[0]));
+      last = m.index + m[0].length;
+      if (m[0].length === 0) NUM_RE.lastIndex++;
+    }
+    if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+    return frag;
+  }
+
+  // ---- state machine ----
+  var T = {
+    i: 0,
+    chars: 0,
+    wait: 0,
+    last: 0,
+    rafId: null,
+    visible: false,
+    docHidden: false,
+    cur: null,        // active <div class="l"> being typed into
+    cursorEl: null,
+    reduced: REDUCED
+  };
+
+  function newLine(cls) {
+    var d = document.createElement('div');
+    d.className = 'l' + (cls ? ' ' + cls : '');
+    termBody.appendChild(d);
+    termBody.scrollTop = termBody.scrollHeight;
+    return d;
+  }
+
+  function detachCursor() {
+    if (T.cursorEl && T.cursorEl.parentNode) T.cursorEl.parentNode.removeChild(T.cursorEl);
+  }
+
+  function paintTyping(step) {
+    if (!T.cur) return;
+    while (T.cur.firstChild) T.cur.removeChild(T.cur.firstChild);
+    T.cur.appendChild(span('prm', '$ '));
+    T.cur.appendChild(highlightCommand(step.t.slice(0, T.chars)));
+    if (!T.cursorEl) {
+      T.cursorEl = document.createElement('span');
+      T.cursorEl.className = 'cursor';
+    }
+    T.cursorEl.classList.add('typing');
+    T.cur.appendChild(T.cursorEl);
+    termBody.scrollTop = termBody.scrollHeight;
+  }
+
+  function resetTerm() {
+    while (termBody.firstChild) termBody.removeChild(termBody.firstChild);
+    T.i = 0; T.chars = 0; T.wait = 0; T.cur = null;
+    detachCursor();
+    T.cursorEl = null;
+  }
+
+  // performs exactly one unit of work; sets T.wait for the next unit
+  function advance() {
+    if (T.i >= SCRIPT.length) { T.i = 0; T.wait = 600; resetTerm(); return; }
+    var step = SCRIPT[T.i];
+
+    switch (step.k) {
+      case 'cmd':
+        if (T.chars === 0 && T.cur === null) T.cur = newLine('ok');
+        if (T.chars < step.t.length) {
+          T.chars++;
+          paintTyping(step);
+          var ch = step.t.charAt(T.chars - 1);
+          var base = step.speed || 34;
+          // slower over separators, faster mid-word — reads like real hands
+          var jitter = (ch === ' ' || ch === '-' || ch === ':') ? base * 1.7 : base * (0.55 + Math.random() * 0.9);
+          T.wait = jitter;
+        } else {
+          if (T.cursorEl) T.cursorEl.classList.remove('typing');
+          T.i++; T.chars = 0; T.cur = null;
+          T.wait = step.pause || 300;
+        }
+        break;
+
+      case 'line': {
+        detachCursor();
+        var l = newLine(step.c);
+        l.appendChild(highlightOutput(step.s));
+        if (T.cursorEl) { l.appendChild(T.cursorEl); T.cursorEl.classList.remove('typing'); }
+        termBody.scrollTop = termBody.scrollHeight;
+        T.i++; T.wait = step.d || 100;
+        break;
+      }
+
+      case 'gap':
+        newLine('gap');
+        T.i++; T.wait = 40;
+        break;
+
+      case 'wait':
+        T.i++; T.wait = step.ms || 500;
+        break;
+
+      case 'clear':
+        resetTerm();
+        T.wait = 700;
+        break;
+
+      default:
+        T.i++; T.wait = 100;
+    }
+  }
+
+  function frame(now) {
+    if (T.rafId === null) return;                 // defensive: cancelled mid-flight
+    var dt = Math.min(now - T.last, 140);         // clamp tab-switch jumps
+    T.last = now;
+    T.wait -= dt;
+    var guard = 0;
+    while (T.wait <= 0 && guard++ < 300) advance();
+    T.rafId = window.requestAnimationFrame(frame);
+  }
+
+  function startTerm() {
+    if (T.reduced || T.rafId !== null) return;    // single-entry guard
+    if (!T.visible || T.docHidden) return;
+    T.last = window.performance.now();
+    T.rafId = window.requestAnimationFrame(frame);
+    if (termState) { termState.classList.remove('paused'); termStateT.textContent = 'live'; }
+  }
+
+  function pauseTerm(label) {
+    if (T.rafId !== null) {
+      window.cancelAnimationFrame(T.rafId);
+      T.rafId = null;
+    }
+    if (termState && !T.reduced) {
+      termState.classList.add('paused');
+      termStateT.textContent = label || 'paused';
+    }
+  }
+
+  function renderFinalTranscript() {
+    resetTerm();
+    for (var i = 0; i < SCRIPT.length; i++) {
+      var s = SCRIPT[i];
+      if (s.k === 'cmd') {
+        var c = newLine('ok');
+        c.appendChild(span('prm', '$ '));
+        c.appendChild(highlightCommand(s.t));
+      } else if (s.k === 'line') {
+        var l = newLine(s.c);
+        l.appendChild(highlightOutput(s.s));
+      } else if (s.k === 'gap') {
+        newLine('gap');
+      }
+    }
+    termBody.scrollTop = 0;
+  }
+
+  if (termBody) {
+    if (T.reduced) {
+      renderFinalTranscript();
+      if (termState) { termState.classList.add('paused'); termStateT.textContent = 'static'; }
+      if (termReplay) termReplay.setAttribute('hidden', '');
+    } else {
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            T.visible = entries[i].isIntersecting;
+            if (T.visible) startTerm(); else pauseTerm('offscreen');
+          }
+        }, { threshold: 0.18 });
+        io.observe($('#term'));
+      } else {
+        T.visible = true;
+        startTerm();
+      }
+      document.addEventListener('visibilitychange', function () {
+        T.docHidden = document.hidden;
+        if (document.hidden) pauseTerm('backgrounded'); else startTerm();
+      });
+      if (termReplay) {
+        termReplay.addEventListener('click', function () {
+          pauseTerm();
+          resetTerm();
+          startTerm();
+        });
+      }
+    }
+  }
+
+  /* ==========================================================
+     2. INSTALL TABS + COPY TO CLIPBOARD
+     ========================================================== */
+  var installText = $('#installText');
+  var copyBtn = $('#copyBtn');
+  var copyLabel = $('#copyLabel');
+  var copyTimer = null;
+
+  $$('.tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      $$('.tab').forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
+      tab.setAttribute('aria-selected', 'true');
+      if (installText) installText.textContent = tab.getAttribute('data-cmd') || '';
+    });
+  });
+
+  function flashCopied(ok) {
+    if (!copyBtn || !copyLabel) return;
+    if (copyTimer) { clearTimeout(copyTimer); copyTimer = null; }
+    copyLabel.textContent = ok ? 'Copied' : 'Press ⌘C';
+    copyBtn.classList.toggle('done', !!ok);
+    copyTimer = setTimeout(function () {
+      copyLabel.textContent = 'Copy';
+      copyBtn.classList.remove('done');
+      copyTimer = null;
+    }, 1600);
+  }
+
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function () {
+      var text = installText ? installText.textContent : '';
+      if (!text) return;
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(
+          function () { flashCopied(true); },
+          function () { flashCopied(legacyCopy(text)); }
+        );
+      } else {
+        flashCopied(legacyCopy(text));
+      }
+    });
+  }
+
+  /* ==========================================================
+     3. ACCORDION
+     ========================================================== */
+  $$('.acc-item').forEach(function (item) {
+    var q = $('.acc-q', item);
+    var p = $('.acc-p', item);
+    if (!q || !p) return;
+    q.setAttribute('aria-expanded', 'false');
+    q.addEventListener('click', function () {
+      var open = item.classList.toggle('open');
+      q.setAttribute('aria-expanded', open ? 'true' : 'false');
+      p.style.height = open ? p.scrollHeight + 'px' : '0px';
+      if (HAS_GSAP) setTimeout(function () { window.ScrollTrigger.refresh(); }, 460);
+    });
+  });
+  window.addEventListener('resize', function () {
+    $$('.acc-item.open').forEach(function (item) {
+      var p = $('.acc-p', item);
+      if (p) p.style.height = p.scrollHeight + 'px';
+    });
+  });
+
+  /* ==========================================================
+     4. NAV STATE
+     ========================================================== */
+  var nav = $('#nav');
+  function navState(y) { if (nav) nav.classList.toggle('stuck', y > 12); }
+  navState(window.scrollY || 0);
+
+  /* ==========================================================
+     5. MOTION — GSAP + ScrollTrigger + Lenis
+     ========================================================== */
+  if (!HAS_GSAP) {
+    killIntro(true);
+    clearTimeout(introFailsafe);
+    window.addEventListener('scroll', function () { navState(window.scrollY || 0); }, { passive: true });
+    return;
+  }
+
+  var gsap = window.gsap;
+  var ScrollTrigger = window.ScrollTrigger;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ---- Lenis smooth scroll, wired into ScrollTrigger ---- */
+  var lenis = null;
+  if (!REDUCED && typeof window.Lenis === 'function') {
+    lenis = new window.Lenis({
+      duration: 1.05,
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    lenis.on('scroll', function (e) { navState(e.scroll); });
+    gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+    lenis.stop();
+  } else {
+    window.addEventListener('scroll', function () { navState(window.scrollY || 0); }, { passive: true });
+  }
+
+  // anchor links routed through Lenis
+  $$('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (ev) {
+      var id = a.getAttribute('href');
+      if (!id || id === '#') return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      ev.preventDefault();
+      if (lenis) lenis.scrollTo(target, { offset: -70, duration: 1.1 });
+      else target.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
+    });
+  });
+
+  /* ---- hand-rolled line splitter (no SplitText) ---- */
+  function splitLines(node) {
+    var text = (node.textContent || '').trim().replace(/\s+/g, ' ');
+    if (!text) return [];
+    node.textContent = '';
+    var frag = document.createDocumentFragment();
+    var words = text.split(' ').map(function (w, i, arr) {
+      var s = document.createElement('span');
+      s.className = 'w';
+      s.textContent = w + (i < arr.length - 1 ? ' ' : '');
+      frag.appendChild(s);
+      return s;
+    });
+    node.appendChild(frag);
+
+    var lines = [], cur = null, top = null;
+    words.forEach(function (w) {
+      var t = w.offsetTop;
+      if (top === null || Math.abs(t - top) > 2) { top = t; cur = []; lines.push(cur); }
+      cur.push(w);
+    });
+
+    node.textContent = '';
+    var inners = [];
+    lines.forEach(function (ws) {
+      var outer = document.createElement('span');
+      outer.className = 'ln';
+      var inner = document.createElement('span');
+      inner.className = 'ln-i';
+      ws.forEach(function (w) { inner.appendChild(w); });
+      outer.appendChild(inner);
+      node.appendChild(outer);
+      inners.push(inner);
+    });
+    return inners;
+  }
+
+  /* ---- count-up ---- */
+  function countUp(el) {
+    var to = parseFloat(el.getAttribute('data-to')) || 0;
+    var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+    var group = el.getAttribute('data-group') === '1';
+    var obj = { v: 0 };
+    gsap.to(obj, {
+      v: to,
+      duration: 1.5,
+      ease: 'power3.out',
+      onUpdate: function () {
+        var n = obj.v.toFixed(dec);
+        el.textContent = group ? Number(n).toLocaleString('en-US') : n;
+      }
+    });
+  }
+
+  /* ---- build everything once fonts are settled (line splitting needs metrics) ---- */
+  function buildMotion() {
+    document.documentElement.classList.add('anim-ready');
+
+    var splitMap = $$('.split').map(function (n) { return { node: n, lines: splitLines(n) }; });
+    if (REDUCED) {
+      gsap.set('.ln-i', { y: '0%' });
+      gsap.set('.fade-up', { opacity: 1, y: 0 });
+    } else {
+      gsap.set('.fade-up', { opacity: 0, y: 16 });
+    }
+
+    /* ---------- INTRO TIMELINE ---------- */
+    var heroSplit = splitMap[0];
+    if (REDUCED) {
+      killIntro(true);
+      clearTimeout(introFailsafe);
+      if (lenis) lenis.start();
+    } else {
+      var counter = { v: 0 };
+      var countEl = $('#introCount');
+      var tl = gsap.timeline({
+        onComplete: function () { if (lenis) lenis.start(); }
+      });
+      tl.to('#introBar', { scaleX: 1, duration: 1.15, ease: 'power2.inOut' }, 0)
+        .to(counter, {
+          v: 100, duration: 1.15, ease: 'power2.inOut',
+          onUpdate: function () {
+            if (countEl) countEl.textContent = String(Math.round(counter.v)).padStart(2, '0');
+          }
+        }, 0)
+        .to('#bootList li', { opacity: 1, duration: 0.25, stagger: 0.16, ease: 'none' }, 0.12)
+        .add(function () { killIntro(false); clearTimeout(introFailsafe); }, 1.2);
+
+      if (heroSplit && heroSplit.lines.length) {
+        tl.to(heroSplit.lines, { y: '0%', duration: 1.15, stagger: 0.075, ease: 'power4.out' }, 1.62);
+      }
+      tl.to('.hero .fade-up, .hero-aside .fade-up', {
+        opacity: 1, y: 0, duration: 0.9, stagger: 0.06, ease: 'power3.out'
+      }, 1.85);
+      tl.from('.hero .install, .hero .hero-cta', {
+        opacity: 0, y: 18, duration: 0.9, stagger: 0.08, ease: 'power3.out'
+      }, 1.95);
+    }
+
+    if (REDUCED) return;   // no scrub / pin work under reduced motion
+
+    /* ---------- TECHNIQUE: line-mask reveals on scroll ---------- */
+    splitMap.forEach(function (m, idx) {
+      if (idx === 0 || !m.lines.length) return;
+      gsap.to(m.lines, {
+        y: '0%', duration: 1.05, stagger: 0.07, ease: 'power4.out',
+        scrollTrigger: { trigger: m.node, start: 'top 84%' }
+      });
+    });
+
+    $$('.fade-up').forEach(function (el) {
+      if (el.closest('.hero') || el.closest('.hero-aside')) return;
+      gsap.to(el, {
+        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 90%' }
+      });
+    });
+
+    /* ---------- TECHNIQUE: count-up numbers ---------- */
+    $$('.count').forEach(function (el) {
+      ScrollTrigger.create({
+        trigger: el, start: 'top 92%', once: true,
+        onEnter: function () { countUp(el); }
+      });
+    });
+
+    /* ---------- TECHNIQUE: benchmark bars grow on scroll ---------- */
+    $$('[data-chart]').forEach(function (chart) {
+      var fills = $$('.bar-fill', chart);
+      fills.forEach(function (f) {
+        var row = f.closest('.bar-row');
+        f.style.setProperty('--pct', (row.getAttribute('data-pct') || 0) + '%');
+      });
+      gsap.fromTo(fills, { scaleX: 0 }, {
+        scaleX: 1, duration: 1.25, stagger: 0.08, ease: 'power3.out',
+        scrollTrigger: { trigger: chart, start: 'top 80%' }
+      });
+    });
+
+    /* ---------- TECHNIQUE: SVG path draw (architecture diagram) ---------- */
+    var diagram = $('#diagram');
+    if (diagram) {
+      var paths = $$('#dgPaths path', diagram);
+      paths.forEach(function (p) {
+        var len = 0;
+        try { len = p.getTotalLength(); } catch (e) { len = 300; }
+        if (!len || !isFinite(len)) len = 300;
+        p.style.strokeDasharray = len + ' ' + len;
+        p.style.strokeDashoffset = len;
+        p.setAttribute('data-len', len);
+      });
+      var dgTl = gsap.timeline({
+        scrollTrigger: { trigger: diagram, start: 'top 78%', end: 'bottom 62%', scrub: 0.6 }
+      });
+      dgTl.to('#dgNodes rect', { opacity: 1, duration: 0.5, stagger: 0.12, ease: 'power2.out' }, 0)
+          .to('#dgText text', { opacity: 1, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, 0.15)
+          .to(paths, { strokeDashoffset: 0, duration: 0.9, stagger: 0.1, ease: 'power2.inOut' }, 0.25)
+          .to('#dgLabels text', { opacity: 1, duration: 0.4, stagger: 0.08, ease: 'power2.out' }, 0.5);
+    }
+
+    /* ---------- TECHNIQUE: pinned, scrubbed step sequence ---------- */
+    var mm = gsap.matchMedia();
+    var stepsList = $('#stepsList');
+    var stepPanels = $('#stepPanels');
+    var stage = $('#stepsStage');
+
+    if (stepsList && stepPanels && stage) {
+      var items = $$('.step-item', stepsList);
+      var panels = $$('.step-panel', stepPanels);
+      var tracks = $$('.step-item .track span', stepsList);
+
+      mm.add('(min-width: 1024px)', function () {
+        var current = -1;
+
+        function setStep(idx) {
+          if (idx === current) return;          // guard: no thrash per scroll frame
+          current = idx;
+          items.forEach(function (el, i) { el.classList.toggle('is-active', i === idx); });
+          panels.forEach(function (el, i) { el.classList.toggle('is-active', i === idx); });
+          var active = panels[idx];
+          if (active) {
+            gsap.fromTo(active,
+              { opacity: 0, y: 22 },
+              { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', overwrite: 'auto' });
+          }
+        }
+
+        var st = ScrollTrigger.create({
+          trigger: stage,
+          start: 'top 18%',
+          end: '+=' + (panels.length * 62) + '%',
+          pin: true,
+          pinSpacing: true,
+          scrub: true,
+          invalidateOnRefresh: true,
+          onUpdate: function (self) {
+            var raw = self.progress * panels.length;
+            var idx = Math.min(panels.length - 1, Math.max(0, Math.floor(raw)));
+            setStep(idx);
+            var local = Math.min(1, Math.max(0, raw - idx));
+            tracks.forEach(function (t, i) {
+              gsap.set(t, { scaleX: i < idx ? 1 : (i === idx ? local : 0) });
+            });
+          }
+        });
+
+        setStep(0);
+
+        return function () {                    // cleanup on breakpoint exit
+          st.kill();
+          items.forEach(function (el) { el.classList.remove('is-active'); });
+          panels.forEach(function (el) { el.classList.remove('is-active'); });
+          gsap.set(tracks, { clearProps: 'all' });
+          gsap.set(panels, { clearProps: 'opacity,transform' });
+        };
+      });
+
+      mm.add('(max-width: 1023px)', function () {
+        stepPanels.classList.add('flow');
+        stepsList.classList.add('flow');
+        return function () {
+          stepPanels.classList.remove('flow');
+          stepsList.classList.remove('flow');
+        };
+      });
+    }
+
+    /* ---------- supporting: table row + user card entrance ---------- */
+    gsap.from('.tbl tbody tr', {
+      opacity: 0, y: 14, duration: 0.6, stagger: 0.045, ease: 'power2.out',
+      scrollTrigger: { trigger: '.tbl', start: 'top 82%' }
+    });
+    gsap.from('.user', {
+      opacity: 0, y: 18, duration: 0.7, stagger: 0.05, ease: 'power3.out',
+      scrollTrigger: { trigger: '.users', start: 'top 85%' }
+    });
+
+    ScrollTrigger.refresh();
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(buildMotion).catch(buildMotion);
+  } else {
+    window.addEventListener('load', buildMotion);
+  }
+})();
+</script>
+</body>
+</html>

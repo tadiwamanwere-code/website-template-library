@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OFFSET/26 — one day, one track, Copenhagen · 14 May 2026</title>
+<meta name="description" content="OFFSET/26 is a one-day, single-track conference for the people who keep the infrastructure layer standing. 480 seats. Øksnehallen, Copenhagen. 14 May 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   OFFSET/26 — one-day developer conference
+   Cream ground · near-black ink · ONE accent: #3ECF8E
+   Monospace-dominant (IBM Plex Mono). Inter only for long prose.
+   Technical-document grid layout, visible hairlines.
+   ============================================================ */
+
+:root{
+  --cream:#f5f2ed;
+  --cream-2:#ece7dd;
+  --cream-3:#e3ddd0;
+  --ink:#0d0d0c;
+  --ink-2:#26251f;
+  --muted:#6e6b60;
+  --muted-2:#96917f;
+  --rule:#d8d2c4;
+  --rule-2:#c3bcaa;
+
+  --green:#3ECF8E;
+  --green-ink:#08301f;
+
+  --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --gut:clamp(16px, 3.4vw, 56px);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-io:cubic-bezier(.76,0,.24,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--mono);
+  font-size:14px;
+  line-height:1.5;
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
+table{border-collapse:collapse;width:100%;}
+::selection{background:var(--green);color:var(--green-ink);}
+
+.wrap{padding-inline:var(--gut);}
+
+/* -------- technical label -------- */
+.lab{
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.lab i{width:6px;height:6px;background:var(--green);display:block;font-style:normal;}
+
+.sechead{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);
+  gap:clamp(20px,3vw,48px);
+  padding-top:16px;
+  border-top:1px solid var(--ink);
+}
+.sechead__n{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+.sechead__n b{color:var(--ink);font-weight:500;}
+.sechead__t{
+  font-size:clamp(26px,4.4vw,52px);
+  line-height:1.02;
+  letter-spacing:-.035em;
+  font-weight:400;
+  margin:0;
+  max-width:20ch;
+}
+
+/* -------- hand-split line mask primitives -------- */
+.ln{display:block;overflow:hidden;}
+.ln > span{display:block;will-change:transform;}
+
+/* ============================================================
+   BOOT / page-load intro
+   ============================================================ */
+.boot{
+  position:fixed;inset:0;z-index:200;
+  background:var(--cream);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:var(--gut);
+  gap:14px;
+}
+.boot__grid{
+  font-size:clamp(7px,1.02vw,12px);
+  line-height:1.1;
+  letter-spacing:.07em;
+  color:var(--rule-2);
+  white-space:pre;
+  overflow:hidden;
+  flex:1;
+  display:flex;
+  align-items:flex-end;
+}
+.boot__row{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+.boot__row b{font-weight:500;color:var(--ink);}
+.boot__pct{
+  font-size:clamp(52px,15vw,180px);line-height:.8;letter-spacing:-.055em;
+  color:var(--ink);font-weight:400;
+}
+.boot__bar{height:2px;background:var(--rule);position:relative;overflow:hidden;}
+.boot__bar i{position:absolute;top:0;bottom:0;left:0;width:0%;background:var(--green);display:block;}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:120;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
+  padding:14px var(--gut);
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--cream);
+  border-bottom:1px solid transparent;
+  transition:background .5s var(--ease), color .5s var(--ease), border-color .5s var(--ease);
+}
+.nav.is-solid{background:var(--cream);color:var(--ink);border-bottom-color:var(--rule);}
+.nav__mark{display:flex;align-items:center;gap:10px;}
+.nav__mark i{width:8px;height:8px;background:var(--green);display:block;}
+.nav__links{display:flex;gap:26px;}
+.nav__links a{position:relative;padding-bottom:3px;}
+.nav__links a::after{
+  content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;
+  background:var(--green);transform:scaleX(0);transform-origin:100% 50%;
+  transition:transform .45s var(--ease);
+}
+.nav__links a:hover::after{transform:scaleX(1);transform-origin:0 50%;}
+.nav__cta{
+  border:1px solid currentColor;padding:8px 14px;
+  transition:background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+}
+.nav__cta:hover{background:var(--green);border-color:var(--green);color:var(--green-ink);}
+
+/* ============================================================
+   HERO — photographic, full bleed
+   ============================================================ */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;
+  background:#0b0c0b;
+  color:var(--cream);
+  isolation:isolate;
+}
+.hero__media{position:absolute;left:0;right:0;top:-9%;bottom:-9%;z-index:0;will-change:transform;}
+.hero__media img{width:100%;height:100%;object-fit:cover;filter:grayscale(.36) contrast(1.07) brightness(.84);}
+/* legibility scrim ONLY — dark-to-transparent over a photo */
+.hero__scrim{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top, rgba(6,7,6,.94) 0%, rgba(6,7,6,.66) 32%, rgba(6,7,6,.20) 62%, rgba(6,7,6,.46) 100%);
+}
+.hero__cols{position:absolute;inset:0;z-index:2;display:grid;grid-template-columns:repeat(6,1fr);pointer-events:none;}
+.hero__cols span{border-left:1px solid rgba(245,242,237,.11);}
+.hero__cols span:first-child{border-left:0;}
+.hero__inner{position:relative;z-index:3;padding:calc(var(--gut) + 46px) var(--gut) var(--gut);width:100%;}
+.hero__top{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:min(13vh,150px);}
+.hero__badge{
+  border:1px solid rgba(245,242,237,.42);padding:7px 12px;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  display:inline-flex;gap:10px;align-items:center;
+}
+.hero__badge i{width:6px;height:6px;background:var(--green);display:block;border-radius:50%;}
+.hero__coord{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,242,237,.6);text-align:right;}
+.hero h1{
+  margin:0;
+  font-weight:400;
+  font-size:clamp(56px,13.8vw,202px);
+  line-height:.85;
+  letter-spacing:-.06em;
+}
+.hero h1 .sl{color:var(--green);}
+.hero__sub{
+  max-width:52ch;
+  margin:22px 0 0;
+  font-size:clamp(12.5px,1.15vw,16px);
+  line-height:1.5;
+  color:rgba(245,242,237,.82);
+}
+.hero__facts{
+  margin:clamp(28px,5vw,60px) 0 0;
+  border-top:1px solid rgba(245,242,237,.3);
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.hero__facts > div{padding:16px 0 2px 18px;border-left:1px solid rgba(245,242,237,.3);}
+.hero__facts > div:first-child{border-left:0;padding-left:0;}
+.hero__facts dt{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,242,237,.55);margin-bottom:9px;}
+.hero__facts dd{margin:0;font-size:clamp(13px,1.45vw,18px);letter-spacing:-.01em;}
+.hero__facts dd small{display:block;font-size:11px;color:rgba(245,242,237,.58);letter-spacing:.04em;margin-top:5px;}
+.hero__scroll{
+  position:absolute;right:var(--gut);top:38%;z-index:4;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,242,237,.55);
+  writing-mode:vertical-rl;
+}
+
+/* ============================================================
+   TICKER (supporting element only)
+   ============================================================ */
+.ticker{
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  background:var(--cream);overflow:hidden;padding-block:11px;white-space:nowrap;
+}
+.ticker__track{display:inline-flex;will-change:transform;}
+.ticker__track span{font-size:12px;letter-spacing:.2em;text-transform:uppercase;padding-inline:20px;}
+.ticker__track b{color:var(--green);font-weight:400;}
+
+/* ============================================================
+   BRIEF + COUNT-UP STATS
+   ============================================================ */
+.brief{padding-block:clamp(52px,7.5vw,116px);}
+.brief__body{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);
+  gap:clamp(20px,3vw,48px);
+  margin-top:clamp(26px,4vw,54px);
+}
+.brief__aside ul{margin:0;padding:0;list-style:none;}
+.brief__aside li{
+  padding:10px 0;border-top:1px solid var(--rule);
+  display:flex;justify-content:space-between;gap:12px;
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+}
+.brief__aside li b{color:var(--ink);font-weight:500;}
+.prose{font-family:var(--sans);font-size:clamp(15px,1.45vw,18px);line-height:1.62;max-width:60ch;color:var(--ink-2);}
+.prose p{margin:0 0 1.05em;}
+.prose p:last-child{margin-bottom:0;}
+.prose em{font-style:normal;box-shadow:inset 0 -.4em 0 rgba(62,207,142,.45);}
+
+.stats{
+  margin-top:clamp(38px,6vw,84px);
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+}
+.stat{padding:22px 18px 20px;border-left:1px solid var(--rule);}
+.stat:first-child{border-left:0;padding-left:0;}
+.stat__n{font-size:clamp(32px,6vw,74px);line-height:.9;letter-spacing:-.055em;}
+.stat__n .u{font-size:.32em;letter-spacing:.02em;color:var(--green);vertical-align:top;margin-left:.12em;}
+.stat__l{margin-top:12px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+
+/* ============================================================
+   CHARACTER GRID BAND
+   ============================================================ */
+.signal{padding-block:clamp(44px,6.5vw,92px) 0;}
+.signal__frame{border:1px solid var(--ink);background:var(--cream-2);margin-top:20px;overflow:hidden;}
+.signal__bar,.signal__cap{
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:9px 14px;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+}
+.signal__bar{border-bottom:1px solid var(--ink);}
+.signal__cap{border-top:1px solid var(--ink);}
+.chargrid{
+  padding:14px 14px 16px;
+  font-size:clamp(8px,.92vw,13px);
+  line-height:1.1;
+  letter-spacing:.1em;
+  color:var(--rule-2);
+  user-select:none;
+  cursor:crosshair;
+}
+.chargrid .r{display:block;white-space:pre;}
+.chargrid i{font-style:normal;}
+.chargrid i.a{color:var(--muted-2);}
+.chargrid i.b{color:var(--ink-2);}
+.chargrid i.c{color:var(--green);}
+
+/* ============================================================
+   SPEAKERS — dithered canvas portraits
+   ============================================================ */
+.speakers{padding-block:clamp(52px,7.5vw,116px);}
+.spk__grid{
+  margin-top:clamp(26px,4vw,54px);
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--ink);border-left:1px solid var(--rule);
+}
+.spk{
+  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  padding:16px 16px 20px;
+  background:var(--cream);
+  transition:background .45s var(--ease);
+  position:relative;
+}
+.spk:nth-child(-n+3){border-top:0;}
+.spk:hover{background:var(--green);}
+.spk__idx{
+  display:flex;justify-content:space-between;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+  transition:color .45s var(--ease);
+}
+.spk:hover .spk__idx{color:var(--green-ink);}
+.spk__frame{
+  margin-top:12px;position:relative;
+  background:var(--cream-3);
+  transition:background .45s var(--ease);
+  aspect-ratio:4/5;
+  overflow:hidden;
+}
+.spk:hover .spk__frame{background:rgba(8,48,31,.14);}
+.spk__frame canvas{
+  width:100%;height:100%;display:block;
+  image-rendering:pixelated;
+  image-rendering:crisp-edges;
+}
+.spk__frame::after{
+  content:"";position:absolute;inset:0;border:1px solid rgba(13,13,12,.16);pointer-events:none;
+}
+.spk__name{margin:14px 0 0;font-size:clamp(16px,1.7vw,21px);letter-spacing:-.02em;font-weight:500;}
+.spk__role{margin:6px 0 0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .45s var(--ease);}
+.spk:hover .spk__role{color:var(--green-ink);}
+.spk__talk{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);
+  font-size:13px;line-height:1.4;color:var(--ink-2);
+  transition:color .45s var(--ease), border-color .45s var(--ease);
+}
+.spk:hover .spk__talk{color:var(--green-ink);border-top-color:rgba(8,48,31,.28);}
+.spk__talk span{color:var(--green);transition:color .45s var(--ease);}
+.spk:hover .spk__talk span{color:var(--green-ink);}
+
+/* ============================================================
+   SCHEDULE — pinned, scrubbed playhead over a real table
+   ============================================================ */
+.sched{background:var(--cream);}
+.sched__stage{padding-block:clamp(28px,3.6vw,50px);}
+.sched__head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px;}
+.sched__title{font-size:clamp(22px,3vw,38px);letter-spacing:-.035em;margin:0;font-weight:400;}
+.sched__meter{
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+  display:flex;align-items:center;gap:12px;
+}
+.sched__meter u{
+  text-decoration:none;display:block;width:clamp(90px,14vw,190px);height:2px;background:var(--rule);position:relative;
+}
+.sched__meter u b{position:absolute;top:0;bottom:0;left:0;width:0%;background:var(--green);display:block;}
+.sched__table{position:relative;border-top:1px solid var(--ink);}
+.sched__playhead{
+  position:absolute;left:0;right:0;top:0;height:2px;background:var(--green);z-index:3;pointer-events:none;
+}
+.sched__playhead::after{
+  content:"NOW";position:absolute;right:0;top:-8px;font-size:9px;line-height:1.4;letter-spacing:.2em;
+  color:var(--green-ink);background:var(--green);padding:1px 6px;
+}
+.sched table th{
+  text-align:left;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+  font-weight:400;padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);
+}
+.sched tbody tr{border-bottom:1px solid var(--rule);}
+.sched tbody td{
+  padding:11px 12px 11px 0;vertical-align:top;color:var(--muted-2);
+  transition:color .5s var(--ease), background .5s var(--ease);
+}
+.sched tbody tr.is-live td,.sched tbody tr.is-past td{color:var(--ink);}
+.sched tbody tr.is-live{background:rgba(62,207,142,.13);}
+.sched tbody tr.is-break td{font-style:italic;}
+.sched .c-time{width:12%;min-width:74px;letter-spacing:.04em;white-space:nowrap;}
+.sched .c-title{width:44%;font-size:clamp(14px,1.45vw,18px);letter-spacing:-.015em;line-height:1.3;}
+.sched .c-who{width:26%;font-size:12px;letter-spacing:.02em;}
+.sched .c-who small{display:block;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-size:10px;margin-top:4px;}
+.sched .c-len{width:10%;text-align:right;padding-right:0;font-size:12px;color:var(--muted);}
+.sched tbody tr.is-live .c-len,.sched tbody tr.is-past .c-len{color:var(--ink-2);}
+.sched__foot{
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding-top:12px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+}
+
+/* ============================================================
+   VENUE + PROOF
+   ============================================================ */
+.venue{padding-block:clamp(52px,7.5vw,116px);}
+.venue__body{
+  margin-top:clamp(26px,4vw,54px);
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
+  gap:clamp(20px,3vw,44px);
+  align-items:start;
+}
+.venue__shot{position:relative;overflow:hidden;border:1px solid var(--ink);}
+.venue__shot img{width:100%;aspect-ratio:16/10;object-fit:cover;filter:grayscale(1) contrast(1.14) brightness(1.02);}
+.venue__shot figcaption{
+  position:absolute;left:0;bottom:0;right:0;
+  padding:8px 12px;background:var(--cream);border-top:1px solid var(--ink);
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+  display:flex;justify-content:space-between;gap:12px;
+}
+.venue__spec{border-top:1px solid var(--ink);}
+.venue__spec dl{margin:0;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);}
+.venue__spec dt,.venue__spec dd{
+  padding:11px 0;border-bottom:1px solid var(--rule);margin:0;
+  font-size:12px;letter-spacing:.02em;
+}
+.venue__spec dt{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding-right:12px;}
+.proof{
+  margin-top:clamp(34px,5vw,72px);
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+}
+.proof__q{
+  grid-column:span 4;padding:20px 0 22px;border-bottom:1px solid var(--rule);
+  font-size:clamp(16px,2.2vw,28px);line-height:1.32;letter-spacing:-.025em;max-width:34ch;
+}
+.proof__q footer{margin-top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+
+/* ============================================================
+   TICKETS / CLOSING CTA
+   ============================================================ */
+.tickets{background:var(--ink);color:var(--cream);padding-block:clamp(54px,8vw,124px);}
+.tickets .sechead{border-top-color:rgba(245,242,237,.42);}
+.tickets .sechead__n{color:rgba(245,242,237,.5);}
+.tickets .sechead__n b{color:var(--cream);}
+.tickets__grid{
+  margin-top:clamp(28px,4vw,58px);
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid rgba(245,242,237,.42);
+}
+.tier{padding:22px 20px 24px;border-left:1px solid rgba(245,242,237,.22);}
+.tier:first-child{border-left:0;padding-left:0;}
+.tier--out{color:rgba(245,242,237,.4);}
+.tier__n{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,242,237,.6);}
+.tier--out .tier__n{color:rgba(245,242,237,.35);}
+.tier__p{font-size:clamp(28px,4.4vw,54px);line-height:1;letter-spacing:-.045em;margin-top:16px;}
+.tier__p s{color:rgba(245,242,237,.35);}
+.tier__p sup{font-size:.32em;vertical-align:super;letter-spacing:.06em;color:var(--green);}
+.tier--out .tier__p sup{color:rgba(245,242,237,.3);}
+.tier ul{margin:18px 0 0;padding:0;list-style:none;}
+.tier li{
+  padding:8px 0;border-top:1px solid rgba(245,242,237,.16);
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,237,.7);
+}
+.tier--out li{color:rgba(245,242,237,.3);}
+.cta__row{
+  margin-top:clamp(34px,5vw,68px);
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.magnet{position:relative;display:inline-block;}
+.btn{
+  display:inline-flex;align-items:center;gap:16px;
+  background:var(--green);color:var(--green-ink);
+  padding:20px 30px;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  border:1px solid var(--green);
+  will-change:transform;
+  transition:background .3s var(--ease), color .3s var(--ease);
+}
+.btn span.x{display:block;}
+.btn:hover{background:transparent;color:var(--green);}
+.cta__note{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,242,237,.55);max-width:34ch;line-height:1.7;}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot{background:var(--ink);color:var(--cream);padding:0 var(--gut) 22px;}
+.foot__top{
+  display:grid;grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr));
+  gap:clamp(20px,3vw,44px);
+  padding-block:clamp(34px,5vw,64px);
+  border-top:1px solid rgba(245,242,237,.28);
+}
+.foot__mark{font-size:clamp(28px,5vw,64px);line-height:.9;letter-spacing:-.055em;}
+.foot__mark .sl{color:var(--green);}
+.foot__mark p{margin:16px 0 0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,242,237,.55);line-height:1.8;}
+.foot h4{margin:0 0 14px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,242,237,.45);font-weight:400;}
+.foot ul{margin:0;padding:0;list-style:none;}
+.foot li{padding:5px 0;font-size:12px;letter-spacing:.04em;}
+.foot li a{color:rgba(245,242,237,.82);transition:color .25s var(--ease);}
+.foot li a:hover{color:var(--green);}
+.foot__bar{
+  border-top:1px solid rgba(245,242,237,.18);
+  padding-top:16px;
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,242,237,.45);
+}
+
+/* ============================================================
+   RESPONSIVE — degrade below 1024px
+   ============================================================ */
+@media (max-width:1024px){
+  .nav__links{display:none;}
+  .sechead{grid-template-columns:1fr;gap:14px;}
+  .brief__body{grid-template-columns:1fr;}
+  .spk__grid{grid-template-columns:repeat(2,1fr);}
+  .spk:nth-child(-n+3){border-top:1px solid var(--rule);}
+  .spk:nth-child(-n+2){border-top:0;}
+  .venue__body{grid-template-columns:1fr;}
+  .tickets__grid{grid-template-columns:1fr;}
+  .tier{border-left:0;padding-left:0;border-top:1px solid rgba(245,242,237,.22);}
+  .tier:first-child{border-top:0;}
+  .foot__top{grid-template-columns:1fr 1fr;}
+  .sched .c-who small{display:none;}
+}
+@media (max-width:720px){
+  .hero__facts{grid-template-columns:1fr 1fr;}
+  .hero__facts > div{border-left:0;padding-left:0;border-top:1px solid rgba(245,242,237,.22);}
+  .hero__facts > div:nth-child(-n+2){border-top:0;}
+  .hero__cols{grid-template-columns:repeat(3,1fr);}
+  .stats{grid-template-columns:1fr 1fr;}
+  .stat{border-left:0;padding-left:0;border-top:1px solid var(--rule);}
+  .stat:nth-child(-n+2){border-top:0;}
+  .spk__grid{grid-template-columns:1fr;}
+  .spk{border-top:1px solid var(--rule);}
+  .spk:first-child{border-top:0;}
+  .proof{grid-template-columns:1fr 1fr;}
+  .proof__q{grid-column:span 2;}
+  .foot__top{grid-template-columns:1fr;}
+  .sched .c-who,.sched .c-len{display:none;}
+  .sched .c-time{width:22%;}
+  .sched .c-title{width:78%;}
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+  .boot{display:none !important;}
+  .ln > span{transform:none !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================== BOOT ============================== -->
+<div class="boot" id="boot" aria-hidden="true">
+  <div class="boot__row"><b>OFFSET/26</b><span id="bootMsg">RESOLVING VENUE MANIFEST</span></div>
+  <div class="boot__grid" id="bootGrid"></div>
+  <div class="boot__row"><span class="boot__pct" id="bootPct">000</span><span>CPH — 14.05.26 — 480 SEATS</span></div>
+  <div class="boot__bar"><i id="bootBar"></i></div>
+</div>
+
+<!-- ============================== NAV ============================== -->
+<nav class="nav" id="nav">
+  <a class="nav__mark" href="#top"><i></i> OFFSET/26</a>
+  <div class="nav__links">
+    <a href="#brief">Brief</a>
+    <a href="#speakers">Speakers</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#venue">Venue</a>
+  </div>
+  <a class="nav__cta" href="#tickets">Get ticket — 1,450 DKK</a>
+</nav>
+
+<!-- ============================== HERO ============================== -->
+<header class="hero" id="top">
+  <div class="hero__media" id="heroMedia">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=2400&q=80" alt="A full auditorium during a single-track technical conference">
+  </div>
+  <div class="hero__scrim"></div>
+  <div class="hero__cols"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <div class="hero__inner on-photo">
+    <div class="hero__top">
+      <span class="hero__badge"><i></i> Third edition — single track</span>
+      <span class="hero__coord">55.6688° N / 12.5622° E<br>Øksnehallen · Halmtorvet 11</span>
+    </div>
+
+    <h1>
+      <span class="ln"><span>OFFSET</span></span>
+      <span class="ln"><span><span class="sl">/</span>26</span></span>
+    </h1>
+
+    <p class="hero__sub split-lines">One day for the people who keep the infrastructure layer standing. Eight sessions, one room, no vendor keynotes.</p>
+
+    <dl class="hero__facts" id="heroFacts">
+      <div><dt>Date</dt><dd>Thu 14 May 2026<small>08:30 — 23:00 CEST</small></dd></div>
+      <div><dt>City</dt><dd>Copenhagen, DK<small>Vesterbro, 1700</small></dd></div>
+      <div><dt>Capacity</dt><dd>480 seats<small>312 already gone</small></dd></div>
+      <div><dt>Ticket</dt><dd>1,450 DKK<small>incl. lunch + afterparty</small></dd></div>
+    </dl>
+  </div>
+  <span class="hero__scroll">Scroll ↓</span>
+</header>
+
+<!-- ============================== TICKER ============================== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track" id="ticker">
+    <span>One day <b>/</b> One track <b>/</b> 480 seats</span>
+    <span>Øksnehallen, Copenhagen <b>—</b> 14 May 2026</span>
+    <span>Talks recorded, published free within 21 days</span>
+    <span>Doors 08:30 <b>·</b> First talk 09:40 <b>·</b> Close 18:20</span>
+  </div>
+</div>
+
+<!-- ============================== BRIEF ============================== -->
+<section class="brief wrap" id="brief">
+  <div class="sechead">
+    <p class="sechead__n"><b>[ 00 ]</b> &nbsp;— &nbsp;The brief</p>
+    <h2 class="sechead__t reveal-lines">A conference sized to the room, not to the sponsor deck.</h2>
+  </div>
+
+  <div class="brief__body">
+    <aside class="brief__aside">
+      <ul>
+        <li><span>Format</span><b>Single track</b></li>
+        <li><span>Sessions</span><b>8</b></li>
+        <li><span>Talk length</span><b>30—45 min</b></li>
+        <li><span>Sponsor slots</span><b>0</b></li>
+        <li><span>Recording</span><b>Free, 21 days</b></li>
+        <li><span>Code of conduct</span><b>Enforced</b></li>
+      </ul>
+    </aside>
+
+    <div class="prose">
+      <p>OFFSET is a one-day conference in Copenhagen for engineers working below the product line — storage, runtimes, compilers, platform, the parts of the stack that only get attention when they break. It started in 2024 as 90 people in a rented cinema on Gothersgade. It is now 480 people in a converted cattle hall, and the format has not changed: <em>one room, one track, everybody sees the same talks.</em></p>
+      <p>We do not sell keynote slots. Every speaker is invited because they shipped the thing they are talking about, and every talk has to include at least one part that went badly. Q&amp;A is moderated and runs long. Lunch is included and eaten standing up, on purpose, because the hallway track is the actual product.</p>
+      <p>Tickets are flat-priced. There is no VIP tier, no early-bird trickery beyond the first release, and student tickets are subsidised out of the general pool — 40 of them, first come.</p>
+    </div>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat"><div class="stat__n" data-count="480" data-suffix="">0</div><div class="stat__l">Seats, hard cap</div></div>
+    <div class="stat"><div class="stat__n" data-count="8">0</div><div class="stat__l">Sessions, one track</div></div>
+    <div class="stat"><div class="stat__n" data-count="11" data-unit="h">0</div><div class="stat__l">Doors to close</div></div>
+    <div class="stat"><div class="stat__n" data-count="0">0</div><div class="stat__l">Sponsor keynotes</div></div>
+  </div>
+</section>
+
+<!-- ============================== SIGNAL / CHARACTER GRID ============================== -->
+<section class="signal wrap" aria-hidden="true">
+  <p class="lab"><i></i> Signal — live from the hall</p>
+  <div class="signal__frame">
+    <div class="signal__bar">
+      <span>/dev/offset/hall-01</span>
+      <span id="sigStatus">SAMPLING · 24 fps</span>
+    </div>
+    <div class="chargrid" id="chargrid"></div>
+    <div class="signal__cap">
+      <span>Interference pattern — move the pointer across the field</span>
+      <span>ASCII homage · 1-bit</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SPEAKERS ============================== -->
+<section class="speakers wrap" id="speakers">
+  <div class="sechead">
+    <p class="sechead__n"><b>[ 01 ]</b> &nbsp;— &nbsp;Speakers</p>
+    <h2 class="sechead__t reveal-lines">Six people who shipped it, plus the eight who will talk fast.</h2>
+  </div>
+
+  <div class="spk__grid" id="spkGrid">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <article class="spk">
+      <div class="spk__idx"><span>SPK_01</span><span>09:40</span></div>
+      <div class="spk__frame"><canvas class="dither" width="220" height="275" data-src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80" data-seed="1" aria-label="Portrait of Ines Halvorsen"></canvas></div>
+      <h3 class="spk__name">Ines Halvorsen</h3>
+      <p class="spk__role">Principal Engineer · Tessellate Storage</p>
+      <p class="spk__talk"><span>&rsaquo;</span> Rebuilding a 41 PB object store while it was on fire</p>
+    </article>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <article class="spk">
+      <div class="spk__idx"><span>SPK_02</span><span>10:25</span></div>
+      <div class="spk__frame"><canvas class="dither" width="220" height="275" data-src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80" data-seed="2" aria-label="Portrait of Kwame Adjei"></canvas></div>
+      <h3 class="spk__name">Kwame Adjei</h3>
+      <p class="spk__role">Head of Runtime · Farside Labs</p>
+      <p class="spk__talk"><span>&rsaquo;</span> Green threads are back, and this time they are structured</p>
+    </article>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <article class="spk">
+      <div class="spk__idx"><span>SPK_03</span><span>11:40</span></div>
+      <div class="spk__frame"><canvas class="dither" width="220" height="275" data-src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=800&q=80" data-seed="3" aria-label="Portrait of Mira Lindqvist"></canvas></div>
+      <h3 class="spk__name">Mira Lindqvist</h3>
+      <p class="spk__role">Distinguished Engineer · Northwind Data</p>
+      <p class="spk__talk"><span>&rsaquo;</span> Consistency you can actually explain to a product manager</p>
+    </article>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <article class="spk">
+      <div class="spk__idx"><span>SPK_04</span><span>13:40</span></div>
+      <div class="spk__frame"><canvas class="dither" width="220" height="275" data-src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" data-seed="4" aria-label="Portrait of Tobias Vester"></canvas></div>
+      <h3 class="spk__name">Tobias Vester</h3>
+      <p class="spk__role">Independent · author of ripgrid</p>
+      <p class="spk__talk"><span>&rsaquo;</span> Reading 2 GB/s on a laptop without a single unsafe block</p>
+    </article>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <article class="spk">
+      <div class="spk__idx"><span>SPK_05</span><span>14:20</span></div>
+      <div class="spk__frame"><canvas class="dither" width="220" height="275" data-src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80" data-seed="5" aria-label="Portrait of Amara Oyelaran"></canvas></div>
+      <h3 class="spk__name">Amara Oyelaran</h3>
+      <p class="spk__role">Director of Platform · Halcyon Systems</p>
+      <p class="spk__talk"><span>&rsaquo;</span> Platform teams die of a thousand YAMLs</p>
+    </article>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <article class="spk">
+      <div class="spk__idx"><span>SPK_06</span><span>15:40</span></div>
+      <div class="spk__frame"><canvas class="dither" width="220" height="275" data-src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80" data-seed="6" aria-label="Portrait of Jonas Brekke"></canvas></div>
+      <h3 class="spk__name">Jonas Brekke</h3>
+      <p class="spk__role">Compiler Team Lead · Kestrel Compute</p>
+      <p class="spk__talk"><span>&rsaquo;</span> A compiler that explains itself, in 4,000 lines</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============================== SCHEDULE ============================== -->
+<section class="sched" id="schedule">
+  <div class="sched__stage wrap" id="schedStage">
+    <div class="sched__head">
+      <div>
+        <p class="lab" style="margin-bottom:10px"><i></i> [ 02 ] — Schedule · 14 May 2026</p>
+        <h2 class="sched__title">One room. 08:30 to 18:20.</h2>
+      </div>
+      <div class="sched__meter"><span id="schedClock">08:30</span><u><b id="schedBar"></b></u><span>18:20</span></div>
+    </div>
+
+    <div class="sched__table" id="schedTable">
+      <div class="sched__playhead" id="schedPlay" style="top:0"></div>
+      <table>
+        <thead>
+          <tr><th class="c-time">Time</th><th class="c-title">Session</th><th class="c-who">Speaker</th><th class="c-len">Len</th></tr>
+        </thead>
+        <tbody id="schedBody">
+          <tr data-t="08:30" class="is-break"><td class="c-time">08:30</td><td class="c-title">Doors, coffee, badge pickup</td><td class="c-who">—</td><td class="c-len">70′</td></tr>
+          <tr data-t="09:40"><td class="c-time">09:40</td><td class="c-title">Rebuilding a 41 PB object store while it was on fire</td><td class="c-who">Ines Halvorsen<small>Tessellate Storage</small></td><td class="c-len">35′</td></tr>
+          <tr data-t="10:25"><td class="c-time">10:25</td><td class="c-title">Green threads are back, and this time they are structured</td><td class="c-who">Kwame Adjei<small>Farside Labs</small></td><td class="c-len">35′</td></tr>
+          <tr data-t="11:10" class="is-break"><td class="c-time">11:10</td><td class="c-title">Break — coffee cart, west aisle</td><td class="c-who">—</td><td class="c-len">30′</td></tr>
+          <tr data-t="11:40"><td class="c-time">11:40</td><td class="c-title">Consistency you can actually explain to a product manager</td><td class="c-who">Mira Lindqvist<small>Northwind Data</small></td><td class="c-len">35′</td></tr>
+          <tr data-t="12:20" class="is-break"><td class="c-time">12:20</td><td class="c-title">Lunch — standing, in the hall, on purpose</td><td class="c-who">—</td><td class="c-len">80′</td></tr>
+          <tr data-t="13:40"><td class="c-time">13:40</td><td class="c-title">Reading 2 GB/s on a laptop without a single unsafe block</td><td class="c-who">Tobias Vester<small>ripgrid</small></td><td class="c-len">30′</td></tr>
+          <tr data-t="14:20"><td class="c-time">14:20</td><td class="c-title">Platform teams die of a thousand YAMLs</td><td class="c-who">Amara Oyelaran<small>Halcyon Systems</small></td><td class="c-len">35′</td></tr>
+          <tr data-t="15:40"><td class="c-time">15:40</td><td class="c-title">A compiler that explains itself, in 4,000 lines</td><td class="c-who">Jonas Brekke<small>Kestrel Compute</small></td><td class="c-len">35′</td></tr>
+          <tr data-t="16:25"><td class="c-time">16:25</td><td class="c-title">Panel — what we got wrong about serverless, 2019—2026</td><td class="c-who">All six + moderator<small>Moderated Q&amp;A</small></td><td class="c-len">45′</td></tr>
+          <tr data-t="17:20"><td class="c-time">17:20</td><td class="c-title">Lightning talks — eight slots, five minutes, hard cut</td><td class="c-who">Open CFP<small>Drawn on the day</small></td><td class="c-len">55′</td></tr>
+          <tr data-t="18:20" class="is-break"><td class="c-time">18:20</td><td class="c-title">Close, then afterparty at Kødbyens Fiskebar until 23:00</td><td class="c-who">—</td><td class="c-len">—</td></tr>
+        </tbody>
+      </table>
+      <div class="sched__foot">
+        <span>All times CEST · 15 min buffer between blocks</span>
+        <span id="schedCount">Session 01 / 12</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== VENUE + PROOF ============================== -->
+<section class="venue wrap" id="venue">
+  <div class="sechead">
+    <p class="sechead__n"><b>[ 03 ]</b> &nbsp;— &nbsp;Venue &amp; proof</p>
+    <h2 class="sechead__t reveal-lines">A 1901 cattle hall with 14-metre trusses and very good coffee.</h2>
+  </div>
+
+  <div class="venue__body">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <figure class="venue__shot" style="margin:0">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1800&q=80" alt="Interior of a large industrial hall set up for a conference">
+      <figcaption><span>Øksnehallen · Halmtorvet 11 · 1700 København V</span><span>2,400 m²</span></figcaption>
+    </figure>
+
+    <div class="venue__spec">
+      <dl>
+        <dt>Getting there</dt><dd>7 min walk from København H. Metro M3 Enghave Plads, then 6 min.</dd>
+        <dt>Seating</dt><dd>480 fixed seats, raked. No standing tickets — if it is sold out, it is sold out.</dd>
+        <dt>Accessibility</dt><dd>Step-free throughout, 12 wheelchair positions, live captions on both screens.</dd>
+        <dt>Food</dt><dd>Lunch included. Vegan by default, other options on request at checkout.</dd>
+        <dt>Wi-Fi</dt><dd>1 Gbps symmetric, dual SSID, no captive portal.</dd>
+        <dt>Afterparty</dt><dd>Kødbyens Fiskebar, 4 min walk. Two drinks on the badge.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="proof" id="proof">
+    <blockquote class="proof__q">
+      &ldquo;The only conference where I came home with three fixes for our own storage layer and none of them were in the slides.&rdquo;
+      <footer>— attendee survey, OFFSET/25</footer>
+    </blockquote>
+    <div class="stat" style="padding-left:0"><div class="stat__n" data-count="2">0</div><div class="stat__l">Editions run</div></div>
+    <div class="stat"><div class="stat__n" data-count="940">0</div><div class="stat__l">Attendees so far</div></div>
+    <div class="stat"><div class="stat__n" data-count="96" data-unit="%">0</div><div class="stat__l">Would return</div></div>
+    <div class="stat"><div class="stat__n" data-count="34">0</div><div class="stat__l">Countries, 2025</div></div>
+  </div>
+</section>
+
+<!-- ============================== TICKETS ============================== -->
+<section class="tickets wrap" id="tickets">
+  <div class="sechead">
+    <p class="sechead__n"><b>[ 04 ]</b> &nbsp;— &nbsp;Tickets</p>
+    <h2 class="sechead__t reveal-lines">312 of 480 gone. Flat price, no tiers above this one.</h2>
+  </div>
+
+  <div class="tickets__grid">
+    <div class="tier tier--out">
+      <p class="tier__n">Release 01 — closed 12 Feb</p>
+      <p class="tier__p"><s>1,150</s> <sup>DKK</sup></p>
+      <ul><li>200 seats</li><li>Sold out in 91 minutes</li><li>Waitlist not maintained</li></ul>
+    </div>
+    <div class="tier">
+      <p class="tier__n">Release 02 — on sale now</p>
+      <p class="tier__p">1,450 <sup>DKK</sup></p>
+      <ul><li>Row choice at check-in</li><li>Lunch + afterparty included</li><li>Transferable until 07 May</li><li>Invoice on request</li></ul>
+    </div>
+    <div class="tier">
+      <p class="tier__n">Student / unwaged — 40 seats</p>
+      <p class="tier__p">450 <sup>DKK</sup></p>
+      <ul><li>Subsidised from general pool</li><li>Any proof of study accepted</li><li>Same seat, same lunch</li><li>28 remaining</li></ul>
+    </div>
+  </div>
+
+  <div class="cta__row">
+    <div class="magnet" id="magnet">
+      <a class="btn" href="#tickets"><span class="x">Buy a ticket</span> <span class="x" aria-hidden="true">→</span></a>
+    </div>
+    <p class="cta__note">Payment by card, MobilePay or invoice. Refundable to 07 May 2026, transferable after. Company purchase orders: finance@offset.dev</p>
+  </div>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="foot">
+  <div class="foot__top">
+    <div class="foot__mark">
+      OFFSET<span class="sl">/</span>26
+      <p>Øksnehallen, Halmtorvet 11<br>1700 København V, Denmark<br>14 May 2026 · 08:30—23:00</p>
+    </div>
+    <div>
+      <h4>Event</h4>
+      <ul>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#speakers">Speakers</a></li>
+        <li><a href="#venue">Venue &amp; travel</a></li>
+        <li><a href="#tickets">Tickets</a></li>
+        <li><a href="#brief">Code of conduct</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Archive</h4>
+      <ul>
+        <li><a href="#top">OFFSET/25 — all talks</a></li>
+        <li><a href="#top">OFFSET/24 — all talks</a></li>
+        <li><a href="#top">Transcripts</a></li>
+        <li><a href="#top">Photo set</a></li>
+        <li><a href="#top">Press kit</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#top">hello@offset.dev</a></li>
+        <li><a href="#top">cfp@offset.dev</a></li>
+        <li><a href="#top">access@offset.dev</a></li>
+        <li><a href="#top">@offset_conf</a></li>
+        <li><a href="#top">Newsletter — 4 sends / year</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__bar">
+    <span>© 2026 OFFSET Conference ApS · CVR 41 88 20 17</span>
+    <span>Built in Copenhagen · Set in IBM Plex Mono</span>
+    <span>Recordings CC BY-NC 4.0</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+/* ============================================================
+   OFFSET/26 — motion
+   1. Floyd–Steinberg dithered canvas portraits, scanline-revealed
+   2. Animated character grid (wave + pointer interference)
+   3. Pinned + scrubbed schedule with playhead
+   4. Hand-split line mask reveals
+   5. Count-up figures
+   6. Magnetic CTA + hero parallax
+   ============================================================ */
+(function(){
+  "use strict";
+
+  var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var DESKTOP = window.matchMedia("(min-width: 1025px)").matches;
+  var hasGSAP = typeof window.gsap !== "undefined";
+
+  if (hasGSAP && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------------------------------------------------------
+     LENIS smooth scroll, wired into ScrollTrigger
+     --------------------------------------------------------- */
+  var lenis = null;
+  if (!REDUCED && typeof window.Lenis !== "undefined" && hasGSAP) {
+    lenis = new Lenis({ duration: 1.1, lerp: 0.09, wheelMultiplier: 1, smoothWheel: true });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener("click", function(e){
+        var t = document.querySelector(a.getAttribute("href"));
+        if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -40, duration: 1.2 }); }
+      });
+    });
+  }
+
+  /* =========================================================
+     1. FLOYD–STEINBERG DITHER — real 1-bit portraits on canvas
+     ========================================================= */
+  var CHARSET = " .·:-=+*#%@";
+
+  function luminance(r,g,b){ return 0.2126*r + 0.7152*g + 0.0722*b; }
+
+  // Procedural fallback so the treatment still reads with no network
+  function fallbackGray(w,h,seed){
+    var g = new Float32Array(w*h), i=0, s = seed*97.13;
+    for (var y=0;y<h;y++){
+      for (var x=0;x<w;x++){
+        var nx = (x/w-0.5), ny = (y/h-0.42);
+        var d = Math.sqrt(nx*nx*1.35 + ny*ny);
+        var head = Math.max(0, 1 - d*2.6);
+        var noise = (Math.sin((x*12.9898 + y*78.233 + s))*43758.5453) % 1;
+        g[i++] = Math.max(0, Math.min(255, 232*head + 26 + noise*26 + Math.sin(y*0.11+s)*10));
+      }
+    }
+    return g;
+  }
+
+  function grayFromImage(img, w, h){
+    var off = document.createElement("canvas");
+    off.width = w; off.height = h;
+    var octx = off.getContext("2d", { willReadFrequently: true });
+    octx.fillStyle = "#fff"; octx.fillRect(0,0,w,h);
+    // cover-crop, biased to the top third (faces sit high)
+    var scale = Math.max(w/img.naturalWidth, h/img.naturalHeight);
+    var dw = img.naturalWidth*scale, dh = img.naturalHeight*scale;
+    octx.drawImage(img, (w-dw)/2, (h-dh)*0.30, dw, dh);
+    var data = octx.getImageData(0,0,w,h).data; // throws if tainted
+    var g = new Float32Array(w*h);
+    for (var i=0, p=0; i<g.length; i++, p+=4){
+      var v = luminance(data[p], data[p+1], data[p+2]) / 255;
+      v = Math.pow(v, 0.82);              // gamma lift
+      v = (v - 0.5) * 1.26 + 0.5;         // contrast
+      g[i] = Math.max(0, Math.min(255, v*255));
+    }
+    return g;
+  }
+
+  // Floyd–Steinberg error diffusion → strict 1-bit
+  function floydSteinberg(gray, w, h){
+    var out = new Uint8ClampedArray(w*h*4);
+    for (var y=0; y<h; y++){
+      for (var x=0; x<w; x++){
+        var i = y*w + x;
+        var old = gray[i];
+        var nv = old < 128 ? 0 : 255;
+        var err = old - nv;
+        gray[i] = nv;
+        if (x+1 < w)             gray[i+1]     += err * 7/16;
+        if (y+1 < h){
+          if (x > 0)             gray[i+w-1]   += err * 3/16;
+                                 gray[i+w]     += err * 5/16;
+          if (x+1 < w)           gray[i+w+1]   += err * 1/16;
+        }
+        var o = i*4;
+        if (nv === 0){ out[o]=13; out[o+1]=13; out[o+2]=12; out[o+3]=255; }
+        else         { out[o]=0;  out[o+1]=0;  out[o+2]=0;  out[o+3]=0;   } // white → transparent
+      }
+    }
+    return out;
+  }
+
+  function mountDither(canvas){
+    var w = canvas.width, h = canvas.height;
+    var ctx = canvas.getContext("2d", { willReadFrequently: true });
+    var seed = parseInt(canvas.getAttribute("data-seed") || "1", 10);
+    var full = null;
+    var state = { p: 0 };
+
+    function paint(){
+      if (!full) return;
+      var rows = Math.max(1, Math.round(state.p * h));
+      ctx.clearRect(0,0,w,h);
+      ctx.putImageData(full, 0, 0, 0, 0, w, rows);
+      if (state.p > 0.004 && state.p < 0.999){
+        ctx.fillStyle = "#3ECF8E";
+        ctx.fillRect(0, rows-1, w, 1);
+        ctx.fillStyle = "rgba(62,207,142,.22)";
+        ctx.fillRect(0, Math.max(0, rows-7), w, 6);
+      }
+    }
+
+    function commit(gray){
+      var bytes = floydSteinberg(gray, w, h);
+      full = new ImageData(bytes, w, h);
+      if (REDUCED || !hasGSAP){ state.p = 1; paint(); return; }
+      gsap.to(state, {
+        p: 1, duration: 1.25, ease: "power2.inOut", onUpdate: paint,
+        scrollTrigger: { trigger: canvas, start: "top 88%", once: true }
+      });
+      paint();
+    }
+
+    var img = new Image();
+    img.crossOrigin = "anonymous";           // required before drawing a remote image
+    img.onload = function(){
+      try { commit(grayFromImage(img, w, h)); }
+      catch(e){ commit(fallbackGray(w,h,seed)); }   // tainted canvas / SecurityError
+    };
+    img.onerror = function(){ commit(fallbackGray(w,h,seed)); };
+    img.src = canvas.getAttribute("data-src");
+  }
+
+  document.querySelectorAll("canvas.dither").forEach(mountDither);
+
+  /* =========================================================
+     2. CHARACTER GRID — animated ASCII field
+     ========================================================= */
+  (function charGrid(){
+    var host = document.getElementById("chargrid");
+    if (!host) return;
+    var cols = 0, rows = DESKTOP ? 13 : 9, rowEls = [], cells = [];
+    var pointer = { x: 0.5, y: 0.5, ax: 0.5, ay: 0.5 };
+    var t = 0, vel = 0;
+
+    function build(){
+      var probe = document.createElement("span");
+      probe.style.cssText = "position:absolute;visibility:hidden;white-space:pre;";
+      probe.textContent = "0".repeat(100);
+      host.appendChild(probe);
+      var cw = probe.getBoundingClientRect().width / 100;
+      probe.remove();
+      cols = Math.max(24, Math.min(150, Math.floor((host.clientWidth - 28) / cw)));
+      host.innerHTML = "";
+      rowEls = []; cells = [];
+      for (var y=0; y<rows; y++){
+        var r = document.createElement("span");
+        r.className = "r";
+        var line = [];
+        for (var x=0; x<cols; x++){
+          var c = document.createElement("i");
+          c.textContent = " ";
+          r.appendChild(c);
+          line.push({ el: c, ch: " ", cl: "" });
+        }
+        host.appendChild(r);
+        rowEls.push(r); cells.push(line);
+      }
+    }
+
+    function frame(){
+      for (var y=0; y<rows; y++){
+        for (var x=0; x<cols; x++){
+          var nx = x/cols, ny = y/rows;
+          var dx = nx - pointer.ax, dy = (ny - pointer.ay) * 0.55;
+          var d = Math.sqrt(dx*dx + dy*dy);
+          var v = Math.sin(nx*11 + t*1.15)
+                + Math.sin(ny*7.5 - t*0.85)
+                + Math.sin((nx+ny)*8.5 + t*0.6)
+                + Math.cos(d*22 - t*2.6) * (1.5 - Math.min(1.5, d*2.2));
+          v = (v + 4) / 8;                      // → 0..1
+          v = Math.max(0, Math.min(0.999, v + vel*0.28));
+          var idx = Math.floor(v * CHARSET.length);
+          var ch = CHARSET[idx];
+          var cl = v > 0.86 ? "c" : (v > 0.66 ? "b" : (v > 0.42 ? "a" : ""));
+          var cell = cells[y][x];
+          if (cell.ch !== ch){ cell.el.textContent = ch; cell.ch = ch; }
+          if (cell.cl !== cl){ cell.el.className = cl; cell.cl = cl; }
+        }
+      }
+    }
+
+    build();
+    var ro = window.ResizeObserver ? new ResizeObserver(function(){ build(); frame(); }) : null;
+    if (ro) ro.observe(host);
+
+    host.addEventListener("pointermove", function(e){
+      var r = host.getBoundingClientRect();
+      pointer.x = (e.clientX - r.left) / r.width;
+      pointer.y = (e.clientY - r.top) / r.height;
+    });
+    host.addEventListener("pointerleave", function(){ pointer.x = 0.5; pointer.y = 0.5; });
+
+    if (REDUCED || !hasGSAP){ t = 1.4; frame(); return; }
+
+    var visible = true, last = 0;
+    if (window.IntersectionObserver){
+      new IntersectionObserver(function(en){ visible = en[0].isIntersecting; },{ threshold: 0 }).observe(host);
+    }
+    gsap.ticker.add(function(time){
+      if (!visible) return;
+      if (time - last < 1/26) return;           // throttle to ~26fps, DOM-friendly
+      last = time;
+      t += 0.09;
+      pointer.ax += (pointer.x - pointer.ax) * 0.08;   // rAF lerp, never raw assignment
+      pointer.ay += (pointer.y - pointer.ay) * 0.08;
+      vel *= 0.9;
+      frame();
+    });
+    if (lenis) lenis.on("scroll", function(e){ vel = Math.min(0.5, Math.abs(e.velocity || 0) * 0.012); });
+  })();
+
+  /* =========================================================
+     3. HAND-SPLIT LINE MASK REVEALS
+     ========================================================= */
+  function splitLines(el){
+    if (el.dataset.split === "1") return;
+    var words = el.textContent.trim().split(/\s+/);
+    el.textContent = "";
+    var probe = document.createElement("span");
+    words.forEach(function(w, i){
+      var s = document.createElement("span");
+      s.className = "w";
+      s.style.display = "inline-block";
+      s.textContent = w;
+      probe.appendChild(s);
+      if (i < words.length-1) probe.appendChild(document.createTextNode(" "));
+    });
+    el.appendChild(probe);
+    var lines = [], cur = null, top = null;
+    probe.querySelectorAll(".w").forEach(function(w){
+      var y = Math.round(w.offsetTop);
+      if (top === null || y !== top){ top = y; cur = []; lines.push(cur); }
+      cur.push(w.textContent);
+    });
+    el.textContent = "";
+    lines.forEach(function(words){
+      var mask = document.createElement("span");
+      mask.className = "ln";
+      var inner = document.createElement("span");
+      inner.textContent = words.join(" ");
+      mask.appendChild(inner);
+      el.appendChild(mask);
+    });
+    el.dataset.split = "1";
+  }
+
+  document.querySelectorAll(".reveal-lines, .split-lines").forEach(splitLines);
+
+  if (hasGSAP && !REDUCED){
+    document.querySelectorAll(".reveal-lines").forEach(function(el){
+      gsap.from(el.querySelectorAll(".ln > span"), {
+        yPercent: 108, duration: 1.05, ease: "power4.out", stagger: 0.07,
+        scrollTrigger: { trigger: el, start: "top 86%" }
+      });
+    });
+
+    // generic block entrances (supporting hygiene, not counted as a technique)
+    ["#brief .prose p", ".brief__aside li", ".tier", ".venue__spec dt, .venue__spec dd"].forEach(function(sel){
+      var nodes = document.querySelectorAll(sel);
+      if (!nodes.length) return;
+      gsap.from(nodes, {
+        y: 18, opacity: 0, duration: .8, ease: "power3.out", stagger: 0.045,
+        scrollTrigger: { trigger: nodes[0].closest("section"), start: "top 72%" }
+      });
+    });
+
+    gsap.from(".spk", {
+      yPercent: 8, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.06,
+      scrollTrigger: { trigger: "#spkGrid", start: "top 80%" }
+    });
+  }
+
+  /* =========================================================
+     4. COUNT-UP FIGURES
+     ========================================================= */
+  document.querySelectorAll("[data-count]").forEach(function(el){
+    var target = parseFloat(el.getAttribute("data-count"));
+    var unit = el.getAttribute("data-unit") || "";
+    function render(v){
+      var n = Math.round(v);
+      el.innerHTML = n.toLocaleString("en-US") + (unit ? '<span class="u">'+unit+'</span>' : "");
+    }
+    if (REDUCED || !hasGSAP){ render(target); return; }
+    render(0);
+    var obj = { v: 0 };
+    gsap.to(obj, {
+      v: target, duration: 1.7, ease: "power3.out",
+      onUpdate: function(){ render(obj.v); },
+      scrollTrigger: { trigger: el, start: "top 90%", once: true }
+    });
+  });
+
+  /* =========================================================
+     5. PINNED + SCRUBBED SCHEDULE
+     ========================================================= */
+  (function schedule(){
+    var stage = document.getElementById("schedStage");
+    var body  = document.getElementById("schedBody");
+    var play  = document.getElementById("schedPlay");
+    var bar   = document.getElementById("schedBar");
+    var clock = document.getElementById("schedClock");
+    var count = document.getElementById("schedCount");
+    if (!stage || !body) return;
+    var rows = Array.prototype.slice.call(body.querySelectorAll("tr"));
+
+    var host = document.getElementById("schedTable");
+    var lastActive = -1;
+
+    function apply(p){
+      var hostTop = host.getBoundingClientRect().top;
+      var y = p * (host.offsetHeight - 2);
+      bar.style.width = (p*100).toFixed(1) + "%";
+      play.style.opacity = p > 0.001 ? 1 : 0;
+
+      var active = 0, activeTop = 0;
+      rows.forEach(function(tr, i){
+        var r = tr.getBoundingClientRect();
+        var top = r.top - hostTop;
+        var past = (top + r.height) < y, live = !past && top <= y;
+        tr.classList.toggle("is-past", past);
+        tr.classList.toggle("is-live", live);
+        if (past || live){ active = i; if (live) activeTop = top; else activeTop = top; }
+      });
+
+      // snap the playhead to the live row's top edge so it never strikes text
+      if (active !== lastActive){
+        lastActive = active;
+        gsap.to(play, { y: activeTop, duration: .38, ease: "power3.out", overwrite: true });
+        clock.textContent = rows[active].getAttribute("data-t") || "08:30";
+        count.textContent = "Session " + String(active+1).padStart(2,"0") + " / " + rows.length;
+      }
+    }
+
+    if (REDUCED || !hasGSAP){
+      rows.forEach(function(tr){ tr.classList.add("is-past"); });
+      play.style.opacity = 0;
+      bar.style.width = "100%";
+      return;
+    }
+
+    play.style.opacity = 0;
+
+    var mm = gsap.matchMedia();
+    mm.add("(min-width: 1025px)", function(){
+        ScrollTrigger.create({
+          trigger: "#schedule",
+          start: "top top",
+          end: "+=" + Math.round(window.innerHeight * 1.9),
+          pin: "#schedStage",
+          pinSpacing: true,
+          scrub: 0.5,
+          onUpdate: function(self){ apply(self.progress); },
+          onRefresh: function(self){ apply(self.progress); }
+        });
+    });
+
+    mm.add("(max-width: 1024px)", function(){
+        // no pin below 1024 — rows simply reveal in flow
+        gsap.from(rows, {
+          opacity: 0, y: 14, duration: .7, ease: "power3.out", stagger: 0.04,
+          scrollTrigger: { trigger: "#schedTable", start: "top 82%" }
+        });
+        rows.forEach(function(tr){ tr.classList.add("is-past"); });
+        bar.style.width = "100%";
+    });
+  })();
+
+  /* =========================================================
+     6. HERO PARALLAX + NAV STATE + TICKER
+     ========================================================= */
+  if (hasGSAP && !REDUCED){
+    gsap.to("#heroMedia", {
+      yPercent: 13, ease: "none",
+      scrollTrigger: { trigger: "#top", start: "top top", end: "bottom top", scrub: true }
+    });
+    gsap.to("#heroFacts", {
+      yPercent: -22, opacity: .25, ease: "none",
+      scrollTrigger: { trigger: "#top", start: "60% top", end: "bottom top", scrub: true }
+    });
+
+    // ticker: duplicate + loop (supporting element only)
+    var track = document.getElementById("ticker");
+    if (track){
+      track.innerHTML += track.innerHTML;
+      gsap.to(track, { xPercent: -50, duration: 34, ease: "none", repeat: -1 });
+    }
+  }
+
+  var nav = document.getElementById("nav");
+  function navState(){
+    var y = window.scrollY || document.documentElement.scrollTop;
+    nav.classList.toggle("is-solid", y > window.innerHeight * 0.86);
+  }
+  navState();
+  window.addEventListener("scroll", navState, { passive: true });
+
+  /* =========================================================
+     7. MAGNETIC CTA (rAF lerp, desktop only)
+     ========================================================= */
+  (function magnetic(){
+    var host = document.getElementById("magnet");
+    if (!host || !DESKTOP || REDUCED || !hasGSAP) return;
+    var btn = host.querySelector(".btn");
+    var target = { x:0, y:0 }, cur = { x:0, y:0 }, inside = false;
+    host.addEventListener("pointermove", function(e){
+      var r = host.getBoundingClientRect();
+      target.x = (e.clientX - (r.left + r.width/2)) * 0.32;
+      target.y = (e.clientY - (r.top + r.height/2)) * 0.42;
+      inside = true;
+    });
+    host.addEventListener("pointerleave", function(){ target.x = 0; target.y = 0; inside = false; });
+    gsap.ticker.add(function(){
+      cur.x += (target.x - cur.x) * 0.13;
+      cur.y += (target.y - cur.y) * 0.13;
+      if (Math.abs(cur.x) < 0.02 && Math.abs(cur.y) < 0.02 && !inside) return;
+      gsap.set(btn, { x: cur.x, y: cur.y });
+    });
+  })();
+
+  /* =========================================================
+     8. PAGE-LOAD INTRO — terminal boot, then curtain
+     ========================================================= */
+  (function boot(){
+    var el = document.getElementById("boot");
+    if (!el) return;
+    if (REDUCED || !hasGSAP){ el.remove(); return; }
+    if (lenis) lenis.stop();
+
+    var pct = document.getElementById("bootPct");
+    var barEl = document.getElementById("bootBar");
+    var grid = document.getElementById("bootGrid");
+    var msg = document.getElementById("bootMsg");
+    var msgs = ["RESOLVING VENUE MANIFEST","LOADING 06 SPEAKER PLATES","DITHERING PORTRAITS — FLOYD/STEINBERG","BUILDING SCHEDULE 08:30→18:20","480 SEATS ALLOCATED"];
+
+    var GC = 84, GR = 9;
+    var chars = "0123456789ABCDEF/·-=+#%@";
+    function scramble(p){
+      var out = [];
+      for (var y=0; y<GR; y++){
+        var line = "";
+        for (var x=0; x<GC; x++){
+          var lit = (x/GC) < p * (0.6 + 0.4*Math.sin(y*0.8+p*6));
+          line += lit ? chars[(Math.random()*chars.length)|0] : " ";
+        }
+        out.push(line);
+      }
+      grid.textContent = out.join("\n");
+    }
+
+    var o = { v: 0 };
+    var tl = gsap.timeline({ onComplete: function(){
+      el.remove();
+      if (lenis) lenis.start();
+      ScrollTrigger.refresh();
+    }});
+
+    tl.to(o, {
+      v: 100, duration: 2.0, ease: "power2.inOut",
+      onUpdate: function(){
+        var v = o.v;
+        pct.textContent = String(Math.round(v)).padStart(3, "0");
+        barEl.style.width = v + "%";
+        scramble(v/100);
+        msg.textContent = msgs[Math.min(msgs.length-1, Math.floor(v/20))];
+      }
+    })
+    .to("#bootGrid", { opacity: 0, duration: .35, ease: "power2.in" }, "-=.1")
+    .to(el, { yPercent: -100, duration: 1.05, ease: "power4.inOut" }, "-=.05")
+    .from(".hero h1 .ln > span", { yPercent: 112, duration: 1.15, ease: "power4.out", stagger: .085 }, "-=.72")
+    .from(".hero__sub .ln > span", { yPercent: 108, duration: .95, ease: "power4.out", stagger: .06 }, "-=.85")
+    .from(".hero__badge, .hero__coord", { opacity: 0, y: 12, duration: .8, ease: "power3.out", stagger: .08 }, "-=.8")
+    .from(".hero__facts > div", { opacity: 0, y: 22, duration: .9, ease: "power3.out", stagger: .07 }, "-=.7")
+    .from(".hero__cols span", { scaleY: 0, transformOrigin: "0 0", duration: 1.1, ease: "power3.out", stagger: .05 }, "-=1.1")
+    .from(".nav", { opacity: 0, duration: .6, ease: "power2.out" }, "-=.6");
+  })();
+
+  window.addEventListener("load", function(){
+    if (hasGSAP && window.ScrollTrigger) ScrollTrigger.refresh();
+  });
+})();
+</script>
+</body>
+</html>

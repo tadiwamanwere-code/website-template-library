@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Geptral — Dark Cinematic Eco-Restoration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #1b1b1b;
+    --fg: #ffffff;
+    --muted: #888888;
+    --line: rgba(255,255,255,0.15);
+    --divider: rgba(255,255,255,0.25);
+    --accent: #DE7D4D;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+  img { display: block; max-width: 100%; }
+
+  section { position: relative; width: 100%; }
+
+  /* ============ CUSTOM CURSOR CHIP ============ */
+  .cursor-chip {
+    position: fixed;
+    top: 0; left: 0;
+    width: 64px;
+    height: 64px;
+    margin-left: -32px;
+    margin-top: -32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+    will-change: transform, opacity;
+  }
+  .cursor-chip.active { opacity: 1; transform: scale(1); }
+  .cursor-chip svg { width: 18px; height: 18px; }
+  .cursor-chip path { stroke: #fff; }
+  @media (max-width: 1024px) { .cursor-chip { display: none !important; } }
+
+  /* ============ HERO ============ */
+  .hero {
+    height: 100vh;
+    min-height: 720px;
+    overflow: hidden;
+    background: #000;
+  }
+  .hero video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    pointer-events: none;
+  }
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.10) 22%, rgba(10,10,10,0.20) 55%, rgba(10,10,10,0.90) 100%);
+    pointer-events: none;
+  }
+
+  .hero-header {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 34px 56px 0;
+  }
+
+  .wordmark { display: flex; cursor: default; user-select: none; }
+  .wordmark span {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    transition: font-weight 0.35s var(--ease-out);
+  }
+
+  .hero-nav {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .hero-nav a {
+    position: relative;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.78);
+    padding-bottom: 6px;
+  }
+  .hero-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0%;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s var(--ease-out);
+  }
+  .hero-nav a:hover { color: #fff; }
+  .hero-nav a:hover::after { width: 100%; }
+
+  .hero-actions { display: flex; align-items: center; gap: 26px; }
+  .signin {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.78);
+    transition: color 0.25s ease;
+  }
+  .signin:hover { color: #fff; }
+  .join-btn {
+    background: #fff;
+    color: #101010;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 22px;
+    border-radius: 3px;
+    display: inline-block;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .join-btn:hover { background: #eae8e3; transform: translateY(-1px); }
+
+  .divider {
+    position: relative;
+    z-index: 3;
+    height: 1px;
+    width: 0%;
+    margin: 26px 56px 0;
+    background: var(--divider);
+    animation: growDivider 1.4s var(--ease-out) 0.2s forwards;
+  }
+  @keyframes growDivider { from { width: 0%; } to { width: calc(100% - 112px); } }
+
+  .hero-tags {
+    position: absolute;
+    top: 46%;
+    left: 0; right: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 56px;
+    pointer-events: none;
+  }
+  .hero-tags .tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.72);
+    max-width: 220px;
+  }
+  .hero-tags .tag-right { text-align: right; }
+
+  .hero-bottom {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 110px;
+    z-index: 3;
+    padding: 0 56px;
+  }
+  .hero-bottom h1 {
+    font-size: clamp(40px, 7.4vw, 96px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    max-width: 1100px;
+  }
+  .hero-bottom p {
+    margin-top: 22px;
+    max-width: 460px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.72);
+  }
+
+  .hero-footer-row {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 34px;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 56px;
+  }
+  .hero-footer-row span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .hero-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    transition-delay: calc(var(--d, 0) * 0.13s + 0.35s);
+  }
+  .hero.is-loaded .hero-reveal { opacity: 1; transform: translateY(0); }
+
+  /* ============ COLLAGE / STATEMENT SECTION ============ */
+  .collage {
+    padding: 160px 56px 120px;
+  }
+  .mask-headline {
+    font-size: clamp(30px, 4.6vw, 58px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    max-width: 980px;
+    margin-bottom: 90px;
+  }
+  .mask-headline .word-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+  }
+  .mask-headline .word-inner {
+    display: inline-block;
+    transform: translateY(110%);
+    transition: transform 0.8s var(--ease-out);
+  }
+  .mask-headline.in-view .word-inner { transform: translateY(0); }
+
+  .collage-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .collage-row::-webkit-scrollbar { display: none; }
+
+  .collage-img {
+    position: relative;
+    flex: 0 0 auto;
+    overflow: hidden;
+    border-radius: 2px;
+    cursor: none;
+  }
+  .collage-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.02);
+    transition: transform 0.8s var(--ease-out), filter 0.8s var(--ease-out);
+    filter: grayscale(0.15) brightness(0.92);
+  }
+  .collage-img:hover img { transform: scale(1.08); filter: grayscale(0) brightness(1); }
+
+  .collage-img.c1 { width: 26%; height: 420px; }
+  .collage-img.c2 { width: 20%; height: 310px; }
+  .collage-img.c3 { width: 24%; height: 480px; }
+  .collage-img.c4 { width: 18%; height: 260px; }
+  .collage-img.c5 { width: 20%; height: 360px; }
+
+  @media (max-width: 1024px) { .collage-img { cursor: default; } }
+
+  /* ============ FOCUS AREAS ============ */
+  .focus {
+    padding: 140px 56px 160px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 60px;
+  }
+  .focus-left { position: sticky; top: 100px; align-self: start; }
+  .eyebrow {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .eyebrow-sub {
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 260px;
+  }
+
+  .focus-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 60px;
+    row-gap: 64px;
+  }
+  .focus-item .rule {
+    border-top: 1px solid var(--line);
+    margin-bottom: 10px;
+  }
+  .focus-item h3 {
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  }
+  .focus-item ul {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .focus-item li {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--muted);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  }
+  .focus-item.in-view h3 { opacity: 1; transform: translateY(0); }
+  .focus-item.in-view li { opacity: 1; transform: translateY(0); }
+  .focus-item li:nth-child(1) { transition-delay: 0.12s; }
+  .focus-item li:nth-child(2) { transition-delay: 0.20s; }
+  .focus-item li:nth-child(3) { transition-delay: 0.28s; }
+  .focus-item li:nth-child(4) { transition-delay: 0.36s; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px) {
+    .hero-header { padding: 24px 24px 0; flex-wrap: wrap; }
+    .hero-nav { display: none; }
+    .divider { margin: 20px 24px 0; }
+    .hero-tags { padding: 0 24px; top: 42%; }
+    .hero-tags .tag { max-width: 140px; font-size: 10px; }
+    .hero-bottom { padding: 0 24px; bottom: 92px; }
+    .hero-bottom p { max-width: 100%; }
+    .hero-footer-row { padding: 0 24px; bottom: 24px; }
+    .hero-footer-row span:last-child { display: none; }
+
+    .collage { padding: 100px 24px 80px; }
+    .mask-headline { margin-bottom: 50px; }
+    .collage-row { flex-wrap: nowrap; }
+    .collage-img.c1, .collage-img.c2, .collage-img.c3, .collage-img.c4, .collage-img.c5 {
+      width: 72vw; height: 320px;
+    }
+
+    .focus { grid-template-columns: 1fr; padding: 100px 24px 120px; }
+    .focus-left { position: static; }
+    .focus-grid { grid-template-columns: 1fr; row-gap: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-chip" id="cursorChip">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+
+<section class="hero" id="hero">
+  <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+  <video autoplay loop muted playsinline preload="auto" aria-hidden="true" id="heroVideo">
+    <source src="https://videos.pexels.com/video-files/1093662/1093662-hd_1920_1080_30fps.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-scrim"></div>
+
+  <header class="hero-header">
+    <div class="wordmark" id="wordmark">
+      <span>G</span><span>e</span><span>p</span><span>t</span><span>r</span><span>a</span><span>l</span>
+    </div>
+    <nav class="hero-nav">
+      <a href="#">Future</a>
+      <a href="#">About Us</a>
+      <a href="#">Press Releases</a>
+    </nav>
+    <div class="hero-actions">
+      <a href="#" class="signin">Sign In</a>
+      <a href="#" class="join-btn">Join the Movement</a>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <div class="hero-tags">
+    <span class="tag tag-left">Restore Ecosystems</span>
+    <span class="tag tag-right">&amp; Return Natural Cycles to Harmony</span>
+  </div>
+
+  <div class="hero-bottom">
+    <h1 class="hero-reveal" style="--d:0">Preserving Nature for<br>Future Generations</h1>
+    <p class="hero-reveal" style="--d:1">Geptral partners with landscapes at the edge of collapse — rebuilding soil, water, and habitat until the systems can carry themselves again.</p>
+  </div>
+
+  <div class="hero-footer-row">
+    <span class="hero-reveal" style="--d:2">Be Part of the Change Restoring Our Planet</span>
+    <span class="hero-reveal" style="--d:2">Scroll to Explore</span>
+  </div>
+</section>
+
+<section class="collage" id="collage">
+  <h2 class="mask-headline" data-reveal>Every degraded landscape still holds the memory of what it once was.</h2>
+
+  <div class="collage-row">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <div class="collage-img c1"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900&q=80&auto=format&fit=crop" alt="Forest mist" /></div>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <div class="collage-img c2"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?w=700&q=80&auto=format&fit=crop" alt="Water" /></div>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <div class="collage-img c3"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=900&q=80&auto=format&fit=crop" alt="Mountain forest" /></div>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <div class="collage-img c4"><img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=700&q=80&auto=format&fit=crop" alt="Solar infrastructure" /></div>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <div class="collage-img c5"><img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800&q=80&auto=format&fit=crop" alt="Sunlight through forest" /></div>
+  </div>
+</section>
+
+<section class="focus" id="focus">
+  <div class="focus-left">
+    <p class="eyebrow">03 — Focus Areas</p>
+    <p class="eyebrow-sub">The four disciplines Geptral works across, from soil to systems, to bring degraded land back into balance.</p>
+  </div>
+
+  <div class="focus-grid">
+    <div class="focus-item">
+      <div class="rule"></div>
+      <h3>Ecosystem Restoration</h3>
+      <ul>
+        <li>Native species reintroduction</li>
+        <li>Soil regeneration programs</li>
+        <li>Habitat corridor mapping</li>
+        <li>Long-term biodiversity monitoring</li>
+      </ul>
+    </div>
+    <div class="focus-item">
+      <div class="rule"></div>
+      <h3>Sustainable Infrastructure</h3>
+      <ul>
+        <li>Low-impact site design</li>
+        <li>Renewable energy integration</li>
+        <li>Circular material sourcing</li>
+        <li>Community-scaled construction</li>
+      </ul>
+    </div>
+    <div class="focus-item">
+      <div class="rule"></div>
+      <h3>Clean Water Initiatives</h3>
+      <ul>
+        <li>Watershed protection</li>
+        <li>Wetland filtration systems</li>
+        <li>Groundwater recharge projects</li>
+        <li>Rural access engineering</li>
+      </ul>
+    </div>
+    <div class="focus-item">
+      <div class="rule"></div>
+      <h3>Environmental Research</h3>
+      <ul>
+        <li>Field data collection</li>
+        <li>Climate resilience modeling</li>
+        <li>Open-access publication</li>
+        <li>Cross-institution partnerships</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    /* ---------- hero video watchdog ---------- */
+    var video = document.getElementById('heroVideo');
+    if (video) {
+      var tryPlay = function () {
+        var p = video.play();
+        if (p && typeof p.catch === 'function') p.catch(function () {});
+      };
+      video.addEventListener('pause', tryPlay);
+      video.addEventListener('ended', tryPlay);
+      video.addEventListener('loadedmetadata', tryPlay);
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) tryPlay(); });
+      tryPlay();
+      setInterval(function () { if (video.paused) tryPlay(); }, 1500);
+    }
+
+    /* ---------- hero load-in reveal ---------- */
+    window.addEventListener('load', function () {
+      requestAnimationFrame(function () {
+        document.getElementById('hero').classList.add('is-loaded');
+      });
+    });
+    // fallback in case 'load' is slow (video etc.) — reveal after 1.2s regardless
+    setTimeout(function () {
+      document.getElementById('hero').classList.add('is-loaded');
+    }, 1200);
+
+    /* ---------- wordmark hover-weight effect ---------- */
+    var wordmark = document.getElementById('wordmark');
+    var letters = wordmark.querySelectorAll('span');
+    function setWeights(target) {
+      letters.forEach(function (el, i) {
+        el.style.transitionDelay = (i * 16) + 'ms';
+        el.style.fontWeight = target;
+      });
+    }
+    wordmark.addEventListener('mousemove', function (e) {
+      if (!e.movementX) return;
+      setWeights(e.movementX > 0 ? '200' : '900');
+    });
+    wordmark.addEventListener('mouseleave', function () { setWeights('900'); });
+
+    /* ---------- word-mask scroll reveal (collage headline) ---------- */
+    document.querySelectorAll('[data-reveal]').forEach(function (el) {
+      var text = el.textContent.trim();
+      var words = text.split(/\s+/);
+      el.innerHTML = '';
+      words.forEach(function (w, i) {
+        var mask = document.createElement('span');
+        mask.className = 'word-mask';
+        var inner = document.createElement('span');
+        inner.className = 'word-inner';
+        inner.style.transitionDelay = (i * 0.055) + 's';
+        inner.textContent = w + (i < words.length - 1 ? ' ' : '');
+        mask.appendChild(inner);
+        el.appendChild(mask);
+      });
+    });
+
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+
+    document.querySelectorAll('[data-reveal], .focus-item').forEach(function (el) {
+      revealObserver.observe(el);
+    });
+
+    /* ---------- custom cursor chip over collage images (desktop only) ---------- */
+    if (window.matchMedia('(min-width: 1025px)').matches) {
+      var chip = document.getElementById('cursorChip');
+      var targetX = 0, targetY = 0, curX = 0, curY = 0, active = false;
+
+      document.addEventListener('mousemove', function (e) {
+        targetX = e.clientX;
+        targetY = e.clientY;
+      });
+
+      document.querySelectorAll('.collage-img').forEach(function (img) {
+        img.addEventListener('mouseenter', function () {
+          active = true;
+          chip.classList.add('active');
+        });
+        img.addEventListener('mouseleave', function () {
+          active = false;
+          chip.classList.remove('active');
+        });
+      });
+
+      function raf() {
+        curX += (targetX - curX) * 0.16;
+        curY += (targetY - curY) * 0.16;
+        chip.style.transform = 'translate3d(' + curX + 'px,' + curY + 'px,0)';
+        requestAnimationFrame(raf);
+      }
+      raf();
+    }
+  })();
+</script>
+
+</body>
+</html>

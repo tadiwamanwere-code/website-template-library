@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Healcure — Healthcare Landing Hero</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; font-family: 'Inter', sans-serif; }
+  .word-reveal span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(4px);
+    animation: revealWord 0.6s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes revealWord {
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+  .fade-in-page { animation: fadeInPage 0.9s ease forwards; }
+  @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body class="bg-black">
+
+<section class="relative w-full min-h-screen flex flex-col justify-end fade-in-page overflow-hidden">
+
+  <!-- BACKGROUND -->
+  <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+  <img
+    src="https://cdn.sceneai.art/Hero%20Section%20Video/802fa01f-44ef-4ab4-ac73-62015fe06eef.png"
+    alt=""
+    class="absolute inset-0 w-full h-full object-cover object-center"
+  />
+  <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/90"></div>
+
+  <div class="relative z-10 mx-auto w-full" style="max-width:1340px;">
+
+    <!-- NAVBAR -->
+    <nav class="flex items-center justify-between px-6 lg:px-0 pt-8">
+      <span class="text-white text-2xl font-semibold tracking-tight">Healcure</span>
+
+      <ul class="hidden md:flex items-center gap-9 text-[14px] font-normal text-white/80">
+        <li><a href="#" class="hover:text-white transition">Home</a></li>
+        <li><a href="#" class="hover:text-white transition">About</a></li>
+        <li><a href="#" class="hover:text-white transition">Services</a></li>
+        <li><a href="#" class="hover:text-white transition">Doctors</a></li>
+        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+      </ul>
+
+      <a href="#" class="hidden sm:inline-flex items-center gap-2 bg-white text-black text-[13px] font-medium px-4 py-2.5 rounded-full hover:bg-white/90 transition">
+        Book An Appointment
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </nav>
+
+    <!-- HERO CONTENT -->
+    <div class="px-6 lg:px-0 pt-24 pb-16">
+
+      <!-- Trusted badge -->
+      <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 backdrop-blur-sm rounded-full pl-1.5 pr-4 py-1.5 mb-7">
+        <span class="bg-white text-black text-[11px] font-medium px-2.5 py-1 rounded-full">Trusted</span>
+        <span class="text-white text-[14px] font-normal">20,000+ Patients Worldwide</span>
+      </div>
+
+      <!-- Main heading -->
+      <h1 id="mainHeading" class="text-white text-[42px] font-medium leading-[1.08] max-w-2xl">
+        Healthcare for Good <br /> Today. Tomorrow. Always.
+      </h1>
+
+      <!-- Subtext -->
+      <p id="subText" class="text-white/70 text-[15px] font-normal leading-relaxed mt-5 max-w-xl">
+        Take charge of your well-being and explore the many <br /> advantages of modern healthcare through our trusted platform.
+      </p>
+
+      <!-- Buttons -->
+      <div class="flex flex-wrap items-center gap-3 mt-8">
+        <a href="#" class="inline-flex items-center gap-2 bg-white text-black text-[13.5px] font-medium px-5 py-2.5 rounded-full hover:bg-white/90 transition">
+          Book An Appointment
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#" class="inline-flex items-center gap-2 bg-transparent border border-white/40 text-white text-[13.5px] font-medium px-5 py-2.5 rounded-full hover:bg-white/10 transition">
+          About Us
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <!-- Reviews -->
+      <div class="flex items-center gap-4 mt-12">
+        <div class="flex -space-x-3">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://cdn.sceneai.art/Only%20man%20image/0ccd6017-25fc-493b-abdf-321915dde101.jpg" class="w-10 h-10 rounded-full border-2 border-black object-cover" alt="" />
+          <img src="https://cdn.sceneai.art/Only%20man%20image/7e1339ef-7a01-4979-93c8-21d97af291ee.webp" class="w-10 h-10 rounded-full border-2 border-black object-cover" alt="" />
+          <img src="https://cdn.sceneai.art/Image%20for%20any%20section/2d8032d8-c1cd-4827-84db-0aeba1109c1b.jpg" class="w-10 h-10 rounded-full border-2 border-black object-cover" alt="" />
+          <img src="https://cdn.sceneai.art/Image%20for%20any%20section/470b31f2-d1b5-4730-96a2-aca680204172.jpg" class="w-10 h-10 rounded-full border-2 border-black object-cover" alt="" />
+        </div>
+        <div>
+          <div class="flex gap-0.5 text-white">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+          </div>
+          <span class="text-white/70 text-[13px]">Baser on 20K+ Reviews</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function splitToWords(el) {
+    const text = el.innerHTML.split('<br />').map(s => s.trim());
+    el.innerHTML = '';
+    text.forEach((line, li) => {
+      line.split(' ').forEach((word) => {
+        const span = document.createElement('span');
+        span.className = 'word-reveal';
+        span.innerHTML = `<span style="animation-delay:0s">${word}&nbsp;</span>`;
+        el.appendChild(span);
+      });
+      if (li < text.length - 1) el.appendChild(document.createElement('br'));
+    });
+  }
+
+  function stagger(el, startDelay, step) {
+    const spans = el.querySelectorAll('.word-reveal span');
+    spans.forEach((s, i) => {
+      s.style.animationDelay = (startDelay + i * step) + 's';
+    });
+  }
+
+  const heading = document.getElementById('mainHeading');
+  const sub = document.getElementById('subText');
+  splitToWords(heading);
+  splitToWords(sub);
+  stagger(heading, 0.15, 0.09);
+  stagger(sub, 0.15 + 0.09 * 8, 0.045);
+</script>
+
+</body>
+</html>

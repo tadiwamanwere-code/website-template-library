@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CADENCE — SEVERANCE / FW26 Lookbook</title>
+<meta name="description" content="CADENCE. SEVERANCE, Fall–Winter 2026. Twenty-four looks cut in Antwerp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CADENCE — FW26 "SEVERANCE"
+   Palette: pure black / pure white. One accent: #FF1E00 (used
+   only as the editorial mark + intro progress rule).
+   Type: Anton (condensed masthead) + Archivo (micro labels).
+   ============================================================ */
+
+:root{
+  --blk:#000;
+  --wht:#fff;
+  --red:#FF1E00;              /* the single accent, used sparingly */
+  --gutter:clamp(16px,3.2vw,44px);
+  --label:clamp(9px,0.68vw,11px);
+  --rule:1px solid currentColor;
+  --e-out:cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  background:var(--blk);
+  color:var(--wht);
+  font-family:'Archivo',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  font-size:15px;
+  line-height:1.45;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{display:block;max-width:100%;filter:grayscale(1) contrast(1.08);}
+a{color:inherit;text-decoration:none;}
+button,input{font:inherit;color:inherit;background:none;border:0;}
+:focus-visible{outline:2px solid currentColor;outline-offset:3px;}
+::selection{background:var(--wht);color:var(--blk);}
+.inv ::selection{background:var(--blk);color:var(--wht);}
+
+/* --- inverted (white) blocks: hard edge, zero softness ------- */
+.inv{background:var(--wht);color:var(--blk);}
+
+/* --- typography --------------------------------------------- */
+.display{
+  font-family:'Anton',Impact,'Arial Narrow Bold',sans-serif;
+  font-weight:400;
+  text-transform:uppercase;
+  letter-spacing:-0.015em;
+  line-height:0.86;
+  margin:0;
+}
+.d-xl{font-size:clamp(58px,15.4vw,236px);}
+.d-lg{font-size:clamp(46px,9.6vw,148px);}
+.d-md{font-size:clamp(34px,5.6vw,86px);}
+.d-sm{font-size:clamp(26px,3.4vw,52px);}
+
+.lbl{
+  font-size:var(--label);
+  font-weight:600;
+  letter-spacing:0.24em;
+  text-transform:uppercase;
+  line-height:1.2;
+  margin:0;
+}
+.lbl-thin{font-weight:500;letter-spacing:0.2em;}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;}
+.mark{color:var(--red);}          /* ← the only place colour appears */
+
+/* --- hand-split character masks ------------------------------ */
+.ch{display:inline-block;overflow:hidden;vertical-align:top;
+    padding:0.04em 0 0.16em;margin:-0.04em 0 -0.16em;}
+.ch-i{display:inline-block;will-change:transform;}
+.mask-line{display:block;overflow:hidden;padding-bottom:0.14em;margin-bottom:-0.14em;}
+.mask-line > span{display:block;will-change:transform;}
+
+/* ============================================================
+   INTRO CURTAIN
+   ============================================================ */
+#intro{
+  position:fixed;inset:0;z-index:200;background:var(--blk);
+  display:flex;align-items:flex-end;justify-content:space-between;
+  padding:var(--gutter);
+}
+#intro .panels{position:absolute;inset:0;display:flex;pointer-events:none;}
+#intro .panels i{flex:1 1 0;background:var(--blk);display:block;}
+#intro .in-content{position:relative;z-index:2;display:flex;width:100%;
+  align-items:flex-end;justify-content:space-between;gap:24px;}
+#intro-count{font-family:'Anton',Impact,sans-serif;font-size:clamp(72px,17vw,240px);
+  line-height:0.78;letter-spacing:-0.02em;}
+#intro .in-meta{text-align:right;padding-bottom:0.7em;}
+#intro .in-meta p{margin:0 0 6px;}
+#intro-bar{position:absolute;left:0;bottom:0;height:2px;width:100%;
+  transform:scaleX(0);transform-origin:0 50%;background:var(--red);z-index:3;}
+.intro-word{position:absolute;left:var(--gutter);top:var(--gutter);z-index:2;}
+
+/* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+.cursor{
+  position:fixed;top:0;left:0;z-index:300;pointer-events:none;
+  mix-blend-mode:difference;display:none;
+}
+.cursor-in{
+  width:104px;height:104px;border-radius:50%;background:var(--wht);
+  display:grid;place-items:center;
+}
+.cursor-label{
+  font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--blk);opacity:0;white-space:nowrap;
+}
+body.has-cursor .cursor{display:block;}
+body.has-cursor,body.has-cursor a,body.has-cursor button{cursor:none;}
+
+/* ============================================================
+   CHROME — fixed rails
+   ============================================================ */
+.chrome{
+  position:fixed;z-index:120;mix-blend-mode:difference;color:var(--wht);
+  pointer-events:none;
+}
+.chrome a,.chrome button{pointer-events:auto;}
+.chrome-top{
+  top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;
+  padding:var(--gutter);gap:20px;
+}
+.brandmark{font-family:'Anton',Impact,sans-serif;font-size:19px;letter-spacing:0.06em;
+  text-transform:uppercase;line-height:1;}
+.chrome-nav{display:flex;gap:clamp(14px,2vw,34px);}
+.chrome-nav a{position:relative;}
+.chrome-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:1px;
+  background:currentColor;transform:scaleX(0);transform-origin:100% 50%;
+  transition:transform .3s var(--e-out);}
+.chrome-nav a:hover::after{transform:scaleX(1);transform-origin:0 50%;}
+.chrome-side{
+  bottom:var(--gutter);left:var(--gutter);display:flex;gap:10px;align-items:center;
+}
+.dot{width:6px;height:6px;background:var(--red);display:block;}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;min-height:100vh;min-height:100svh;
+  padding:calc(var(--gutter)*3.2) var(--gutter) var(--gutter);
+  display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;}
+.hero-figure{
+  position:absolute;top:0;right:0;width:44vw;height:100%;overflow:hidden;margin:0;
+  clip-path:inset(0% 0% 100% 0%);
+}
+.hero-figure img{position:relative;top:-15%;width:100%;height:130%;
+  object-fit:cover;object-position:50% 34%;}
+.hero-scrim{position:absolute;inset:0;background:linear-gradient(90deg,#000 0%,rgba(0,0,0,0) 46%);}
+.hero-head{position:relative;z-index:3;}
+.hero-head .d-xl{margin-left:-0.012em;}
+.hero-sub{
+  position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:clamp(20px,4vw,70px);
+  border-top:1px solid rgba(255,255,255,.28);margin-top:clamp(22px,3.4vw,44px);
+  padding-top:16px;
+}
+.hero-sub div{max-width:34ch;}
+.hero-sub p{margin:6px 0 0;font-size:13px;line-height:1.5;color:rgba(255,255,255,.72);}
+.hero-tag{position:absolute;z-index:3;right:var(--gutter);top:38svh;text-align:right;
+  writing-mode:vertical-rl;}
+.scroll-cue{display:flex;align-items:center;gap:10px;margin-top:clamp(20px,3vw,36px);
+  position:relative;z-index:3;}
+.scroll-cue .bar{width:64px;height:1px;background:rgba(255,255,255,.4);position:relative;overflow:hidden;}
+.scroll-cue .bar::after{content:"";position:absolute;inset:0;background:var(--wht);
+  transform:translateX(-100%);animation:cue 2.2s var(--e-out) infinite;}
+@keyframes cue{0%{transform:translateX(-100%)}55%{transform:translateX(0)}100%{transform:translateX(100%)}}
+
+/* ============================================================
+   STATEMENT (inverted slab)
+   ============================================================ */
+.statement{padding:clamp(72px,12vw,180px) var(--gutter);}
+.statement-grid{display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,60px);}
+.statement blockquote{margin:0;}
+.statement .d-md{max-width:16ch;}
+.statement-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  border-top:1px solid var(--blk);padding-top:18px;margin-top:clamp(30px,5vw,64px);}
+.statement-foot p{margin:8px 0 0;font-size:13px;line-height:1.5;max-width:32ch;}
+
+/* ============================================================
+   LOOKBOOK — horizontal track
+   ============================================================ */
+.lookbook{position:relative;background:var(--blk);color:var(--wht);overflow:hidden;}
+.lb-head{position:absolute;top:calc(var(--gutter)*3);left:var(--gutter);right:var(--gutter);
+  z-index:5;display:flex;justify-content:space-between;gap:20px;pointer-events:none;}
+.lb-viewport{height:100vh;height:100svh;display:flex;align-items:center;}
+.lb-track{display:flex;align-items:flex-start;gap:clamp(28px,4.4vw,86px);
+  padding:0 var(--gutter);will-change:transform;}
+.look{flex:0 0 auto;width:clamp(240px,27vw,400px);position:relative;}
+.look:nth-child(even){margin-top:clamp(50px,9vw,150px);}
+.look:nth-child(3n){width:clamp(280px,34vw,520px);margin-top:clamp(14px,2vw,30px);}
+.look-fig{position:relative;overflow:hidden;aspect-ratio:3/4;background:#0a0a0a;}
+.look:nth-child(3n) .look-fig{aspect-ratio:4/5;}
+.look-fig img{width:100%;height:100%;object-fit:cover;}
+.look-no{
+  position:absolute;left:0.04em;bottom:-0.12em;z-index:3;pointer-events:none;
+  font-family:'Anton',Impact,sans-serif;font-size:clamp(56px,7.6vw,124px);line-height:0.8;
+  letter-spacing:-0.03em;color:var(--wht);mix-blend-mode:difference;
+}
+.look-meta{padding-top:14px;display:flex;flex-direction:column;gap:6px;}
+.look-meta h3{margin:0;font-family:'Anton',Impact,sans-serif;font-weight:400;
+  text-transform:uppercase;letter-spacing:0.005em;font-size:clamp(16px,1.5vw,24px);line-height:1.02;}
+.look-meta .spec{font-size:11px;line-height:1.55;color:rgba(255,255,255,.62);margin:0;}
+.look-meta .spec b{font-weight:600;color:rgba(255,255,255,.9);}
+.lb-end{flex:0 0 auto;width:clamp(220px,24vw,340px);align-self:center;}
+.lb-end p{margin:10px 0 0;font-size:12px;color:rgba(255,255,255,.6);line-height:1.6;}
+.lb-progress{position:absolute;left:var(--gutter);right:var(--gutter);bottom:calc(var(--gutter)*1.6);
+  height:1px;background:rgba(255,255,255,.22);z-index:5;}
+.lb-progress i{position:absolute;inset:0;background:var(--wht);transform:scaleX(0);transform-origin:0 50%;display:block;}
+
+/* ============================================================
+   DESIGNER'S NOTE — broken grid, type on image
+   ============================================================ */
+.note{position:relative;padding:clamp(76px,11vw,160px) var(--gutter) clamp(76px,11vw,170px);}
+.note-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(14px,2vw,28px);align-items:start;}
+.note-kicker{grid-column:1 / span 3;position:sticky;top:calc(var(--gutter)*3.4);}
+.note-kicker p{margin:10px 0 0;font-size:12px;line-height:1.6;}
+.note-body{grid-column:4 / span 5;}
+.note-body p{margin:0 0 1.15em;font-size:clamp(14px,1.05vw,17px);line-height:1.62;max-width:44ch;}
+.note-body p:first-of-type::first-letter{
+  font-family:'Anton',Impact,sans-serif;font-size:3.4em;float:left;line-height:0.76;
+  padding:0.04em 0.1em 0 0;
+}
+.note-sign{margin-top:26px;display:flex;align-items:baseline;gap:14px;}
+.note-fig{grid-column:10 / span 3;position:relative;margin:clamp(0px,5vw,70px) 0 0;}
+.note-fig .imgwrap{overflow:hidden;aspect-ratio:3/4;clip-path:inset(0% 0% 100% 0%);}
+.note-fig img{position:relative;top:-6%;width:100%;height:114%;object-fit:cover;}
+.note-fig figcaption{margin-top:10px;font-size:11px;line-height:1.5;}
+.note-overlay{
+  position:absolute;left:-76%;bottom:6%;width:162%;z-index:4;
+  mix-blend-mode:difference;color:var(--wht);pointer-events:none;
+}
+.note-rule{grid-column:1 / -1;height:1px;background:currentColor;opacity:.25;margin:clamp(34px,5vw,64px) 0 0;}
+
+/* ============================================================
+   MATERIALS — clip reveals + parallax
+   ============================================================ */
+.materials{padding:clamp(72px,11vw,160px) 0 clamp(60px,9vw,130px);}
+.mat-head{padding:0 var(--gutter);display:flex;justify-content:space-between;
+  align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(34px,5vw,74px);}
+.mat-row{
+  display:grid;grid-template-columns:0.6fr 3.4fr 3fr 2.4fr;gap:clamp(14px,2.4vw,40px);
+  align-items:center;padding:clamp(16px,2vw,26px) var(--gutter);
+  border-top:1px solid rgba(255,255,255,.2);position:relative;
+}
+.materials .mat-row:last-of-type{border-bottom:1px solid rgba(255,255,255,.2);}
+.mat-row h3{margin:0;font-family:'Anton',Impact,sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(22px,3.2vw,50px);line-height:0.94;letter-spacing:-0.01em;}
+.mat-row p{margin:0;font-size:12px;line-height:1.55;color:rgba(255,255,255,.66);}
+.mat-fig{overflow:hidden;aspect-ratio:16/11;clip-path:inset(0% 100% 0% 0%);margin:0;}
+.mat-fig img{position:relative;top:-9%;width:100%;height:118%;object-fit:cover;}
+.mat-row .idx{font-size:var(--label);font-weight:600;letter-spacing:0.18em;opacity:.55;}
+
+/* ============================================================
+   SPECS — proof table + count-ups
+   ============================================================ */
+.specs{padding:clamp(72px,11vw,160px) var(--gutter) clamp(60px,9vw,120px);}
+.spec-top{display:flex;justify-content:space-between;align-items:flex-end;gap:26px;
+  flex-wrap:wrap;margin-bottom:clamp(40px,6vw,80px);}
+.counts{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,2vw,30px);
+  border-top:1px solid var(--blk);padding-top:20px;}
+.count b{display:block;font-family:'Anton',Impact,sans-serif;font-weight:400;
+  font-size:clamp(42px,6.6vw,104px);line-height:0.84;letter-spacing:-0.02em;}
+.count span{display:block;margin-top:10px;}
+.tbl{width:100%;border-collapse:collapse;margin-top:clamp(46px,7vw,92px);}
+.tbl caption{text-align:left;padding-bottom:14px;}
+.tbl th{
+  text-align:left;font-size:var(--label);font-weight:600;letter-spacing:0.22em;
+  text-transform:uppercase;padding:0 12px 10px 0;border-bottom:2px solid var(--blk);
+  white-space:nowrap;
+}
+.tbl td{padding:14px 12px 14px 0;border-bottom:1px solid rgba(0,0,0,.16);font-size:13px;
+  vertical-align:baseline;}
+.tbl td:first-child{font-family:'Anton',Impact,sans-serif;font-size:17px;text-transform:uppercase;
+  letter-spacing:0.01em;white-space:nowrap;}
+.tbl tbody tr{transition:background .22s var(--e-out),color .22s var(--e-out);}
+.tbl tbody tr:hover{background:var(--blk);color:var(--wht);}
+.tbl tbody tr:hover td{border-bottom-color:var(--blk);}
+.tbl .r{text-align:right;font-variant-numeric:tabular-nums;}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+/* ============================================================
+   CTA + FOOTER
+   ============================================================ */
+.cta{position:relative;padding:clamp(80px,13vw,190px) var(--gutter) clamp(60px,8vw,110px);
+  overflow:hidden;}
+.cta-in{position:relative;z-index:3;}
+.cta-form{display:flex;flex-wrap:wrap;gap:0;border-bottom:2px solid var(--wht);
+  max-width:620px;margin-top:clamp(28px,4vw,52px);align-items:center;}
+.cta-form input{flex:1 1 240px;padding:14px 0;font-size:15px;letter-spacing:0.02em;}
+.cta-form input::placeholder{color:rgba(255,255,255,.42);}
+.cta-form button{padding:14px 0 14px 20px;font-size:var(--label);font-weight:700;
+  letter-spacing:0.24em;text-transform:uppercase;transition:opacity .25s var(--e-out);}
+.cta-form button:hover{opacity:.6;}
+.cta-note{margin:16px 0 0;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:0.04em;}
+
+footer{padding:clamp(50px,7vw,90px) var(--gutter) 0;border-top:1px solid rgba(255,255,255,.22);}
+.f-cols{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:clamp(24px,3vw,50px);}
+.f-col h4{margin:0 0 16px;}
+.f-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+.f-col li a{font-size:13px;color:rgba(255,255,255,.72);transition:color .2s var(--e-out);}
+.f-col li a:hover{color:var(--wht);}
+.f-about p{margin:0 0 14px;font-size:12.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:34ch;}
+.f-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  padding:26px 0 12px;margin-top:clamp(38px,5vw,64px);border-top:1px solid rgba(255,255,255,.18);}
+.f-wordmark{font-family:'Anton',Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(52px,17.6vw,270px);line-height:0.78;letter-spacing:-0.028em;
+  margin:0;padding:0 0 0.04em;white-space:nowrap;text-align:center;overflow:hidden;}
+
+/* ============================================================
+   RESPONSIVE — degrade below 1024px
+   ============================================================ */
+@media (max-width:1023px){
+  .cursor{display:none !important;}
+  .hero-figure{width:100%;opacity:.42;}
+  .hero-scrim{background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.2) 40%,#000 92%);}
+  .hero-tag{display:none;}
+  .lb-viewport{height:auto;padding:clamp(90px,20vw,140px) 0 clamp(46px,10vw,80px);
+    overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .lb-track{transform:none !important;}
+  .look,.look:nth-child(3n){width:74vw;margin-top:0;}
+  .lb-end{width:74vw;}
+  .lb-progress{display:none;}
+  .lb-head{position:static;padding:calc(var(--gutter)*3) var(--gutter) 0;flex-direction:column;gap:10px;}
+  .note-grid{grid-template-columns:repeat(6,1fr);}
+  .note-kicker{grid-column:1 / -1;position:static;}
+  .note-body{grid-column:1 / -1;}
+  .note-fig{grid-column:1 / span 4;margin-top:26px;}
+  .note-overlay{position:static;left:auto;bottom:auto;width:auto;margin-top:30px;
+    mix-blend-mode:normal;color:inherit;}
+  .mat-row{grid-template-columns:1fr;gap:12px;}
+  .mat-fig{aspect-ratio:16/9;}
+  .counts{grid-template-columns:repeat(2,1fr);gap:26px;}
+  .statement-foot{grid-template-columns:1fr;}
+  .f-cols{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:600px){
+  .f-cols{grid-template-columns:1fr;}
+  .counts{grid-template-columns:1fr 1fr;}
+  .chrome-nav{display:none;}
+}
+
+/* ============================================================
+   REDUCED MOTION — final state, no scrub, no pin
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;}
+  #intro{display:none !important;}
+  .cursor{display:none !important;}
+  .hero-figure,.note-fig .imgwrap{clip-path:none !important;}
+  .mat-fig{clip-path:none !important;}
+  .ch-i,.mask-line > span{transform:none !important;}
+  .lb-viewport{height:auto;overflow-x:auto;padding:clamp(90px,18vw,150px) 0 60px;}
+  .lb-track{transform:none !important;}
+  .lb-progress{display:none;}
+  .scroll-cue .bar::after{transform:translateX(0);}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== INTRO CURTAIN ===================== -->
+<div id="intro" aria-hidden="true">
+  <div class="panels"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="intro-word">
+    <p class="lbl">CADENCE <span class="mark">&#9632;</span> ATELIER ANTWERP</p>
+  </div>
+  <div class="in-content">
+    <div id="intro-count" class="num">000</div>
+    <div class="in-meta">
+      <p class="lbl">SEVERANCE</p>
+      <p class="lbl lbl-thin">FALL &ndash; WINTER 2026</p>
+      <p class="lbl lbl-thin">24 LOOKS</p>
+    </div>
+  </div>
+  <span id="intro-bar"></span>
+</div>
+
+<!-- ===================== CUSTOM CURSOR ===================== -->
+<div class="cursor" aria-hidden="true">
+  <div class="cursor-in"><span class="cursor-label">VIEW</span></div>
+</div>
+
+<!-- ===================== FIXED CHROME ===================== -->
+<header class="chrome chrome-top">
+  <a href="#top" class="brandmark" data-cursor="link">Cadence</a>
+  <nav class="chrome-nav lbl" aria-label="Primary">
+    <a href="#lookbook" data-cursor="link">Lookbook</a>
+    <a href="#note" data-cursor="link">Note</a>
+    <a href="#materials" data-cursor="link">Materials</a>
+    <a href="#specs" data-cursor="link">Specifications</a>
+    <a href="#request" data-cursor="link">Request</a>
+  </nav>
+</header>
+<div class="chrome chrome-side">
+  <span class="dot" aria-hidden="true"></span>
+  <p class="lbl lbl-thin">FW26 &nbsp;/&nbsp; PRESS PREVIEW &nbsp;/&nbsp; 51.2194&deg;N 4.4025&deg;E</p>
+</div>
+
+<main id="top">
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="hero">
+  <figure class="hero-figure">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=80" alt="Model in a pressed wool officer coat, Cadence FW26" data-skew data-parallax="0.16" fetchpriority="high">
+  </figure>
+  <div class="hero-scrim" aria-hidden="true"></div>
+
+  <p class="lbl hero-tag">COLLECTION 09 &nbsp;&mdash;&nbsp; SHOWN 04.03.26, ANTWERP</p>
+
+  <div class="hero-head">
+    <p class="lbl" data-reveal-line style="margin-bottom:clamp(14px,2.2vw,28px)">
+      <span class="mark">&#9632;</span> CADENCE &nbsp;/&nbsp; FALL&ndash;WINTER 2026
+    </p>
+    <h1 class="display d-xl" data-split>Severance</h1>
+  </div>
+
+  <div class="hero-sub">
+    <div>
+      <p class="lbl">THE COLLECTION</p>
+      <p data-reveal-line>Twenty-four looks. Eleven materials. One rule &mdash; every seam is cut through, then re-joined by hand so the join is the ornament.</p>
+    </div>
+    <div>
+      <p class="lbl">ATELIER</p>
+      <p data-reveal-line>Nationalestraat 28, Antwerp. Sampled and graded in-house; outerwear finished in Biella.</p>
+    </div>
+    <div>
+      <p class="lbl">DELIVERY</p>
+      <p data-reveal-line>Drop one 14.08.26 &middot; Drop two 02.10.26. Wholesale window closes 19.05.26.</p>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span class="bar" aria-hidden="true"></span>
+    <p class="lbl lbl-thin">SCROLL &mdash; 10 LOOKS SHOWN</p>
+  </div>
+</section>
+
+<!-- ===================== STATEMENT (inverted) ===================== -->
+<section class="statement inv" id="statement">
+  <div class="statement-grid">
+    <p class="lbl" data-reveal-line>01 &mdash; POSITION</p>
+    <blockquote>
+      <h2 class="display d-lg" data-split>Cut it open.</h2>
+      <h2 class="display d-lg" data-split>Show the join.</h2>
+    </blockquote>
+    <div class="statement-foot">
+      <div>
+        <p class="lbl">METHOD</p>
+        <p data-reveal-line>Panels are severed along the grain, offset four millimetres, then bridged with a flat felled seam in contrast thread. Nothing is hidden in the lining.</p>
+      </div>
+      <div>
+        <p class="lbl">PRODUCTION</p>
+        <p data-reveal-line>Cut runs capped at 120 units per style. Outerwear is numbered on the inside placket; every jacket carries the cutter's initials.</p>
+      </div>
+      <div>
+        <p class="lbl">FIT</p>
+        <p data-reveal-line>Graded 34&ndash;46 IT on a 6&nbsp;cm drop. Tailoring runs one size generous through the shoulder &mdash; take your true size for the intended line.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LOOKBOOK — HORIZONTAL ===================== -->
+<section class="lookbook" id="lookbook" aria-label="FW26 lookbook">
+  <div class="lb-head">
+    <p class="lbl">02 &mdash; THE LOOKBOOK <span class="mark">&#9632;</span></p>
+    <p class="lbl lbl-thin">DRAG &nbsp;&larr;&nbsp;&rarr;&nbsp; OR SCROLL</p>
+  </div>
+
+  <div class="lb-viewport" data-cursor="drag">
+    <div class="lb-track">
+
+      <article class="look">
+        <div class="look-fig" data-cursor="view">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=80" alt="Look 01, pressed wool officer coat" loading="lazy" data-skew>
+          <span class="look-no num">01</span>
+        </div>
+        <div class="look-meta">
+          <h3>Pressed Wool Officer Coat</h3>
+          <p class="spec"><b>78%</b> wool &middot; <b>18%</b> mohair &middot; <b>4%</b> polyamide</p>
+          <p class="spec">780 gsm, Biella. Sizes 34&ndash;46. Run of 96.</p>
+        </div>
+      </article>
+
+      <article class="look">
+        <div class="look-fig" data-cursor="view">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=80" alt="Look 02, raw-edge silk charmeuse slip" loading="lazy" data-skew>
+          <span class="look-no num">02</span>
+        </div>
+        <div class="look-meta">
+          <h3>Raw-Edge Charmeuse Slip</h3>
+          <p class="spec"><b>100%</b> mulberry silk, 19&nbsp;momme</p>
+          <p class="spec">Bias cut, unfinished hem. Sizes 34&ndash;44. Run of 110.</p>
+        </div>
+      </article>
+
+      <article class="look">
+        <div class="look-fig" data-cursor="view">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1485462537746-965f33f7f6a7?w=1200&q=80" alt="Look 03, double-faced cashmere cape" loading="lazy" data-skew>
+          <span class="look-no num">03</span>
+        </div>
+        <div class="look-meta">
+          <h3>Double-Faced Cashmere Cape</h3>
+          <p class="spec"><b>100%</b> cashmere, hand-separated facings</p>
+          <p class="spec">One size. 3.1&nbsp;kg. Run of 40. Numbered.</p>
+        </div>
+      </article>
+
+      <article class="look">
+        <div class="look-fig" data-cursor="view">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=900&q=80" alt="Look 04, cut-seam high-rise trouser" loading="lazy" data-skew>
+          <span class="look-no num">04</span>
+        </div>
+        <div class="look-meta">
+          <h3>Cut-Seam Trouser, High Rise</h3>
+          <p class="spec"><b>64%</b> virgin wool &middot; <b>34%</b> mohair &middot; <b>2%</b> elastane</p>
+          <p class="spec">34.5&nbsp;cm rise, 21&nbsp;cm hem. Sizes 34&ndash;46.</p>
+        </div>
+      </article>
+
+      <article class="look">
+        <div class="look-fig" data-cursor="view">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=80" alt="Look 05, bonded jersey column dress" loading="lazy" data-skew>
+          <span class="look-no num">05</span>
+        </div>
+        <div class="look-meta">
+          <h3>Bonded Jersey Column Dress</h3>
+          <p class="spec"><b>92%</b> viscose &middot; <b>8%</b> elastane, twin-bonded</p>
+          <p class="spec">Floor length, 148&nbsp;cm. Sizes XS&ndash;L. Run of 84.</p>
+        </div>
+      </article>
+
+      <article class="look">
+        <div class="look-fig" data-cursor="view">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=1200&q=80" alt="Look 06, cropped oiled calf biker" loading="lazy" data-skew>
+          <span class="look-no num">06</span>
+        </div>
+        <div class="look-meta">
+          <h3>Oiled Calf Biker, Cropped</h3>
+          <p class="spec"><b>100%</b> vegetable-tanned calf, T&auml;rnsj&ouml; SE</p>
+          <p class="spec">1.2&nbsp;mm. Sizes 44&ndash;54. Run of 60.</p>
+        </div>
+      </article>
+
+      <article class="look">
+        <div class="look-fig" data-cursor="view">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&q=80" alt="Look 07, tubular knit rollneck" loading="lazy" data-skew>
+          <span class="look-no num">07</span>
+        </div>
+        <div class="look-meta">
+          <h3>Tubular Knit Rollneck</h3>
+          <p class="spec"><b>70%</b> extrafine merino &middot; <b>30%</b> silk</p>
+          <p class="spec">7&nbsp;gg, seamless body. Sizes XS&ndash;XL.</p>
+        </div>
+      </article>
+
+      <article class="look">
+        <div class="look-fig" data-cursor="view">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=1200&q=80" alt="Look 08, shirred poplin shirtdress" loading="lazy" data-skew>
+          <span class="look-no num">08</span>
+        </div>
+        <div class="look-meta">
+          <h3>Shirred Poplin Shirtdress</h3>
+          <p class="spec"><b>100%</b> compact cotton poplin, 120/2</p>
+          <p class="spec">Mother-of-pearl closure. Sizes 34&ndash;46.</p>
+        </div>
+      </article>
+
+      <article class="look">
+        <div class="look-fig" data-cursor="view">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?w=900&q=80" alt="Look 09, felted alpaca greatcoat" loading="lazy" data-skew>
+          <span class="look-no num">09</span>
+        </div>
+        <div class="look-meta">
+          <h3>Felted Alpaca Greatcoat</h3>
+          <p class="spec"><b>62%</b> alpaca &middot; <b>34%</b> wool &middot; <b>4%</b> polyamide</p>
+          <p class="spec">Unlined, raw revere. Sizes 46&ndash;56. Run of 44.</p>
+        </div>
+      </article>
+
+      <article class="look">
+        <div class="look-fig" data-cursor="view">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1200&q=80" alt="Look 10, moire taffeta evening trouser" loading="lazy" data-skew>
+          <span class="look-no num">10</span>
+        </div>
+        <div class="look-meta">
+          <h3>Moir&eacute; Taffeta Evening Trouser</h3>
+          <p class="spec"><b>58%</b> acetate &middot; <b>42%</b> silk, calendered</p>
+          <p class="spec">Sizes 34&ndash;44. Run of 52. Dry clean only.</p>
+        </div>
+      </article>
+
+      <div class="lb-end">
+        <h3 class="display d-sm">Looks 11&ndash;24 by appointment</h3>
+        <p>The full run &mdash; including the four eveningwear exits and the men's tailoring block &mdash; is shown privately at Nationalestraat 28 and during Paris market, 27.02&ndash;05.03.26.</p>
+        <p class="lbl" style="margin-top:18px"><a href="#request" data-cursor="link">BOOK AN APPOINTMENT &rarr;</a></p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="lb-progress" aria-hidden="true"><i></i></div>
+</section>
+
+<!-- ===================== DESIGNER'S NOTE ===================== -->
+<section class="note inv" id="note">
+  <div class="note-grid">
+    <div class="note-kicker">
+      <p class="lbl">03 &mdash; DESIGNER'S NOTE</p>
+      <p>Marit Halvorsen<br>Founder &amp; Creative Director<br>Antwerp, March 2026</p>
+    </div>
+
+    <div class="note-body">
+      <p>Severance began with a coat I ruined. I cut into a wool officer coat that had taken nine days to sample, straight down the back panel, because the line was too polite. The repair &mdash; four millimetres of offset, a flat felled seam in a thread two tones off &mdash; was the only honest thing in the room.</p>
+      <p>So the collection took that as its rule. Every garment here is severed and re-joined. Not distressed, not deconstructed &mdash; those words have gone soft. Severed: a clean cut, made deliberately, then closed by a hand that leaves evidence. The join is the ornament. There is no other decoration in twenty-four looks.</p>
+      <p>What surprised us was the weight. Once you accept the seam as the subject, you stop needing volume to make a silhouette. The greatcoat lost 400 grams. The cape lost its lining entirely. Antwerp winters will test that decision, and I am content to be tested.</p>
+      <div class="note-sign">
+        <span class="display d-sm">M.H.</span>
+        <span class="lbl lbl-thin">EST. 2019 &middot; NINE COLLECTIONS</span>
+      </div>
+    </div>
+
+    <figure class="note-fig">
+      <div class="imgwrap">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=900&q=80" alt="Atelier fitting, Nationalestraat 28" loading="lazy" data-skew data-parallax="0.1">
+      </div>
+      <figcaption>Fitting 14 of 31, look 03. Nationalestraat 28.</figcaption>
+      <p class="note-overlay display d-md" aria-hidden="true">The join is the ornament</p>
+    </figure>
+
+    <div class="note-rule" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ===================== MATERIALS ===================== -->
+<section class="materials" id="materials">
+  <div class="mat-head">
+    <h2 class="display d-md" data-split>Eleven materials</h2>
+    <p class="lbl lbl-thin" style="max-width:30ch">04 &mdash; SOURCED FOR FW26. MILL, WEIGHT AND CERTIFICATION ON REQUEST.</p>
+  </div>
+
+  <div class="mat-row" data-mat>
+    <span class="idx num">M/01</span>
+    <h3>Pressed Wool</h3>
+    <p>Vitale Barberis Canonico, Biella. 780&nbsp;gsm, milled four passes then hot-pressed flat so the cut edge holds without fusing. Used in looks 01, 09, 17.</p>
+    <figure class="mat-fig">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1100&q=80" alt="Pressed wool detail" loading="lazy" data-parallax="0.08">
+    </figure>
+  </div>
+
+  <div class="mat-row" data-mat>
+    <span class="idx num">M/02</span>
+    <h3>Silk Charmeuse</h3>
+    <p>Taroni, Como. 19&nbsp;momme, sand-washed once. Cut on the true bias and left raw at the hem &mdash; it will fray six to eight millimetres and then stop.</p>
+    <figure class="mat-fig">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=1100&q=80" alt="Silk charmeuse detail" loading="lazy" data-parallax="0.08">
+    </figure>
+  </div>
+
+  <div class="mat-row" data-mat>
+    <span class="idx num">M/03</span>
+    <h3>Double-Faced Cashmere</h3>
+    <p>Todd &amp; Duncan yarn, woven in Scotland. Two faces separated by hand across 3.1&nbsp;metres per cape, then closed with a saddle stitch. Forty pieces only.</p>
+    <figure class="mat-fig">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <img src="https://images.unsplash.com/photo-1479064555552-3ef4979f8908?w=1100&q=80" alt="Cashmere detail" loading="lazy" data-parallax="0.08">
+    </figure>
+  </div>
+
+  <div class="mat-row" data-mat>
+    <span class="idx num">M/04</span>
+    <h3>Oiled Calf</h3>
+    <p>T&auml;rnsj&ouml; Garveri, Sweden. Vegetable-tanned, 1.2&nbsp;mm, hot-stuffed. Gold-rated LWG tannery; hides traced to four farms within 300&nbsp;km of the works.</p>
+    <figure class="mat-fig">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <img src="https://images.unsplash.com/photo-1518049362265-d5b2a6467637?w=1100&q=80" alt="Oiled calf leather detail" loading="lazy" data-parallax="0.08">
+    </figure>
+  </div>
+</section>
+
+<!-- ===================== SPECS / PROOF ===================== -->
+<section class="specs inv" id="specs">
+  <div class="spec-top">
+    <h2 class="display d-md" data-split>Specifications</h2>
+    <p class="lbl lbl-thin" style="max-width:32ch">05 &mdash; FW26 PRODUCTION RECORD, AUDITED 11.04.26</p>
+  </div>
+
+  <div class="counts">
+    <div class="count"><b class="num" data-count="24">0</b><span class="lbl">LOOKS IN COLLECTION</span></div>
+    <div class="count"><b class="num" data-count="11">0</b><span class="lbl">MATERIALS SOURCED</span></div>
+    <div class="count"><b class="num" data-count="1340" data-suffix="m">0</b><span class="lbl">CLOTH CONSUMED</span></div>
+    <div class="count"><b class="num" data-count="41">0</b><span class="lbl">HANDS ON THE RUN</span></div>
+  </div>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <caption class="lbl">FABRIC BREAKDOWN &mdash; BY WEIGHT OF TOTAL RUN</caption>
+      <thead>
+        <tr><th>Material</th><th>Mill / Origin</th><th>Weight</th><th class="r">Share</th><th class="r">Cert.</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Pressed Wool</td><td>V.B.C. &mdash; Biella, IT</td><td>780 gsm</td><td class="r">31.4%</td><td class="r">RWS</td></tr>
+        <tr><td>Alpaca Felt</td><td>Michell &mdash; Arequipa, PE</td><td>640 gsm</td><td class="r">18.9%</td><td class="r">RAS</td></tr>
+        <tr><td>Cashmere D/F</td><td>Todd &amp; Duncan &mdash; Kinross, UK</td><td>590 gsm</td><td class="r">12.2%</td><td class="r">SFA</td></tr>
+        <tr><td>Cotton Poplin</td><td>Albini &mdash; Bergamo, IT</td><td>135 gsm</td><td class="r">11.0%</td><td class="r">GOTS</td></tr>
+        <tr><td>Silk Charmeuse</td><td>Taroni &mdash; Como, IT</td><td>19 momme</td><td class="r">9.6%</td><td class="r">OEKO&#8209;TEX</td></tr>
+        <tr><td>Merino / Silk Knit</td><td>Zegna Baruffa &mdash; Biella, IT</td><td>7 gg</td><td class="r">7.5%</td><td class="r">RWS</td></tr>
+        <tr><td>Oiled Calf</td><td>T&auml;rnsj&ouml; &mdash; T&auml;rnsj&ouml;, SE</td><td>1.2 mm</td><td class="r">5.8%</td><td class="r">LWG&nbsp;Gold</td></tr>
+        <tr><td>Moir&eacute; Taffeta</td><td>Bianchini &mdash; Lyon, FR</td><td>210 gsm</td><td class="r">3.6%</td><td class="r">&mdash;</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <caption class="lbl">STOCKISTS &mdash; DROP ONE, 14.08.26</caption>
+      <thead>
+        <tr><th>Stockist</th><th>City</th><th>Buy</th><th class="r">In store</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Dover Street Market</td><td>London</td><td>Full collection</td><td class="r">14.08.26</td></tr>
+        <tr><td>The Broken Arm</td><td>Paris</td><td>Outerwear + knit</td><td class="r">14.08.26</td></tr>
+        <tr><td>SSENSE</td><td>Montr&eacute;al</td><td>Full collection</td><td class="r">21.08.26</td></tr>
+        <tr><td>Antonioli</td><td>Milan</td><td>Tailoring block</td><td class="r">21.08.26</td></tr>
+        <tr><td>Dover Street Market Ginza</td><td>Tokyo</td><td>Full collection</td><td class="r">28.08.26</td></tr>
+        <tr><td>Graanmarkt 13</td><td>Antwerp</td><td>Full collection + archive</td><td class="r">07.08.26</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="cta" id="request">
+  <div class="cta-in">
+    <p class="lbl" style="margin-bottom:clamp(16px,2.4vw,30px)">06 &mdash; REQUEST <span class="mark">&#9632;</span></p>
+    <h2 class="display d-lg" data-split>Request the</h2>
+    <h2 class="display d-lg" data-split>lookbook</h2>
+    <form class="cta-form" onsubmit="return false;">
+      <input type="email" placeholder="press@publication.com" aria-label="Email address" required>
+      <button type="submit" data-cursor="link">Send &rarr;</button>
+    </form>
+    <p class="cta-note">Press and wholesale only. The full 24-look PDF, line sheet and hi-res assets are released within one working day. Antwerp showroom: Nationalestraat 28, by appointment.</p>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="f-cols">
+    <div class="f-col f-about">
+      <h4 class="lbl">CADENCE <span class="mark">&#9632;</span></h4>
+      <p>An Antwerp label founded in 2019 by Marit Halvorsen. Nine collections. Cut, graded and sampled at Nationalestraat 28; outerwear finished in Biella.</p>
+      <p class="lbl lbl-thin">BE 0742.118.336</p>
+    </div>
+    <div class="f-col">
+      <h4 class="lbl">COLLECTION</h4>
+      <ul>
+        <li><a href="#lookbook" data-cursor="link">FW26 &mdash; Severance</a></li>
+        <li><a href="#materials" data-cursor="link">Materials index</a></li>
+        <li><a href="#specs" data-cursor="link">Line sheet</a></li>
+        <li><a href="#note" data-cursor="link">Designer's note</a></li>
+        <li><a href="#specs" data-cursor="link">Archive 2019&ndash;2025</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4 class="lbl">TRADE</h4>
+      <ul>
+        <li><a href="#request" data-cursor="link">Wholesale enquiry</a></li>
+        <li><a href="#request" data-cursor="link">Press office</a></li>
+        <li><a href="#specs" data-cursor="link">Stockists</a></li>
+        <li><a href="#request" data-cursor="link">Showroom appointment</a></li>
+        <li><a href="#request" data-cursor="link">Size &amp; grading chart</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4 class="lbl">ATELIER</h4>
+      <ul>
+        <li><a href="#note" data-cursor="link">Nationalestraat 28</a></li>
+        <li><a href="#note" data-cursor="link">2000 Antwerp, BE</a></li>
+        <li><a href="#request" data-cursor="link">studio@cadence.be</a></li>
+        <li><a href="#request" data-cursor="link">+32 3 226 04 91</a></li>
+        <li><a href="#request" data-cursor="link">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="f-bottom">
+    <p class="lbl lbl-thin">&copy; 2026 CADENCE NV &mdash; ALL RIGHTS RESERVED</p>
+    <p class="lbl lbl-thin">TEMPLATE 10 &middot; DESIGN REFERENCE ONLY</p>
+    <p class="lbl lbl-thin">TERMS &nbsp;/&nbsp; PRIVACY &nbsp;/&nbsp; COOKIES</p>
+  </div>
+
+  <p class="f-wordmark" aria-hidden="true">Cadence</p>
+</footer>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  var hasGSAP = (typeof window.gsap !== 'undefined');
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* If GSAP failed to load, leave the page in its readable static state. */
+  if(!hasGSAP){
+    var iv = document.getElementById('intro');
+    if(iv) iv.style.display = 'none';
+    ['.hero-figure', '.note-fig .imgwrap', '.mat-fig', '.look-fig'].forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(n){ n.style.clipPath = 'none'; });
+    });
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  var isTouch = window.matchMedia('(hover: none)').matches || ('ontouchstart' in window);
+  var isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+  var useCursor = isDesktop && !isTouch && !REDUCED;
+
+  /* =========================================================
+     1. LENIS SMOOTH SCROLL  ->  wired into ScrollTrigger
+     ========================================================= */
+  var lenis = null;
+  if(!REDUCED && typeof window.Lenis !== 'undefined'){
+    lenis = new Lenis({
+      duration: 1.1,
+      easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  /* Anchor links routed through Lenis */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if(!id || id === '#') return;
+      var target = document.querySelector(id);
+      if(!target) return;
+      e.preventDefault();
+      if(lenis) lenis.scrollTo(target, { offset: 0, duration: 1.2 });
+      else target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  /* =========================================================
+     2. HAND-ROLLED SPLIT TEXT (chars + lines)
+     ========================================================= */
+  function splitChars(el){
+    var text = el.textContent;
+    el.textContent = '';
+    for(var i = 0; i < text.length; i++){
+      var c = text.charAt(i);
+      var wrap = document.createElement('span');
+      wrap.className = 'ch';
+      var inner = document.createElement('span');
+      inner.className = 'ch-i';
+      inner.textContent = (c === ' ') ? ' ' : c;
+      wrap.appendChild(inner);
+      el.appendChild(wrap);
+    }
+    return Array.prototype.slice.call(el.querySelectorAll('.ch-i'));
+  }
+
+  function wrapLine(el){
+    var span = document.createElement('span');
+    while(el.firstChild) span.appendChild(el.firstChild);
+    el.appendChild(span);
+    el.classList.add('mask-line');
+    return span;
+  }
+
+  var splitTargets = Array.prototype.slice.call(document.querySelectorAll('[data-split]'));
+  var lineTargets  = Array.prototype.slice.call(document.querySelectorAll('[data-reveal-line]'));
+
+  var splitMap = splitTargets.map(function(el){ return { el: el, chars: splitChars(el) }; });
+  var lineMap  = lineTargets.map(function(el){ return { el: el, inner: wrapLine(el) }; });
+
+  if(!REDUCED){
+    splitMap.forEach(function(s){ gsap.set(s.chars, { yPercent: 115 }); });
+    lineMap.forEach(function(l){ gsap.set(l.inner, { yPercent: 110, opacity: 0 }); });
+  }
+
+  function revealChars(chars, delay){
+    return gsap.to(chars, {
+      yPercent: 0, duration: 1.05, ease: 'power4.out',
+      stagger: 0.028, delay: delay || 0
+    });
+  }
+  function revealLine(inner, delay){
+    return gsap.to(inner, {
+      yPercent: 0, opacity: 1, duration: 0.9, ease: 'power3.out', delay: delay || 0
+    });
+  }
+
+  /* Scroll-triggered reveals for everything below the fold */
+  var HERO = document.getElementById('hero');
+  function inHero(el){ return HERO && HERO.contains(el); }
+
+  if(!REDUCED){
+    splitMap.forEach(function(s){
+      if(inHero(s.el)) return;
+      ScrollTrigger.create({
+        trigger: s.el, start: 'top 88%', once: true,
+        onEnter: function(){ revealChars(s.chars, 0); }
+      });
+    });
+    lineMap.forEach(function(l){
+      if(inHero(l.el)) return;
+      ScrollTrigger.create({
+        trigger: l.el, start: 'top 92%', once: true,
+        onEnter: function(){ revealLine(l.inner, 0); }
+      });
+    });
+  }
+
+  /* =========================================================
+     3. INTRO CURTAIN + COUNTER
+     ========================================================= */
+  var intro     = document.getElementById('intro');
+  var introNum  = document.getElementById('intro-count');
+  var introBar  = document.getElementById('intro-bar');
+  var heroFig   = document.querySelector('.hero-figure');
+
+  /* Built with tl.to() directly so no tween is ever orphaned on the root timeline. */
+  function heroIn(){
+    var tl = gsap.timeline();
+    if(heroFig) tl.to(heroFig, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.35, ease: 'expo.out' }, 0);
+    splitMap.forEach(function(s){
+      if(!inHero(s.el)) return;
+      tl.to(s.chars, { yPercent: 0, duration: 1.05, ease: 'power4.out', stagger: 0.028 }, 0.12);
+    });
+    var li = 0;
+    lineMap.forEach(function(l){
+      if(!inHero(l.el)) return;
+      tl.to(l.inner, { yPercent: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }, 0.34 + li * 0.06);
+      li++;
+    });
+    tl.from('.chrome-top, .chrome-side, .hero-tag, .scroll-cue',
+      { autoAlpha: 0, y: 14, duration: 0.8, ease: 'power3.out', stagger: 0.07 }, 0.45);
+    return tl;
+  }
+
+  if(REDUCED){
+    if(intro) intro.style.display = 'none';
+    if(heroFig) heroFig.style.clipPath = 'none';
+  } else {
+    if(lenis) lenis.stop();
+    var counter = { v: 0 };
+    var tlIntro = gsap.timeline({
+      onComplete: function(){ if(intro && intro.parentNode) intro.parentNode.removeChild(intro); }
+    });
+    tlIntro
+      .to(introBar, { scaleX: 1, duration: 2.0, ease: 'power2.inOut' }, 0)
+      .to(counter, {
+        v: 100, duration: 2.0, ease: 'power2.inOut',
+        onUpdate: function(){
+          var n = Math.round(counter.v);
+          introNum.textContent = (n < 10 ? '00' : n < 100 ? '0' : '') + n;
+        }
+      }, 0)
+      .to('#intro .in-content, .intro-word', {
+        autoAlpha: 0, y: -18, duration: 0.5, ease: 'power2.in'
+      }, 2.05)
+      .to('#intro .panels i', {
+        yPercent: -101, duration: 1.0, ease: 'power4.inOut', stagger: 0.055
+      }, 2.3)
+      .to(intro, { backgroundColor: 'transparent', duration: 0.01 }, 2.3)
+      .add(function(){ if(lenis) lenis.start(); }, 2.6)
+      .add(heroIn(), 2.72);
+  }
+
+  /* =========================================================
+     4. CUSTOM CURSOR — rAF lerp + contextual states
+     ========================================================= */
+  if(useCursor){
+    document.body.classList.add('has-cursor');
+    var cursor    = document.querySelector('.cursor');
+    var cursorIn  = document.querySelector('.cursor-in');
+    var cursorLbl = document.querySelector('.cursor-label');
+
+    var mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    var cx = mx, cy = my;
+    var cursorReady = false;
+
+    gsap.set(cursorIn, { scale: 0.085 });
+    gsap.set(cursor, { autoAlpha: 0 });
+
+    window.addEventListener('pointermove', function(e){
+      mx = e.clientX; my = e.clientY;
+      if(!cursorReady){
+        cursorReady = true;
+        cx = mx; cy = my;
+        gsap.to(cursor, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' });
+      }
+    }, { passive: true });
+
+    /* lerp on the gsap ticker, frame-rate independent */
+    gsap.ticker.add(function(){
+      var dr = gsap.ticker.deltaRatio(60);
+      var amt = 1 - Math.pow(1 - 0.17, dr);
+      cx += (mx - cx) * amt;
+      cy += (my - cy) * amt;
+      cursor.style.transform = 'translate3d(' + cx.toFixed(2) + 'px,' + cy.toFixed(2) + 'px,0) translate(-50%,-50%)';
+    });
+
+    var STATES = {
+      view: { scale: 1,    label: 'VIEW' },
+      drag: { scale: 0.62, label: 'DRAG' },
+      link: { scale: 0.30, label: ''     },
+      idle: { scale: 0.085, label: ''    }
+    };
+    var currentState = 'idle';
+
+    function setState(name){
+      if(name === currentState) return;
+      currentState = name;
+      var s = STATES[name] || STATES.idle;
+      gsap.to(cursorIn, { scale: s.scale, duration: 0.42, ease: 'power3.out', overwrite: true });
+      if(s.label){
+        cursorLbl.textContent = s.label;
+        gsap.to(cursorLbl, { opacity: 1, duration: 0.28, ease: 'power2.out', overwrite: true });
+      } else {
+        gsap.to(cursorLbl, { opacity: 0, duration: 0.18, ease: 'power2.out', overwrite: true });
+      }
+    }
+
+    document.addEventListener('pointerover', function(e){
+      var t = e.target && e.target.closest ? e.target.closest('[data-cursor]') : null;
+      setState(t ? (t.getAttribute('data-cursor') || 'idle') : 'idle');
+    });
+    document.addEventListener('pointerdown', function(){
+      gsap.to(cursorIn, { scale: '-=0.06', duration: 0.16, ease: 'power2.out' });
+    });
+    document.addEventListener('pointerup', function(){
+      var s = STATES[currentState] || STATES.idle;
+      gsap.to(cursorIn, { scale: s.scale, duration: 0.3, ease: 'power3.out' });
+    });
+  }
+
+  /* =========================================================
+     5. HORIZONTAL LOOKBOOK  (pin + scrub)  + cursor drag
+     ========================================================= */
+  var lbSection  = document.querySelector('.lookbook');
+  var lbTrack    = document.querySelector('.lb-track');
+  var lbViewport = document.querySelector('.lb-viewport');
+  var lbBar      = document.querySelector('.lb-progress i');
+
+  var mm = gsap.matchMedia();
+
+  mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', function(){
+    if(!lbSection || !lbTrack) return;
+
+    var getDistance = function(){
+      return Math.max(0, lbTrack.scrollWidth - window.innerWidth);
+    };
+
+    var horizontal = gsap.to(lbTrack, {
+      x: function(){ return -getDistance(); },
+      ease: 'none',
+      scrollTrigger: {
+        id: 'lookbook',
+        trigger: lbSection,
+        start: 'top top',
+        end: function(){ return '+=' + getDistance(); },
+        pin: true,
+        scrub: 1,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: function(self){
+          if(lbBar) gsap.set(lbBar, { scaleX: self.progress });
+        }
+      }
+    });
+
+    /* per-look reveals, driven by the horizontal tween (containerAnimation) */
+    var looks = gsap.utils.toArray('.look');
+    looks.forEach(function(look){
+      var fig  = look.querySelector('.look-fig');
+      var meta = look.querySelector('.look-meta');
+      var no   = look.querySelector('.look-no');
+
+      gsap.fromTo(fig,
+        { clipPath: 'inset(0% 0% 100% 0%)' },
+        { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'power4.out',
+          scrollTrigger: {
+            trigger: look, containerAnimation: horizontal,
+            start: 'left 92%', toggleActions: 'play none none reverse'
+          }});
+
+      gsap.from(meta, {
+        yPercent: 40, autoAlpha: 0, duration: 0.8, ease: 'power3.out', delay: 0.12,
+        scrollTrigger: {
+          trigger: look, containerAnimation: horizontal,
+          start: 'left 88%', toggleActions: 'play none none reverse'
+        }});
+
+      gsap.from(no, {
+        yPercent: 60, autoAlpha: 0, duration: 0.7, ease: 'power3.out',
+        scrollTrigger: {
+          trigger: look, containerAnimation: horizontal,
+          start: 'left 85%', toggleActions: 'play none none reverse'
+        }});
+    });
+
+    /* ---- cursor drags the lookbook -------------------------------- */
+    var dragging = false, lastX = 0;
+
+    function scrollPos(){
+      if(lenis && typeof lenis.animatedScroll === 'number') return lenis.animatedScroll;
+      return window.scrollY || window.pageYOffset || 0;
+    }
+    function jumpTo(y){
+      if(lenis) lenis.scrollTo(y, { immediate: true, force: true });
+      else window.scrollTo(0, y);
+    }
+
+    function onDown(e){
+      if(e.button !== undefined && e.button !== 0) return;
+      dragging = true;
+      lastX = e.clientX;
+      lbViewport.setPointerCapture && lbViewport.setPointerCapture(e.pointerId);
+    }
+    function onMove(e){
+      if(!dragging) return;
+      var dx = e.clientX - lastX;
+      lastX = e.clientX;
+      jumpTo(scrollPos() - dx * 1.5);
+    }
+    function onUp(e){
+      if(!dragging) return;
+      dragging = false;
+      if(lbViewport.releasePointerCapture && e.pointerId !== undefined){
+        try { lbViewport.releasePointerCapture(e.pointerId); } catch(err){}
+      }
+    }
+
+    if(lbViewport){
+      lbViewport.addEventListener('pointerdown', onDown);
+      lbViewport.addEventListener('pointermove', onMove);
+      lbViewport.addEventListener('pointerup', onUp);
+      lbViewport.addEventListener('pointercancel', onUp);
+      lbViewport.addEventListener('dragstart', function(ev){ ev.preventDefault(); });
+    }
+
+    return function cleanup(){
+      if(lbViewport){
+        lbViewport.removeEventListener('pointerdown', onDown);
+        lbViewport.removeEventListener('pointermove', onMove);
+        lbViewport.removeEventListener('pointerup', onUp);
+        lbViewport.removeEventListener('pointercancel', onUp);
+      }
+      gsap.set(lbTrack, { clearProps: 'transform' });
+    };
+  });
+
+  /* =========================================================
+     6. CLIP-PATH REVEALS  (note figure + material rows)
+     ========================================================= */
+  mm.add('(prefers-reduced-motion: no-preference)', function(){
+    var noteWrap = document.querySelector('.note-fig .imgwrap');
+    if(noteWrap){
+      gsap.to(noteWrap, {
+        clipPath: 'inset(0% 0% 0% 0%)', duration: 1.25, ease: 'expo.out',
+        scrollTrigger: { trigger: noteWrap, start: 'top 85%', once: true }
+      });
+    }
+
+    gsap.utils.toArray('.mat-fig').forEach(function(fig){
+      gsap.to(fig, {
+        clipPath: 'inset(0% 0% 0% 0%)', duration: 1.15, ease: 'power4.inOut',
+        scrollTrigger: { trigger: fig, start: 'top 88%', once: true }
+      });
+    });
+
+    gsap.utils.toArray('[data-mat]').forEach(function(row, i){
+      gsap.from(row.querySelector('h3'), {
+        yPercent: 45, autoAlpha: 0, duration: 0.85, ease: 'power3.out',
+        scrollTrigger: { trigger: row, start: 'top 86%', once: true }
+      });
+    });
+  });
+
+  /* =========================================================
+     7. PARALLAX LAYERS
+     ========================================================= */
+  mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', function(){
+    gsap.utils.toArray('[data-parallax]').forEach(function(el){
+      var depth = parseFloat(el.getAttribute('data-parallax')) || 0.1;
+      gsap.fromTo(el,
+        { yPercent: -depth * 100 * 0.5 },
+        { yPercent: depth * 100 * 0.5, ease: 'none',
+          scrollTrigger: {
+            trigger: el.parentNode || el,
+            start: 'top bottom', end: 'bottom top', scrub: true,
+            invalidateOnRefresh: true
+          }});
+    });
+
+    /* footer wordmark drifts as it enters */
+    var wm = document.querySelector('.f-wordmark');
+    if(wm){
+      gsap.fromTo(wm, { yPercent: 26 }, {
+        yPercent: 0, ease: 'none',
+        scrollTrigger: { trigger: wm, start: 'top bottom', end: 'bottom bottom', scrub: true }
+      });
+    }
+  });
+
+  /* =========================================================
+     8. SCROLL-VELOCITY SKEW  (Lenis velocity -> skewY on images)
+     ========================================================= */
+  if(!REDUCED){
+    var skewables = gsap.utils.toArray('[data-skew]');
+    if(skewables.length){
+      gsap.set(skewables, { scale: 1.06, transformOrigin: '50% 50%' });
+      var setSkew = gsap.quickTo(skewables, 'skewY', { duration: 0.55, ease: 'power3' });
+      var clamp = gsap.utils.clamp(-4.5, 4.5);
+      var lastY = window.scrollY || 0;
+
+      var applyVelocity = function(v){
+        setSkew(clamp(v * 0.0038));
+      };
+
+      if(lenis){
+        lenis.on('scroll', function(e){
+          applyVelocity((e && typeof e.velocity === 'number') ? e.velocity * 14 : 0);
+        });
+      } else {
+        window.addEventListener('scroll', function(){
+          var y = window.scrollY || 0;
+          applyVelocity((y - lastY) * 14);
+          lastY = y;
+        }, { passive: true });
+      }
+      /* settle back to flat when scrolling stops */
+      ScrollTrigger.addEventListener('scrollEnd', function(){ setSkew(0); });
+    }
+  }
+
+  /* =========================================================
+     9. COUNT-UP NUMBERS
+     ========================================================= */
+  gsap.utils.toArray('[data-count]').forEach(function(el){
+    var target = parseFloat(el.getAttribute('data-count')) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    if(REDUCED){
+      el.textContent = target.toLocaleString('en-GB') + suffix;
+      return;
+    }
+    var obj = { v: 0 };
+    ScrollTrigger.create({
+      trigger: el, start: 'top 90%', once: true,
+      onEnter: function(){
+        gsap.to(obj, {
+          v: target, duration: 1.6, ease: 'power3.out',
+          onUpdate: function(){
+            el.textContent = Math.round(obj.v).toLocaleString('en-GB') + suffix;
+          },
+          onComplete: function(){
+            el.textContent = target.toLocaleString('en-GB') + suffix;
+          }
+        });
+      }
+    });
+  });
+
+  /* =========================================================
+     10. MISC — table row + footer stagger, resize refresh
+     ========================================================= */
+  mm.add('(prefers-reduced-motion: no-preference)', function(){
+    gsap.utils.toArray('.tbl tbody').forEach(function(tb){
+      gsap.from(tb.querySelectorAll('tr'), {
+        autoAlpha: 0, y: 18, duration: 0.6, ease: 'power3.out', stagger: 0.045,
+        scrollTrigger: { trigger: tb, start: 'top 88%', once: true }
+      });
+    });
+    gsap.from('.f-col', {
+      autoAlpha: 0, y: 22, duration: 0.75, ease: 'power3.out', stagger: 0.06,
+      scrollTrigger: { trigger: 'footer', start: 'top 82%', once: true }
+    });
+  });
+
+  window.addEventListener('load', function(){ ScrollTrigger.refresh(); });
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ ScrollTrigger.refresh(); }, 180);
+  });
+
+})();
+</script>
+</body>
+</html>

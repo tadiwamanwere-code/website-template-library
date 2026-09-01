@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ODESSA VOSS — BLACKOUT CHOIR (LP 02) · Null Terrace Recordings</title>
+<meta name="description" content="BLACKOUT CHOIR — the second album from Odessa Voss. Eleven tracks. Out 09 October 2026 on Null Terrace Recordings." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   BLACKOUT CHOIR — poster-brutalist record sleeve
+   Palette: near-black #050505 + single acid accent #c8ff3d
+   Type: Archivo Black (display, tight) / JetBrains Mono (data)
+   ============================================================ */
+:root{
+  --bg:#050505;
+  --panel:#0b0b0b;
+  --panel-2:#101010;
+  --ink:#f2f2f0;
+  --dim:#82827d;
+  --dimmer:#4a4a46;
+  --acid:#c8ff3d;
+  --line:rgba(242,242,240,.13);
+  --line-soft:rgba(242,242,240,.07);
+  --pad:clamp(16px,3.2vw,52px);
+  --e-out:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:13px;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body.is-loading{overflow:hidden;height:100vh;}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
+::selection{background:var(--acid);color:#050505;}
+
+/* ---------- type primitives ---------- */
+.disp{
+  font-family:"Archivo Black",Impact,"Haettenschweiler","Arial Black",sans-serif;
+  font-weight:400;
+  text-transform:uppercase;
+  letter-spacing:-.045em;
+  line-height:.82;
+}
+.mono{font-family:"JetBrains Mono",monospace;}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;}
+.tag{
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim);font-weight:500;
+}
+.acid{color:var(--acid);}
+.rule{height:1px;background:var(--line);width:100%;}
+
+/* char-mask reveal primitives (hand-split, no SplitText plugin) */
+.ch-w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.09em;margin-bottom:-.09em;}
+.ch{display:inline-block;will-change:transform;}
+.ln-w{display:block;overflow:hidden;}
+.ln{display:block;will-change:transform;}
+
+/* ============================ INTRO LOADER ============================ */
+#loader{
+  position:fixed;inset:0;z-index:200;background:var(--bg);
+  display:grid;grid-template-rows:1fr auto;
+  padding:var(--pad);
+}
+#loader .curtains{position:absolute;inset:0;display:flex;z-index:-1;}
+#loader .curtains span{flex:1;background:#080808;border-right:1px solid rgba(200,255,61,.06);transform-origin:top;}
+.load-mid{
+  align-self:center;display:flex;flex-direction:column;gap:14px;
+  max-width:640px;
+}
+.load-bar{height:2px;background:rgba(242,242,240,.12);position:relative;overflow:hidden;}
+.load-bar i{position:absolute;inset:0;background:var(--acid);transform:scaleX(0);transform-origin:left;}
+.load-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;}
+#loadCount{
+  font-family:"Archivo Black",sans-serif;letter-spacing:-.05em;line-height:.8;
+  font-size:clamp(70px,17vw,220px);color:var(--ink);
+}
+#loadCount sup{font-size:.22em;vertical-align:super;color:var(--acid);letter-spacing:0;}
+.load-lines{text-align:right;}
+.load-lines div{font-size:10px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;}
+
+/* ============================ NAV ============================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:90;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:16px var(--pad);
+  mix-blend-mode:difference;
+}
+.nav-mark{font-family:"Archivo Black",sans-serif;font-size:14px;letter-spacing:-.02em;text-transform:uppercase;}
+.nav-mark b{color:var(--acid);}
+.nav-links{display:flex;gap:26px;}
+.nav-links a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;position:relative;padding-bottom:3px;}
+.nav-links a::after{
+  content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--acid);
+  transform:scaleX(0);transform-origin:right;transition:transform .32s var(--e-out);
+}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left;}
+.nav-cta{
+  border:1px solid var(--acid);color:var(--acid);
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  padding:9px 16px;transition:background .28s var(--e-out),color .28s var(--e-out);
+}
+.nav-cta:hover{background:var(--acid);color:#050505;}
+@media(max-width:900px){.nav-links{display:none;}}
+
+/* ============================ HERO ============================ */
+.hero{
+  position:relative;min-height:100svh;padding:0 var(--pad) 0;
+  display:grid;grid-template-rows:1fr auto auto;overflow:hidden;
+}
+.hero-photo{
+  position:absolute;right:calc(var(--pad) * -.2);top:8vh;
+  width:min(46vw,660px);height:74vh;z-index:0;
+  clip-path:polygon(0 0,100% 0,100% 86%,72% 100%,0 100%);
+  overflow:hidden;
+}
+.hero-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:52% 30%;
+  filter:grayscale(1) contrast(1.32) brightness(.72);
+  transform:scale(1.12);will-change:transform;
+}
+.hero-photo::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(5,5,5,.55) 0%,rgba(5,5,5,0) 42%,rgba(5,5,5,.9) 100%);
+}
+.hero-grid{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  display:grid;grid-template-columns:repeat(6,1fr);
+}
+.hero-grid span{border-right:1px solid var(--line-soft);}
+.hero-grid span:last-child{border-right:0;}
+
+.hero-top{
+  position:relative;z-index:3;display:flex;justify-content:space-between;
+  align-items:flex-end;padding-top:22vh;gap:24px;
+}
+.hero-kicker{max-width:280px;}
+.hero-kicker p{margin:8px 0 0;color:var(--dim);font-size:11px;line-height:1.7;}
+.hero-side{
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dimmer);
+}
+.hero-title{position:relative;z-index:3;margin:2vh 0 0;}
+.hero-title h1{margin:0;font-size:clamp(58px,15.6vw,236px);}
+.hero-title .l1{position:relative;z-index:4;mix-blend-mode:difference;}
+.hero-title .l2{
+  display:flex;align-items:flex-end;gap:clamp(10px,2vw,32px);flex-wrap:wrap;
+}
+/* type masks the imagery — background-clip:text */
+.mask-word{
+  background-image:url("https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=1600&auto=format&fit=crop");
+  background-size:130% auto;background-position:center 38%;background-repeat:no-repeat;
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+  -webkit-text-stroke:1px rgba(200,255,61,.28);
+  will-change:background-position,clip-path;
+}
+.l2-stamp{
+  display:inline-block;border:1px solid var(--acid);color:var(--acid);
+  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;
+  padding:6px 10px;margin-bottom:clamp(8px,1.6vw,26px);white-space:nowrap;
+}
+.hero-meta{
+  position:relative;z-index:3;margin-top:clamp(20px,4vh,46px);
+  border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(5,1fr);
+}
+.hero-meta div{padding:14px 14px 18px 0;border-right:1px solid var(--line-soft);}
+.hero-meta div:last-child{border-right:0;}
+.hero-meta dt{margin:0;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dimmer);}
+.hero-meta dd{margin:6px 0 0;font-size:clamp(13px,1.2vw,17px);font-weight:500;letter-spacing:-.01em;}
+@media(max-width:900px){
+  .hero-meta{grid-template-columns:repeat(2,1fr);}
+  .hero-photo{width:76vw;height:46vh;top:14vh;opacity:.5;}
+  .hero-top{padding-top:26vh;}
+  .hero-side{display:none;}
+}
+
+/* ---------- ticker ---------- */
+.ticker{
+  position:relative;z-index:3;margin:0 calc(var(--pad) * -1);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  overflow:hidden;background:var(--bg);
+}
+.ticker-track{display:flex;white-space:nowrap;will-change:transform;}
+.ticker-track span{
+  font-family:"Archivo Black",sans-serif;text-transform:uppercase;
+  font-size:clamp(15px,2.1vw,26px);letter-spacing:-.02em;
+  padding:11px 0;display:inline-flex;align-items:center;
+}
+.ticker-track span i{
+  font-style:normal;color:var(--acid);padding:0 22px;font-size:.55em;
+  transform:translateY(-.15em);
+}
+
+/* ============================ VISUALISER ============================ */
+.viz{position:relative;background:var(--bg);}
+.viz-inner{
+  min-height:100svh;display:flex;flex-direction:column;
+  padding:clamp(28px,6vh,80px) var(--pad) clamp(22px,4vh,48px);
+  gap:clamp(14px,2.4vh,28px);
+}
+.viz-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;}
+.viz-head h2{margin:0;font-size:clamp(38px,7.4vw,116px);}
+.viz-head h2 em{font-style:normal;color:var(--acid);}
+.viz-readout{
+  display:grid;grid-template-columns:repeat(2,minmax(96px,auto));gap:2px 26px;
+  border-left:1px solid var(--line);padding-left:18px;
+}
+.viz-readout div{display:flex;justify-content:space-between;gap:14px;font-size:11px;}
+.viz-readout b{font-weight:500;color:var(--dimmer);letter-spacing:.14em;font-size:9px;text-transform:uppercase;}
+.viz-readout span{color:var(--acid);}
+.viz-stage{
+  position:relative;flex:1;min-height:44vh;
+  border:1px solid var(--line);background:
+    repeating-linear-gradient(90deg,var(--line-soft) 0 1px,transparent 1px 12.5%);
+  overflow:hidden;
+}
+#viz-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.viz-scan{
+  position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(5,5,5,.32) 0 1px,transparent 1px 3px);
+  opacity:.5;
+}
+.viz-corner{
+  position:absolute;font-size:9px;letter-spacing:.2em;color:var(--dimmer);
+  text-transform:uppercase;padding:10px 12px;
+}
+.viz-corner.tl{top:0;left:0;}
+.viz-corner.tr{top:0;right:0;}
+.viz-corner.bl{bottom:0;left:0;}
+.viz-controls{display:flex;align-items:center;gap:clamp(14px,2.4vw,34px);flex-wrap:wrap;}
+.play-btn{
+  position:relative;width:clamp(74px,8vw,104px);height:clamp(74px,8vw,104px);
+  border:1px solid var(--acid);border-radius:50%;
+  display:grid;place-items:center;flex:none;
+  transition:background .3s var(--e-out);
+}
+.play-btn:hover{background:rgba(200,255,61,.09);}
+.play-btn svg{width:26%;height:26%;fill:var(--acid);transition:opacity .2s ease;}
+.play-btn .ic-pause{display:none;}
+.play-btn.playing .ic-play{display:none;}
+.play-btn.playing .ic-pause{display:block;}
+.play-btn .ring{
+  position:absolute;inset:-1px;border-radius:50%;border:1px solid var(--acid);
+  opacity:0;transform:scale(1);
+}
+.play-btn.playing .ring{animation:pulse 2.2s var(--e-out) infinite;}
+@keyframes pulse{0%{opacity:.65;transform:scale(1);}100%{opacity:0;transform:scale(1.42);}}
+.viz-copy{max-width:46ch;color:var(--dim);font-size:12px;line-height:1.75;}
+.viz-copy strong{color:var(--ink);font-weight:500;}
+.viz-mode{
+  border:1px solid var(--line);padding:9px 13px;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--dim);white-space:nowrap;
+}
+.viz-mode b{color:var(--acid);font-weight:500;}
+@media(max-width:900px){
+  .viz-readout{border-left:0;padding-left:0;grid-template-columns:repeat(2,1fr);}
+  .viz-stage{min-height:38vh;}
+}
+
+/* ============================ SESSIONS (broken grid) ============================ */
+.sessions{position:relative;padding:clamp(90px,16vh,190px) var(--pad) clamp(70px,12vh,150px);overflow:hidden;}
+.sess-ghost{
+  position:absolute;left:-3vw;top:clamp(26px,7vh,90px);
+  font-size:clamp(110px,25vw,380px);color:transparent;
+  -webkit-text-stroke:1px rgba(242,242,240,.09);
+  pointer-events:none;white-space:nowrap;z-index:0;
+}
+.sess-grid{
+  position:relative;z-index:2;display:grid;
+  grid-template-columns:repeat(12,1fr);gap:clamp(18px,2.4vw,40px);align-items:start;
+}
+.sess-a{grid-column:1/span 4;}
+.sess-b{grid-column:6/span 4;margin-top:clamp(60px,13vh,180px);}
+.sess-photo{grid-column:10/span 3;margin-top:clamp(20px,5vh,70px);position:relative;}
+.sess-photo img{
+  width:100%;aspect-ratio:3/4;object-fit:cover;
+  filter:grayscale(1) contrast(1.25) brightness(.8);
+  clip-path:inset(0 0 100% 0);
+}
+.sess-photo figcaption{margin-top:10px;font-size:10px;letter-spacing:.16em;color:var(--dimmer);text-transform:uppercase;}
+.sess-lead{
+  font-family:"Archivo Black",sans-serif;text-transform:uppercase;letter-spacing:-.035em;
+  font-size:clamp(24px,3.2vw,46px);line-height:.95;margin:0 0 22px;
+}
+.sess-lead em{font-style:normal;color:var(--acid);}
+.sess-body p{margin:0 0 16px;color:var(--dim);font-size:12.5px;line-height:1.8;}
+.sess-body p strong{color:var(--ink);font-weight:500;}
+.sess-quote{
+  margin:clamp(60px,10vh,120px) 0 0;grid-column:2/span 9;position:relative;z-index:2;
+  border-top:1px solid var(--line);padding-top:26px;
+}
+.sess-quote blockquote{
+  margin:0;font-family:"Archivo Black",sans-serif;text-transform:uppercase;
+  font-size:clamp(22px,3.4vw,52px);line-height:1.02;letter-spacing:-.035em;
+}
+.sess-quote blockquote span{color:var(--dimmer);}
+.sess-quote cite{
+  display:block;margin-top:18px;font-style:normal;font-size:10px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--acid);
+}
+.sess-credits{
+  grid-column:1/span 12;margin-top:clamp(46px,8vh,96px);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);
+}
+.sess-credits div{background:var(--bg);padding:18px 16px;}
+.sess-credits dt{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dimmer);margin:0;}
+.sess-credits dd{margin:8px 0 0;font-size:12px;color:var(--ink);}
+@media(max-width:1023px){
+  .sess-a,.sess-b,.sess-photo,.sess-quote{grid-column:1/span 12;margin-top:0;}
+  .sess-b{margin-top:34px;}
+  .sess-photo{margin-top:34px;max-width:340px;}
+  .sess-photo img{clip-path:none;}
+  .sess-credits{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ============================ TRACKLIST ============================ */
+.tracks{padding:clamp(60px,10vh,120px) var(--pad) clamp(70px,12vh,150px);position:relative;}
+.tracks-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
+  border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:0;flex-wrap:wrap;
+}
+.tracks-head h2{margin:0;font-size:clamp(34px,6.4vw,98px);}
+.tracks-head .th-meta{display:flex;gap:28px;padding-bottom:8px;}
+.tracks-head .th-meta div b{display:block;font-size:9px;letter-spacing:.2em;color:var(--dimmer);text-transform:uppercase;font-weight:400;}
+.tracks-head .th-meta div span{font-size:14px;color:var(--ink);}
+
+.track{border-bottom:1px solid var(--line-soft);position:relative;will-change:transform;}
+.track-row{
+  display:grid;
+  grid-template-columns:60px minmax(0,1fr) 230px 74px 30px;
+  align-items:center;gap:clamp(10px,1.8vw,26px);
+  padding:clamp(14px,1.9vh,22px) 0;cursor:pointer;position:relative;
+  transition:padding-left .42s var(--e-out);
+}
+.track:hover .track-row{padding-left:14px;}
+.track::before{
+  content:"";position:absolute;inset:0;background:var(--panel-2);
+  transform:scaleY(0);transform-origin:bottom;z-index:-1;
+  transition:transform .45s var(--e-out);
+}
+.track:hover::before,.track.open::before{transform:scaleY(1);transform-origin:top;}
+.track-no{font-size:11px;color:var(--dimmer);letter-spacing:.1em;transition:color .3s ease;}
+.track:hover .track-no,.track.open .track-no{color:var(--acid);}
+.track-title{
+  font-family:"Archivo Black",sans-serif;text-transform:uppercase;letter-spacing:-.035em;
+  font-size:clamp(19px,2.5vw,40px);line-height:1;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;transition:color .3s ease;
+}
+.track.open .track-title{color:var(--acid);}
+.track-scrub{
+  position:relative;height:34px;opacity:.34;transition:opacity .35s var(--e-out);
+}
+.track:hover .track-scrub{opacity:1;}
+.track-scrub canvas{width:100%;height:100%;display:block;}
+.track-time{font-size:12px;color:var(--dim);text-align:right;}
+.track-plus{
+  justify-self:end;width:12px;height:12px;position:relative;
+}
+.track-plus::before,.track-plus::after{
+  content:"";position:absolute;background:var(--dim);transition:transform .4s var(--e-out),background .3s ease;
+}
+.track-plus::before{left:0;top:5.5px;width:12px;height:1px;}
+.track-plus::after{top:0;left:5.5px;height:12px;width:1px;}
+.track.open .track-plus::after{transform:rotate(90deg);}
+.track:hover .track-plus::before,.track:hover .track-plus::after{background:var(--acid);}
+.track-detail{height:0;overflow:hidden;}
+.track-detail-in{
+  display:grid;grid-template-columns:60px 1fr 1fr;gap:clamp(12px,2vw,30px);
+  padding:0 0 26px;
+}
+.track-detail-in p{margin:0;color:var(--dim);font-size:12px;line-height:1.8;max-width:52ch;}
+.track-detail-in .td-cred{font-size:11px;color:var(--dimmer);line-height:1.9;}
+.track-detail-in .td-cred b{color:var(--ink);font-weight:400;}
+.tracks-foot{
+  display:flex;justify-content:space-between;gap:16px;padding-top:18px;flex-wrap:wrap;
+  font-size:11px;color:var(--dimmer);
+}
+@media(max-width:1023px){
+  .track-row{grid-template-columns:38px minmax(0,1fr) 62px 16px;}
+  .track-scrub{display:none;}
+  .track-detail-in{grid-template-columns:1fr;}
+}
+
+/* ============================ TOUR ============================ */
+.tour{padding:clamp(60px,10vh,130px) var(--pad) clamp(70px,12vh,160px);border-top:1px solid var(--line);}
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);margin-bottom:clamp(50px,9vh,110px);
+}
+.stat{background:var(--bg);padding:clamp(18px,3vw,34px) clamp(14px,2vw,26px);}
+.stat b{
+  display:block;font-family:"Archivo Black",sans-serif;letter-spacing:-.04em;
+  font-size:clamp(40px,6vw,92px);line-height:.86;color:var(--ink);
+}
+.stat span{display:block;margin-top:12px;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);}
+.tour-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:24px;flex-wrap:wrap;}
+.tour-head h2{margin:0;font-size:clamp(34px,6.4vw,98px);}
+.date{
+  display:grid;grid-template-columns:120px 1fr 1fr 120px 108px;
+  gap:clamp(10px,1.6vw,24px);align-items:center;
+  padding:clamp(15px,2vh,24px) 0;border-top:1px solid var(--line-soft);
+  position:relative;
+}
+.date:last-of-type{border-bottom:1px solid var(--line-soft);}
+.date .d-date{font-size:12px;color:var(--dim);letter-spacing:.06em;}
+.date .d-city{
+  font-family:"Archivo Black",sans-serif;text-transform:uppercase;letter-spacing:-.03em;
+  font-size:clamp(16px,1.9vw,30px);line-height:1;
+  transition:transform .5s var(--e-out),color .3s ease;
+}
+.date:hover .d-city{transform:translateX(12px);color:var(--acid);}
+.date .d-venue{font-size:11.5px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;}
+.date .d-status{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dimmer);}
+.date .d-status.low{color:var(--acid);}
+.date .d-status.out{text-decoration:line-through;}
+.d-buy{
+  justify-self:end;border:1px solid var(--line);padding:8px 14px;font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--dim);white-space:nowrap;
+  transition:border-color .3s ease,color .3s ease,background .3s ease;
+}
+.date:hover .d-buy{border-color:var(--acid);color:var(--acid);}
+.d-buy.dis{opacity:.32;pointer-events:none;}
+#tourImg{
+  position:fixed;top:0;left:0;width:230px;height:290px;z-index:60;pointer-events:none;
+  opacity:0;overflow:hidden;will-change:transform;
+}
+#tourImg img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.3) brightness(.82);}
+@media(max-width:1023px){
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .date{grid-template-columns:1fr 1fr;row-gap:6px;}
+  .date .d-venue{grid-column:1/span 2;}
+  .d-buy{justify-self:start;}
+  #tourImg{display:none;}
+}
+
+/* ============================ CTA ============================ */
+.cta{
+  position:relative;padding:clamp(80px,15vh,180px) var(--pad);
+  border-top:1px solid var(--line);overflow:hidden;text-align:center;
+}
+.cta h2{margin:0 auto;font-size:clamp(46px,12vw,190px);max-width:14ch;}
+.cta h2 .stroke{color:transparent;-webkit-text-stroke:1px var(--acid);}
+.cta p{margin:26px auto 40px;max-width:44ch;color:var(--dim);font-size:12.5px;line-height:1.8;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:12px;
+  padding:17px 30px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  border:1px solid var(--acid);overflow:hidden;will-change:transform;
+}
+.btn span{position:relative;z-index:2;transition:color .38s var(--e-out);}
+.btn::before{
+  content:"";position:absolute;inset:0;background:var(--acid);z-index:1;
+  transform:translateY(101%);transition:transform .48s var(--e-out);
+}
+.btn:hover::before{transform:translateY(0);}
+.btn:hover span{color:#050505;}
+.btn.solid{background:var(--acid);color:#050505;}
+.btn.solid::before{background:var(--bg);}
+.btn.solid:hover span{color:var(--acid);}
+.btn.ghost{border-color:var(--line);}
+.btn.ghost::before{background:var(--ink);}
+.cta-note{margin-top:34px;font-size:10px;letter-spacing:.18em;color:var(--dimmer);text-transform:uppercase;}
+
+/* ============================ FOOTER ============================ */
+footer{border-top:1px solid var(--line);padding:clamp(46px,7vh,80px) var(--pad) 26px;}
+.f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1fr;gap:clamp(20px,3vw,50px);}
+.f-brand .disp{font-size:clamp(28px,3.4vw,52px);margin:0 0 14px;}
+.f-brand p{margin:0;color:var(--dim);font-size:11.5px;line-height:1.8;max-width:34ch;}
+.f-col h4{margin:0 0 16px;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--dimmer);font-weight:500;}
+.f-col ul{list-style:none;margin:0;padding:0;}
+.f-col li{margin-bottom:9px;}
+.f-col a{font-size:11.5px;color:var(--dim);transition:color .26s ease,letter-spacing .26s ease;}
+.f-col a:hover{color:var(--acid);letter-spacing:.04em;}
+.f-bot{
+  margin-top:clamp(44px,7vh,78px);padding-top:20px;border-top:1px solid var(--line-soft);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dimmer);
+}
+@media(max-width:1023px){.f-grid{grid-template-columns:repeat(2,1fr);} .f-brand{grid-column:1/span 2;}}
+
+/* ============================ REDUCED MOTION ============================ */
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+  #loader{display:none !important;}
+  .ch,.ln{transform:none !important;}
+  .sess-photo img{clip-path:none !important;}
+  .hero-photo img{transform:scale(1.02) !important;}
+  .play-btn.playing .ring{animation:none;}
+}
+</style>
+</head>
+<body class="is-loading">
+
+<!-- ============================ INTRO LOADER ============================ -->
+<div id="loader" aria-hidden="true">
+  <div class="curtains"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="load-mid">
+    <div class="tag" style="display:flex;justify-content:space-between;">
+      <span>NULL TERRACE RECORDINGS</span><span>NTR—042</span>
+    </div>
+    <div class="load-bar"><i id="loadFill"></i></div>
+    <div class="tag" style="color:var(--dimmer)">BUFFERING MASTER · 24-BIT / 96 kHz · SIDE A</div>
+  </div>
+  <div class="load-foot">
+    <div class="load-lines">
+      <div style="text-align:left">ODESSA VOSS</div>
+      <div style="text-align:left;color:var(--acid)">BLACKOUT CHOIR</div>
+    </div>
+    <div class="num" id="loadCount">00<sup>%</sup></div>
+  </div>
+</div>
+
+<!-- ============================ NAV ============================ -->
+<nav class="nav">
+  <div class="nav-mark">ODESSA VOSS<b>.</b></div>
+  <div class="nav-links">
+    <a href="#viz">Frequency</a>
+    <a href="#sessions">Sessions</a>
+    <a href="#tracks">Tracklist</a>
+    <a href="#tour">Live</a>
+  </div>
+  <a class="nav-cta" href="#cta">Pre-save</a>
+</nav>
+
+<!-- ============================ HERO ============================ -->
+<header class="hero" id="top">
+  <div class="hero-grid"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+  <div class="hero-photo">
+    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1400&auto=format&fit=crop"
+         alt="Odessa Voss performing under a single hard spotlight" />
+  </div>
+
+  <div class="hero-top">
+    <div class="hero-kicker">
+      <div class="tag">LP 02 · NULL TERRACE RECORDINGS</div>
+      <p>Eleven tracks cut to tape in a decommissioned telephone exchange in Lisbon. Out 09 October 2026.</p>
+    </div>
+    <div class="hero-side">A0 POSTER EDITION — 500 NUMBERED</div>
+  </div>
+
+  <div class="hero-title">
+    <h1 class="disp">
+      <span class="ln-w"><span class="ln l1" data-split="chars">BLACKOUT</span></span>
+      <span class="l2">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset (background-clip:text mask image) -->
+        <span class="mask-word" id="maskWord">CHOIR</span>
+        <span class="l2-stamp num">11 TRACKS · 49:06</span>
+      </span>
+    </h1>
+
+    <dl class="hero-meta">
+      <div><dt>Release</dt><dd class="num">09.10.2026</dd></div>
+      <div><dt>Format</dt><dd>2×LP / DIGITAL</dd></div>
+      <div><dt>Catalogue</dt><dd class="num">NTR—042</dd></div>
+      <div><dt>Produced by</dt><dd>VOSS &amp; I. BRANDT</dd></div>
+      <div><dt>Mastered at</dt><dd>IRONWAY, BERLIN</dd></div>
+    </dl>
+  </div>
+
+  <div class="ticker">
+    <div class="ticker-track" id="ticker">
+      <span>BLACKOUT CHOIR<i>◆</i>OUT 09 OCT 2026<i>◆</i>PRE-SAVE NOW<i>◆</i>EUROPE + NORTH AMERICA TOUR<i>◆</i>500 NUMBERED SLEEVES<i>◆</i></span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ VISUALISER ============================ -->
+<section class="viz" id="viz">
+  <div class="viz-inner">
+    <div class="viz-head">
+      <h2 class="disp"><span class="ln-w"><span class="ln" data-split="chars">FREQUENCY</span></span><em>RESPONSE</em></h2>
+      <div class="viz-readout num">
+        <div><b>Peak</b><span id="rdPeak">-∞ dB</span></div>
+        <div><b>RMS</b><span id="rdRms">-∞ dB</span></div>
+        <div><b>Band</b><span id="rdBand">20—18k</span></div>
+        <div><b>Drive</b><span id="rdDrive">0.00</span></div>
+      </div>
+    </div>
+
+    <div class="viz-stage">
+      <canvas id="viz-canvas"></canvas>
+      <div class="viz-scan"></div>
+      <span class="viz-corner tl">A2 — “BLACKOUT CHOIR” / 4:12</span>
+      <span class="viz-corner tr num" id="vizClock">00:00</span>
+      <span class="viz-corner bl">ANALYSER · FFT 2048 · HANN</span>
+    </div>
+
+    <div class="viz-controls">
+      <button class="play-btn" id="playBtn" aria-label="Play or pause the album excerpt">
+        <span class="ring"></span>
+        <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3l15 9L6 21z"/></svg>
+        <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h5v18H5zM14 3h5v18h-5z"/></svg>
+      </button>
+      <p class="viz-copy">
+        <strong>Track A2 — excerpt.</strong> The spectrum above runs procedurally, and switches to the live Web Audio analyser when the
+        clip is playing. With audio blocked or absent it keeps running on a synthesized sine-sum model, and scroll
+        position drives the amplitude either way.
+      </p>
+      <div class="viz-mode">SOURCE: <b id="modeLabel">SYNTHESIZED</b></div>
+    </div>
+  </div>
+
+  <!-- PLACEHOLDER: swap for Higgsfield-generated asset (audio clip — page runs fine if missing) -->
+  <!-- Optional: drop an audio file at assets/blackout-choir-a2-excerpt.mp3 and restore the
+       src attribute below to drive the visualiser from the live Web Audio analyser.
+       With no src the canvas runs in procedural mode, which is the default. -->
+  <audio id="clip" preload="metadata" crossorigin="anonymous" loop></audio>
+</section>
+
+<!-- ============================ SESSIONS ============================ -->
+<section class="sessions" id="sessions">
+  <div class="sess-ghost disp" id="sessGhost">SESSIONS</div>
+
+  <div class="sess-grid">
+    <div class="sess-a">
+      <h3 class="sess-lead">Recorded in a dead <em>telephone exchange</em></h3>
+      <div class="sess-body">
+        <p><strong>Odessa Voss</strong> spent eleven weeks of winter 2025 in Fold Studios, Lisbon — a switching hall
+        that carried the city's calls until 1998 and has kept the acoustics ever since. Nothing was re-amped. The
+        room is on every take.</p>
+        <p>Co-producer <strong>Ilya Brandt</strong> ran the band through a pair of failing tape machines, printing
+        each pass twice and letting the drift between them become the record's tuning.</p>
+      </div>
+    </div>
+
+    <div class="sess-b">
+      <div class="tag" style="margin-bottom:14px">FIELD NOTE — 14.01.26</div>
+      <div class="sess-body">
+        <p>“We stopped fixing the wow and flutter around track five. It was doing something a click track never
+        does — it made the choir sound like it was remembering the song instead of singing it.”</p>
+        <p><strong>Nine voices</strong> from the Alfama community choir appear across four tracks, recorded in a
+        single Sunday afternoon with two ribbon mics at the far end of the hall.</p>
+      </div>
+    </div>
+
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <figure class="sess-photo" style="margin:0">
+      <img src="https://images.unsplash.com/photo-1487215078519-e21cc028cb29?q=80&w=1000&auto=format&fit=crop"
+           alt="Console and outboard gear at Fold Studios, Lisbon" loading="lazy" />
+      <figcaption>Fold Studios, Lisbon — Jan 2026</figcaption>
+    </figure>
+
+    <div class="sess-quote">
+      <blockquote class="disp">“Voss builds cathedrals out of tape hiss <span>— and then turns the lights off.”</span></blockquote>
+      <cite>Slow Static, issue 34</cite>
+    </div>
+
+    <dl class="sess-credits">
+      <div><dt>Written by</dt><dd>Odessa Voss</dd></div>
+      <div><dt>Produced by</dt><dd>Odessa Voss &amp; Ilya Brandt</dd></div>
+      <div><dt>Mixed by</dt><dd>Tess Ngata, Fold Studios</dd></div>
+      <div><dt>Mastered by</dt><dd>Reuben Solis, Ironway</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============================ TRACKLIST ============================ -->
+<section class="tracks" id="tracks">
+  <div class="tracks-head">
+    <h2 class="disp"><span class="ln-w"><span class="ln" data-split="chars">TRACKLIST</span></span></h2>
+    <div class="th-meta num">
+      <div><b>Tracks</b><span>11</span></div>
+      <div><b>Runtime</b><span>49:06</span></div>
+      <div><b>Sides</b><span>A / B / C / D</span></div>
+    </div>
+  </div>
+
+  <div id="trackList"></div>
+
+  <div class="tracks-foot">
+    <span>SIDE A: 01—03 · SIDE B: 04—06 · SIDE C: 07—09 · SIDE D: 10—11 + ETCHING</span>
+    <span class="num">TOTAL 49:06 · 2×LP 180g BLACK / 500 ACID-SPLATTER</span>
+  </div>
+</section>
+
+<!-- ============================ TOUR ============================ -->
+<section class="tour" id="tour">
+  <div class="stats">
+    <div class="stat"><b class="num" data-count="41">0</b><span>Shows announced</span></div>
+    <div class="stat"><b class="num" data-count="24">0</b><span>Cities</span></div>
+    <div class="stat"><b class="num" data-count="11">0</b><span>Countries</span></div>
+    <div class="stat"><b class="num" data-count="9">0</b><span>Voices on stage</span></div>
+  </div>
+
+  <div class="tour-head">
+    <h2 class="disp"><span class="ln-w"><span class="ln" data-split="chars">LIVE 2026</span></span></h2>
+    <div class="tag">THE BLACKOUT CHOIR TOUR · WITH THE ALFAMA NINE</div>
+  </div>
+
+  <div id="tourList"></div>
+
+  <!-- PLACEHOLDER: swap for Higgsfield-generated asset (cursor-follow venue image) -->
+  <div id="tourImg"><img src="https://images.unsplash.com/photo-1470229722913-7ea0d3b0ac9a?q=80&w=800&auto=format&fit=crop" alt="" /></div>
+</section>
+
+<!-- ============================ CTA ============================ -->
+<section class="cta" id="cta">
+  <h2 class="disp">PRE-SAVE <span class="stroke">BLACKOUT</span> CHOIR</h2>
+  <p>Save the record before 09 October and the full album lands in your library at midnight local time.
+     Vinyl pre-orders ship 03 October with a numbered A0 poster and the Lisbon session notes.</p>
+  <div class="cta-btns">
+    <a class="btn solid magnetic" href="#cta"><span>Pre-save the album</span></a>
+    <a class="btn ghost magnetic" href="#tour"><span>Tickets &amp; tour dates</span></a>
+  </div>
+  <div class="cta-note">NTR—042 · 2×LP · CD · DIGITAL · DOLBY ATMOS MIX AT LAUNCH</div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer>
+  <div class="f-grid">
+    <div class="f-brand">
+      <div class="disp">ODESSA<br>VOSS</div>
+      <p>Null Terrace Recordings, Rua da Bica 41, Lisboa 1200-401. Management: Halcyon Field, Berlin.
+         Booking: Meridian Live (EU) / Fourteenth Street (NA).</p>
+    </div>
+    <div class="f-col">
+      <h4>The record</h4>
+      <ul>
+        <li><a href="#tracks">Tracklist</a></li>
+        <li><a href="#sessions">Session notes</a></li>
+        <li><a href="#cta">Vinyl variants</a></li>
+        <li><a href="#cta">Liner notes PDF</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Live</h4>
+      <ul>
+        <li><a href="#tour">2026 tour dates</a></li>
+        <li><a href="#tour">Presale access</a></li>
+        <li><a href="#tour">Accessibility</a></li>
+        <li><a href="#tour">Promoter contact</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Listen</h4>
+      <ul>
+        <li><a href="#viz">Spotify</a></li>
+        <li><a href="#viz">Apple Music</a></li>
+        <li><a href="#viz">Bandcamp</a></li>
+        <li><a href="#viz">Tidal</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#cta">Instagram</a></li>
+        <li><a href="#cta">Mailing list</a></li>
+        <li><a href="#cta">Press kit</a></li>
+        <li><a href="#cta">Sync licensing</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="f-bot">
+    <span>© 2026 Null Terrace Recordings</span>
+    <span>All rights of the producer reserved</span>
+    <span>Design template — placeholder assets</span>
+    <span><a href="#top">Back to top ↑</a></span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var DESKTOP = window.matchMedia('(min-width: 1024px)').matches;
+var HAS_GSAP = typeof window.gsap !== 'undefined';
+if (HAS_GSAP && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+
+/* ============================================================
+   DATA — album + tour
+   ============================================================ */
+var TRACKS = [
+  {n:'01', t:'Static Sermon',              time:'3:41', side:'A',
+   note:'Opens on 40 seconds of exchange-room hum before the first downbeat. The organ is a broken Farfisa found in the building.',
+   cred:'Farfisa & voice: <b>Odessa Voss</b> · Drums: <b>Kemi Aduba</b> · Tape: <b>Ilya Brandt</b>'},
+  {n:'02', t:'Blackout Choir',             time:'4:12', side:'A',
+   note:'The title track. Nine voices from the Alfama community choir, two ribbon mics, one Sunday, no overdubs.',
+   cred:'Choir: <b>The Alfama Nine</b> · Bass: <b>Rui Setter</b> · Mixed by <b>Tess Ngata</b>'},
+  {n:'03', t:'Ninth Avenue Dial Tone',     time:'3:07', side:'A',
+   note:'Built on a sampled 1970s Portuguese dial tone tuned up a semitone to sit in B♭.',
+   cred:'Synth: <b>Ilya Brandt</b> · Strings: <b>Quarteto Bica</b>'},
+  {n:'04', t:'Gravity, Cheaply',           time:'5:26', side:'B',
+   note:'Recorded in a single take at 4am with the hall doors open onto the street. Sirens in the second chorus are not samples.',
+   cred:'Guitar: <b>Odessa Voss</b> · Drums: <b>Kemi Aduba</b> · Room mics: <b>Tess Ngata</b>'},
+  {n:'05', t:'Wire Mother',                time:'2:58', side:'B',
+   note:'The shortest thing on the record and the last written — finished the morning of the final mix session.',
+   cred:'Voice & Juno-6: <b>Odessa Voss</b>'},
+  {n:'06', t:'Hollow Bloom',               time:'4:44', side:'B',
+   note:'Two tape machines running the same take a half-frame apart; the flutter between them is the tuning.',
+   cred:'Tape drift: <b>Ilya Brandt</b> · Cello: <b>Marta Iyer</b>'},
+  {n:'07', t:'Tremor Season',              time:'3:19', side:'C',
+   note:'The only track with a click. Voss called it "the one where the floor stays where you left it."',
+   cred:'Drums: <b>Kemi Aduba</b> · Bass: <b>Rui Setter</b>'},
+  {n:'08', t:'Lisbon, 4AM',                time:'6:02', side:'C',
+   note:'Six minutes with no chorus. The choir enters at 4:41 and never resolves.',
+   cred:'Choir: <b>The Alfama Nine</b> · Piano: <b>Odessa Voss</b>'},
+  {n:'09', t:'Amber Alert Lullaby',        time:'3:52', side:'C',
+   note:'Written for a friend\'s daughter and then made unrecognisably darker in the mix.',
+   cred:'Voice: <b>Odessa Voss</b> · Synth: <b>Ilya Brandt</b>'},
+  {n:'10', t:'Salt in the Monitor',        time:'4:29', side:'D',
+   note:'Feedback loop through the studio\'s original 1962 monitor stack, played as an instrument.',
+   cred:'Feedback: <b>Ilya Brandt</b> · Guitar: <b>Odessa Voss</b>'},
+  {n:'11', t:'Everything Louder Than Grief',time:'7:16', side:'D',
+   note:'Seven minutes, one crescendo, and the tape running out. The etching on side D reads: "NOTHING WAS FIXED".',
+   cred:'Full ensemble · Mastered by <b>Reuben Solis</b> at Ironway, Berlin'}
+];
+
+var DATES = [
+  {d:'22 OCT', city:'Berlin',      cc:'DE', venue:'Halle Sieben',        status:'Sold out',   s:'out'},
+  {d:'25 OCT', city:'Amsterdam',   cc:'NL', venue:'Paradijs Noord',      status:'Low tickets',s:'low'},
+  {d:'28 OCT', city:'Paris',       cc:'FR', venue:'Le Caveau Rive',      status:'On sale',    s:''},
+  {d:'02 NOV', city:'London',      cc:'UK', venue:'The Foundry Hall',    status:'Low tickets',s:'low'},
+  {d:'06 NOV', city:'Dublin',      cc:'IE', venue:'Grand Social Hall',   status:'On sale',    s:''},
+  {d:'11 NOV', city:'New York',    cc:'NY', venue:'Pioneer Works Annex', status:'Sold out',   s:'out'},
+  {d:'15 NOV', city:'Chicago',     cc:'IL', venue:'Thalia Main',         status:'On sale',    s:''},
+  {d:'19 NOV', city:'Los Angeles', cc:'CA', venue:'The Mayan Annex',     status:'Low tickets',s:'low'},
+  {d:'23 NOV', city:'Mexico City', cc:'MX', venue:'Foro Nulo',           status:'On sale',    s:''},
+  {d:'02 DEC', city:'Tokyo',       cc:'JP', venue:'Kiyosumi Hall C',     status:'On sale',    s:''}
+];
+
+/* ============================================================
+   BUILD DOM — tracklist + tour
+   ============================================================ */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+var trackList = document.getElementById('trackList');
+TRACKS.forEach(function(tr, i){
+  var row = document.createElement('article');
+  row.className = 'track';
+  row.setAttribute('data-i', i);
+  row.innerHTML =
+    '<div class="track-row" role="button" tabindex="0" aria-expanded="false">' +
+      '<span class="track-no num">' + tr.n + '</span>' +
+      '<h3 class="track-title">' + esc(tr.t) + '</h3>' +
+      '<div class="track-scrub"><canvas></canvas></div>' +
+      '<span class="track-time num">' + tr.time + '</span>' +
+      '<span class="track-plus" aria-hidden="true"></span>' +
+    '</div>' +
+    '<div class="track-detail"><div class="track-detail-in">' +
+      '<span class="tag">SIDE ' + tr.side + '</span>' +
+      '<p>' + esc(tr.note) + '</p>' +
+      '<div class="td-cred">' + tr.cred + '</div>' +
+    '</div></div>';
+  trackList.appendChild(row);
+});
+
+var tourList = document.getElementById('tourList');
+DATES.forEach(function(dt){
+  var el = document.createElement('div');
+  el.className = 'date';
+  el.innerHTML =
+    '<span class="d-date num">' + dt.d + ' 2026</span>' +
+    '<span class="d-city">' + esc(dt.city) + '</span>' +
+    '<span class="d-venue">' + esc(dt.venue) + ' — ' + dt.cc + '</span>' +
+    '<span class="d-status ' + dt.s + '">' + dt.status + '</span>' +
+    '<a class="d-buy' + (dt.s === 'out' ? ' dis' : '') + '" href="#cta">' +
+      (dt.s === 'out' ? 'Waitlist' : 'Tickets') + '</a>';
+  tourList.appendChild(el);
+});
+
+/* duplicate ticker content so the loop is seamless */
+var tickerTrack = document.getElementById('ticker');
+if (tickerTrack) {
+  var unit = tickerTrack.firstElementChild;
+  for (var k = 0; k < 3; k++) tickerTrack.appendChild(unit.cloneNode(true));
+}
+
+/* ============================================================
+   HAND-ROLLED TEXT SPLITTING (no SplitText plugin)
+   ============================================================ */
+function splitChars(el){
+  if (!el || el.dataset.done === '1') return [];
+  var text = el.textContent;
+  el.textContent = '';
+  var out = [];
+  for (var i = 0; i < text.length; i++){
+    var w = document.createElement('span');
+    w.className = 'ch-w';
+    var c = document.createElement('span');
+    c.className = 'ch';
+    c.textContent = text[i] === ' ' ? ' ' : text[i];
+    w.appendChild(c);
+    el.appendChild(w);
+    out.push(c);
+  }
+  el.dataset.done = '1';
+  return out;
+}
+var splitMap = new Map();
+Array.prototype.forEach.call(document.querySelectorAll('[data-split="chars"]'), function(el){
+  splitMap.set(el, splitChars(el));
+});
+function charsOf(sel){
+  var el = document.querySelector(sel);
+  return el ? (splitMap.get(el) || []) : [];
+}
+
+/* ============================================================
+   LENIS SMOOTH SCROLL  → ScrollTrigger
+   ============================================================ */
+var lenis = null;
+if (!REDUCED && typeof window.Lenis !== 'undefined' && HAS_GSAP) {
+  lenis = new Lenis({
+    duration: 1.15,
+    easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true,
+    touchMultiplier: 1.6
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -10, duration: 1.3 });
+    });
+  });
+}
+
+/* ============================================================
+   MOTION #1 — CANVAS FREQUENCY VISUALISER (Web Audio + fallback)
+   ============================================================ */
+var VIS = {
+  canvas: document.getElementById('viz-canvas'),
+  ctx: null, w: 0, h: 0, dpr: 1,
+  bars: 76, vals: [], peaks: [],
+  scrollAmp: 0.85,     // driven by scroll position through the section
+  turb: 0,             // driven by scroll velocity
+  energy: 0.5,         // 0.5 idle → 1 playing
+  live: false,
+  silentFrames: 0
+};
+for (var b = 0; b < VIS.bars; b++){ VIS.vals.push(0); VIS.peaks.push(0); }
+
+var AUDIO = {
+  el: document.getElementById('clip'),
+  ctxA: null, analyser: null, srcNode: null,
+  freq: null, time: null,
+  failed: false, playing: false, wired: false
+};
+var modeLabel = document.getElementById('modeLabel');
+var playBtn   = document.getElementById('playBtn');
+var rdPeak = document.getElementById('rdPeak');
+var rdRms  = document.getElementById('rdRms');
+var rdDrive= document.getElementById('rdDrive');
+var vizClock = document.getElementById('vizClock');
+
+if (AUDIO.el) {
+  AUDIO.el.addEventListener('error', function(){ AUDIO.failed = true; setMode(); });
+  AUDIO.el.addEventListener('ended', function(){ AUDIO.playing = false; syncBtn(); });
+}
+
+function setMode(){
+  if (!modeLabel) return;
+  modeLabel.textContent = isLive() ? 'LIVE ANALYSER' : 'SYNTHESIZED';
+}
+function isLive(){
+  return !!(AUDIO.analyser && AUDIO.el && !AUDIO.el.paused &&
+            AUDIO.el.readyState >= 2 && AUDIO.ctxA && AUDIO.ctxA.state === 'running' &&
+            VIS.silentFrames < 45);
+}
+function syncBtn(){
+  if (!playBtn) return;
+  playBtn.classList.toggle('playing', AUDIO.playing);
+  playBtn.setAttribute('aria-pressed', AUDIO.playing ? 'true' : 'false');
+  if (HAS_GSAP) gsap.to(VIS, { energy: AUDIO.playing ? 1 : 0.5, duration: 0.9, ease: 'power2.out' });
+  else VIS.energy = AUDIO.playing ? 1 : 0.5;
+  setMode();
+}
+
+function wireAudioGraph(){
+  if (AUDIO.wired || AUDIO.failed || !AUDIO.el) return false;
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) { AUDIO.failed = true; return false; }
+  try {
+    AUDIO.ctxA = new AC();
+    AUDIO.analyser = AUDIO.ctxA.createAnalyser();
+    AUDIO.analyser.fftSize = 2048;
+    AUDIO.analyser.smoothingTimeConstant = 0.82;
+    AUDIO.freq = new Uint8Array(AUDIO.analyser.frequencyBinCount);
+    AUDIO.time = new Uint8Array(AUDIO.analyser.fftSize);
+    AUDIO.srcNode = AUDIO.ctxA.createMediaElementSource(AUDIO.el);
+    AUDIO.srcNode.connect(AUDIO.analyser);
+    AUDIO.analyser.connect(AUDIO.ctxA.destination);
+    AUDIO.wired = true;
+    return true;
+  } catch (err) {
+    /* no AudioContext, tainted source, or already-wired element → procedural only */
+    AUDIO.failed = true;
+    AUDIO.analyser = null;
+    return false;
+  }
+}
+
+/* The play button ALWAYS works: it toggles the visual energy state.
+   Real audio is a bonus layered on top when the file + API allow it. */
+function togglePlay(){
+  if (AUDIO.playing) {
+    AUDIO.playing = false;
+    if (AUDIO.el && !AUDIO.el.paused) { try { AUDIO.el.pause(); } catch(e){} }
+    syncBtn();
+    return;
+  }
+  AUDIO.playing = true;
+  syncBtn();
+  if (AUDIO.failed || !AUDIO.el) return;          // procedural mode, visual keeps running
+  if (!wireAudioGraph()) return;
+  var resume = (AUDIO.ctxA && AUDIO.ctxA.state === 'suspended')
+    ? AUDIO.ctxA.resume() : Promise.resolve();
+  Promise.resolve(resume).then(function(){
+    var p = AUDIO.el.play();
+    if (p && typeof p.then === 'function') {
+      return p.then(function(){ VIS.silentFrames = 0; setMode(); });
+    }
+    setMode();
+  }).catch(function(){
+    /* autoplay blocked, 404, or decode failure → stay in procedural mode */
+    AUDIO.failed = true;
+    setMode();
+  });
+}
+if (playBtn) {
+  playBtn.addEventListener('click', togglePlay);
+}
+setMode();
+
+function sizeCanvas(){
+  if (!VIS.canvas) return;
+  var r = VIS.canvas.getBoundingClientRect();
+  VIS.dpr = Math.min(window.devicePixelRatio || 1, 2);
+  VIS.w = Math.max(1, Math.round(r.width));
+  VIS.h = Math.max(1, Math.round(r.height));
+  VIS.canvas.width  = Math.round(VIS.w * VIS.dpr);
+  VIS.canvas.height = Math.round(VIS.h * VIS.dpr);
+  VIS.ctx = VIS.canvas.getContext('2d');
+  if (VIS.ctx) VIS.ctx.setTransform(VIS.dpr, 0, 0, VIS.dpr, 0, 0);
+  VIS.bars = VIS.w < 700 ? 44 : 76;
+  while (VIS.vals.length < VIS.bars){ VIS.vals.push(0); VIS.peaks.push(0); }
+}
+sizeCanvas();
+window.addEventListener('resize', function(){
+  sizeCanvas();
+  if (REDUCED) drawViz(0);
+});
+
+/* procedural spectrum: sum of sines, spectral tilt, never dead */
+function proceduralBar(p, t){
+  var v = 0.50 * Math.sin(p * 8.0  + t * 1.55)
+        + 0.30 * Math.sin(p * 17.0 - t * 2.35)
+        + 0.20 * Math.sin(p * 31.0 + t * 3.70)
+        + 0.12 * Math.sin(p * 53.0 - t * 5.10)
+        + 0.08 * Math.sin(p * 91.0 + t * 8.40);
+  v = v * 0.42 + 0.46;                        // → roughly 0..1
+  v *= (1 - Math.pow(p, 0.62)) * 0.86 + 0.14; // spectral tilt: less energy up top
+  return Math.max(0, Math.min(1, v));
+}
+
+function drawViz(t){
+  var ctx = VIS.ctx;
+  if (!ctx) return;
+  var w = VIS.w, h = VIS.h, N = VIS.bars;
+  ctx.clearRect(0, 0, w, h);
+
+  var live = isLive();
+  if (live) {
+    AUDIO.analyser.getByteFrequencyData(AUDIO.freq);
+    var sum = 0;
+    for (var s = 0; s < AUDIO.freq.length; s += 16) sum += AUDIO.freq[s];
+    if (sum === 0) VIS.silentFrames++; else VIS.silentFrames = 0;
+    if (VIS.silentFrames >= 45) live = false;   // silence → fall back mid-flight
+  }
+
+  var amp = VIS.scrollAmp * VIS.energy * (1 + VIS.turb);
+  amp = Math.max(0.16, Math.min(2.0, amp));
+
+  var gap = w < 700 ? 2 : 3;
+  var bw = (w - gap * (N - 1)) / N;
+  var mid = h * 0.56;
+  var maxH = h * 0.46;
+  var peakMax = 0, rmsAcc = 0;
+
+  for (var i = 0; i < N; i++){
+    var p = i / (N - 1);
+    var target;
+    if (live) {
+      var idx = Math.floor(Math.pow(p, 1.75) * (AUDIO.freq.length * 0.66));
+      if (idx >= AUDIO.freq.length) idx = AUDIO.freq.length - 1;
+      target = AUDIO.freq[idx] / 255;
+      target *= (1 - Math.pow(p, 0.7)) * 0.55 + 0.45;
+    } else {
+      target = proceduralBar(p, t);
+    }
+    target *= amp;
+    VIS.vals[i] += (target - VIS.vals[i]) * (live ? 0.42 : 0.20);
+    var v = Math.max(0, VIS.vals[i]);
+    if (v > peakMax) peakMax = v;
+    rmsAcc += v * v;
+
+    var bh = Math.min(maxH, v * maxH);
+    var x = i * (bw + gap);
+
+    // main bar
+    ctx.fillStyle = 'rgba(200,255,61,' + (0.34 + Math.min(0.62, v * 0.72)) + ')';
+    ctx.fillRect(x, mid - bh, bw, bh);
+    // mirrored tail
+    ctx.fillStyle = 'rgba(200,255,61,0.13)';
+    ctx.fillRect(x, mid, bw, bh * 0.34);
+
+    // falling peak-hold cap
+    VIS.peaks[i] = Math.max(v, VIS.peaks[i] - 0.008);
+    var ph = Math.min(maxH, VIS.peaks[i] * maxH);
+    ctx.fillStyle = 'rgba(242,242,240,0.55)';
+    ctx.fillRect(x, mid - ph - 2, bw, 1.5);
+  }
+
+  // waveform overlay
+  ctx.beginPath();
+  ctx.lineWidth = 1.4;
+  ctx.strokeStyle = 'rgba(242,242,240,0.42)';
+  var steps = Math.max(80, Math.floor(w / 3));
+  for (var q = 0; q <= steps; q++){
+    var px = (q / steps) * w;
+    var u = q / steps;
+    var y;
+    if (live && AUDIO.time) {
+      AUDIO.analyser.getByteTimeDomainData(AUDIO.time);
+      var ti = Math.floor(u * (AUDIO.time.length - 1));
+      y = mid + ((AUDIO.time[ti] - 128) / 128) * maxH * 0.5 * amp;
+    } else {
+      var wv = Math.sin(u * 13 + t * 2.1) * 0.5
+             + Math.sin(u * 29 - t * 3.3) * 0.28
+             + Math.sin(u * 61 + t * 6.7) * 0.14;
+      y = mid + wv * maxH * 0.34 * amp;
+    }
+    if (q === 0) ctx.moveTo(px, y); else ctx.lineTo(px, y);
+  }
+  ctx.stroke();
+
+  // centre line
+  ctx.fillStyle = 'rgba(242,242,240,0.14)';
+  ctx.fillRect(0, mid, w, 1);
+
+  // readouts (throttled)
+  if (Math.floor(t * 8) % 2 === 0){
+    var rms = Math.sqrt(rmsAcc / N);
+    if (rdPeak) rdPeak.textContent = (peakMax <= 0.001 ? '-∞' : (20 * Math.log10(Math.min(1, peakMax))).toFixed(1)) + ' dB';
+    if (rdRms)  rdRms.textContent  = (rms <= 0.001 ? '-∞' : (20 * Math.log10(Math.min(1, rms))).toFixed(1)) + ' dB';
+    if (rdDrive) rdDrive.textContent = amp.toFixed(2);
+    if (vizClock) {
+      var secs = (AUDIO.el && AUDIO.el.currentTime) ? AUDIO.el.currentTime : (AUDIO.playing ? t % 252 : 0);
+      var mm = Math.floor(secs / 60), ss = Math.floor(secs % 60);
+      vizClock.textContent = (mm < 10 ? '0' : '') + mm + ':' + (ss < 10 ? '0' : '') + ss;
+    }
+  }
+}
+
+if (REDUCED) {
+  VIS.energy = 0.9; VIS.scrollAmp = 1;
+  drawViz(0.4);
+} else if (HAS_GSAP) {
+  gsap.ticker.add(function(time){ drawViz(time); });
+} else {
+  (function loop(ts){ drawViz((ts || 0) / 1000); requestAnimationFrame(loop); })();
+}
+
+/* ============================================================
+   GSAP TIMELINES
+   ============================================================ */
+function startPage(){
+  document.body.classList.remove('is-loading');
+  if (!HAS_GSAP || REDUCED) { if (window.ScrollTrigger) ScrollTrigger.refresh(); return; }
+
+  /* ---- HERO: char mask reveal + clip-path reveal on the masked word ---- */
+  var tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+  tl.from(charsOf('.hero-title .l1'), {
+      yPercent: 118, duration: 1.15, stagger: 0.045
+    })
+    .fromTo('#maskWord',
+      { clipPath: 'inset(0 100% 0 0)' },
+      { clipPath: 'inset(0 0% 0 0)', duration: 1.25, ease: 'expo.out' }, 0.32)
+    .from('.l2-stamp', { yPercent: 60, opacity: 0, duration: 0.7 }, 0.9)
+    .from('.hero-kicker > *', { y: 26, opacity: 0, duration: 0.8, stagger: 0.08 }, 0.25)
+    .from('.hero-meta div', { yPercent: 40, opacity: 0, duration: 0.8, stagger: 0.06 }, 0.55)
+    .from('.hero-photo', { clipPath: 'polygon(0 0,100% 0,100% 0,72% 0,0 0)', duration: 1.3, ease: 'expo.out' }, 0.1)
+    .from('.hero-side', { opacity: 0, duration: 0.8 }, 0.9)
+    .from('.ticker', { yPercent: 100, duration: 0.9 }, 0.7)
+    .from('.nav > *', { y: -20, opacity: 0, duration: 0.7, stagger: 0.07 }, 0.5);
+
+  /* hero photo parallax + mask-word background parallax */
+  gsap.to('.hero-photo img', {
+    yPercent: 12, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+  gsap.to('#maskWord', {
+    backgroundPosition: 'center 70%', ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.6 }
+  });
+
+  /* ---- ticker marquee (supporting element) ---- */
+  var tickerW = tickerTrack ? tickerTrack.firstElementChild.offsetWidth : 0;
+  if (tickerW) {
+    gsap.to(tickerTrack, {
+      x: -tickerW, duration: 22, ease: 'none', repeat: -1,
+      modifiers: { x: function(x){ return (parseFloat(x) % tickerW) + 'px'; } }
+    });
+  }
+
+  /* ---- headline reveals on scroll ---- */
+  ['.viz-head h2 .ln', '.tracks-head h2 .ln', '.tour-head h2 .ln'].forEach(function(sel){
+    var el = document.querySelector(sel);
+    if (!el) return;
+    gsap.from(splitMap.get(el) || [], {
+      yPercent: 118, duration: 1, ease: 'power4.out', stagger: 0.04,
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+
+  /* ---- MOTION #2 — PINNED VISUALISER, scroll drives amplitude ---- */
+  if (DESKTOP) {
+    ScrollTrigger.create({
+      trigger: '.viz',
+      start: 'top top',
+      end: '+=140%',
+      pin: '.viz-inner',
+      pinSpacing: true,
+      scrub: true,
+      onUpdate: function(self){
+        // bell curve: quiet at the edges, hammering through the middle
+        VIS.scrollAmp = 0.42 + Math.sin(self.progress * Math.PI) * 1.05;
+        if (rdBandEl) {
+          var lo = Math.round(20 + self.progress * 60);
+          var hi = (14 + self.progress * 6).toFixed(1);
+          rdBandEl.textContent = lo + '—' + hi + 'k';
+        }
+      }
+    });
+    gsap.to('.viz-stage', {
+      scaleY: 1.06, ease: 'none',
+      scrollTrigger: { trigger: '.viz', start: 'top top', end: '+=140%', scrub: true }
+    });
+  } else {
+    ScrollTrigger.create({
+      trigger: '.viz',
+      start: 'top bottom', end: 'bottom top', scrub: true,
+      onUpdate: function(self){ VIS.scrollAmp = 0.45 + Math.sin(self.progress * Math.PI) * 0.95; }
+    });
+  }
+
+  /* ---- sessions: ghost word parallax + clip-path photo reveal ---- */
+  gsap.to('#sessGhost', {
+    xPercent: -14, ease: 'none',
+    scrollTrigger: { trigger: '.sessions', start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+  });
+  gsap.to('.sess-photo img', {
+    clipPath: 'inset(0 0 0% 0)', duration: 1.4, ease: 'expo.out',
+    scrollTrigger: { trigger: '.sess-photo', start: 'top 85%' }
+  });
+  gsap.from('.sess-a, .sess-b', {
+    y: 60, opacity: 0, duration: 1.1, ease: 'power3.out', stagger: 0.12,
+    scrollTrigger: { trigger: '.sess-grid', start: 'top 78%' }
+  });
+  gsap.from('.sess-quote blockquote', {
+    yPercent: 40, opacity: 0, duration: 1.1, ease: 'power4.out',
+    scrollTrigger: { trigger: '.sess-quote', start: 'top 85%' }
+  });
+  gsap.from('.sess-credits div', {
+    yPercent: 30, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.06,
+    scrollTrigger: { trigger: '.sess-credits', start: 'top 90%' }
+  });
+
+  /* ---- tracklist rows in ---- */
+  gsap.from('.track', {
+    yPercent: 30, opacity: 0, duration: 0.75, ease: 'power3.out', stagger: 0.045,
+    scrollTrigger: { trigger: '#trackList', start: 'top 82%' }
+  });
+
+  /* ---- MOTION #3 — scroll-velocity distortion on the tracklist ---- */
+  if (DESKTOP) {
+    var skewTarget = { v: 0 }, skewSet = gsap.quickSetter('.track', 'skewY', 'deg');
+    ScrollTrigger.create({
+      trigger: '#trackList', start: 'top bottom', end: 'bottom top',
+      onUpdate: function(self){
+        var v = gsap.utils.clamp(-5, 5, self.getVelocity() / -420);
+        skewTarget.v = v;
+        VIS.turb = Math.min(0.5, Math.abs(self.getVelocity()) / 9000);
+      }
+    });
+    gsap.ticker.add(function(){
+      skewTarget.v += (0 - skewTarget.v) * 0.09;
+      skewSet(skewTarget.v);
+      VIS.turb += (0 - VIS.turb) * 0.06;
+    });
+  }
+
+  /* ---- count-ups ---- */
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var end = parseFloat(el.getAttribute('data-count'));
+    var obj = { v: 0 };
+    gsap.to(obj, {
+      v: end, duration: 1.6, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+      onUpdate: function(){ el.textContent = Math.round(obj.v); }
+    });
+  });
+
+  /* ---- tour rows ---- */
+  gsap.from('.date', {
+    yPercent: 45, opacity: 0, duration: 0.7, ease: 'power3.out', stagger: 0.05,
+    scrollTrigger: { trigger: '#tourList', start: 'top 84%' }
+  });
+
+  /* ---- CTA ---- */
+  gsap.from('.cta h2', {
+    yPercent: 22, opacity: 0, duration: 1.2, ease: 'power4.out',
+    scrollTrigger: { trigger: '.cta', start: 'top 80%' }
+  });
+  gsap.from('.cta p, .cta-btns, .cta-note', {
+    y: 30, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08,
+    scrollTrigger: { trigger: '.cta', start: 'top 74%' }
+  });
+
+  ScrollTrigger.refresh();
+}
+var rdBandEl = document.getElementById('rdBand');
+
+/* ============================================================
+   MOTION #4 — TRACKLIST: per-track hover scrub + expanding rows
+   ============================================================ */
+function seeded(i){ var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+
+var scrubs = [];
+document.querySelectorAll('.track').forEach(function(row, idx){
+  var holder = row.querySelector('.track-scrub');
+  var cv = holder ? holder.querySelector('canvas') : null;
+  var detail = row.querySelector('.track-detail');
+  var inner = row.querySelector('.track-detail-in');
+  var trigger = row.querySelector('.track-row');
+
+  /* deterministic waveform shape per track */
+  var N = 58, data = [];
+  for (var i = 0; i < N; i++){
+    var a = seeded(idx * 100 + i);
+    var b2 = seeded(idx * 100 + i + 37);
+    var env = Math.sin((i / (N - 1)) * Math.PI);
+    data.push(0.16 + (a * 0.55 + b2 * 0.3) * (0.35 + env * 0.75));
+  }
+
+  var state = { head: -1, dpr: 1, w: 0, h: 0, ctx: null, raf: 0 };
+  scrubs.push({ cv: cv, state: state, data: data });
+
+  function size(){
+    if (!cv) return;
+    var r = cv.getBoundingClientRect();
+    if (!r.width) return;
+    state.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    state.w = Math.round(r.width); state.h = Math.round(r.height);
+    cv.width = Math.round(state.w * state.dpr);
+    cv.height = Math.round(state.h * state.dpr);
+    state.ctx = cv.getContext('2d');
+    if (state.ctx) state.ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
+    paint();
+  }
+  function paint(){
+    var c = state.ctx;
+    if (!c || !state.w) return;
+    c.clearRect(0, 0, state.w, state.h);
+    var gap = 2, bw = (state.w - gap * (N - 1)) / N;
+    for (var i = 0; i < N; i++){
+      var x = i * (bw + gap);
+      var frac = i / (N - 1);
+      var played = state.head >= 0 && frac <= state.head;
+      var hgt = data[i] * state.h * (played ? 1 : 0.72);
+      c.fillStyle = played ? 'rgba(200,255,61,0.95)' : 'rgba(242,242,240,0.26)';
+      c.fillRect(x, (state.h - hgt) / 2, Math.max(1, bw), hgt);
+    }
+    if (state.head >= 0){
+      c.fillStyle = 'rgba(200,255,61,1)';
+      c.fillRect(state.head * state.w, 0, 1, state.h);
+    }
+  }
+  state.paint = paint;
+  state.size = size;
+  size();
+
+  /* per-track hover scrub: pointer x drives the playhead, rAF-throttled */
+  if (holder && DESKTOP){
+    holder.addEventListener('pointermove', function(e){
+      var r = holder.getBoundingClientRect();
+      state.head = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      if (!state.raf) state.raf = requestAnimationFrame(function(){ state.raf = 0; paint(); });
+    });
+    holder.addEventListener('pointerleave', function(){
+      state.head = -1;
+      if (!state.raf) state.raf = requestAnimationFrame(function(){ state.raf = 0; paint(); });
+    });
+  }
+
+  /* expanding row */
+  function toggle(){
+    var open = row.classList.toggle('open');
+    if (trigger) trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (!HAS_GSAP || REDUCED){
+      detail.style.height = open ? 'auto' : '0px';
+      return;
+    }
+    gsap.killTweensOf(detail);
+    if (open){
+      gsap.to(detail, {
+        height: inner.offsetHeight, duration: 0.62, ease: 'power3.out',
+        onComplete: function(){ detail.style.height = 'auto'; ScrollTrigger.refresh(); }
+      });
+      gsap.fromTo(inner.children,
+        { y: 18, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out', stagger: 0.06, delay: 0.08 });
+    } else {
+      gsap.to(detail, {
+        height: 0, duration: 0.45, ease: 'power3.inOut',
+        onComplete: function(){ ScrollTrigger.refresh(); }
+      });
+    }
+  }
+  if (trigger){
+    trigger.addEventListener('click', toggle);
+    trigger.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+    });
+  }
+});
+window.addEventListener('resize', function(){
+  scrubs.forEach(function(s){ if (s.state.size) s.state.size(); });
+});
+
+/* ============================================================
+   Cursor-follow venue image on tour rows (desktop only)
+   ============================================================ */
+if (DESKTOP && !REDUCED && HAS_GSAP){
+  var tImg = document.getElementById('tourImg');
+  var tp = { x: window.innerWidth / 2, y: window.innerHeight / 2, tx: 0, ty: 0 };
+  var setX = gsap.quickSetter(tImg, 'x', 'px');
+  var setY = gsap.quickSetter(tImg, 'y', 'px');
+  document.querySelectorAll('.date').forEach(function(d){
+    d.addEventListener('pointerenter', function(){ gsap.to(tImg, { opacity: 1, duration: 0.4, ease: 'power2.out' }); });
+    d.addEventListener('pointerleave', function(){ gsap.to(tImg, { opacity: 0, duration: 0.35, ease: 'power2.out' }); });
+  });
+  window.addEventListener('pointermove', function(e){ tp.tx = e.clientX + 26; tp.ty = e.clientY - 145; });
+  gsap.ticker.add(function(){
+    tp.x += (tp.tx - tp.x) * 0.11;
+    tp.y += (tp.ty - tp.y) * 0.11;
+    setX(tp.x); setY(tp.y);
+  });
+}
+
+/* ============================================================
+   Magnetic CTA buttons
+   ============================================================ */
+if (DESKTOP && !REDUCED && HAS_GSAP){
+  document.querySelectorAll('.magnetic').forEach(function(btn){
+    var m = { x: 0, y: 0, tx: 0, ty: 0, active: false };
+    var sx = gsap.quickSetter(btn, 'x', 'px'), sy = gsap.quickSetter(btn, 'y', 'px');
+    btn.addEventListener('pointerenter', function(){ m.active = true; });
+    btn.addEventListener('pointerleave', function(){ m.active = false; m.tx = 0; m.ty = 0; });
+    btn.addEventListener('pointermove', function(e){
+      var r = btn.getBoundingClientRect();
+      m.tx = (e.clientX - (r.left + r.width / 2)) * 0.34;
+      m.ty = (e.clientY - (r.top + r.height / 2)) * 0.5;
+    });
+    gsap.ticker.add(function(){
+      m.x += (m.tx - m.x) * 0.14;
+      m.y += (m.ty - m.y) * 0.14;
+      sx(m.x); sy(m.y);
+    });
+  });
+}
+
+/* ============================================================
+   INTRO LOADER — counter + curtain wipe
+   ============================================================ */
+(function intro(){
+  var loader = document.getElementById('loader');
+  var count = document.getElementById('loadCount');
+  var fill = document.getElementById('loadFill');
+
+  if (REDUCED || !HAS_GSAP || !loader){
+    if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+    startPage();
+    return;
+  }
+  var o = { n: 0 };
+  var tl = gsap.timeline({
+    onComplete: function(){
+      if (loader.parentNode) loader.parentNode.removeChild(loader);
+      startPage();
+    }
+  });
+  tl.to(o, {
+      n: 100, duration: 1.75, ease: 'power2.inOut',
+      onUpdate: function(){
+        var v = Math.round(o.n);
+        count.innerHTML = (v < 10 ? '0' : '') + v + '<sup>%</sup>';
+      }
+    })
+    .to(fill, { scaleX: 1, duration: 1.75, ease: 'power2.inOut' }, 0)
+    .to('.load-mid, .load-foot', { opacity: 0, y: -18, duration: 0.4, ease: 'power2.in' }, '>-0.05')
+    .to('#loader .curtains span', {
+      scaleY: 0, duration: 0.85, ease: 'power4.inOut', stagger: 0.055
+    }, '-=0.15')
+    .to(loader, { backgroundColor: 'rgba(5,5,5,0)', duration: 0.5 }, '<0.15');
+})();
+
+/* keep ScrollTrigger honest after fonts land */
+if (document.fonts && document.fonts.ready){
+  document.fonts.ready.then(function(){
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+    sizeCanvas();
+    scrubs.forEach(function(s){ if (s.state.size) s.state.size(); });
+  });
+}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campo Alto — Atlas Residential, Príncipe Real, Lisboa</title>
+<meta name="description" content="Campo Alto: 42 residences in Príncipe Real, Lisboa. By Atlas Residential and Estúdio Mena Ferreira. Completion Q2 2027. From €785,000.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ATLAS RESIDENTIAL — CAMPO ALTO
+   Palette : warm sand / bone / deep charcoal, muted terracotta accent
+   Type    : Newsreader (transitional serif) + Archivo (grotesk UI/data)
+   ============================================================ */
+
+:root{
+  --sand:      #F2EDE6;
+  --bone:      #E9E2D7;
+  --clay:      #DDD3C4;
+  --shadow:    #CFC4B3;
+  --ink:       #1E1C19;
+  --ink-2:     #46423B;
+  --ink-3:     #7E776C;
+  --line:      #D3C9BA;
+  --accent:    #A0563A;   /* muted terracotta — used sparingly */
+
+  --m:  clamp(20px, 5.2vw, 96px);      /* page margin */
+  --gap: clamp(20px, 2.4vw, 40px);
+
+  --f-serif: "Newsreader", "Times New Roman", serif;
+  --f-sans:  "Archivo", "Helvetica Neue", Arial, sans-serif;
+
+  --e-out: cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{
+  -webkit-text-size-adjust:100%;
+  scroll-behavior:auto;
+}
+html,body{
+  overflow-x:clip;          /* clip (not hidden) — does not break position:sticky */
+}
+body{
+  margin:0;
+  background:var(--sand);
+  color:var(--ink);
+  font-family:var(--f-sans);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-feature-settings:"tnum" 0;
+}
+body.is-locked{ height:100vh; overflow:hidden; }
+
+img{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button,input,textarea,select{ font:inherit; color:inherit; }
+
+::selection{ background:var(--accent); color:var(--sand); }
+
+/* ---------- typography primitives ---------- */
+.serif{ font-family:var(--f-serif); font-weight:300; letter-spacing:-0.018em; line-height:0.98; }
+
+.d1{ font-family:var(--f-serif); font-weight:300; font-size:clamp(58px,12.4vw,196px); line-height:0.86; letter-spacing:-0.032em; }
+.d2{ font-family:var(--f-serif); font-weight:300; font-size:clamp(38px,6.2vw,96px);  line-height:0.95; letter-spacing:-0.026em; }
+.d3{ font-family:var(--f-serif); font-weight:300; font-size:clamp(28px,3.4vw,52px);  line-height:1.04; letter-spacing:-0.02em; }
+.d4{ font-family:var(--f-serif); font-weight:300; font-size:clamp(22px,2.1vw,32px);  line-height:1.14; letter-spacing:-0.014em; }
+
+.lede{ font-family:var(--f-serif); font-weight:300; font-size:clamp(19px,1.62vw,25px); line-height:1.5; color:var(--ink-2); }
+
+.label{
+  font-family:var(--f-sans); font-size:11px; font-weight:500;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-3);
+}
+.label--accent{ color:var(--accent); }
+
+.body{ font-size:15.5px; line-height:1.72; color:var(--ink-2); max-width:56ch; }
+.body + .body{ margin-top:1.1em; }
+
+.num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+
+em.acc{ font-style:italic; color:var(--accent); }
+
+/* word-mask reveal primitives */
+.w{ display:inline-block; overflow:hidden; vertical-align:bottom; padding-bottom:0.16em; margin-bottom:-0.16em; }
+.w-i{ display:inline-block; will-change:transform; }
+
+/* generic rise-in items */
+.rise{ }
+
+hr.rule{ border:0; height:1px; background:var(--line); margin:0; }
+
+/* ============================================================
+   INTRO CURTAIN
+   ============================================================ */
+#intro{
+  position:fixed; inset:0; z-index:200;
+  background:var(--sand);
+  display:grid; grid-template-rows:1fr auto;
+  padding:var(--m);
+}
+#intro .intro-mark{
+  align-self:center; justify-self:start;
+  display:flex; align-items:baseline; gap:.5em;
+  overflow:hidden;
+}
+#intro .intro-mark span{
+  font-family:var(--f-serif); font-weight:300;
+  font-size:clamp(44px,8vw,120px); line-height:1; letter-spacing:-0.03em;
+  display:inline-block;
+}
+#intro .intro-foot{
+  display:flex; justify-content:space-between; align-items:flex-end;
+  border-top:1px solid var(--line); padding-top:14px;
+}
+#intro .intro-count{
+  font-family:var(--f-sans); font-size:clamp(40px,7vw,86px); font-weight:400;
+  letter-spacing:-0.04em; line-height:.9; font-variant-numeric:tabular-nums;
+}
+#intro .intro-bar{
+  position:absolute; left:var(--m); right:var(--m); bottom:calc(var(--m) + 96px);
+  height:1px; background:var(--line);
+}
+#intro .intro-bar i{
+  position:absolute; inset:0 auto 0 0; width:0%; background:var(--accent); display:block;
+}
+.curtains{ position:fixed; inset:0; z-index:199; pointer-events:none; display:flex; }
+.curtains i{ flex:1; background:var(--bone); transform-origin:bottom; }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:120;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px var(--m);
+  mix-blend-mode:normal;
+  transition:transform .5s var(--e-out), background-color .4s ease, border-color .4s ease;
+  border-bottom:1px solid transparent;
+}
+.nav.is-solid{ background:rgba(242,237,230,.86); backdrop-filter:blur(10px); border-bottom-color:var(--line); }
+.nav.is-hidden{ transform:translateY(-104%); }
+.nav__mark{ font-family:var(--f-serif); font-size:20px; letter-spacing:.02em; }
+.nav__mark b{ font-weight:400; }
+.nav__mark span{ color:var(--ink-3); font-family:var(--f-sans); font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; margin-left:.7em; }
+.nav__links{ display:flex; gap:clamp(16px,2vw,34px); }
+.nav__links a{
+  font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:500;
+  position:relative; padding-bottom:3px;
+}
+.nav__links a::after{
+  content:""; position:absolute; left:0; bottom:0; height:1px; width:100%;
+  background:var(--accent); transform:scaleX(0); transform-origin:right;
+  transition:transform .45s var(--e-out);
+}
+.nav__links a:hover::after{ transform:scaleX(1); transform-origin:left; }
+
+.btn{
+  display:inline-flex; align-items:center; gap:.7em;
+  border:1px solid var(--ink); border-radius:999px;
+  padding:11px 20px; font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; font-weight:500;
+  background:transparent; cursor:pointer; position:relative; overflow:hidden;
+  transition:color .38s var(--e-out), border-color .38s var(--e-out);
+}
+.btn i{ position:absolute; inset:0; background:var(--ink); transform:scaleY(0); transform-origin:bottom; transition:transform .48s var(--e-out); z-index:0; }
+.btn span{ position:relative; z-index:1; }
+.btn:hover{ color:var(--sand); }
+.btn:hover i{ transform:scaleY(1); transform-origin:top; }
+.btn--accent{ border-color:var(--accent); color:var(--accent); }
+.btn--accent i{ background:var(--accent); }
+.btn--lg{ padding:16px 30px; font-size:12px; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;
+  padding:calc(var(--m) + 92px) 0 0 0;
+  min-height:100svh;
+  display:grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,46%);   /* asymmetric: text wide, image column narrower */
+  align-items:start;
+  column-gap:var(--gap);
+}
+.hero__text{ padding-left:var(--m); padding-right:var(--gap); position:relative; z-index:3; }
+.hero__eyebrow{ display:flex; align-items:center; gap:14px; margin-bottom:clamp(20px,3.4vw,44px); }
+.hero__eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none; }
+.hero h1{ margin:0; }
+.hero h1 .ln{ display:block; }
+.hero h1 .ln--in{ padding-left:clamp(0px,9vw,180px); }
+.hero__sub{
+  margin-top:clamp(26px,3.6vw,52px);
+  display:grid; grid-template-columns: 1fr 1fr; gap:var(--gap);
+  max-width:720px;
+}
+.hero__sub .body{ font-size:15px; }
+.hero__cta{ margin-top:clamp(24px,3vw,40px); display:flex; gap:14px; flex-wrap:wrap; }
+
+/* image column bleeds off the RIGHT edge */
+.hero__media{
+  position:relative;
+  height:min(88vh,900px);
+  margin-right:calc(var(--m) * -1);
+  align-self:stretch;
+}
+.hero__layer{ position:absolute; overflow:hidden; background:var(--clay); }
+.hero__layer img{ width:100%; height:100%; object-fit:cover; will-change:transform; }
+.hero__layer--a{ top:0; right:0; width:100%; height:76%; }
+.hero__layer--b{ bottom:-6%; left:-30%; width:56%; height:40%; box-shadow:0 30px 70px -40px rgba(60,45,30,.5); }
+.hero__layer--c{ top:44%; right:6%; width:30%; height:24%; }
+
+.hero__caption{
+  position:absolute; left:-28%; bottom:-16%;
+  width:min(240px,44vw);
+  font-size:12px; line-height:1.55; color:var(--ink-3);
+}
+.hero__caption b{ color:var(--ink); font-weight:500; display:block; letter-spacing:.02em; }
+
+/* ---------- dateline ticker (supporting element) ---------- */
+.dateline{
+  margin-top:clamp(40px,7vw,110px);
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  overflow:hidden; padding:13px 0; background:var(--sand);
+  grid-column:1 / -1;
+}
+.dateline__track{ display:flex; gap:0; width:max-content; }
+.dateline__row{ display:flex; gap:0; will-change:transform; }
+.dateline__row span{
+  font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-2);
+  padding:0 26px; white-space:nowrap; display:inline-flex; align-items:center; gap:26px;
+}
+.dateline__row span::after{ content:""; width:4px; height:4px; border-radius:50%; background:var(--accent); opacity:.55; }
+
+/* ============================================================
+   SECTION SHELL
+   ============================================================ */
+.sec{ padding:clamp(80px,11vw,180px) var(--m); position:relative; }
+.sec__head{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:var(--gap);
+  align-items:end; margin-bottom:clamp(40px,5.6vw,86px);
+}
+.sec__head .label{ display:block; margin-bottom:18px; }
+.idx{ font-family:var(--f-sans); font-size:11px; letter-spacing:.16em; color:var(--ink-3); }
+
+/* ============================================================
+   STACKING STICKY CARDS  — signature motion
+   ============================================================ */
+#residences{ padding-bottom:0; }
+.stack{
+  position:relative;
+  /* NO overflow property here — an overflow value other than `visible`
+     on an ancestor turns it into the sticky scroll container and kills the effect */
+}
+.stack-item{
+  position:sticky;
+  top:0;
+  height:100vh;              /* each item owns a full viewport of scroll length */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.rescard{
+  position:relative;
+  width:100%;
+  height:min(84vh, 740px);
+  background:var(--bone);
+  border:1px solid var(--line);
+  display:grid;
+  grid-template-columns: 1.05fr 1fr;
+  overflow:hidden;
+  transform-origin:50% 12%;
+  will-change:transform;
+  box-shadow:0 40px 80px -60px rgba(60,45,30,.55);
+}
+.rescard--flip{ grid-template-columns:1fr 1.05fr; }
+.rescard--flip .rescard__media{ order:2; }
+.rescard--flip .rescard__body{ order:1; }
+
+.rescard__media{ position:relative; overflow:hidden; background:var(--clay); }
+.rescard__media img{ width:100%; height:100%; object-fit:cover; will-change:transform; }
+.rescard__tag{
+  position:absolute; left:0; top:24px;
+  background:var(--sand); color:var(--ink);
+  padding:8px 16px 8px 14px;
+  font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; font-weight:500;
+}
+.rescard__body{
+  padding:clamp(26px,3.2vw,54px);
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.rescard__no{
+  display:flex; align-items:baseline; justify-content:space-between;
+  border-bottom:1px solid var(--line); padding-bottom:14px;
+}
+.rescard__no b{ font-family:var(--f-serif); font-size:clamp(30px,3.2vw,46px); font-weight:300; letter-spacing:-.02em; line-height:1; }
+.rescard h3{ margin:clamp(20px,2.4vw,34px) 0 0; }
+.rescard__desc{ margin-top:16px; font-size:14.5px; line-height:1.68; color:var(--ink-2); max-width:44ch; }
+.rescard__spec{
+  margin-top:auto; padding-top:clamp(20px,2.4vw,32px);
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2px 0;
+  border-top:1px solid var(--line);
+}
+.rescard__spec div{ padding:12px 0; border-bottom:1px solid var(--line); }
+.rescard__spec div:nth-child(odd){ padding-right:16px; }
+.rescard__spec dt{ font-size:10.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-3); margin:0 0 5px; }
+.rescard__spec dd{ margin:0; font-size:15px; font-weight:500; letter-spacing:-.01em; font-variant-numeric:tabular-nums; }
+.rescard__price{ color:var(--accent); }
+.rescard__veil{ position:absolute; inset:0; background:var(--sand); opacity:0; pointer-events:none; }
+
+.stack-outro{ padding:clamp(64px,8vw,120px) 0 0; }
+
+/* ============================================================
+   PLACE — asymmetric editorial invention layout
+   ============================================================ */
+.place{ background:var(--bone); border-top:1px solid var(--line); }
+.place__grid{
+  display:grid;
+  grid-template-columns: minmax(0,7fr) minmax(0,4fr);   /* one column intentionally narrower */
+  gap:var(--gap);
+  align-items:start;
+}
+.place__figure{ position:relative; }
+.place__figure .big{ width:100%; aspect-ratio:4/3.1; overflow:hidden; background:var(--clay); }
+.place__figure .big img{ width:100%; height:100%; object-fit:cover; will-change:transform; }
+.place__figure .small{
+  position:absolute; right:-9%; bottom:-16%;
+  width:42%; aspect-ratio:3/4; overflow:hidden; background:var(--clay);
+  border:8px solid var(--bone);
+}
+.place__figure .small img{ width:100%; height:100%; object-fit:cover; }
+.place__figcap{ margin-top:18px; font-size:12px; color:var(--ink-3); max-width:38ch; }
+
+.place__col{ padding-top:clamp(0px,4vw,60px); }
+.place__col .d3{ margin:0 0 22px; }
+.place__quote{
+  margin:clamp(34px,4vw,56px) 0 0;
+  padding-left:22px; border-left:1px solid var(--accent);
+  font-family:var(--f-serif); font-size:clamp(19px,1.7vw,24px); line-height:1.42; font-style:italic; color:var(--ink);
+}
+.place__quote cite{ display:block; margin-top:14px; font-style:normal; font-family:var(--f-sans); font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-3); }
+
+/* walkable index */
+.walk{ margin-top:clamp(90px,11vw,170px); }
+.walk__list{ list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
+.walk__list li{
+  display:grid; grid-template-columns: 56px minmax(0,1fr) minmax(0,1.15fr) 90px;
+  gap:var(--gap); align-items:baseline;
+  padding:20px 0; border-bottom:1px solid var(--line);
+  position:relative;
+}
+.walk__list li::before{
+  content:""; position:absolute; left:-var(--m); right:0; top:0; bottom:0;
+  background:var(--sand); opacity:0; transition:opacity .4s var(--e-out); z-index:-1;
+}
+.walk__list li:hover::before{ opacity:.7; }
+.walk__list .n{ font-size:11px; color:var(--ink-3); letter-spacing:.1em; font-variant-numeric:tabular-nums; }
+.walk__list .t{ font-family:var(--f-serif); font-size:clamp(20px,1.9vw,27px); font-weight:300; letter-spacing:-.018em; transition:transform .5s var(--e-out), color .4s ease; }
+.walk__list li:hover .t{ transform:translateX(10px); color:var(--accent); }
+.walk__list .d{ font-size:13.5px; color:var(--ink-2); }
+.walk__list .m{ font-size:12px; color:var(--ink-3); text-align:right; letter-spacing:.06em; font-variant-numeric:tabular-nums; }
+
+/* ============================================================
+   SHOWCASE — scrubbed card → full-bleed scale-through
+   ============================================================ */
+.scaler{ position:relative; height:340vh; background:var(--sand); }
+.scaler__stage{ height:100vh; overflow:hidden; position:relative; }
+.scaler__frame{
+  position:absolute; inset:0;
+  clip-path: inset(22% 26% 22% 26%);
+  will-change:clip-path;
+}
+.scaler__frame img{ width:100%; height:100%; object-fit:cover; will-change:transform; }
+.scaler__scrim{
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(24,20,16,.62), rgba(24,20,16,0) 46%);
+  opacity:0;
+}
+.scaler__copy{
+  position:absolute; left:var(--m); right:var(--m); bottom:clamp(34px,5vw,72px);
+  color:var(--sand); display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+  gap:var(--gap); align-items:end; opacity:0;
+}
+.scaler__copy .d2{ margin:0; }
+.scaler__copy p{ font-size:14.5px; line-height:1.7; color:rgba(242,237,230,.78); margin:0; max-width:46ch; }
+.scaler__hint{
+  position:absolute; left:50%; top:calc(22% - 34px); transform:translateX(-50%);
+  font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3);
+}
+
+/* amenity strip below the scale-through */
+.amenity{ background:var(--sand); }
+.amenity__grid{
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0;
+  border-top:1px solid var(--line);
+}
+.amenity__grid > div{
+  padding:clamp(24px,2.6vw,38px) clamp(16px,1.8vw,28px) clamp(30px,3.4vw,48px);
+  border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.amenity__grid > div:last-child{ border-right:0; }
+.amenity__grid h4{ font-family:var(--f-serif); font-weight:300; font-size:clamp(20px,1.7vw,26px); letter-spacing:-.016em; margin:18px 0 10px; line-height:1.1; }
+.amenity__grid p{ margin:0; font-size:13.5px; line-height:1.65; color:var(--ink-2); }
+.amenity__grid .n{ font-size:10.5px; letter-spacing:.18em; color:var(--accent); }
+
+/* ============================================================
+   PROOF — count-ups + specification accordion
+   ============================================================ */
+.proof{ background:var(--ink); color:var(--sand); }
+.proof .label{ color:rgba(242,237,230,.5); }
+.proof .d2{ color:var(--sand); }
+.stats{
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  border-top:1px solid rgba(242,237,230,.16);
+}
+.stat{ padding:clamp(28px,3vw,44px) 0 clamp(30px,3.4vw,52px); border-right:1px solid rgba(242,237,230,.16); padding-right:var(--gap); }
+.stat:last-child{ border-right:0; }
+.stat__n{
+  font-family:var(--f-serif); font-weight:300;
+  font-size:clamp(46px,6.4vw,104px); line-height:.9; letter-spacing:-.038em;
+  font-variant-numeric:tabular-nums; display:flex; align-items:baseline;
+}
+.stat__n .suf{ font-size:.34em; letter-spacing:.04em; margin-left:.24em; color:var(--accent); font-family:var(--f-sans); }
+.stat__l{ margin-top:16px; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:rgba(242,237,230,.52); }
+.stat__d{ margin-top:8px; font-size:13px; color:rgba(242,237,230,.66); line-height:1.6; max-width:26ch; }
+
+.spec{ margin-top:clamp(70px,9vw,130px); display:grid; grid-template-columns:minmax(0,4fr) minmax(0,7fr); gap:var(--gap); align-items:start; }
+.acc{ border-top:1px solid rgba(242,237,230,.16); }
+.acc__item{ border-bottom:1px solid rgba(242,237,230,.16); }
+.acc__btn{
+  width:100%; background:none; border:0; cursor:pointer; text-align:left;
+  display:grid; grid-template-columns:44px minmax(0,1fr) 30px; gap:var(--gap); align-items:center;
+  padding:clamp(20px,2.2vw,30px) 0; color:var(--sand);
+}
+.acc__btn .n{ font-size:11px; color:rgba(242,237,230,.42); letter-spacing:.1em; font-variant-numeric:tabular-nums; }
+.acc__btn .t{ font-family:var(--f-serif); font-weight:300; font-size:clamp(21px,2.1vw,32px); letter-spacing:-.018em; transition:color .35s ease, transform .5s var(--e-out); }
+.acc__btn:hover .t{ color:var(--accent); transform:translateX(8px); }
+.acc__sign{ position:relative; width:14px; height:14px; justify-self:end; }
+.acc__sign::before,.acc__sign::after{ content:""; position:absolute; background:rgba(242,237,230,.7); transition:transform .45s var(--e-out); }
+.acc__sign::before{ left:0; right:0; top:6.5px; height:1px; }
+.acc__sign::after{ top:0; bottom:0; left:6.5px; width:1px; }
+.acc__item.is-open .acc__sign::after{ transform:scaleY(0); }
+.acc__item.is-open .acc__btn .t{ color:var(--accent); }
+.acc__panel{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .62s var(--e-out); }
+.acc__item.is-open .acc__panel{ grid-template-rows:1fr; }
+.acc__inner{ overflow:hidden; }
+.acc__inner > div{
+  padding:0 0 clamp(24px,2.6vw,36px) calc(44px + var(--gap));
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px var(--gap);
+}
+.acc__inner p{ margin:0 0 10px; font-size:13.8px; line-height:1.72; color:rgba(242,237,230,.7); }
+.acc__inner ul{ margin:0; padding:0; list-style:none; }
+.acc__inner li{ font-size:13px; line-height:1.5; color:rgba(242,237,230,.62); padding:7px 0; border-bottom:1px solid rgba(242,237,230,.1); display:flex; justify-content:space-between; gap:20px; }
+.acc__inner li b{ font-weight:500; color:rgba(242,237,230,.9); }
+
+.spec__aside .body{ color:rgba(242,237,230,.66); }
+.spec__aside .d3{ color:var(--sand); }
+
+/* ============================================================
+   CTA / ENQUIRY
+   ============================================================ */
+.cta{ background:var(--sand); }
+.cta__grid{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:clamp(36px,5vw,90px); align-items:start; }
+.cta__grid .d2{ margin:0 0 24px; }
+.cta__meta{ margin-top:clamp(34px,4vw,56px); display:grid; gap:2px; }
+.cta__meta div{ display:flex; justify-content:space-between; gap:20px; padding:13px 0; border-top:1px solid var(--line); font-size:13.5px; }
+.cta__meta div:last-child{ border-bottom:1px solid var(--line); }
+.cta__meta span:first-child{ color:var(--ink-3); font-size:11px; letter-spacing:.14em; text-transform:uppercase; align-self:center; }
+.cta__meta span:last-child{ text-align:right; }
+
+.form{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 var(--gap); }
+.field{ position:relative; border-bottom:1px solid var(--line); padding-top:26px; }
+.field--full{ grid-column:1 / -1; }
+.field label{
+  position:absolute; top:26px; left:0; font-size:14px; color:var(--ink-3);
+  pointer-events:none; transform-origin:left top;
+  transition:transform .42s var(--e-out), color .3s ease;
+}
+.field input,.field textarea,.field select{
+  width:100%; background:none; border:0; outline:none;
+  padding:6px 0 13px; font-size:15px; color:var(--ink); border-radius:0;
+}
+.field textarea{ resize:none; min-height:74px; }
+.field select{ appearance:none; cursor:pointer; }
+.field select + label,
+.field.is-filled label,
+.field input:focus + label,.field textarea:focus + label{
+  transform:translateY(-24px) scale(.74); color:var(--accent);
+}
+.field::after{ content:""; position:absolute; left:0; bottom:-1px; height:1px; width:100%; background:var(--accent); transform:scaleX(0); transform-origin:right; transition:transform .5s var(--e-out); }
+.field:focus-within::after{ transform:scaleX(1); transform-origin:left; }
+.field .chev{ position:absolute; right:2px; bottom:16px; font-size:11px; color:var(--ink-3); pointer-events:none; }
+.form__foot{ grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between; gap:20px; margin-top:30px; flex-wrap:wrap; }
+.form__note{ font-size:11.5px; color:var(--ink-3); max-width:40ch; line-height:1.55; }
+.form__ok{ grid-column:1/-1; margin-top:18px; font-size:13.5px; color:var(--accent); display:none; }
+.form.is-sent .form__ok{ display:block; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot{ background:var(--bone); border-top:1px solid var(--line); padding:clamp(56px,7vw,96px) var(--m) 0; }
+.foot__cols{
+  display:grid; grid-template-columns:minmax(0,2.1fr) repeat(4,minmax(0,1fr));
+  gap:var(--gap); padding-bottom:clamp(46px,6vw,80px);
+}
+.foot__brand .d4{ margin:0 0 14px; }
+.foot__brand p{ font-size:13px; color:var(--ink-2); line-height:1.65; max-width:30ch; margin:0 0 20px; }
+.foot h5{ margin:0 0 18px; font-size:10.5px; letter-spacing:.17em; text-transform:uppercase; color:var(--ink-3); font-weight:500; }
+.foot ul{ list-style:none; margin:0; padding:0; display:grid; gap:9px; }
+.foot li a, .foot li span{ font-size:13.2px; color:var(--ink-2); transition:color .3s ease; display:inline-block; }
+.foot li a:hover{ color:var(--accent); }
+.foot__word{
+  border-top:1px solid var(--line);
+  padding:clamp(22px,3vw,40px) 0 clamp(14px,2vw,22px);
+  font-family:var(--f-serif); font-weight:300;
+  font-size:clamp(52px,15.5vw,250px); line-height:.8; letter-spacing:-.045em;
+  color:var(--ink); overflow:hidden; white-space:nowrap;
+}
+.foot__bar{
+  border-top:1px solid var(--line);
+  display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  padding:18px 0 26px; font-size:11px; letter-spacing:.08em; color:var(--ink-3);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1180px){
+  .rescard__desc{ display:none; }
+}
+@media (max-width:1023px){
+  .hero{ grid-template-columns:1fr; min-height:auto; padding-top:calc(var(--m) + 78px); }
+  .hero__text{ padding-right:var(--m); }
+  .hero h1 .ln--in{ padding-left:0; }
+  .hero__sub{ grid-template-columns:1fr; }
+  .hero__media{ height:min(62vh,520px); margin:44px 0 0; margin-right:calc(var(--m) * -1); margin-left:var(--m); }
+  .hero__layer--a{ height:100%; }
+  .hero__layer--b{ display:none; }
+  .hero__layer--c{ display:none; }
+  .hero__caption{ display:none; }
+  .dateline{ margin-top:52px; }
+
+  /* stacking degrades to plain vertical flow */
+  .stack-item{ position:relative; top:auto; height:auto; margin-bottom:22px; }
+  .rescard{ height:auto; grid-template-columns:1fr; box-shadow:none; }
+  .rescard--flip{ grid-template-columns:1fr; }
+  .rescard--flip .rescard__media{ order:1; }
+  .rescard--flip .rescard__body{ order:2; }
+  .rescard__media{ aspect-ratio:4/3; }
+  .rescard__desc{ display:block; }
+
+  .sec__head{ grid-template-columns:1fr; }
+  .place__grid{ grid-template-columns:1fr; }
+  .place__figure .small{ position:relative; right:auto; bottom:auto; width:56%; margin:-14% 0 0 auto; border-width:6px; }
+  .place__col{ padding-top:34px; }
+  .walk__list li{ grid-template-columns:36px minmax(0,1fr); gap:10px var(--gap); }
+  .walk__list .d{ grid-column:2; }
+  .walk__list .m{ grid-column:2; text-align:left; }
+
+  .scaler{ height:auto; }
+  .scaler__stage{ height:auto; }
+  .scaler__frame{ position:relative; clip-path:none; height:64vh; }
+  .scaler__scrim{ opacity:1; }
+  .scaler__copy{ opacity:1; grid-template-columns:1fr; gap:16px; }
+  .scaler__hint{ display:none; }
+
+  .amenity__grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .amenity__grid > div:nth-child(2n){ border-right:0; }
+  .stats{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .stat:nth-child(2n){ border-right:0; }
+  .stat{ border-bottom:1px solid rgba(242,237,230,.16); }
+  .spec{ grid-template-columns:1fr; }
+  .acc__inner > div{ grid-template-columns:1fr; padding-left:0; }
+  .acc__btn{ grid-template-columns:34px minmax(0,1fr) 24px; }
+
+  .cta__grid{ grid-template-columns:1fr; }
+  .foot__cols{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:38px var(--gap); }
+  .foot__brand{ grid-column:1 / -1; }
+  .nav__links{ display:none; }
+}
+@media (max-width:560px){
+  .form{ grid-template-columns:1fr; }
+  .amenity__grid{ grid-template-columns:1fr; }
+  .amenity__grid > div{ border-right:0; }
+  .stats{ grid-template-columns:1fr; }
+  .stat{ border-right:0; }
+  .foot__cols{ grid-template-columns:1fr; }
+}
+
+/* ============================================================
+   REDUCED MOTION — everything lands in its final state
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  #intro,.curtains{ display:none !important; }
+  .w-i{ transform:none !important; }
+  .scaler{ height:auto; }
+  .scaler__stage{ height:auto; }
+  .scaler__frame{ position:relative; clip-path:none !important; height:70vh; }
+  .scaler__scrim{ opacity:1 !important; }
+  .scaler__copy{ opacity:1 !important; }
+  .scaler__hint{ display:none; }
+  .stack-item{ position:relative; top:auto; height:auto; margin-bottom:20px; }
+  .rescard{ height:auto; transform:none !important; }
+  .rescard__media{ aspect-ratio:16/10; }
+  *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ══════════════════ INTRO CURTAIN ══════════════════ -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-mark">
+    <span data-i>A</span><span data-i>T</span><span data-i>L</span><span data-i>A</span><span data-i>S</span>
+  </div>
+  <div class="intro-bar"><i id="introBar"></i></div>
+  <div class="intro-foot">
+    <div>
+      <div class="label" style="margin-bottom:10px">Campo Alto — Príncipe Real, Lisboa</div>
+      <div class="label label--accent">42 Residences · Completion Q2 2027</div>
+    </div>
+    <div class="intro-count num" id="introCount">00</div>
+  </div>
+</div>
+<div class="curtains" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<header class="nav" id="nav">
+  <a class="nav__mark" href="#top"><b>Atlas</b> <span>Residential</span></a>
+  <nav class="nav__links">
+    <a href="#residences">Residences</a>
+    <a href="#place">Príncipe Real</a>
+    <a href="#house">The House</a>
+    <a href="#detail">Specification</a>
+  </nav>
+  <a class="btn" href="#enquire"><i></i><span>Register interest</span></a>
+</header>
+
+
+<main id="top">
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero">
+  <div class="hero__text">
+    <div class="hero__eyebrow">
+      <span class="dot"></span>
+      <span class="label">Atlas Residential — Development No. 14</span>
+    </div>
+
+    <h1 class="d1" data-split>
+      <span class="ln">Campo</span>
+      <span class="ln ln--in">Alto</span>
+    </h1>
+
+    <div class="hero__sub">
+      <p class="lede" data-reveal>Forty-two residences on the high ground of Príncipe Real, built in board-marked concrete, lime plaster and Portuguese chestnut.</p>
+      <div>
+        <p class="body" data-reveal>Estúdio Mena Ferreira has set two low volumes around a walled garden on the site of the old Casa Vilar seed warehouse, keeping the 1908 façade on Rua do Século and the four jacarandas behind it.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#residences"><i></i><span>View the residences</span></a>
+          <a class="btn btn--lg btn--accent" href="#enquire"><i></i><span>Book a viewing</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__media">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <div class="hero__layer hero__layer--a" data-par="0.14">
+      <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1500&q=80" alt="Living room of a Campo Alto residence with lime-plaster walls and chestnut floors">
+    </div>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <div class="hero__layer hero__layer--b" data-par="-0.20">
+      <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1100&q=80" alt="Warm interior corner with linen seating and afternoon light">
+      <div class="hero__caption"><b>Type C · Garden Maisonette</b>Southwest terrace, 40 m², facing the walled garden.</div>
+    </div>
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <div class="hero__layer hero__layer--c" data-par="0.30">
+      <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=80" alt="Detail of a bedroom with plaster walls and a timber-framed window">
+    </div>
+  </div>
+
+  <div class="dateline">
+    <div class="dateline__track" id="dateline">
+      <div class="dateline__row">
+        <span>42 Residences</span><span>Príncipe Real, Lisboa</span><span>Estúdio Mena Ferreira</span><span>Interiors by Studio Corvo</span><span>68–214 m² · 730–2,300 sq ft</span><span>From €785,000</span><span>Completion Q2 2027</span><span>Reservations open</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ STACKING STICKY CARDS ══════════════════ -->
+<section class="sec" id="residences">
+  <div class="sec__head">
+    <div>
+      <span class="label label--accent">01 — The Residences</span>
+      <h2 class="d2" data-split>Four plan types, no repeated apartment.</h2>
+    </div>
+    <div>
+      <p class="body" data-reveal>Every residence is dual-aspect or better. Ceilings run 2.94 m on floors one to five and 3.35 m on the ground floor, where the old warehouse structure allowed it. Twenty-nine of the forty-two have private outdoor space of 8 m² or more.</p>
+      <p class="body" data-reveal>Twelve are already reserved off-plan. Floorplans and the full price list are released to registered parties on request.</p>
+    </div>
+  </div>
+
+  <div class="stack" id="stack">
+
+    <!-- CARD 1 -->
+    <div class="stack-item">
+      <article class="rescard">
+        <div class="rescard__media">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1300&q=80" alt="One-bedroom courtyard residence interior" loading="lazy">
+          <div class="rescard__tag">Type A · 14 available</div>
+        </div>
+        <div class="rescard__body">
+          <div>
+            <div class="rescard__no">
+              <b class="num">01</b>
+              <span class="label">Courtyard One-Bedroom</span>
+            </div>
+            <h3 class="d3" data-card-title>The Vilar</h3>
+            <p class="rescard__desc">Single-aspect onto the planted courtyard, with a 3.2 m kitchen wall in oiled chestnut and a full-height window seat. The quietest plan in the building — nothing faces the street.</p>
+          </div>
+          <dl class="rescard__spec">
+            <div><dt>Internal area</dt><dd>68–74 m² / 730–796 sq ft</dd></div>
+            <div><dt>Outdoor</dt><dd>Juliet balcony</dd></div>
+            <div><dt>Aspect</dt><dd>East, courtyard</dd></div>
+            <div><dt>From</dt><dd class="rescard__price">€785,000</dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="stack-item">
+      <article class="rescard rescard--flip">
+        <div class="rescard__media">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1300&q=80" alt="Two-bedroom garden maisonette living space" loading="lazy">
+          <div class="rescard__tag">Type C · 6 available</div>
+        </div>
+        <div class="rescard__body">
+          <div>
+            <div class="rescard__no">
+              <b class="num">02</b>
+              <span class="label">Garden Maisonette</span>
+            </div>
+            <h3 class="d3" data-card-title>The Século</h3>
+            <p class="rescard__desc">Two floors joined by a cast terrazzo stair, opening to a 40 m² southwest terrace under the jacarandas. Living level sits half a storey above the garden wall for privacy from Rua do Século.</p>
+          </div>
+          <dl class="rescard__spec">
+            <div><dt>Internal area</dt><dd>118 m² / 1,270 sq ft</dd></div>
+            <div><dt>Outdoor</dt><dd>40 m² terrace</dd></div>
+            <div><dt>Aspect</dt><dd>Southwest, dual</dd></div>
+            <div><dt>From</dt><dd class="rescard__price">€1,145,000</dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="stack-item">
+      <article class="rescard">
+        <div class="rescard__media">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1300&q=80" alt="Three-bedroom corner residence kitchen and dining" loading="lazy">
+          <div class="rescard__tag">Type E · 5 available</div>
+        </div>
+        <div class="rescard__body">
+          <div>
+            <div class="rescard__no">
+              <b class="num">03</b>
+              <span class="label">Corner Three-Bedroom</span>
+            </div>
+            <h3 class="d3" data-card-title>The Jacaranda</h3>
+            <p class="rescard__desc">Triple-aspect on the building's west corner, with a 9.4 m living wall of sliding chestnut screens and a separate scullery. Two of the five have a direct view down to the Tejo over the rooftops of Bica.</p>
+          </div>
+          <dl class="rescard__spec">
+            <div><dt>Internal area</dt><dd>164 m² / 1,765 sq ft</dd></div>
+            <div><dt>Outdoor</dt><dd>14 m² loggia</dd></div>
+            <div><dt>Aspect</dt><dd>North / west / south</dd></div>
+            <div><dt>From</dt><dd class="rescard__price">€1,680,000</dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="stack-item">
+      <article class="rescard rescard--flip">
+        <div class="rescard__media">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1300&q=80" alt="Penthouse roof house interior with terrace doors" loading="lazy">
+          <div class="rescard__tag">Type G · 2 available</div>
+        </div>
+        <div class="rescard__body">
+          <div>
+            <div class="rescard__no">
+              <b class="num">04</b>
+              <span class="label">The Roof Houses</span>
+            </div>
+            <h3 class="d3" data-card-title>The Miradouro</h3>
+            <p class="rescard__desc">Two four-bedroom houses set back on the sixth floor, each with a 96 m² roof terrace, an outdoor kitchen in board-marked concrete and a 6 m plunge pool. Sold with two parking bays and a wine locker.</p>
+          </div>
+          <dl class="rescard__spec">
+            <div><dt>Internal area</dt><dd>214 m² / 2,300 sq ft</dd></div>
+            <div><dt>Outdoor</dt><dd>96 m² roof terrace</dd></div>
+            <div><dt>Aspect</dt><dd>360° · river view</dd></div>
+            <div><dt>Price</dt><dd class="rescard__price">€3,400,000</dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+
+  </div>
+
+  <div class="stack-outro">
+    <hr class="rule">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;padding-top:20px">
+      <span class="label">Price list issued 04 · 2026 · subject to availability</span>
+      <a class="btn" href="#enquire"><i></i><span>Request floorplans</span></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ PLACE — editorial asymmetric ══════════════════ -->
+<section class="sec place" id="place">
+  <div class="sec__head">
+    <div>
+      <span class="label label--accent">02 — The Neighbourhood</span>
+      <h2 class="d2" data-split>Nine minutes above <em class="acc">Chiado</em>, and a world quieter.</h2>
+    </div>
+    <div><p class="body" data-reveal>Príncipe Real is Lisbon's garden quarter: a plateau of nineteenth-century palacetes, plant nurseries and small kitchens, held together by the cedar in the middle of its square. Campo Alto sits on its western lip, where the ground begins to fall towards Bica and the river.</p></div>
+  </div>
+
+  <div class="place__grid">
+    <figure class="place__figure" style="margin:0">
+      <div class="big">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80" alt="Warm residential architecture in an old city quarter" loading="lazy" data-par-slow="0.10">
+      </div>
+      <div class="small">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=800&q=80" alt="Plaster stairwell detail with morning light" loading="lazy">
+      </div>
+      <figcaption class="place__figcap">The retained 1908 façade of the Casa Vilar seed warehouse, Rua do Século 118. Restoration by Oficina Rebelo.</figcaption>
+    </figure>
+
+    <div class="place__col">
+      <h3 class="d3" data-split>A site with a memory.</h3>
+      <p class="body" data-reveal>The warehouse supplied seed to the market gardens of Campolide until 1974, then sat half-empty for four decades. Atlas acquired it in 2022 with a condition attached by the Câmara: keep the street wall, keep the trees, and give the garden back to the block.</p>
+      <p class="body" data-reveal>So the new volumes step back from Rua do Século and sit low — six storeys at the tallest point, below the ridge line of the palacete next door. The 1,340 m² garden between them is planted with strawberry tree, oleander and rosemary by Teresa Roque, and is open to residents from first light.</p>
+
+      <blockquote class="place__quote" data-reveal>
+        “We were not trying to make a landmark. On this hill the good buildings are the ones you only notice on the second walk past.”
+        <cite>Inês Mena Ferreira — Estúdio Mena Ferreira</cite>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:24px">
+      <h3 class="d4" data-split>On foot from the front door</h3>
+      <span class="label">Walking times · measured 03 · 2026</span>
+    </div>
+    <ul class="walk__list">
+      <li><span class="n num">01</span><span class="t">Jardim do Príncipe Real</span><span class="d">The cedar, the Tuesday organic market, and the cisterns underneath it.</span><span class="m num">3 min</span></li>
+      <li><span class="n num">02</span><span class="t">Praça das Flores</span><span class="d">Six tables outside Tasca Baldracca; the best coffee on the hill at Copenhagen Coffee Lab.</span><span class="m num">5 min</span></li>
+      <li><span class="n num">03</span><span class="t">Miradouro de São Pedro de Alcântara</span><span class="d">The full castle-to-river panorama, two streets down through the gardens.</span><span class="m num">7 min</span></li>
+      <li><span class="n num">04</span><span class="t">Elevador da Bica</span><span class="d">Down to Cais do Sodré and the river ferries in under four minutes.</span><span class="m num">8 min</span></li>
+      <li><span class="n num">05</span><span class="t">Chiado &amp; Rua Serpa Pinto</span><span class="d">Bertrand, the Teatro São Carlos, and the Baixa beyond it.</span><span class="m num">9 min</span></li>
+      <li><span class="n num">06</span><span class="t">Rato Metro · Yellow line</span><span class="d">Eleven stops to the airport with one change at Saldanha.</span><span class="m num">11 min</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════════════ SHOWCASE — scrubbed scale-through ══════════════════ -->
+<section class="scaler" id="house">
+  <div class="scaler__stage">
+    <div class="scaler__frame" id="scalerFrame">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <img id="scalerImg" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80" alt="The residents' garden room at Campo Alto" loading="lazy">
+      <div class="scaler__scrim" id="scalerScrim"></div>
+      <div class="scaler__copy" id="scalerCopy">
+        <h2 class="d2">The Garden Room</h2>
+        <p>Two hundred and ten square metres on the courtyard level: a residents' library, a long chestnut table that seats fourteen, and doors that fold back into the garden for eight months of the year. Staffed daily from 07:00 to 23:00 by Atlas House Management.</p>
+      </div>
+    </div>
+    <div class="scaler__hint label" id="scalerHint">Scroll · the house opens</div>
+  </div>
+</section>
+
+<section class="sec amenity">
+  <div class="sec__head">
+    <div>
+      <span class="label label--accent">03 — Shared Rooms</span>
+      <h2 class="d2" data-split>Eight rooms held in common.</h2>
+    </div>
+    <div><p class="body" data-reveal>Service charge is budgeted at €3.85 per m² per month, fixed for the first three years by deed. It covers management, the garden, the pool plant and the concierge desk.</p></div>
+  </div>
+  <div class="amenity__grid">
+    <div>
+      <span class="n num">i</span>
+      <h4>16-metre lap pool</h4>
+      <p>Basement level, cut into the bedrock, held at 28 °C with a UV system instead of chlorine. Changing rooms in the same lime plaster as the residences.</p>
+    </div>
+    <div>
+      <span class="n num">ii</span>
+      <h4>Movement studio</h4>
+      <p>Sprung oak floor, 74 m², with Technogym Artis equipment and a bookable corner for the Tuesday and Friday classes run by Estúdio Nove.</p>
+    </div>
+    <div>
+      <span class="n num">iii</span>
+      <h4>Wine store</h4>
+      <p>Forty-two private lockers at 13 °C — one per residence — plus a tasting counter that takes six, off the garden room.</p>
+    </div>
+    <div>
+      <span class="n num">iv</span>
+      <h4>Bicycle workshop</h4>
+      <p>Sixty-eight racks, a repair bench, and a wash bay at the Rua do Século gate. Thirty-eight parking bays below, twenty of them with 11 kW chargers.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ PROOF — count-ups + specification ══════════════════ -->
+<section class="sec proof" id="detail">
+  <div class="sec__head">
+    <div>
+      <span class="label label--accent">04 — The Numbers</span>
+      <h2 class="d2" data-split>Built once, and properly.</h2>
+    </div>
+    <div><p class="body" style="color:rgba(242,237,230,.66)" data-reveal>Structure topped out in February 2026. Façade and glazing complete by November; handover of the first twelve residences begins in April 2027.</p></div>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat">
+      <div class="stat__n"><span class="num" data-count="42">0</span></div>
+      <div class="stat__l">Residences</div>
+      <div class="stat__d">One to four bedrooms across two volumes.</div>
+    </div>
+    <div class="stat">
+      <div class="stat__n"><span class="num" data-count="7">0</span></div>
+      <div class="stat__l">Storeys</div>
+      <div class="stat__d">Six above ground, one below the garden.</div>
+    </div>
+    <div class="stat">
+      <div class="stat__n"><span class="num" data-count="2300" data-sep="1">0</span><span class="suf">sq ft</span></div>
+      <div class="stat__l">Largest residence</div>
+      <div class="stat__d">The Miradouro roof houses, plus 96 m² of terrace.</div>
+    </div>
+    <div class="stat">
+      <div class="stat__n"><span class="num" data-count="2027">0</span></div>
+      <div class="stat__l">Completion</div>
+      <div class="stat__d">Second quarter. Ten-year structural warranty.</div>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="spec__aside">
+      <h3 class="d3" data-split>Specification</h3>
+      <p class="body" data-reveal>Written by Estúdio Mena Ferreira with Studio Corvo and issued in full to reserving purchasers. Sample boards are held at the sales gallery on Rua da Escola Politécnica.</p>
+      <p class="body" data-reveal>Purchasers reserving before September 2026 may specify from the alternate finish schedule at no cost.</p>
+    </div>
+
+    <div class="acc" id="acc">
+      <div class="acc__item">
+        <button class="acc__btn" type="button" aria-expanded="false"><span class="n num">01</span><span class="t">Kitchens</span><span class="acc__sign"></span></button>
+        <div class="acc__panel"><div class="acc__inner"><div>
+          <p>Designed as furniture rather than fitted units: oiled Portuguese chestnut fronts on a solid frame, with a 40 mm honed Estremoz marble top and an integrated drainer cut into the stone. Scullery to Types E and G.</p>
+          <ul>
+            <li><span>Appliances</span><b>Gaggenau 200 series</b></li>
+            <li><span>Extraction</span><b>Ducted, 620 m³/h</b></li>
+            <li><span>Tap</span><b>Vola KV1, brushed brass</b></li>
+            <li><span>Waste</span><b>Three-way separation drawer</b></li>
+          </ul>
+        </div></div></div>
+      </div>
+      <div class="acc__item">
+        <button class="acc__btn" type="button" aria-expanded="false"><span class="n num">02</span><span class="t">Bathrooms</span><span class="acc__sign"></span></button>
+        <div class="acc__panel"><div class="acc__inner"><div>
+          <p>Tadelakt walls in the principal bathrooms, hand-applied by Oficina Rebelo over four coats, with underfloor heating beneath a poured microcement floor. Second bathrooms in full-height Estremoz.</p>
+          <ul>
+            <li><span>Brassware</span><b>Vola 111, brushed brass</b></li>
+            <li><span>Sanitaryware</span><b>Duravit Starck 3</b></li>
+            <li><span>Mirror</span><b>Backlit, demisted</b></li>
+            <li><span>Floor heating</span><b>Zoned, per room</b></li>
+          </ul>
+        </div></div></div>
+      </div>
+      <div class="acc__item">
+        <button class="acc__btn" type="button" aria-expanded="false"><span class="n num">03</span><span class="t">Floors &amp; joinery</span><span class="acc__sign"></span></button>
+        <div class="acc__panel"><div class="acc__inner"><div>
+          <p>Engineered chestnut boards, 220 mm wide and 20 mm thick, laid in a single direction across each residence and finished with hardwax oil. All internal doors are full-height, flush, and hung on concealed pivots.</p>
+          <ul>
+            <li><span>Board</span><b>220 × 2,400 mm chestnut</b></li>
+            <li><span>Skirting</span><b>Shadow gap, 12 mm</b></li>
+            <li><span>Wardrobes</span><b>Fitted, all bedrooms</b></li>
+            <li><span>Ironmongery</span><b>FSB 1076, bronze</b></li>
+          </ul>
+        </div></div></div>
+      </div>
+      <div class="acc__item">
+        <button class="acc__btn" type="button" aria-expanded="false"><span class="n num">04</span><span class="t">Climate &amp; air</span><span class="acc__sign"></span></button>
+        <div class="acc__panel"><div class="acc__inner"><div>
+          <p>Air-source heat pumps serve underfloor heating and cooling throughout, with mechanical ventilation and heat recovery running continuously at low volume. No visible grilles in living rooms — supply is through linear slots in the ceiling shadow gap.</p>
+          <ul>
+            <li><span>System</span><b>Daikin Altherma 3</b></li>
+            <li><span>Ventilation</span><b>MVHR, F7 filtration</b></li>
+            <li><span>Energy class</span><b>A+ (certified)</b></li>
+            <li><span>Control</span><b>Per-room, app or dial</b></li>
+          </ul>
+        </div></div></div>
+      </div>
+      <div class="acc__item">
+        <button class="acc__btn" type="button" aria-expanded="false"><span class="n num">05</span><span class="t">Windows &amp; glazing</span><span class="acc__sign"></span></button>
+        <div class="acc__panel"><div class="acc__inner"><div>
+          <p>Bronze-anodised aluminium frames with a thermal break, triple-glazed to the street elevation and double to the garden. Reveals are deep — 340 mm — so that every opening carries a shadow, and every living room has one window that opens fully.</p>
+          <ul>
+            <li><span>Street glazing</span><b>Triple, Ug 0.6</b></li>
+            <li><span>Acoustic</span><b>38 dB reduction</b></li>
+            <li><span>Solar control</span><b>Exterior chestnut louvres</b></li>
+            <li><span>Terrace doors</span><b>Sliding, flush track</b></li>
+          </ul>
+        </div></div></div>
+      </div>
+      <div class="acc__item">
+        <button class="acc__btn" type="button" aria-expanded="false"><span class="n num">06</span><span class="t">Security &amp; access</span><span class="acc__sign"></span></button>
+        <div class="acc__panel"><div class="acc__inner"><div>
+          <p>Concierge desk staffed 07:00–23:00, with a night line thereafter. Access by phone credential or fob; deliveries are received into a temperature-split parcel room off the Rua do Século gate.</p>
+          <ul>
+            <li><span>Entrance</span><b>Two gated, one vehicular</b></li>
+            <li><span>Video</span><b>Door station to residence</b></li>
+            <li><span>Parcel room</span><b>Ambient &amp; chilled</b></li>
+            <li><span>Warranty</span><b>10-year structural</b></li>
+          </ul>
+        </div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ CTA / ENQUIRY ══════════════════ -->
+<section class="sec cta" id="enquire">
+  <div class="cta__grid">
+    <div>
+      <span class="label label--accent" style="display:block;margin-bottom:18px">05 — Register</span>
+      <h2 class="d2" data-split>Private viewings, Tuesday to Saturday.</h2>
+      <p class="body" data-reveal>The sales gallery holds the 1:50 model, the full material boards and two dressed rooms at finished specification. Viewings run at the hour; allow forty-five minutes.</p>
+
+      <div class="cta__meta">
+        <div><span>Sales gallery</span><span>Rua da Escola Politécnica 42, 1250-100 Lisboa</span></div>
+        <div><span>Hours</span><span>Tue–Sat, 10:00–18:00</span></div>
+        <div><span>Telephone</span><span>+351 21 099 4420</span></div>
+        <div><span>Email</span><span>residences@atlas.pt</span></div>
+        <div><span>Reservation</span><span>€15,000, refundable for 21 days</span></div>
+      </div>
+    </div>
+
+    <form class="form" id="form" novalidate>
+      <div class="field"><input id="fn" type="text" required autocomplete="given-name"><label for="fn">First name</label></div>
+      <div class="field"><input id="ln" type="text" required autocomplete="family-name"><label for="ln">Last name</label></div>
+      <div class="field field--full"><input id="em" type="email" required autocomplete="email"><label for="em">Email address</label></div>
+      <div class="field"><input id="ph" type="tel" autocomplete="tel"><label for="ph">Telephone</label></div>
+      <div class="field">
+        <select id="ty">
+          <option>Type A · Courtyard One-Bedroom</option>
+          <option>Type C · Garden Maisonette</option>
+          <option selected>Type E · Corner Three-Bedroom</option>
+          <option>Type G · The Roof Houses</option>
+          <option>Undecided — send the full list</option>
+        </select>
+        <label for="ty">Residence of interest</label>
+        <span class="chev">▾</span>
+      </div>
+      <div class="field field--full"><textarea id="ms" rows="2"></textarea><label for="ms">Anything we should know</label></div>
+      <div class="form__foot">
+        <p class="form__note">We will send the price list and floorplans within one working day. Atlas does not share enquiry data with third parties.</p>
+        <button class="btn btn--lg btn--accent" type="submit"><i></i><span>Send enquiry</span></button>
+      </div>
+      <p class="form__ok">Thank you — a member of the Campo Alto sales team will write to you within one working day.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer class="foot">
+  <div class="foot__cols">
+    <div class="foot__brand">
+      <h4 class="d4">Atlas Residential</h4>
+      <p>Building small, long-life residential buildings in Lisboa and Porto since 2009. Fourteen completed developments, 611 homes.</p>
+      <a class="btn" href="#enquire"><i></i><span>Register interest</span></a>
+    </div>
+    <div>
+      <h5>Campo Alto</h5>
+      <ul>
+        <li><a href="#residences">The residences</a></li>
+        <li><a href="#place">Príncipe Real</a></li>
+        <li><a href="#house">Shared rooms</a></li>
+        <li><a href="#detail">Specification</a></li>
+        <li><a href="#enquire">Availability &amp; prices</a></li>
+        <li><a href="#enquire">Floorplan library</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Enquiries</h5>
+      <ul>
+        <li><span>Rua da Escola Politécnica 42</span></li>
+        <li><span>1250-100 Lisboa</span></li>
+        <li><a href="tel:+351210994420">+351 21 099 4420</a></li>
+        <li><a href="mailto:residences@atlas.pt">residences@atlas.pt</a></li>
+        <li><span>Tue–Sat, 10:00–18:00</span></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Atlas</h5>
+      <ul>
+        <li><a href="#top">Practice</a></li>
+        <li><a href="#top">Completed works</a></li>
+        <li><a href="#top">Aftercare &amp; warranty</a></li>
+        <li><a href="#top">Journal</a></li>
+        <li><a href="#top">Careers</a></li>
+        <li><a href="#top">Press office</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="#top">Privacy notice</a></li>
+        <li><a href="#top">Cookies</a></li>
+        <li><a href="#top">Reservation terms</a></li>
+        <li><span>AMI 19842</span></li>
+        <li><span>NIPC 514 882 037</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot__word">Campo Alto</div>
+
+  <div class="foot__bar">
+    <span>© 2026 Atlas Residential, S.A. — Lisboa</span>
+    <span>Computer-generated images are indicative. Areas are approximate and measured to RICS IPMS 2.</span>
+    <span>Design reference template — placeholder imagery</span>
+  </div>
+</footer>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var REDUCED  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var HAS_GSAP = (typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined');
+
+  /* ---------------------------------------------------------
+     0. Always-on behaviour (works even if CDNs fail)
+     --------------------------------------------------------- */
+
+  // Accordion — real interaction, CSS grid-rows transition
+  var accItems = Array.prototype.slice.call(document.querySelectorAll('.acc__item'));
+  accItems.forEach(function(item){
+    var btn = item.querySelector('.acc__btn');
+    btn.addEventListener('click', function(){
+      var open = item.classList.contains('is-open');
+      accItems.forEach(function(o){
+        o.classList.remove('is-open');
+        o.querySelector('.acc__btn').setAttribute('aria-expanded','false');
+      });
+      if(!open){
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded','true');
+      }
+      if(HAS_GSAP){ setTimeout(function(){ ScrollTrigger.refresh(); }, 680); }
+    });
+  });
+  if(accItems[0]){ accItems[0].classList.add('is-open'); accItems[0].querySelector('.acc__btn').setAttribute('aria-expanded','true'); }
+
+  // Floating labels
+  Array.prototype.forEach.call(document.querySelectorAll('.field input, .field textarea'), function(el){
+    var sync = function(){ el.parentNode.classList.toggle('is-filled', el.value.trim() !== ''); };
+    el.addEventListener('input', sync); el.addEventListener('blur', sync); sync();
+  });
+
+  // Form
+  var form = document.getElementById('form');
+  if(form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      form.classList.add('is-sent');
+    });
+  }
+
+  // Anchor links (routed through Lenis when available)
+  var lenis = null;
+  Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'), function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if(id.length < 2) return;
+      var t = document.querySelector(id);
+      if(!t) return;
+      e.preventDefault();
+      if(lenis){ lenis.scrollTo(t, { offset: -72, duration: 1.35 }); }
+      else{ t.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' }); }
+    });
+  });
+
+  // Nav: solid + hide-on-scroll-down
+  var nav = document.getElementById('nav');
+  var lastY = 0;
+  function navUpdate(y){
+    nav.classList.toggle('is-solid', y > 80);
+    nav.classList.toggle('is-hidden', y > 420 && y > lastY + 4);
+    lastY = y;
+  }
+
+  if(!HAS_GSAP){
+    // Graceful bail-out: reveal everything, drop the curtain.
+    var i0 = document.getElementById('intro'); if(i0) i0.style.display = 'none';
+    var c0 = document.querySelector('.curtains'); if(c0) c0.style.display = 'none';
+    window.addEventListener('scroll', function(){ navUpdate(window.scrollY); }, { passive:true });
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.defaults({ ease:'power3.out' });
+
+  /* ---------------------------------------------------------
+     1. Lenis smooth scroll → ScrollTrigger
+     --------------------------------------------------------- */
+  if(!REDUCED && typeof window.Lenis !== 'undefined'){
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    lenis.on('scroll', function(e){ navUpdate(e.scroll); });
+    gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  } else {
+    window.addEventListener('scroll', function(){ navUpdate(window.scrollY); }, { passive:true });
+  }
+
+  /* ---------------------------------------------------------
+     2. Hand-rolled word splitter (no paid SplitText)
+     --------------------------------------------------------- */
+  function splitWords(el){
+    if(el.dataset.isSplit === '1'){
+      return Array.prototype.slice.call(el.querySelectorAll('.w-i'));
+    }
+    var nodes = Array.prototype.slice.call(el.childNodes);
+    var inner = [];
+    el.innerHTML = '';
+
+    function pushUnit(content){
+      var w = document.createElement('span'); w.className = 'w';
+      var i = document.createElement('span'); i.className = 'w-i';
+      if(typeof content === 'string'){ i.textContent = content; }
+      else { i.appendChild(content); }
+      w.appendChild(i); el.appendChild(w); inner.push(i);
+    }
+
+    nodes.forEach(function(node){
+      if(node.nodeType === 3){
+        var parts = node.textContent.split(/\s+/);
+        parts.forEach(function(p){
+          if(p === '') return;
+          pushUnit(p);
+          el.appendChild(document.createTextNode(' '));
+        });
+      } else if(node.nodeType === 1){
+        if(node.tagName === 'BR'){ el.appendChild(node); return; }
+        // block-level children (e.g. .ln lines) get split recursively
+        if(node.classList && node.classList.contains('ln')){
+          el.appendChild(node);
+          inner = inner.concat(splitWords(node));
+          return;
+        }
+        pushUnit(node);
+        el.appendChild(document.createTextNode(' '));
+      }
+    });
+    el.dataset.isSplit = '1';
+    return inner;
+  }
+
+  // pre-split every headline
+  var splitTargets = Array.prototype.slice.call(document.querySelectorAll('[data-split]'));
+  var splitMap = new Map();
+  splitTargets.forEach(function(el){
+    splitMap.set(el, splitWords(el));
+  });
+  if(!REDUCED){
+    splitTargets.forEach(function(el){ gsap.set(splitMap.get(el), { yPercent: 112 }); });
+    gsap.set('[data-reveal]', { y: 26, opacity: 0 });
+  }
+
+  /* ---------------------------------------------------------
+     3. Intro curtain  →  hero reveal
+     --------------------------------------------------------- */
+  var intro   = document.getElementById('intro');
+  var curtains= document.querySelectorAll('.curtains i');
+  var heroSet = splitMap.get(document.querySelector('.hero h1'));
+
+  function heroIn(delay){
+    var tl = gsap.timeline({ delay: delay || 0 });
+    tl.to(heroSet, { yPercent: 0, duration: 1.25, stagger: 0.085, ease: 'power4.out' })
+      .to('.hero__eyebrow', { opacity: 1, y: 0, duration: .8 }, 0.15)
+      .to('.hero__text [data-reveal]', { y: 0, opacity: 1, duration: 1, stagger: 0.07 }, 0.35)
+      .from('.hero__layer--a', { yPercent: 14, opacity: 0, duration: 1.4, ease: 'power4.out' }, 0.05)
+      .from('.hero__layer--b', { yPercent: 30, opacity: 0, duration: 1.3, ease: 'power4.out' }, 0.22)
+      .from('.hero__layer--c', { xPercent: 22, opacity: 0, duration: 1.2, ease: 'power4.out' }, 0.34)
+      .from('.dateline', { opacity: 0, duration: .9 }, 0.5);
+    return tl;
+  }
+
+  gsap.set('.hero__eyebrow', { opacity: 0, y: 14 });
+
+  if(REDUCED){
+    if(intro) intro.style.display = 'none';
+    document.querySelector('.curtains').style.display = 'none';
+    gsap.set('.hero__eyebrow', { opacity: 1, y: 0 });
+    gsap.set('[data-reveal]', { opacity: 1, y: 0 });
+  } else {
+    document.body.classList.add('is-locked');
+    if(lenis) lenis.stop();
+
+    var counter = { v: 0 };
+    var countEl = document.getElementById('introCount');
+    var barEl   = document.getElementById('introBar');
+
+    var tlIntro = gsap.timeline({
+      onComplete: function(){
+        document.body.classList.remove('is-locked');
+        if(lenis) lenis.start();
+        if(intro) intro.style.display = 'none';
+        ScrollTrigger.refresh();
+      }
+    });
+
+    tlIntro
+      .from('#intro .intro-mark span', { yPercent: 118, duration: 1.05, stagger: 0.055, ease: 'power4.out' }, 0)
+      .from('#intro .intro-foot > div > div', { opacity: 0, y: 12, duration: .7, stagger: .08 }, 0.25)
+      .to(counter, {
+        v: 100, duration: 1.9, ease: 'power2.inOut',
+        onUpdate: function(){
+          var n = Math.round(counter.v);
+          countEl.textContent = (n < 10 ? '0' : '') + n;
+        }
+      }, 0.2)
+      .to(barEl, { width: '100%', duration: 1.9, ease: 'power2.inOut' }, 0.2)
+      .to('#intro .intro-mark span', { yPercent: -118, duration: .8, stagger: 0.04, ease: 'power3.in' }, 2.15)
+      .to('#intro', { opacity: 0, duration: .55, ease: 'power2.inOut' }, 2.45)
+      .to(curtains, { scaleY: 0, duration: 1.15, stagger: 0.06, ease: 'power4.inOut' }, 2.35)
+      .add(heroIn(0), 2.7);
+  }
+
+  /* ---------------------------------------------------------
+     4. Scroll-triggered word reveals + fades (site-wide)
+     --------------------------------------------------------- */
+  if(!REDUCED){
+    splitTargets.forEach(function(el){
+      if(el.closest('.hero')) return;   // hero runs off the intro timeline
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 84%',
+        once: true,
+        onEnter: function(){
+          gsap.to(splitMap.get(el), { yPercent: 0, duration: 1.1, stagger: 0.055, ease: 'power4.out' });
+        }
+      });
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-reveal]'), function(el){
+      if(el.closest('.hero__text')) return;
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 88%',
+        once: true,
+        onEnter: function(){ gsap.to(el, { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }); }
+      });
+    });
+
+    // walk index rows — staggered rise
+    ScrollTrigger.create({
+      trigger: '.walk__list',
+      start: 'top 82%',
+      once: true,
+      onEnter: function(){
+        gsap.from('.walk__list li', { y: 30, opacity: 0, duration: .9, stagger: .06, ease: 'power3.out' });
+      }
+    });
+
+    // amenity cells
+    ScrollTrigger.create({
+      trigger: '.amenity__grid',
+      start: 'top 84%',
+      once: true,
+      onEnter: function(){
+        gsap.from('.amenity__grid > div', { y: 40, opacity: 0, duration: 1, stagger: .07, ease: 'power3.out' });
+      }
+    });
+
+    // footer wordmark
+    gsap.from('.foot__word', {
+      yPercent: 42, opacity: 0, duration: 1.2, ease: 'power4.out',
+      scrollTrigger: { trigger: '.foot__word', start: 'top 96%', once: true }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     5. MOTION #1 — count-up statistics
+     --------------------------------------------------------- */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-count]'), function(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var sep    = el.getAttribute('data-sep') === '1';
+    if(REDUCED){
+      el.textContent = sep ? target.toLocaleString('en-US') : String(target);
+      return;
+    }
+    var o = { v: 0 };
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 88%',
+      once: true,
+      onEnter: function(){
+        gsap.to(o, {
+          v: target, duration: 2.1, ease: 'power3.out',
+          onUpdate: function(){
+            var n = Math.round(o.v);
+            el.textContent = sep ? n.toLocaleString('en-US') : String(n);
+          }
+        });
+      }
+    });
+  });
+
+  /* ---------------------------------------------------------
+     6. Supporting — dateline marquee (not counted as a technique)
+     --------------------------------------------------------- */
+  (function(){
+    var track = document.getElementById('dateline');
+    if(!track || REDUCED) return;
+    var row = track.querySelector('.dateline__row');
+    var clone = row.cloneNode(true);
+    clone.setAttribute('aria-hidden','true');
+    track.appendChild(clone);
+    var w = row.offsetWidth;
+    if(!w) return;
+    gsap.to(track.children, {
+      x: -w, duration: 28, ease: 'none', repeat: -1
+    });
+  })();
+
+  /* ---------------------------------------------------------
+     7. Desktop-only scroll choreography (>= 1024px)
+     --------------------------------------------------------- */
+  var mm = gsap.matchMedia();
+
+  mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', function(){
+
+    /* --- MOTION #2 — parallax layers on the hero imagery --- */
+    Array.prototype.forEach.call(document.querySelectorAll('[data-par]'), function(layer){
+      var img = layer.querySelector('img') || layer;
+      var depth = parseFloat(layer.getAttribute('data-par'));
+      gsap.fromTo(img,
+        { yPercent: -depth * 34 },
+        {
+          yPercent: depth * 34,
+          ease: 'none',
+          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.6 }
+        });
+    });
+    // slow parallax on the neighbourhood photograph
+    Array.prototype.forEach.call(document.querySelectorAll('[data-par-slow]'), function(img){
+      gsap.fromTo(img, { yPercent: -8, scale: 1.12 }, {
+        yPercent: 8, scale: 1.12, ease: 'none',
+        scrollTrigger: { trigger: img.parentNode, start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+      });
+    });
+
+    /* --- MOTION #3 — STACKING STICKY CARDS (signature) ---
+       Layout math:
+         .stack has NO overflow property, so the sticky context is the viewport.
+         Each .stack-item is position:sticky; top:0; height:100vh, so it
+         contributes exactly one viewport of scroll length and pins at the top.
+         Item N therefore stays pinned while items N+1…last scroll over it.
+         The card inside is shorter than the item (84vh) and centred, so
+         successive cards visibly slide over the one beneath.
+       The scrub range for card N is driven by item N+1 travelling from the
+       bottom of the viewport to the top — exactly the window during which
+       card N+1 covers card N.                                            */
+    var items = Array.prototype.slice.call(document.querySelectorAll('#stack .stack-item'));
+
+    items.forEach(function(item, i){
+      var card = item.querySelector('.rescard');
+
+      // veil element for the fade-down (cheaper than animating filter/blur)
+      var veil = document.createElement('div');
+      veil.className = 'rescard__veil';
+      card.appendChild(veil);
+
+      // content reveal as each card arrives
+      var title = card.querySelector('[data-card-title]');
+      var rows  = card.querySelectorAll('.rescard__spec div');
+      var media = card.querySelector('.rescard__media img');
+
+      gsap.from([title, card.querySelector('.rescard__desc')], {
+        y: 34, opacity: 0, duration: 1, stagger: 0.08, ease: 'power3.out',
+        scrollTrigger: { trigger: item, start: 'top 62%', once: true }
+      });
+      gsap.from(rows, {
+        y: 20, opacity: 0, duration: .8, stagger: 0.06, ease: 'power3.out',
+        scrollTrigger: { trigger: item, start: 'top 55%', once: true }
+      });
+      // slow inner-image drift while the card is on screen
+      gsap.fromTo(media, { scale: 1.14, yPercent: -3 }, {
+        scale: 1.02, yPercent: 3, ease: 'none',
+        scrollTrigger: { trigger: item, start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+      });
+
+      // the stack itself: every card but the last recedes as the next covers it
+      if(i === items.length - 1) return;
+      var next = items[i + 1];
+
+      gsap.to(card, {
+        scale: 0.915,
+        yPercent: -3.5,
+        ease: 'none',
+        scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: true }
+      });
+      gsap.to(veil, {
+        opacity: 0.55,
+        ease: 'none',
+        scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: true }
+      });
+    });
+
+    /* --- MOTION #4 — scroll-scrubbed card → full-bleed scale-through --- */
+    var scaler = document.querySelector('.scaler');
+    if(scaler){
+      var tlScale = gsap.timeline({
+        scrollTrigger: {
+          trigger: scaler,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.7,
+          pin: '.scaler__stage',
+          pinSpacing: false,
+          anticipatePin: 1
+        }
+      });
+      tlScale
+        .fromTo('#scalerFrame',
+          { clipPath: 'inset(22% 26% 22% 26%)' },
+          { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: 1 }, 0)
+        .fromTo('#scalerImg',
+          { scale: 1.28 },
+          { scale: 1, ease: 'power2.inOut', duration: 1 }, 0)
+        .to('#scalerHint', { opacity: 0, duration: .18 }, 0)
+        .to('#scalerScrim', { opacity: 1, duration: .45 }, 0.45)
+        .fromTo('#scalerCopy', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .45 }, 0.55);
+    }
+
+    return function(){
+      // matchMedia cleanup — GSAP reverts its own tweens/triggers automatically
+      Array.prototype.forEach.call(document.querySelectorAll('.rescard__veil'), function(v){
+        if(v.parentNode) v.parentNode.removeChild(v);
+      });
+    };
+  });
+
+  // keep measurements honest once webfonts and images have settled
+  window.addEventListener('load', function(){ ScrollTrigger.refresh(); });
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ ScrollTrigger.refresh(); });
+  }
+
+})();
+</script>
+</body>
+</html>
