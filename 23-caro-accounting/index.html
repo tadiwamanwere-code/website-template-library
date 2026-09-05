@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en" class="is-loading">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caro Accounting &amp; Tax — Kadoma, Zimbabwe</title>
+<meta name="description" content="Caro Accounting &amp; Tax. Bookkeeping, accounting, ZIMRA returns, PAYE and payroll, statutory reporting and business advisory for companies in Kadoma and across Zimbabwe. Registered tax agents since 2012.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   CARO ACCOUNTING & TAX — professional services landing template
+   Palette : near-black ground + white paper, ONE accent teal #17A2B8.
+   Type    : Archivo (variable wdth 76 / wght 800, uppercase display)
+             + DM Sans (body).
+   Rule    : SQUARE CORNERS EVERYWHERE. border-radius is 0, globally, always.
+             Hard edges + structural hairline rules are the whole personality.
+   ========================================================================== */
+
+:root{
+  --ink:#0B0E10;
+  --ink-2:#0F1315;
+  --ink-3:#151A1D;
+  --ink-4:#1D2428;
+  --paper:#FFFFFF;
+  --paper-2:#F3F4F5;
+  --paper-3:#E6E8E9;
+  --fg:#0B0E10;
+  --fg-inv:#F6F7F7;
+  --mut:#5E686E;
+  --mut-inv:#9AA5AB;
+  --dim:#8B959B;
+  --acc:#17A2B8;
+  --acc-hi:#3EC6DA;
+  --acc-lo:#0E7A8B;
+  --line-d:#D9DCDE;
+  --line-i:rgba(255,255,255,.14);
+  --line-i2:rgba(255,255,255,.26);
+  --disp:'Archivo','Archivo Narrow','Arial Narrow',Arial,Helvetica,sans-serif;
+  --body:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --gut:clamp(18px,4vw,72px);
+  --maxw:1560px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  /* Floor for the pinned-stack photo column. It stretches to the panel height,
+     so this only stops it collapsing on very short screens. */
+  --svcH:clamp(280px,34vh,420px);
+}
+
+*,*::before,*::after{box-sizing:border-box;border-radius:0}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+html.is-loading{overflow:hidden}
+body{
+  background:var(--paper);
+  color:var(--fg);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.65;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-feature-settings:"kern" 1,"liga" 1;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;padding:0}
+::selection{background:var(--acc);color:#04171B}
+
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+
+/* ---------- shared type ---------- */
+.disp{
+  font-family:var(--disp);
+  font-weight:800;
+  font-stretch:76%;
+  text-transform:uppercase;
+  line-height:.88;
+  letter-spacing:-.005em;
+  margin:0;
+}
+h1.disp{font-size:clamp(46px,9.3vw,158px)}
+h2.disp{font-size:clamp(34px,5.4vw,84px)}
+h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
+.eyebrow{
+  font-family:var(--body);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  margin:0;
+  color:var(--acc);
+  display:flex;align-items:center;gap:14px;
+}
+.eyebrow::before{content:"";width:38px;height:1px;background:currentColor;flex:none}
+.eyebrow.plain::before{display:none}
+.lede{font-size:clamp(17px,1.35vw,20px);line-height:1.6;color:var(--mut);max-width:60ch}
+.on-dark .lede{color:var(--mut-inv)}
+.mono-lab{
+  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:500;color:var(--dim);
+  font-variant-numeric:tabular-nums;
+}
+.num{font-variant-numeric:tabular-nums lining-nums}
+
+/* ---------- mask reveal primitive ----------
+   The padding/negative-margin pair buys room for descenders inside the
+   overflow:hidden box without opening a gap between lines. Display type at
+   line-height .88 clips the tail of a "g" otherwise. */
+.mask{display:block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em}
+.mask>span{display:block;will-change:transform}
+
+/* ---------- buttons: SQUARE, always ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:14px;
+  height:56px;padding:0 26px;
+  font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  border:1px solid transparent;
+  position:relative;overflow:hidden;
+  transition:color .3s var(--ease),background-color .3s var(--ease),border-color .3s var(--ease);
+}
+.btn span{position:relative;z-index:2;display:inline-flex;align-items:center;gap:12px}
+.btn::after{
+  content:"";position:absolute;inset:0;background:var(--ink);
+  transform:scaleY(0);transform-origin:bottom;z-index:1;
+  transition:transform .42s var(--ease);
+}
+.btn:hover::after{transform:scaleY(1)}
+.btn-fill{background:var(--acc);color:#04171B}
+.btn-fill:hover{color:#fff}
+.btn-line{border-color:var(--line-d);color:var(--fg)}
+.btn-line:hover{color:#fff;border-color:var(--ink)}
+.on-dark .btn-line{border-color:var(--line-i2);color:var(--fg-inv)}
+.on-dark .btn-line::after{background:var(--fg-inv)}
+.on-dark .btn-line:hover{color:var(--ink);border-color:var(--fg-inv)}
+.btn svg{width:12px;height:12px;flex:none}
+.mag{will-change:transform}
+
+/* ---------- page-load curtain ---------- */
+#load{position:fixed;inset:0;z-index:9999;pointer-events:none}
+.load-half{position:absolute;left:0;width:100%;height:50.2%;background:var(--ink)}
+.load-half.t{top:0}
+.load-half.b{bottom:0}
+.load-in{
+  position:absolute;inset:0;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  color:var(--fg-inv);
+}
+.load-brand{font-family:var(--disp);font-stretch:76%;font-weight:800;text-transform:uppercase;
+  font-size:clamp(30px,5.5vw,62px);line-height:.9;letter-spacing:.02em;text-align:center}
+.load-brand i{display:block;font-family:var(--body);font-style:normal;font-weight:500;
+  font-size:10px;letter-spacing:.42em;color:var(--acc);margin-top:12px}
+.load-bar{width:min(320px,52vw);height:2px;background:rgba(255,255,255,.16);position:relative}
+.load-bar i{position:absolute;inset:0;background:var(--acc);transform:scaleX(0);transform-origin:left}
+.load-num{font-family:var(--body);font-size:11px;letter-spacing:.3em;color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* ---------- header ---------- */
+.hdr{
+  position:fixed;top:0;left:0;width:100%;z-index:200;
+  border-bottom:1px solid transparent;
+  transition:background-color .45s var(--ease),border-color .45s var(--ease),transform .45s var(--ease);
+}
+.hdr.is-stuck{background:rgba(11,14,16,.94);backdrop-filter:blur(14px);border-bottom-color:var(--line-i)}
+.hdr.is-hidden{transform:translateY(-101%)}
+.hdr-in{
+  display:flex;align-items:center;gap:clamp(16px,3vw,54px);
+  height:86px;color:var(--fg-inv);
+}
+.brand{display:flex;align-items:center;gap:13px;flex:none}
+.brand-mark{width:38px;height:38px;border:1px solid var(--acc);display:grid;place-items:center;flex:none}
+.brand-mark svg{width:20px;height:20px;color:var(--acc)}
+.brand-txt{font-family:var(--disp);font-stretch:76%;font-weight:800;text-transform:uppercase;
+  font-size:21px;line-height:.9;letter-spacing:.02em}
+.brand-txt i{display:block;font-family:var(--body);font-style:normal;font-weight:400;
+  font-size:8.5px;letter-spacing:.3em;color:var(--dim);margin-top:3px}
+.nav{display:flex;align-items:center;gap:clamp(14px,2.1vw,34px);margin-left:auto}
+.nav a{
+  font-size:11.5px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;
+  position:relative;padding:6px 0;color:rgba(246,247,247,.82);transition:color .25s var(--ease);
+}
+.nav a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--acc);
+  transform:scaleX(0);transform-origin:right;transition:transform .38s var(--ease)}
+.nav a:hover{color:#fff}
+.nav a:hover::after,.nav a.on::after{transform:scaleX(1);transform-origin:left}
+.nav a.on{color:#fff}
+.hdr-act{display:flex;align-items:center;gap:clamp(10px,1.6vw,22px);margin-left:clamp(10px,2vw,30px)}
+.ai-link{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:11.5px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;color:var(--acc);
+  transition:color .25s var(--ease);
+}
+.ai-link svg{width:14px;height:14px}
+.ai-link:hover{color:var(--acc-hi)}
+.ai-link .spark{animation:sparkle 3.2s ease-in-out infinite}
+@keyframes sparkle{0%,100%{opacity:.55;transform:scale(.9)}50%{opacity:1;transform:scale(1)}}
+.hdr .btn{height:46px;padding:0 20px;font-size:11px}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--line-i2);place-items:center}
+.burger span{display:block;width:18px;height:1px;background:currentColor;position:relative}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:1px;background:currentColor}
+.burger span::before{top:-5px}.burger span::after{top:5px}
+
+/* mobile drawer */
+.drawer{position:fixed;inset:0;z-index:190;background:var(--ink);color:var(--fg-inv);
+  transform:translateY(-100%);transition:transform .6s var(--ease);display:none;
+  flex-direction:column;justify-content:center;padding:110px var(--gut) 40px}
+.drawer.open{transform:translateY(0)}
+.drawer a{font-family:var(--disp);font-stretch:76%;font-weight:800;text-transform:uppercase;
+  font-size:clamp(30px,9vw,52px);line-height:1.1;border-bottom:1px solid var(--line-i);padding:14px 0}
+.drawer a:last-of-type{color:var(--acc)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink);color:var(--fg-inv)}
+.hero-media{position:absolute;inset:-11% 0 -11% 0;z-index:0;will-change:transform}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:50% 42%}
+.hero-wash{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(11,14,16,.86) 0%,rgba(11,14,16,.42) 34%,rgba(11,14,16,.62) 68%,rgba(11,14,16,.92) 100%)}
+.hero-wash2{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,rgba(11,14,16,.74) 0%,rgba(11,14,16,.22) 52%,rgba(11,14,16,0) 78%)}
+.hero-grid{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background-image:linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:calc(100% / 6) 100%}
+.hero-in{position:relative;z-index:3;width:100%;padding-top:150px;padding-bottom:0}
+.hero-copy{max-width:1180px}
+.hero .eyebrow{color:var(--acc);margin-bottom:clamp(20px,2.6vw,34px)}
+.hero h1{margin:0 0 clamp(26px,3vw,44px)}
+.hero h1 .l2,.hero h1 .l3{color:var(--acc)}
+.hero-blurb{display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(24px,5vw,80px);
+  padding-bottom:clamp(30px,4vw,52px)}
+.hero-blurb p{margin:0;max-width:46ch;color:rgba(246,247,247,.86);font-size:clamp(16px,1.15vw,18px)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-left:auto}
+.hero-foot{border-top:1px solid var(--line-i2);display:flex;flex-wrap:wrap;
+  gap:clamp(18px,3vw,44px);padding:20px 0 26px}
+.hero-foot div{display:flex;align-items:baseline;gap:10px}
+.hero-foot b{font-family:var(--disp);font-stretch:76%;font-weight:800;font-size:20px;letter-spacing:.02em}
+.hero-foot span{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+
+.scroll-cue{position:absolute;right:clamp(10px,1.6vw,26px);bottom:170px;z-index:4;
+  display:flex;flex-direction:column;align-items:center;gap:16px}
+.scroll-cue span{writing-mode:vertical-rl;font-size:10px;letter-spacing:.42em;text-transform:uppercase;
+  color:rgba(246,247,247,.72)}
+.scroll-cue i{display:block;width:1px;height:74px;background:var(--line-i2);position:relative;overflow:hidden}
+.scroll-cue i::after{content:"";position:absolute;left:0;top:0;width:1px;height:26px;background:var(--acc);
+  animation:cue 2.4s cubic-bezier(.7,0,.3,1) infinite}
+@keyframes cue{0%{transform:translateY(-30px)}100%{transform:translateY(76px)}}
+
+/* ---------- ticker ---------- */
+.ticker{border-bottom:1px solid var(--line-d);background:var(--paper);overflow:hidden}
+.ticker-track{display:flex;width:max-content;animation:slide 46s linear infinite}
+.ticker-track div{display:flex;align-items:center;flex:none}
+.ticker-track b{font-family:var(--disp);font-stretch:76%;font-weight:800;text-transform:uppercase;
+  font-size:clamp(15px,1.5vw,21px);letter-spacing:.03em;padding:16px clamp(16px,2vw,30px);white-space:nowrap}
+.ticker-track em{font-style:normal;color:var(--acc);font-size:9px;line-height:1}
+@keyframes slide{to{transform:translateX(-50%)}}
+.ticker:hover .ticker-track{animation-play-state:paused}
+
+/* ---------- rule that draws itself ---------- */
+.rule{position:relative;height:1px;width:100%;margin:0}
+.rule>b{display:block;height:1px;width:100%;background:var(--line-d);transform:scaleX(0);transform-origin:left}
+.rule>i{position:absolute;left:0;top:-1px;width:96px;height:3px;background:var(--acc);opacity:0}
+.on-dark .rule>b{background:var(--line-i)}
+
+/* ---------- section shells ---------- */
+.sec{padding:clamp(76px,9vw,148px) 0}
+.on-dark{background:var(--ink);color:var(--fg-inv)}
+.on-dark .mono-lab{color:var(--mut-inv)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-bottom:clamp(40px,5vw,78px)}
+.sec-head.split{grid-template-columns:minmax(0,1.25fr) minmax(0,.85fr);align-items:end;gap:clamp(24px,5vw,80px)}
+@media (max-width:900px){.sec-head.split{grid-template-columns:1fr}}
+
+/* ---------- firm / positioning ---------- */
+.firm-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(30px,5vw,88px);align-items:start}
+.firm-copy p{margin:0 0 18px;color:var(--mut);max-width:52ch}
+.firm-copy p:first-child{color:var(--fg);font-size:clamp(18px,1.5vw,22px);line-height:1.5}
+.firm-fig{position:relative}
+.firm-fig img{width:100%;height:clamp(320px,44vw,560px);object-fit:cover;filter:grayscale(1) contrast(1.06)}
+.firm-fig figcaption{position:absolute;left:0;bottom:0;background:var(--ink);color:var(--fg-inv);
+  padding:16px 20px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;max-width:74%}
+.firm-fig figcaption b{color:var(--acc);font-weight:500}
+.values{display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(48px,6vw,88px);border-top:1px solid var(--line-d)}
+.values article{padding:30px clamp(16px,2vw,34px) 8px;border-right:1px solid var(--line-d)}
+.values article:last-child{border-right:0}
+.values h3{margin:14px 0 10px;font-family:var(--disp);font-stretch:76%;font-weight:800;
+  text-transform:uppercase;font-size:clamp(20px,2vw,30px);line-height:.95}
+.values p{margin:0;font-size:15px;color:var(--mut);line-height:1.6}
+.values .k{font-size:10.5px;letter-spacing:.22em;color:var(--acc)}
+@media (max-width:900px){
+  .firm-grid{grid-template-columns:1fr}
+  .values{grid-template-columns:1fr}
+  .values article{border-right:0;border-bottom:1px solid var(--line-d);padding-bottom:26px}
+  .values article:last-child{border-bottom:0}
+}
+
+/* ---------- SERVICES — pinned scrub stack ---------- */
+.svc{background:var(--ink);color:var(--fg-inv);position:relative}
+.svc-pin{position:relative;padding:clamp(92px,10vh,112px) 0 clamp(34px,5vh,64px)}
+.svc-top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;
+  border-bottom:1px solid var(--line-i);padding-bottom:20px;margin-bottom:clamp(26px,3vw,44px)}
+.svc-top h2{margin:0;font-size:clamp(30px,4.3vw,66px)}
+.svc-count{font-family:var(--disp);font-stretch:76%;font-weight:800;font-size:clamp(28px,3.4vw,52px);
+  line-height:.9;letter-spacing:.02em;color:var(--acc);font-variant-numeric:tabular-nums;flex:none}
+.svc-count s{text-decoration:none;color:var(--dim);font-size:.5em;margin-left:6px;letter-spacing:.1em}
+.svc-stage{display:grid;grid-template-columns:minmax(0,64px) minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(22px,3.4vw,58px);align-items:start}
+.svc-rail{position:relative;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--line-i);padding-left:0}
+.svc-rail .fill{position:absolute;left:-1px;top:0;width:1px;background:var(--acc);height:100%;
+  transform:scaleY(0);transform-origin:top}
+.svc-rail button{display:block;text-align:left;padding:11px 0 11px 16px;
+  font-size:11px;letter-spacing:.2em;color:var(--dim);font-variant-numeric:tabular-nums;
+  transition:color .3s var(--ease)}
+.svc-rail button.on{color:var(--acc)}
+.svc-panels{position:relative;min-height:0}
+.svc-panel{display:block}
+.svc-panel .n{font-size:11px;letter-spacing:.24em;color:var(--acc);display:block;margin-bottom:14px}
+.svc-panel h3{margin:0 0 16px}
+.svc-panel .d{margin:0 0 22px;color:var(--mut-inv);max-width:44ch;font-size:clamp(15px,1.05vw,17px);line-height:1.55}
+.svc-inc{list-style:none;margin:0 0 22px;padding:0;border-top:1px solid var(--line-i)}
+.svc-inc li{padding:9px 0 9px 24px;border-bottom:1px solid var(--line-i);position:relative;
+  font-size:14px;line-height:1.45;color:rgba(246,247,247,.9)}
+.svc-inc li::before{content:"";position:absolute;left:0;top:18px;width:9px;height:1px;background:var(--acc)}
+.svc-for{display:flex;gap:14px;align-items:baseline;font-size:13.5px;color:var(--mut-inv)}
+.svc-for b{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);
+  font-weight:500;flex:none}
+.svc-media{position:relative;overflow:hidden}
+.svc-shot{margin:0;position:relative;overflow:hidden}
+.svc-shot img{width:100%;height:var(--svcH);object-fit:cover;filter:grayscale(1) contrast(1.08) brightness(.92)}
+.svc-shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,162,184,.14),rgba(11,14,16,.5))}
+.svc-tag{position:absolute;left:0;bottom:0;z-index:2;background:var(--acc);color:#04171B;
+  padding:10px 16px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+/* Pinned layout. Panels stack in one grid cell so the container sizes itself
+   from the tallest panel: no magic height to keep in sync with the copy. The
+   photo column stretches to match. Gated on viewport HEIGHT as well as width,
+   because a held section that does not fit the screen is worse than a list. */
+@media (min-width:1024px) and (min-height:680px) and (prefers-reduced-motion:no-preference){
+  .svc{height:100svh;display:flex;align-items:center}
+  .svc-pin{width:100%}
+  .svc-stage{align-items:stretch}
+  .svc-panels{display:grid}
+  .svc-panel{grid-area:1/1;will-change:transform,opacity}
+  .svc-media{position:relative;min-height:var(--svcH)}
+  .svc-shot{position:absolute;inset:0;will-change:clip-path}
+  .svc-shot img{height:100%}
+}
+@media (max-width:1023px),(max-height:679px),(prefers-reduced-motion:reduce){
+  .svc-stage{grid-template-columns:1fr;gap:0}
+  .svc-rail{display:none}
+  .svc-count{display:none}
+  /* the six photos become a service index strip above the list */
+  .svc-media{order:-1;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:40px}
+  .svc-shot{margin:0}
+  .svc-shot img{height:clamp(92px,25vw,150px)}
+  .svc-tag{display:none}
+  .svc-panel{border-top:1px solid var(--line-i);padding-top:32px;margin-top:32px}
+  .svc-panel:first-child{border-top:0;margin-top:0;padding-top:0}
+}
+
+/* ---------- pricing ---------- */
+.price{background:var(--paper-2)}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line-d);background:var(--paper)}
+.tier{padding:clamp(26px,2.6vw,42px);border-right:1px solid var(--line-d);display:flex;flex-direction:column}
+.tier:last-child{border-right:0}
+.tier.feat{background:var(--ink);color:var(--fg-inv);position:relative}
+.tier.feat::before{content:"";position:absolute;left:0;top:0;width:100%;height:4px;background:var(--acc)}
+.tier-name{font-family:var(--disp);font-stretch:76%;font-weight:800;text-transform:uppercase;
+  font-size:clamp(22px,2.1vw,32px);line-height:.95;margin:0 0 8px}
+.tier-who{font-size:13.5px;color:var(--mut);margin:0 0 26px;min-height:3.2em;line-height:1.5}
+.tier.feat .tier-who{color:var(--mut-inv)}
+.tier-fee{display:flex;align-items:baseline;gap:8px;border-top:1px solid var(--line-d);
+  border-bottom:1px solid var(--line-d);padding:20px 0;margin-bottom:26px}
+.tier.feat .tier-fee{border-color:var(--line-i)}
+.tier-fee b{font-family:var(--disp);font-stretch:76%;font-weight:800;font-size:clamp(38px,4vw,60px);
+  line-height:.85;letter-spacing:0;font-variant-numeric:tabular-nums}
+.tier.feat .tier-fee b{color:var(--acc)}
+.tier-fee s{text-decoration:none;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.tier-list{list-style:none;margin:0 0 30px;padding:0;flex:1}
+.tier-list li{position:relative;padding:8px 0 8px 24px;font-size:14.5px;line-height:1.5;color:var(--fg)}
+.tier.feat .tier-list li{color:rgba(246,247,247,.9)}
+.tier-list li::before{content:"";position:absolute;left:0;top:17px;width:10px;height:1px;background:var(--acc)}
+.tier-list li.off{color:var(--dim)}
+.tier-list li.off::before{background:var(--line-d);width:10px}
+.tier .btn{width:100%;justify-content:center}
+.tier-flag{position:absolute;right:clamp(26px,2.6vw,42px);top:clamp(26px,2.6vw,42px);
+  font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);border:1px solid var(--acc);padding:5px 9px}
+.oneoff{margin-top:0;border:1px solid var(--line-d);border-top:0;background:var(--paper);
+  display:grid;grid-template-columns:repeat(5,1fr)}
+.oneoff div{padding:22px clamp(14px,1.6vw,26px);border-right:1px solid var(--line-d)}
+.oneoff div:last-child{border-right:0}
+.oneoff span{display:block;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:9px}
+.oneoff b{font-family:var(--disp);font-stretch:76%;font-weight:800;font-size:22px;letter-spacing:.02em}
+.price-note{margin:24px 0 0;font-size:13px;color:var(--mut);max-width:78ch}
+@media (max-width:980px){
+  .tiers{grid-template-columns:1fr}
+  .tier{border-right:0;border-bottom:1px solid var(--line-d)}
+  .tier:last-child{border-bottom:0}
+  .oneoff{grid-template-columns:repeat(2,1fr)}
+  .oneoff div{border-bottom:1px solid var(--line-d)}
+}
+
+/* ---------- credentials ---------- */
+.cred{background:var(--ink);color:var(--fg-inv)}
+.figs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line-i);
+  border-bottom:1px solid var(--line-i);margin-bottom:clamp(46px,5vw,80px)}
+.figs div{padding:clamp(26px,3vw,44px) clamp(14px,2vw,32px);border-right:1px solid var(--line-i)}
+.figs div:last-child{border-right:0}
+.figs b{display:block;font-family:var(--disp);font-stretch:76%;font-weight:800;
+  font-size:clamp(44px,5.4vw,86px);line-height:.85;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.figs b em{font-style:normal;color:var(--acc)}
+.figs span{display:block;margin-top:14px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut-inv)}
+.reg{width:100%;border-collapse:collapse;font-size:14.5px}
+.reg th{text-align:left;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
+  font-weight:500;padding:0 16px 14px 0;border-bottom:1px solid var(--line-i2)}
+.reg td{padding:18px 16px 18px 0;border-bottom:1px solid var(--line-i);vertical-align:top;
+  transition:color .25s var(--ease)}
+.reg tbody tr{transition:background-color .3s var(--ease)}
+.reg tbody tr:hover{background:rgba(23,162,184,.08)}
+.reg tbody tr:hover td:first-child{color:var(--acc)}
+.reg td:first-child{font-weight:500}
+.reg td.ref{font-variant-numeric:tabular-nums;color:var(--mut-inv);letter-spacing:.06em}
+.reg td.st{color:var(--acc);font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.cred-note{margin:26px 0 0;font-size:13px;color:var(--dim);max-width:82ch}
+@media (max-width:900px){
+  .figs{grid-template-columns:repeat(2,1fr)}
+  .figs div{border-bottom:1px solid var(--line-i)}
+  .figs div:nth-child(2n){border-right:0}
+  .reg,.reg tbody,.reg tr,.reg td{display:block;width:100%}
+  .reg thead{display:none}
+  .reg tr{padding:18px 0;border-bottom:1px solid var(--line-i)}
+  .reg td{border:0;padding:3px 0}
+  .reg td:first-child{font-size:17px;font-weight:500}
+  .reg td.st{margin-top:8px}
+}
+
+/* ---------- outcomes / case ---------- */
+.work-lead{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  gap:clamp(24px,4vw,64px);align-items:center;margin-bottom:clamp(44px,5vw,80px)}
+.work-fig{position:relative;overflow:hidden}
+.work-fig img{width:100%;height:clamp(300px,40vw,520px);object-fit:cover;filter:grayscale(1) contrast(1.05)}
+.work-stat{position:absolute;right:0;bottom:0;background:var(--ink);color:var(--fg-inv);
+  padding:24px 28px;max-width:74%}
+.work-stat b{display:block;font-family:var(--disp);font-stretch:76%;font-weight:800;
+  font-size:clamp(30px,3.4vw,50px);line-height:.9;color:var(--acc);font-variant-numeric:tabular-nums}
+.work-stat span{display:block;margin-top:10px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut-inv)}
+.work-copy .who{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--acc);margin:0 0 18px}
+.work-copy h3{margin:0 0 20px}
+.work-copy p{margin:0 0 18px;color:var(--mut);max-width:50ch}
+.work-kpi{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--line-d);margin-top:26px}
+.work-kpi div{padding:18px 28px 4px 0;margin-right:28px;border-right:1px solid var(--line-d)}
+.work-kpi div:last-child{border-right:0;margin-right:0}
+.work-kpi b{display:block;font-family:var(--disp);font-stretch:76%;font-weight:800;font-size:26px;letter-spacing:.02em}
+.work-kpi span{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-top:6px}
+.work-more{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line-d)}
+.work-more article{padding:34px clamp(18px,2.4vw,40px) 34px 0;border-right:1px solid var(--line-d)}
+.work-more article:last-child{border-right:0;padding-left:clamp(18px,2.4vw,40px);padding-right:0}
+.work-more .who{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--acc);margin:0 0 14px}
+.work-more h4{margin:0 0 14px;font-family:var(--disp);font-stretch:76%;font-weight:800;
+  text-transform:uppercase;font-size:clamp(19px,1.9vw,27px);line-height:1}
+.work-more p{margin:0;font-size:14.5px;color:var(--mut)}
+.work-more p b{color:var(--fg);font-weight:700;font-variant-numeric:tabular-nums}
+@media (max-width:900px){
+  .work-lead{grid-template-columns:1fr}
+  .work-more{grid-template-columns:1fr}
+  .work-more article{border-right:0;border-bottom:1px solid var(--line-d);padding:28px 0}
+  .work-more article:last-child{border-bottom:0;padding-left:0}
+}
+
+/* ---------- ask caro ai ---------- */
+.ai{background:var(--ink-2);color:var(--fg-inv);border-top:1px solid var(--line-i)}
+.ai-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(28px,4vw,72px);align-items:start}
+.ai-copy p{color:var(--mut-inv);margin:0 0 18px;max-width:40ch}
+.ai-copy ul{list-style:none;margin:24px 0 0;padding:0;border-top:1px solid var(--line-i)}
+.ai-copy li{padding:12px 0;border-bottom:1px solid var(--line-i);font-size:13.5px;color:var(--mut-inv);
+  display:flex;gap:12px}
+.ai-copy li b{color:var(--acc);font-weight:500;font-size:10.5px;letter-spacing:.18em;
+  text-transform:uppercase;flex:none;padding-top:3px}
+.ai-win{border:1px solid var(--line-i2);background:var(--ink);display:flex;flex-direction:column;min-height:460px}
+.ai-bar{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line-i)}
+.ai-bar svg{width:15px;height:15px;color:var(--acc)}
+.ai-bar b{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+.ai-bar s{text-decoration:none;margin-left:auto;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--acc);border:1px solid rgba(23,162,184,.5);padding:4px 8px}
+.ai-log{flex:1;padding:22px 18px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;max-height:340px}
+.ai-msg{max-width:86%;font-size:14.5px;line-height:1.6}
+.ai-msg.u{align-self:flex-end;background:var(--acc);color:#04171B;padding:12px 16px;font-weight:500}
+.ai-msg.a{align-self:flex-start;border-left:2px solid var(--acc);padding:2px 0 2px 16px;color:rgba(246,247,247,.9)}
+.ai-msg.a i{font-style:normal;color:var(--acc);display:block;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;margin-bottom:8px}
+.ai-caret{display:inline-block;width:7px;height:15px;background:var(--acc);vertical-align:-2px;
+  margin-left:3px;animation:blink 1s steps(2) infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.ai-chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 16px}
+.ai-chips button{border:1px solid var(--line-i2);padding:9px 13px;font-size:11.5px;color:var(--mut-inv);
+  transition:color .25s var(--ease),border-color .25s var(--ease),background-color .25s var(--ease)}
+.ai-chips button:hover{color:#04171B;background:var(--acc);border-color:var(--acc)}
+.ai-in{display:flex;border-top:1px solid var(--line-i)}
+.ai-in input{flex:1;background:none;border:0;padding:18px;font-size:14.5px;outline:none;color:var(--fg-inv)}
+.ai-in input::placeholder{color:var(--dim)}
+.ai-in button{padding:0 22px;background:var(--acc);color:#04171B;font-size:11px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;transition:background-color .25s var(--ease)}
+.ai-in button:hover{background:var(--acc-hi)}
+@media (max-width:900px){.ai-grid{grid-template-columns:1fr}}
+
+/* ---------- process ---------- */
+.proc{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line-i);margin-top:clamp(50px,6vw,90px)}
+.proc article{padding:30px clamp(14px,2vw,32px) 6px 0;border-right:1px solid var(--line-i)}
+.proc article:last-child{border-right:0}
+.proc .k{font-size:11px;letter-spacing:.24em;color:var(--acc);font-variant-numeric:tabular-nums}
+.proc h4{margin:14px 0 10px;font-family:var(--disp);font-stretch:76%;font-weight:800;
+  text-transform:uppercase;font-size:clamp(18px,1.8vw,26px);line-height:1}
+.proc p{margin:0;font-size:14px;color:var(--mut-inv);line-height:1.55}
+@media (max-width:900px){
+  .proc{grid-template-columns:1fr}
+  .proc article{border-right:0;border-bottom:1px solid var(--line-i);padding:24px 0}
+  .proc article:last-child{border-bottom:0}
+}
+
+/* ---------- CTA ---------- */
+.cta{background:var(--ink);color:var(--fg-inv);position:relative;overflow:hidden;
+  padding:clamp(80px,10vw,170px) 0}
+.cta-grid{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:calc(100% / 6) 100%}
+.cta-in{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:clamp(28px,5vw,80px);align-items:end}
+.cta h2{margin:0 0 24px}
+.cta h2 em{font-style:normal;color:var(--acc)}
+.cta p{margin:0;color:var(--mut-inv);max-width:44ch}
+.cta-act{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta-det{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line-i);
+  margin-top:clamp(46px,5vw,80px);position:relative;z-index:1}
+.cta-det div{padding:24px clamp(14px,2vw,30px) 0 0;border-right:1px solid var(--line-i)}
+.cta-det div:last-child{border-right:0}
+.cta-det span{display:block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.cta-det b{font-family:var(--disp);font-stretch:76%;font-weight:800;text-transform:uppercase;
+  font-size:clamp(16px,1.5vw,22px);letter-spacing:.02em;line-height:1.15;display:block;
+  transition:color .25s var(--ease)}
+.cta-det a:hover b{color:var(--acc)}
+@media (max-width:900px){.cta-in{grid-template-columns:1fr}.cta-det{grid-template-columns:1fr}
+  .cta-det div{border-right:0;border-bottom:1px solid var(--line-i);padding:20px 0}}
+
+/* ---------- footer ---------- */
+.ftr{background:var(--ink);color:var(--fg-inv);border-top:1px solid var(--line-i2);padding:clamp(56px,6vw,90px) 0 0}
+.ftr-top{display:grid;grid-template-columns:minmax(0,1.25fr) repeat(3,minmax(0,.7fr));
+  gap:clamp(24px,3vw,54px);padding-bottom:clamp(46px,5vw,74px)}
+.ftr-brand .brand{margin-bottom:22px}
+.ftr-brand p{margin:0 0 22px;color:var(--mut-inv);font-size:14.5px;max-width:34ch}
+.ftr-brand .tag{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--acc)}
+.ftr h5{margin:0 0 20px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);font-weight:500}
+.ftr ul{list-style:none;margin:0;padding:0}
+.ftr li{margin-bottom:11px;font-size:14.5px}
+.ftr li a{color:rgba(246,247,247,.78);transition:color .25s var(--ease)}
+.ftr li a:hover{color:var(--acc)}
+.ftr-word{border-top:1px solid var(--line-i);overflow:hidden;padding:clamp(22px,2.4vw,34px) 0 0}
+.ftr-word b{display:block;font-family:var(--disp);font-stretch:62%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(56px,17.4vw,300px);line-height:.78;letter-spacing:-.01em;
+  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.2)}
+.ftr-bot{display:flex;flex-wrap:wrap;gap:14px 30px;align-items:center;
+  border-top:1px solid var(--line-i);padding:22px 0;font-size:11.5px;color:var(--dim);letter-spacing:.06em}
+.ftr-bot a:hover{color:var(--acc)}
+.ftr-bot .r{margin-left:auto;display:flex;gap:22px}
+@media (max-width:900px){
+  .ftr-top{grid-template-columns:repeat(2,1fr)}
+  .ftr-brand{grid-column:1/-1}
+  .ftr-bot .r{margin-left:0}
+}
+
+/* ---------- responsive header ---------- */
+@media (max-width:1100px){
+  .nav{display:none}
+  .burger{display:grid}
+  .drawer{display:flex}
+  .hdr .btn{display:none}
+  .hdr-act{margin-left:auto}
+}
+@media (max-width:640px){
+  .ai-link span{display:none}
+  .hero-cta{margin-left:0;width:100%}
+  .btn{height:52px;padding:0 20px;font-size:11px}
+  .scroll-cue{display:none}
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important}
+  .rule>b{transform:scaleX(1)}
+  .rule>i{display:none}
+  .ticker-track{animation:none}
+  .hero-media{inset:0}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================ PAGE-LOAD CURTAIN ============================ -->
+<div id="load" aria-hidden="true">
+  <div class="load-half t"></div>
+  <div class="load-half b"></div>
+  <div class="load-in">
+    <div class="load-brand">Caro<i>Accounting &amp; Tax</i></div>
+    <div class="load-bar"><i></i></div>
+    <div class="load-num">000</div>
+  </div>
+</div>
+
+<!-- ================================= HEADER ================================= -->
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="#home" aria-label="Caro Accounting and Tax, home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M20 6.5A9 9 0 1 0 21 12"/><path d="M16.5 9.2A5.4 5.4 0 1 0 17 12"/>
+        </svg>
+      </span>
+      <span class="brand-txt">Caro<i>Accounting &amp; Tax</i></span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a href="#home" class="on">Home</a>
+      <a href="#firm">Firm</a>
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#credentials">Credentials</a>
+      <a href="#work">Results</a>
+    </nav>
+
+    <div class="hdr-act">
+      <a class="ai-link" href="#ask">
+        <svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 1.5l1.9 6.1 6.1 1.9-6.1 1.9L12 17.5l-1.9-6.1L4 9.5l6.1-1.9z"/>
+          <path d="M19 15l.8 2.5 2.5.8-2.5.8L19 21.6l-.8-2.5-2.5-.8 2.5-.8z"/>
+        </svg>
+        <span>Ask Caro AI</span>
+      </a>
+      <a class="btn btn-line mag" href="#contact"><span>Get in touch
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 18L18 6M9 6h9v9"/></svg>
+      </span></a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <a href="#firm">Firm</a>
+  <a href="#services">Services</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#credentials">Credentials</a>
+  <a href="#work">Results</a>
+  <a href="#ask">Ask Caro AI</a>
+</div>
+
+<main>
+
+<!-- ================================== HERO ================================== -->
+<section class="hero" id="home">
+  <div class="hero-media" id="heroMedia">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&amp;fit=crop&amp;w=2200&amp;q=80" alt="Glass office towers photographed from street level, looking up" fetchpriority="high">
+  </div>
+  <div class="hero-wash"></div>
+  <div class="hero-wash2"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-in wrap">
+    <div class="hero-copy" id="heroCopy">
+      <p class="eyebrow">Kadoma, Zimbabwe &middot; Accounting &middot; Tax &middot; Bookkeeping</p>
+      <h1 class="disp" id="heroH1">
+        <span class="mask"><span class="l1">Build a stronger,</span></span>
+        <span class="mask"><span class="l2">More profitable</span></span>
+        <span class="mask"><span class="l3">Future</span></span>
+      </h1>
+    </div>
+
+    <div class="hero-blurb" id="heroBlurb">
+      <p data-fade>Registered tax agents for 312 Zimbabwean businesses. We keep the ledger current,
+        file every ZIMRA return on time, run the payroll, and put a number in front of you that you
+        can actually make a decision on.</p>
+      <div class="hero-cta" data-fade>
+        <a class="btn btn-fill mag" href="#contact"><span>Get in touch
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 18L18 6M9 6h9v9"/></svg>
+        </span></a>
+        <a class="btn btn-line mag" href="#services"><span>What we do</span></a>
+      </div>
+    </div>
+
+    <div class="hero-foot" data-fade>
+      <div><b class="num">2012</b><span>Trading since</span></div>
+      <div><b class="num">99.4%</b><span>Filed on time</span></div>
+      <div><b>ICAZ &middot; ZIMRA</b><span>Registered practice</span></div>
+      <div><b class="num">+263 77 419 9766</b><span>Kadoma office</span></div>
+    </div>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+</section>
+
+<!-- ================================= TICKER ================================= -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="ticker">
+    <div>
+      <b>Bookkeeping</b><em>&#9632;</em><b>ZIMRA returns</b><em>&#9632;</em><b>VAT7</b><em>&#9632;</em>
+      <b>PAYE &amp; NSSA</b><em>&#9632;</em><b>Payroll</b><em>&#9632;</em><b>Management accounts</b><em>&#9632;</em>
+      <b>Company formation</b><em>&#9632;</em><b>Audit files</b><em>&#9632;</em><b>Tax clearance</b><em>&#9632;</em>
+      <b>Business advisory</b><em>&#9632;</em>
+    </div>
+    <div>
+      <b>Bookkeeping</b><em>&#9632;</em><b>ZIMRA returns</b><em>&#9632;</em><b>VAT7</b><em>&#9632;</em>
+      <b>PAYE &amp; NSSA</b><em>&#9632;</em><b>Payroll</b><em>&#9632;</em><b>Management accounts</b><em>&#9632;</em>
+      <b>Company formation</b><em>&#9632;</em><b>Audit files</b><em>&#9632;</em><b>Tax clearance</b><em>&#9632;</em>
+      <b>Business advisory</b><em>&#9632;</em>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== FIRM / ABOUT ============================== -->
+<section class="sec" id="firm">
+  <div class="wrap">
+    <div class="rule" data-rule><b></b><i></i></div>
+    <div class="sec-head split" style="margin-top:clamp(34px,4vw,64px)">
+      <div>
+        <p class="eyebrow" data-fade>The firm</p>
+        <h2 class="disp" data-split style="margin-top:22px">A practice built<br>on a clean ledger</h2>
+      </div>
+      <p class="lede" data-fade>Fourteen years in Kadoma, working with millers, hardware groups,
+        clinics, schools, contractors and co-operatives across Mashonaland West. Most clients arrive
+        behind. Nobody stays behind.</p>
+    </div>
+
+    <div class="firm-grid">
+      <div class="firm-copy" data-fade>
+        <p>We are not a filing service. A return is the last five minutes of a month of work, and if
+          the month was done properly the return takes care of itself.</p>
+        <p>That means the bank, the cash box and the mobile money wallet reconcile every month, not
+          every March. It means the payroll and the PAYE schedule agree before the P2 goes out. It
+          means the trial balance is built from documents you can produce if ZIMRA asks for them,
+          because sooner or later ZIMRA asks for them.</p>
+        <p>Where records have fallen behind we rebuild them from bank statements, EcoCash exports and
+          supplier invoices, file what is outstanding, and deal with the penalty position directly
+          with the revenue authority rather than leaving it hanging over you.</p>
+        <p>You get a named accountant, a fixed monthly fee agreed in advance, and a management pack
+          on the same day each month.</p>
+      </div>
+      <figure class="firm-fig" data-clip style="margin:0">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="The Caro practice office in Kadoma" loading="lazy">
+        <figcaption>Westview, Kadoma &middot; <b>Open 08:00&ndash;17:00 Mon&ndash;Fri</b></figcaption>
+      </figure>
+    </div>
+
+    <div class="values">
+      <article data-fade>
+        <span class="k">01 / Integrity</span>
+        <h3>Say the number</h3>
+        <p>You get the position as it stands, not as it would be convenient. Nothing is submitted
+          that we could not defend with a document.</p>
+      </article>
+      <article data-fade>
+        <span class="k">02 / Accuracy</span>
+        <h3>Reconciled first</h3>
+        <p>Every figure is balanced and traceable to source before it leaves the office. Restated
+          prior years are marked as restated.</p>
+      </article>
+      <article data-fade>
+        <span class="k">03 / Excellence</span>
+        <h3>On the same date</h3>
+        <p>Management accounts land on the 12th. VAT by the 25th. PAYE by the 10th. A rhythm you can
+          plan the rest of the business around.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SERVICES — PINNED SCRUB STACK ==================== -->
+<section class="svc" id="services">
+  <div class="svc-pin" id="svcPin">
+    <div class="wrap">
+      <div class="svc-top">
+        <div>
+          <p class="eyebrow" data-fade>What we do</p>
+          <h2 class="disp" data-split style="margin-top:20px">The service stack</h2>
+        </div>
+        <div class="svc-count" id="svcCount">01<s>/06</s></div>
+      </div>
+
+      <div class="svc-stage">
+        <div class="svc-rail" id="svcRail">
+          <span class="fill"></span>
+          <button type="button" data-go="0">01</button>
+          <button type="button" data-go="1">02</button>
+          <button type="button" data-go="2">03</button>
+          <button type="button" data-go="3">04</button>
+          <button type="button" data-go="4">05</button>
+          <button type="button" data-go="5">06</button>
+        </div>
+
+        <div class="svc-panels" id="svcPanels">
+          <article class="svc-panel">
+            <span class="n">01 &mdash; Bookkeeping</span>
+            <h3 class="disp">Records kept<br>current</h3>
+            <p class="d">The day-to-day book, done monthly, so the ledger always reflects what the
+              business actually did rather than what someone remembers it doing.</p>
+            <ul class="svc-inc">
+              <li>Income and expenditure captured from source documents</li>
+              <li>Bank, petty cash, EcoCash and OneMoney reconciliations</li>
+              <li>Debtors and creditors ledgers with an ageing report</li>
+              <li>Arrears rebuild for books that have fallen behind</li>
+            </ul>
+            <p class="svc-for"><b>Who it&rsquo;s for</b> Any trading business with more than a
+              handful of transactions a week, and anyone whose last set of books stopped mid-year.</p>
+          </article>
+
+          <article class="svc-panel">
+            <span class="n">02 &mdash; Accounting</span>
+            <h3 class="disp">Trial balance<br>to year end</h3>
+            <p class="d">Your books turned into a complete, balanced set of accounts that a bank,
+              a board or an auditor will accept without a covering letter.</p>
+            <ul class="svc-inc">
+              <li>General ledger, trial balance and journal control</li>
+              <li>Month-end and year-end close with a signed working file</li>
+              <li>Annual financial statements under IFRS for SMEs</li>
+              <li>Correction and formal restatement of prior periods</li>
+            </ul>
+            <p class="svc-for"><b>Who it&rsquo;s for</b> Private companies, PBCs and trusts that need
+              statements for lenders, tenders, shareholders or a statutory audit.</p>
+          </article>
+
+          <article class="svc-panel">
+            <span class="n">03 &mdash; Tax &amp; ZIMRA</span>
+            <h3 class="disp">Every return,<br>on the date</h3>
+            <p class="d">Registration, filing and correspondence handled end to end, with every
+              legitimate deduction claimed and every acknowledgement kept on file.</p>
+            <ul class="svc-inc">
+              <li>VAT7 returns, Category A, B and C</li>
+              <li>ITF12C self-assessment and QPD provisional payments</li>
+              <li>ITF263 tax clearance and BP number registration</li>
+              <li>Audit queries, objections and payment-plan negotiation</li>
+            </ul>
+            <p class="svc-for"><b>Who it&rsquo;s for</b> VAT-registered traders, companies on
+              quarterly QPDs, and anyone holding a ZIMRA letter they have not opened yet.</p>
+          </article>
+
+          <article class="svc-panel">
+            <span class="n">04 &mdash; Payroll</span>
+            <h3 class="disp">Paid right,<br>paid on time</h3>
+            <p class="d">A full payroll run with payslips issued, statutory deductions calculated,
+              and the schedules that go with them submitted before the deadline.</p>
+            <ul class="svc-inc">
+              <li>Monthly runs and individual payslips, up to 120 staff</li>
+              <li>PAYE (P2), NSSA, ZIMDEF and standards levy computation</li>
+              <li>Leave, bonus, gratuity and terminal benefit calculations</li>
+              <li>ITF16 annual reconciliation and payroll audit file</li>
+            </ul>
+            <p class="svc-for"><b>Who it&rsquo;s for</b> Employers of five staff and up, especially
+              anyone still running the payroll on a spreadsheet in the back office.</p>
+          </article>
+
+          <article class="svc-panel">
+            <span class="n">05 &mdash; Reporting</span>
+            <h3 class="disp">Numbers you<br>can act on</h3>
+            <p class="d">A management pack on the same day each month showing where the money went,
+              what it earned, and how far that sits from what you planned.</p>
+            <ul class="svc-inc">
+              <li>Monthly management accounts, delivered by the 12th</li>
+              <li>Profit and loss, balance sheet and 13-week cash flow</li>
+              <li>Budget versus actual with variance commentary</li>
+              <li>Lender, board and donor reporting packs</li>
+            </ul>
+            <p class="svc-for"><b>Who it&rsquo;s for</b> Owner-managers running more than one revenue
+              line, and any business reporting to a funder, a bank or a board.</p>
+          </article>
+
+          <article class="svc-panel">
+            <span class="n">06 &mdash; Advisory</span>
+            <h3 class="disp">The decision<br>behind it</h3>
+            <p class="d">Costing, structure and planning work. The part where the accounts stop being
+              a compliance chore and start telling you what to do next.</p>
+            <ul class="svc-inc">
+              <li>Company formation: CR6, CR14 and incorporation</li>
+              <li>Costing, pricing and gross-margin review by product line</li>
+              <li>Budgeting, cash-flow forecasting and funding applications</li>
+              <li>Structure, systems and internal-control design</li>
+            </ul>
+            <p class="svc-for"><b>Who it&rsquo;s for</b> Businesses about to grow, formalise, take on
+              debt, or split a partnership into something with a share register.</p>
+          </article>
+        </div>
+
+        <div class="svc-media" id="svcMedia">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <figure class="svc-shot"><img src="https://images.unsplash.com/photo-1648201637025-1c77b9be3013?auto=format&amp;fit=crop&amp;w=1100&amp;q=80" alt="Ledger and reconciliation work in progress" loading="lazy"><span class="svc-tag">Monthly</span></figure>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <figure class="svc-shot"><img src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&amp;fit=crop&amp;w=1100&amp;q=80" alt="Financial statements on a desk" loading="lazy"><span class="svc-tag">Annual</span></figure>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <figure class="svc-shot"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&amp;fit=crop&amp;w=1100&amp;q=80" alt="Tax paperwork being reviewed" loading="lazy"><span class="svc-tag">Statutory</span></figure>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <figure class="svc-shot"><img src="https://images.unsplash.com/photo-1529119368496-2dfda6ec2804?auto=format&amp;fit=crop&amp;w=1100&amp;q=80" alt="Payroll schedule on screen" loading="lazy"><span class="svc-tag">Monthly</span></figure>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <figure class="svc-shot"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=1100&amp;q=80" alt="Management reporting dashboard" loading="lazy"><span class="svc-tag">By the 12th</span></figure>
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <figure class="svc-shot"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&amp;fit=crop&amp;w=1100&amp;q=80" alt="Advisory meeting with a client" loading="lazy"><span class="svc-tag">On request</span></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================ PRICING ================================ -->
+<section class="sec price" id="pricing">
+  <div class="wrap">
+    <div class="rule" data-rule><b></b><i></i></div>
+    <div class="sec-head split" style="margin-top:clamp(34px,4vw,64px)">
+      <div>
+        <p class="eyebrow" data-fade>Fees</p>
+        <h2 class="disp" data-split style="margin-top:22px">Fixed monthly,<br>agreed in advance</h2>
+      </div>
+      <p class="lede" data-fade>No hourly billing and no surprise invoice in March. The tier is set
+        from your transaction volume and headcount at the records review, and it does not move
+        without a conversation first.</p>
+    </div>
+
+    <div class="tiers" data-fade>
+      <article class="tier">
+        <h3 class="tier-name">Essentials</h3>
+        <p class="tier-who">Sole traders, consultants and micro-businesses not yet registered for VAT.</p>
+        <div class="tier-fee"><b class="num">US$120</b><s>per month</s></div>
+        <ul class="tier-list">
+          <li>Bookkeeping to 80 transactions a month</li>
+          <li>Bank, cash and mobile money reconciliation</li>
+          <li>Quarterly management summary</li>
+          <li>Annual income tax return and ITF263 clearance</li>
+          <li>ZIMRA correspondence handled on your behalf</li>
+          <li class="off">Payroll processing</li>
+          <li class="off">Monthly VAT filing</li>
+        </ul>
+        <a class="btn btn-line mag" href="#contact"><span>Start here</span></a>
+      </article>
+
+      <article class="tier feat">
+        <span class="tier-flag">Most chosen</span>
+        <h3 class="tier-name">Practice</h3>
+        <p class="tier-who">VAT-registered SMEs with staff on the payroll and a bank facility to service.</p>
+        <div class="tier-fee"><b class="num">US$340</b><s>per month</s></div>
+        <ul class="tier-list">
+          <li>Everything in Essentials, transactions unmetered</li>
+          <li>Monthly VAT7 return, filed and acknowledged</li>
+          <li>PAYE (P2) and NSSA submitted by the 10th</li>
+          <li>Payroll and payslips for up to 25 staff</li>
+          <li>Management accounts delivered by the 12th</li>
+          <li>Named accountant, reachable directly</li>
+          <li>Annual financial statements included</li>
+        </ul>
+        <a class="btn btn-fill mag" href="#contact"><span>Book a review
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 18L18 6M9 6h9v9"/></svg>
+        </span></a>
+      </article>
+
+      <article class="tier">
+        <h3 class="tier-name">Statutory</h3>
+        <p class="tier-who">Companies carrying an audit, a board, or a funder that wants a quarterly pack.</p>
+        <div class="tier-fee"><b class="num">US$780</b><s>per month</s></div>
+        <ul class="tier-list">
+          <li>Everything in Practice</li>
+          <li>Payroll and payslips for up to 120 staff</li>
+          <li>IFRS for SMEs financial statements</li>
+          <li>Audit file prepared, auditor liaison handled</li>
+          <li>Budget versus actual with written commentary</li>
+          <li>Quarterly board pack and 13-week cash flow</li>
+          <li>Two tax-planning reviews a year</li>
+        </ul>
+        <a class="btn btn-line mag" href="#contact"><span>Request a quote</span></a>
+      </article>
+    </div>
+
+    <div class="oneoff" data-fade>
+      <div><span>Company registration</span><b class="num">US$180</b></div>
+      <div><span>ZIMRA BP number</span><b class="num">US$95</b></div>
+      <div><span>Arrears rebuild, per year</span><b class="num">US$240</b></div>
+      <div><span>Tax clearance ITF263</span><b class="num">US$60</b></div>
+      <div><span>Payroll setup, one-off</span><b class="num">US$150</b></div>
+    </div>
+
+    <p class="price-note" data-fade>Fees are quoted and invoiced in United States dollars, payable in
+      USD or at the prevailing interbank rate in ZWG. The first records review is free and takes
+      about forty-five minutes. Statutory audits are signed by an independent PAAB-registered
+      auditor; we prepare the file and manage the process, we do not audit our own work.</p>
+  </div>
+</section>
+
+<!-- ============================== CREDENTIALS ============================== -->
+<section class="sec cred on-dark" id="credentials">
+  <div class="wrap">
+    <div class="rule" data-rule><b></b><i></i></div>
+    <div class="sec-head split" style="margin-top:clamp(34px,4vw,64px)">
+      <div>
+        <p class="eyebrow" data-fade>Credentials &amp; compliance</p>
+        <h2 class="disp" data-split style="margin-top:22px">Checkable,<br>not claimed</h2>
+      </div>
+      <p class="lede" data-fade>Every registration below can be verified with the issuing body before
+        you sign anything. We would rather you did.</p>
+    </div>
+
+    <div class="figs" data-fade>
+      <div><b class="num" data-count="11940">0</b><span>Returns filed since 2012</span></div>
+      <div><b class="num" data-count="312">0</b><span>Clients on retainer</span></div>
+      <div><b class="num" data-count="14">0</b><span>Years in practice</span></div>
+      <div><b class="num" data-count="99.4" data-dec="1">0</b><span>% filed before deadline</span></div>
+    </div>
+
+    <table class="reg" data-fade>
+      <thead>
+        <tr><th>Registration</th><th>Issuing body</th><th>Reference</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Registered Tax Agent</td>
+          <td>Zimbabwe Revenue Authority (ZIMRA)</td>
+          <td class="ref">TA-04871</td>
+          <td class="st">Current</td>
+        </tr>
+        <tr>
+          <td>Public Practice Certificate</td>
+          <td>Institute of Chartered Accountants of Zimbabwe (ICAZ)</td>
+          <td class="ref">PPC-2019/0442</td>
+          <td class="st">Current</td>
+        </tr>
+        <tr>
+          <td>Member in Practice</td>
+          <td>Institute of Administration &amp; Commerce (IAC)</td>
+          <td class="ref">M-8842</td>
+          <td class="st">Current</td>
+        </tr>
+        <tr>
+          <td>Registered employer</td>
+          <td>National Social Security Authority (NSSA)</td>
+          <td class="ref">0114-882-6</td>
+          <td class="st">Current</td>
+        </tr>
+        <tr>
+          <td>Audit file preparation &amp; liaison</td>
+          <td>Signed by an independent PAAB-registered auditor</td>
+          <td class="ref">Referred</td>
+          <td class="st">By engagement</td>
+        </tr>
+        <tr>
+          <td>Professional indemnity cover</td>
+          <td>US$250,000 limit, renewed annually</td>
+          <td class="ref">PI-2026/117</td>
+          <td class="st">Current</td>
+        </tr>
+        <tr>
+          <td>Client records handling</td>
+          <td>Cyber and Data Protection Act [Chapter 12:07]</td>
+          <td class="ref">Registered</td>
+          <td class="st">Compliant</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="cred-note">Registration numbers shown are illustrative for this template. Replace them
+      with the practice&rsquo;s own before publishing, and never display a certificate reference the
+      firm does not actually hold.</p>
+
+    <div class="proc">
+      <article data-fade>
+        <span class="k">01</span>
+        <h4>Records review</h4>
+        <p>Forty-five minutes, free, at our office or yours. We look at what exists, what is missing
+          and what ZIMRA is currently owed.</p>
+      </article>
+      <article data-fade>
+        <span class="k">02</span>
+        <h4>Position letter</h4>
+        <p>Within five working days: the state of the books, the exposure in dollars, the work
+          required, and a fixed monthly fee.</p>
+      </article>
+      <article data-fade>
+        <span class="k">03</span>
+        <h4>Catch-up</h4>
+        <p>Arrears rebuilt, registrations completed, outstanding returns filed and any penalty
+          position negotiated before the retainer starts.</p>
+      </article>
+      <article data-fade>
+        <span class="k">04</span>
+        <h4>Monthly rhythm</h4>
+        <p>PAYE by the 10th, accounts by the 12th, VAT by the 25th. Same dates, every month, without
+          being chased.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CLIENT WORK ============================== -->
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="rule" data-rule><b></b><i></i></div>
+    <div class="sec-head split" style="margin-top:clamp(34px,4vw,64px)">
+      <div>
+        <p class="eyebrow" data-fade>Client outcomes</p>
+        <h2 class="disp" data-split style="margin-top:22px">What it was worth</h2>
+      </div>
+      <p class="lede" data-fade>Three engagements, with the figures the client agreed we could
+        publish. Names used with permission.</p>
+    </div>
+
+    <div class="work-lead">
+      <figure class="work-fig" data-clip style="margin:0">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Client meeting reviewing rebuilt accounts" loading="lazy">
+        <figcaption class="work-stat"><b class="num">US$34,350</b><span>Penalty exposure removed</span></figcaption>
+      </figure>
+      <div class="work-copy" data-fade>
+        <p class="who">Rimuka Milling (Pvt) Ltd &middot; Kadoma &middot; 2024</p>
+        <h3 class="disp">Thirty-one months<br>of unfiled VAT</h3>
+        <p>A maize and stockfeed miller arrived with a ZIMRA assessment, no VAT returns since 2021,
+          and a bookkeeper who had left the country. Records existed only as bank statements and a
+          shoebox of supplier invoices.</p>
+        <p>We rebuilt thirty-one periods from source, filed every outstanding VAT7 and ITF12C, and
+          took the penalty position to ZIMRA with a full reconciliation attached. The assessed
+          exposure of US$41,200 settled at US$6,850 on a six-month payment plan.</p>
+        <div class="work-kpi">
+          <div><b class="num">11 wks</b><span>Records rebuilt</span></div>
+          <div><b class="num">31</b><span>Periods filed</span></div>
+          <div><b class="num">83%</b><span>Exposure removed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-more">
+      <article data-fade>
+        <p class="who">Patel Hardware Group &middot; Chegutu &amp; Kadoma</p>
+        <h4>Payroll off the spreadsheet</h4>
+        <p>Seventy-eight staff across four branches were being paid from a workbook that nobody had
+          rebuilt since 2019. Annual PAYE variance of <b>US$3,140</b> went to <b>zero</b> in the
+          first quarter, and the monthly run dropped from <b>three days to four hours</b>. ITF16
+          reconciliation now closes without a query.</p>
+      </article>
+      <article data-fade>
+        <p class="who">Sanyati Cotton Collective &middot; Mashonaland West</p>
+        <h4>First statements, first facility</h4>
+        <p>A 214-member growers&rsquo; co-operative had never produced statements a bank would read.
+          We built two comparative years under IFRS for SMEs, prepared the audit file and sat in the
+          credit meeting. Result: a <b>US$120,000</b> input facility approved, at <b>4.2%</b> below
+          the rate first quoted.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== ASK CARO AI ============================== -->
+<section class="sec ai on-dark" id="ask">
+  <div class="wrap">
+    <div class="ai-grid">
+      <div class="ai-copy">
+        <p class="eyebrow" data-fade>Ask Caro AI</p>
+        <h2 class="disp" data-split style="margin:22px 0 24px">Answers<br>before the<br>appointment</h2>
+        <p data-fade>A trained assistant that answers the questions clients ask us most: filing
+          dates, what a registration costs, which category of VAT you fall into, what happens if you
+          are behind.</p>
+        <p data-fade>It is a first look, not advice. Anything that changes what you file comes back
+          to a person with a practice certificate before it goes anywhere near ZIMRA.</p>
+        <ul>
+          <li data-fade><b>Trained on</b> Zimbabwean tax deadlines, ZIMRA form sets and our own fee schedule</li>
+          <li data-fade><b>Never</b> asks for a BP number, a bank login or a payslip</li>
+          <li data-fade><b>Escalates</b> to a named accountant within one working day</li>
+        </ul>
+      </div>
+
+      <div class="ai-win" data-fade>
+        <div class="ai-bar">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 1.5l1.9 6.1 6.1 1.9-6.1 1.9L12 17.5l-1.9-6.1L4 9.5l6.1-1.9z"/>
+          </svg>
+          <b>Caro AI</b><s>Beta</s>
+        </div>
+        <div class="ai-log" id="aiLog" aria-live="polite">
+          <div class="ai-msg a"><i>Caro AI</i>Ask me about filing dates, registration costs or what
+            to do about books that have fallen behind. Pick one below, or type your own.</div>
+        </div>
+        <div class="ai-chips" id="aiChips">
+          <button type="button" data-q="0">When is my VAT return due?</button>
+          <button type="button" data-q="1">What does PAYE cost the employer?</button>
+          <button type="button" data-q="2">Can you register a company?</button>
+          <button type="button" data-q="3">My books are three years behind</button>
+        </div>
+        <form class="ai-in" id="aiForm">
+          <input id="aiInput" type="text" placeholder="Ask about VAT, PAYE, ZIMRA deadlines&hellip;" aria-label="Ask Caro AI a question" autocomplete="off">
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================== CTA ================================== -->
+<section class="cta" id="contact">
+  <div class="cta-grid"></div>
+  <div class="wrap">
+    <div class="cta-in">
+      <div>
+        <p class="eyebrow" data-fade>Next step</p>
+        <h2 class="disp" data-split style="margin:24px 0">Bring us the<br><em>shoebox</em></h2>
+        <p data-fade>Forty-five minutes, no fee, no obligation. We will tell you where the books
+          stand, what is outstanding at ZIMRA, and what it costs to fix. In writing, within five
+          working days.</p>
+      </div>
+      <div class="cta-act" data-fade>
+        <a class="btn btn-fill mag" href="tel:+263774199766"><span>Call the office
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 18L18 6M9 6h9v9"/></svg>
+        </span></a>
+        <a class="btn btn-line mag" href="#ask"><span>Ask Caro AI first</span></a>
+      </div>
+    </div>
+
+    <div class="cta-det">
+      <div><span>Telephone</span><a href="tel:+263774199766"><b class="num">+263 77 419 9766</b></a></div>
+      <div><span>Email</span><a href="mailto:hello@caroaccounting.co.zw"><b>hello@caroaccounting.co.zw</b></a></div>
+      <div><span>Office</span><b>Westview, Kadoma<br>Mashonaland West</b></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================================= FOOTER ================================= -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <a class="brand" href="#home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M20 6.5A9 9 0 1 0 21 12"/><path d="M16.5 9.2A5.4 5.4 0 1 0 17 12"/>
+            </svg>
+          </span>
+          <span class="brand-txt">Caro<i>Accounting &amp; Tax</i></span>
+        </a>
+        <p>Registered tax agents and accountants in Kadoma, working with businesses across
+          Mashonaland West and the rest of Zimbabwe since 2012.</p>
+        <p class="tag">Integrity &middot; Accuracy &middot; Excellence</p>
+      </div>
+
+      <div>
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Bookkeeping</a></li>
+          <li><a href="#services">Accounting &amp; year end</a></li>
+          <li><a href="#services">Tax &amp; ZIMRA returns</a></li>
+          <li><a href="#services">Payroll processing</a></li>
+          <li><a href="#services">Management reporting</a></li>
+          <li><a href="#services">Business advisory</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>The firm</h5>
+        <ul>
+          <li><a href="#firm">About the practice</a></li>
+          <li><a href="#pricing">Fees &amp; tiers</a></li>
+          <li><a href="#credentials">Credentials</a></li>
+          <li><a href="#work">Client outcomes</a></li>
+          <li><a href="#ask">Ask Caro AI</a></li>
+          <li><a href="#contact">Book a records review</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Compliance</h5>
+        <ul>
+          <li><a href="#credentials">ZIMRA tax agent</a></li>
+          <li><a href="#credentials">ICAZ practice certificate</a></li>
+          <li><a href="#credentials">Professional indemnity</a></li>
+          <li><a href="#credentials">Data protection</a></li>
+          <li><a href="#credentials">Engagement terms</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ftr-word" aria-hidden="true"><b>Caro</b></div>
+
+    <div class="ftr-bot">
+      <span>&copy; 2026 Caro Accounting &amp; Tax (Pvt) Ltd</span>
+      <span>Westview, Kadoma, Zimbabwe</span>
+      <div class="r">
+        <a href="#credentials">Terms of engagement</a>
+        <a href="#credentials">Privacy</a>
+        <a href="#home">Back to top</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGSAP = typeof window.gsap !== 'undefined';
+  if(hasGSAP && window.ScrollTrigger){ gsap.registerPlugin(ScrollTrigger); }
+
+  /* ------------------------------------------------------------------ */
+  /* 0 · Lenis smooth scroll, wired into ScrollTrigger                    */
+  /* ------------------------------------------------------------------ */
+  var lenis = null;
+  if(!REDUCED && typeof window.Lenis !== 'undefined'){
+    lenis = new Lenis({
+      duration: 1.05,
+      easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.5
+    });
+    if(hasGSAP && window.ScrollTrigger){
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      requestAnimationFrame(function raf(t){ lenis.raf(t); requestAnimationFrame(raf); });
+    }
+  }
+  function goTo(target){
+    var el = typeof target === 'string' ? document.querySelector(target) : target;
+    if(!el) return;
+    if(lenis){ lenis.scrollTo(el, { offset: -70, duration: 1.2 }); }
+    else { el.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }); }
+  }
+  document.addEventListener('click', function(e){
+    if(!e.target || !e.target.closest) return;
+    var a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    var id = a.getAttribute('href');
+    if(id.length < 2) return;
+    var el = document.querySelector(id);
+    if(!el) return;
+    e.preventDefault();
+    closeDrawer();
+    goTo(el);
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* 1 · Page-load curtain: counter, bar, then a hard split              */
+  /* ------------------------------------------------------------------ */
+  var load = document.getElementById('load');
+  var loadNum = load.querySelector('.load-num');
+  var loadBar = load.querySelector('.load-bar i');
+  var loadIn  = load.querySelector('.load-in');
+  var halves  = load.querySelectorAll('.load-half');
+
+  function unlock(){
+    document.documentElement.classList.remove('is-loading');
+    if(lenis) lenis.start();
+    if(hasGSAP && window.ScrollTrigger) ScrollTrigger.refresh();
+  }
+
+  /* Freeze the hero in its pre-reveal state immediately, so nothing flashes
+     into view in the gap between the curtain splitting and the reveal firing. */
+  if(hasGSAP && !REDUCED){
+    gsap.set('#heroH1 .mask > span', { yPercent: 128 });
+    gsap.set('.hero .eyebrow', { yPercent: 40, autoAlpha: 0 });
+    gsap.set('.hero [data-fade]', { y: 26, autoAlpha: 0 });
+    gsap.set('.scroll-cue', { autoAlpha: 0 });
+    gsap.set('.hdr-in > *', { y: -18, autoAlpha: 0 });
+  }
+
+  function heroIn(){
+    if(!hasGSAP || REDUCED) return;
+    gsap.timeline({ onComplete: heroParallax })
+      .to('#heroH1 .mask > span',
+        { yPercent: 0, duration: 1.15, ease: 'power4.out', stagger: .085 }, 0)
+      .to('.hero .eyebrow',
+        { yPercent: 0, autoAlpha: 1, duration: .8, ease: 'power3.out' }, 0.05)
+      .to('.hdr-in > *',
+        { y: 0, autoAlpha: 1, duration: .7, ease: 'power3.out', stagger: .06 }, 0.15)
+      .to('.hero [data-fade]',
+        { y: 0, autoAlpha: 1, duration: .9, ease: 'power3.out', stagger: .08 }, 0.5)
+      .to('.scroll-cue', { autoAlpha: 1, duration: .6 }, 0.9);
+  }
+
+  if(REDUCED || !hasGSAP){
+    load.style.display = 'none';
+    unlock();
+  } else {
+    if(lenis) lenis.stop();
+    var counter = { v: 0 };
+    var tlLoad = gsap.timeline({ delay: 0.15 });
+    tlLoad.to(loadBar, { scaleX: 1, duration: 1.15, ease: 'power2.inOut' }, 0)
+      .to(counter, {
+        v: 100, duration: 1.15, ease: 'power2.inOut',
+        onUpdate: function(){
+          loadNum.textContent = String(Math.round(counter.v)).padStart(3, '0');
+        }
+      }, 0)
+      .to(loadIn, { autoAlpha: 0, duration: .32, ease: 'power2.in' }, 1.22)
+      .to(halves[0], { yPercent: -100, duration: 1.0, ease: 'power4.inOut' }, 1.34)
+      .to(halves[1], { yPercent: 100, duration: 1.0, ease: 'power4.inOut' }, 1.34)
+      .add(function(){ unlock(); }, 1.4)
+      .add(heroIn, 1.52)
+      .add(function(){ load.style.display = 'none'; }, 2.4);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 2 · Header: solid on scroll, hide on scroll-down                    */
+  /* ------------------------------------------------------------------ */
+  var hdr = document.getElementById('hdr');
+  var lastY = 0;
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    hdr.classList.toggle('is-stuck', y > 40);
+    if(y > 640 && y > lastY + 6) hdr.classList.add('is-hidden');
+    else if(y < lastY - 6 || y < 200) hdr.classList.remove('is-hidden');
+    lastY = y;
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* nav active state */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  if(hasGSAP && window.ScrollTrigger){
+    navLinks.forEach(function(a){
+      var sec = document.querySelector(a.getAttribute('href'));
+      if(!sec) return;
+      ScrollTrigger.create({
+        trigger: sec, start: 'top 45%', end: 'bottom 45%',
+        onToggle: function(self){
+          if(self.isActive){
+            navLinks.forEach(function(x){ x.classList.remove('on'); });
+            a.classList.add('on');
+          }
+        }
+      });
+    });
+  }
+
+  /* mobile drawer */
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('drawer');
+  function closeDrawer(){
+    drawer.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    if(lenis) lenis.start();
+  }
+  burger.addEventListener('click', function(){
+    var open = drawer.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(lenis){ open ? lenis.stop() : lenis.start(); }
+  });
+
+  if(!hasGSAP) return;
+
+  /* ------------------------------------------------------------------ */
+  /* 3 · Hand-split line mask reveals for every section headline         */
+  /* ------------------------------------------------------------------ */
+  function splitHeadline(el){
+    if(el.dataset.done) return;
+    el.dataset.done = '1';
+    var html = el.innerHTML;
+    var lines = html.split(/<br\s*\/?>/i);
+    el.innerHTML = lines.map(function(l){
+      return '<span class="mask"><span>' + l.trim() + '</span></span>';
+    }).join('');
+  }
+
+  if(!REDUCED){
+    document.querySelectorAll('[data-split]').forEach(function(h){
+      splitHeadline(h);
+      var kids = h.querySelectorAll('.mask > span');
+      gsap.set(kids, { yPercent: 128 });
+      ScrollTrigger.create({
+        trigger: h, start: 'top 86%', once: true,
+        onEnter: function(){
+          gsap.to(kids, { yPercent: 0, duration: 1.1, ease: 'power4.out', stagger: .075 });
+        }
+      });
+    });
+
+    /* generic fade-ups (hygiene, not one of the four) */
+    document.querySelectorAll('[data-fade]').forEach(function(el){
+      if(el.closest('.hero')) return;
+      gsap.set(el, { y: 30, autoAlpha: 0 });
+      ScrollTrigger.create({
+        trigger: el, start: 'top 90%', once: true,
+        onEnter: function(){
+          gsap.to(el, { y: 0, autoAlpha: 1, duration: .85, ease: 'power3.out' });
+        }
+      });
+    });
+
+    /* clip-path image reveals */
+    document.querySelectorAll('[data-clip]').forEach(function(el){
+      gsap.set(el, { clipPath: 'inset(0% 0% 100% 0%)' });
+      ScrollTrigger.create({
+        trigger: el, start: 'top 85%', once: true,
+        onEnter: function(){
+          gsap.to(el, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power3.inOut' });
+        }
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 4 · The self-drawing section rules                                  */
+  /* ------------------------------------------------------------------ */
+  if(!REDUCED){
+    document.querySelectorAll('[data-rule]').forEach(function(r){
+      var bar = r.querySelector('b');
+      var lead = r.querySelector('i');
+      ScrollTrigger.create({
+        trigger: r, start: 'top 92%', once: true,
+        onEnter: function(){
+          var w = r.offsetWidth;
+          gsap.timeline()
+            .to(bar, { scaleX: 1, duration: 1.25, ease: 'power3.inOut' }, 0)
+            .fromTo(lead, { x: 0, autoAlpha: 1 },
+              { x: Math.max(0, w - 96), duration: 1.25, ease: 'power3.inOut' }, 0)
+            .to(lead, { autoAlpha: 0, duration: .35, ease: 'power2.out' }, 1.05);
+        }
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 5 · Hero parallax — four depths at different speeds                 */
+  /*     Built only after the intro reveal has finished, so the scrub     */
+  /*     never captures a mid-reveal value as its start state.            */
+  /* ------------------------------------------------------------------ */
+  function heroParallax(){
+    if(!hasGSAP || REDUCED || heroParallax.done) return;
+    heroParallax.done = true;
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.55
+      }
+    })
+    .to('#heroMedia', { yPercent: 15, scale: 1.06, ease: 'none' }, 0)
+    .to('#heroCopy',  { y: -120, ease: 'none' }, 0)
+    .to('.hero-copy .eyebrow', { y: -46, ease: 'none' }, 0)
+    .to('#heroBlurb', { y: -74, ease: 'none' }, 0)
+    .to('.hero-foot', { y: -32, ease: 'none' }, 0)
+    .to('.scroll-cue', { autoAlpha: 0, y: 40, ease: 'none' }, 0);
+    ScrollTrigger.refresh();
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 6 · SIGNATURE — pinned, scrubbed service stack                      */
+  /* ------------------------------------------------------------------ */
+  var panels = gsap.utils.toArray('#svcPanels .svc-panel');
+  var shots  = gsap.utils.toArray('#svcMedia .svc-shot');
+  var railBtns = gsap.utils.toArray('#svcRail button');
+  var railFill = document.querySelector('#svcRail .fill');
+  var svcCount = document.getElementById('svcCount');
+  var svcST = null;
+
+  function setActive(i){
+    railBtns.forEach(function(b, n){ b.classList.toggle('on', n === i); });
+    if(svcCount) svcCount.innerHTML = String(i + 1).padStart(2, '0') + '<s>/06</s>';
+  }
+  setActive(0);
+
+  var mm = gsap.matchMedia();
+  mm.add('(min-width: 1024px) and (min-height: 680px) and (prefers-reduced-motion: no-preference)', function(){
+    var n = panels.length;
+
+    gsap.set(panels, { autoAlpha: 0, yPercent: 7 });
+    gsap.set(panels[0], { autoAlpha: 1, yPercent: 0 });
+    gsap.set(shots, { clipPath: 'inset(0% 0% 100% 0%)' });
+    gsap.set(shots[0], { clipPath: 'inset(0% 0% 0% 0%)' });
+    gsap.set(railFill, { scaleY: 0 });
+
+    var tl = gsap.timeline({
+      defaults: { ease: 'power2.inOut' },
+      scrollTrigger: {
+        id: 'svc',
+        trigger: '.svc',
+        start: 'top top',
+        end: function(){ return '+=' + (window.innerHeight * (n - 1) * 0.92); },
+        pin: true,
+        scrub: 0.65,
+        invalidateOnRefresh: true,
+        onUpdate: function(self){
+          var i = Math.min(n - 1, Math.round(self.progress * (n - 1)));
+          setActive(i);
+          gsap.set(railFill, { scaleY: self.progress });
+        }
+      }
+    });
+    svcST = tl.scrollTrigger;
+
+    for(var i = 1; i < n; i++){
+      var t = i - 1;
+      tl.to(panels[i - 1], { autoAlpha: 0, yPercent: -7, duration: .42, ease: 'power2.in' }, t)
+        .to(shots[i - 1], { clipPath: 'inset(100% 0% 0% 0%)', duration: .55 }, t)
+        .fromTo(shots[i], { clipPath: 'inset(100% 0% 0% 0%)' },
+          { clipPath: 'inset(0% 0% 0% 0%)', duration: .55 }, t + 0.18)
+        .fromTo(panels[i], { autoAlpha: 0, yPercent: 7 },
+          { autoAlpha: 1, yPercent: 0, duration: .45, ease: 'power2.out' }, t + 0.35);
+    }
+
+    return function(){ svcST = null; };
+  });
+
+  railBtns.forEach(function(b, i){
+    b.addEventListener('click', function(){
+      if(svcST){
+        var p = i / (panels.length - 1);
+        var y = svcST.start + (svcST.end - svcST.start) * p;
+        if(lenis) lenis.scrollTo(y, { duration: 1.1 });
+        else window.scrollTo({ top: y, behavior: 'smooth' });
+      } else {
+        goTo(panels[i]);
+      }
+    });
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* 7 · Count-ups on the credential figures                             */
+  /* ------------------------------------------------------------------ */
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+    function fmt(v){
+      return dec ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US');
+    }
+    if(REDUCED){ el.textContent = fmt(target); return; }
+    el.textContent = fmt(0);
+    var o = { v: 0 };
+    ScrollTrigger.create({
+      trigger: el, start: 'top 88%', once: true,
+      onEnter: function(){
+        gsap.to(o, {
+          v: target, duration: 2.1, ease: 'power3.out',
+          onUpdate: function(){ el.textContent = fmt(o.v); }
+        });
+      }
+    });
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* 8 · Magnetic buttons (desktop, pointer-fine only)                   */
+  /* ------------------------------------------------------------------ */
+  mm.add('(min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference)', function(){
+    var mags = gsap.utils.toArray('.mag');
+    var items = mags.map(function(el){
+      return { el: el, label: el.querySelector('span'), x: 0, y: 0, tx: 0, ty: 0, on: false };
+    });
+    var R = 92;
+
+    function move(e){
+      for(var i = 0; i < items.length; i++){
+        var it = items[i];
+        var r = it.el.getBoundingClientRect();
+        var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        var dx = e.clientX - cx, dy = e.clientY - cy;
+        var d = Math.hypot(dx, dy);
+        var reach = Math.max(r.width, r.height) / 2 + R;
+        if(d < reach){ it.tx = dx * 0.32; it.ty = dy * 0.4; it.on = true; }
+        else { it.tx = 0; it.ty = 0; it.on = false; }
+      }
+    }
+    function tick(){
+      for(var i = 0; i < items.length; i++){
+        var it = items[i];
+        it.x += (it.tx - it.x) * 0.14;
+        it.y += (it.ty - it.y) * 0.14;
+        if(Math.abs(it.x) < 0.01 && Math.abs(it.y) < 0.01 && !it.on) continue;
+        gsap.set(it.el, { x: it.x, y: it.y });
+        if(it.label) gsap.set(it.label, { x: it.x * 0.28, y: it.y * 0.28 });
+      }
+    }
+    window.addEventListener('mousemove', move);
+    gsap.ticker.add(tick);
+
+    return function(){
+      window.removeEventListener('mousemove', move);
+      gsap.ticker.remove(tick);
+      items.forEach(function(it){
+        gsap.set(it.el, { x: 0, y: 0 });
+        if(it.label) gsap.set(it.label, { x: 0, y: 0 });
+      });
+    };
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* 9 · Ask Caro AI — canned, typed answers                             */
+  /* ------------------------------------------------------------------ */
+  var ANSWERS = [
+    'Category C files monthly, by the 25th of the following month. Categories A and B file for a two-month period, also by the 25th after that period closes. If you are on the Practice tier we prepare, file and send you the ZIMRA acknowledgement the same day, so nothing sits unconfirmed.',
+    'PAYE itself comes out of the employee, not out of you. Your own cost is the 3% NSSA employer contribution, the 1% ZIMDEF levy and the standards levy where it applies. On a 40-person payroll that is usually US$260 to US$420 a month, and we submit the P2 by the 10th.',
+    'Yes. Name search, CR6 and CR14 lodgement, certificate of incorporation, then the ZIMRA BP number and a first ITF263 clearance. US$180 for the registration, US$95 for the BP number, and it normally runs 9 to 14 working days.',
+    'That is the most common first job we take. We rebuild from bank statements, EcoCash exports and supplier invoices, file everything outstanding, then take the penalty position to ZIMRA with the reconciliation attached. Arrears work is quoted from US$240 per year of records.'
+  ];
+  var FALLBACK = 'I can help with filing dates, registrations, payroll costs and catching up on late books. For anything that changes what you actually file, I will pass you to a named accountant, usually within one working day. Would you like to book the free 45-minute records review?';
+
+  var aiLog = document.getElementById('aiLog');
+  var aiChips = document.getElementById('aiChips');
+  var aiForm = document.getElementById('aiForm');
+  var aiInput = document.getElementById('aiInput');
+  var typing = false;
+
+  function addUser(text){
+    var d = document.createElement('div');
+    d.className = 'ai-msg u';
+    d.textContent = text;
+    aiLog.appendChild(d);
+    aiLog.scrollTop = aiLog.scrollHeight;
+  }
+  function addAgent(text){
+    var d = document.createElement('div');
+    d.className = 'ai-msg a';
+    var tag = document.createElement('i');
+    tag.textContent = 'Caro AI';
+    d.appendChild(tag);
+    var body = document.createElement('span');
+    d.appendChild(body);
+    aiLog.appendChild(d);
+    aiLog.scrollTop = aiLog.scrollHeight;
+
+    if(REDUCED){ body.textContent = text; typing = false; return; }
+
+    var caret = document.createElement('span');
+    caret.className = 'ai-caret';
+    d.appendChild(caret);
+    var i = 0;
+    typing = true;
+    var id = setInterval(function(){
+      i += 2;
+      body.textContent = text.slice(0, i);
+      aiLog.scrollTop = aiLog.scrollHeight;
+      if(i >= text.length){
+        clearInterval(id);
+        caret.remove();
+        typing = false;
+      }
+    }, 16);
+  }
+  function ask(q, idx){
+    if(typing) return;
+    addUser(q);
+    setTimeout(function(){
+      addAgent(idx != null && ANSWERS[idx] ? ANSWERS[idx] : FALLBACK);
+    }, 380);
+  }
+  aiChips.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-q]');
+    if(!b) return;
+    ask(b.textContent.trim(), parseInt(b.getAttribute('data-q'), 10));
+  });
+  aiForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = aiInput.value.trim();
+    if(!v) return;
+    aiInput.value = '';
+    var l = v.toLowerCase(), idx = null;
+    if(l.indexOf('vat') > -1) idx = 0;
+    else if(l.indexOf('paye') > -1 || l.indexOf('payroll') > -1 || l.indexOf('nssa') > -1) idx = 1;
+    else if(l.indexOf('register') > -1 || l.indexOf('company') > -1 || l.indexOf('cr14') > -1) idx = 2;
+    else if(l.indexOf('behind') > -1 || l.indexOf('late') > -1 || l.indexOf('arrear') > -1) idx = 3;
+    ask(v, idx);
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* 10 · Housekeeping                                                   */
+  /* ------------------------------------------------------------------ */
+  window.addEventListener('load', function(){ ScrollTrigger.refresh(); });
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ ScrollTrigger.refresh(); }, 180);
+  });
+})();
+</script>
+</body>
+</html>

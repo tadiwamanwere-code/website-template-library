@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <title>Template Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,10 +17,11 @@
     --fg: #f4f4f5;
     --muted: rgba(255,255,255,0.46);
     --muted-dim: rgba(255,255,255,0.30);
+    --ok: #4ade80;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { overflow-x: hidden; max-width: 100vw; }
+  html, body { overflow-x: clip; max-width: 100vw; }
   html { scroll-behavior: smooth; }
   body {
     background: var(--bg);
@@ -29,266 +30,151 @@
     -webkit-font-smoothing: antialiased;
   }
   a { text-decoration: none; color: inherit; }
-  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  .shell { max-width: 1600px; margin: 0 auto; padding-inline: 48px; }
 
   /* ---------- MASTHEAD ---------- */
-  header {
-    padding: 72px 48px 0;
-    max-width: 1600px;
-    margin: 0 auto;
-  }
   .top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding-bottom: 56px;
-    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 72px 0 56px; border-bottom: 1px solid var(--line);
   }
-  .wordmark {
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
+  .wordmark { font-size: 15px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
   .top-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.06em;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--muted); letter-spacing: 0.06em;
   }
 
-  .masthead { padding: 68px 0 52px; }
+  .masthead { padding: 68px 0 44px; }
   h1 {
-    font-size: clamp(40px, 7.4vw, 104px);
-    font-weight: 800;
-    letter-spacing: -0.045em;
-    line-height: 0.94;
-    max-width: 15ch;
+    font-size: clamp(40px, 7.4vw, 104px); font-weight: 800;
+    letter-spacing: -0.045em; line-height: 0.94; max-width: 15ch;
   }
-  h1 em {
-    font-style: normal;
-    color: var(--muted-dim);
-  }
+  h1 em { font-style: normal; color: var(--muted-dim); }
   .lede {
-    margin-top: 30px;
-    max-width: 62ch;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--muted);
+    margin-top: 30px; max-width: 64ch; font-size: 16px;
+    line-height: 1.6; color: var(--muted);
   }
+  .lede b { color: var(--fg); font-weight: 600; }
 
-  /* ---------- CONTROLS ---------- */
-  .controls {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0 48px 26px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-  }
+  /* ---------- FILTERS ---------- */
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-bottom: 30px; }
   .filter {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: transparent;
-    border: 1px solid var(--line);
-    padding: 8px 14px;
-    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--muted); background: transparent;
+    border: 1px solid var(--line); padding: 8px 13px; cursor: pointer;
     transition: color .25s, border-color .25s, background .25s;
   }
   .filter:hover { color: var(--fg); border-color: var(--line-strong); }
-  .filter[aria-pressed="true"] {
-    color: #08080a;
-    background: var(--fg);
-    border-color: var(--fg);
-  }
+  .filter[aria-pressed="true"] { color: #08080a; background: var(--fg); border-color: var(--fg); }
   .count {
-    margin-left: auto;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--muted-dim);
-    letter-spacing: 0.06em;
+    margin-left: auto; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--muted-dim); letter-spacing: 0.06em;
   }
 
   /* ---------- GRID ---------- */
   .grid {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0 48px 96px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(430px, 1fr));
-    gap: 44px 32px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr));
+    gap: 46px 32px; padding-bottom: 96px;
   }
-
-  .card { display: block; }
+  .card { display: flex; flex-direction: column; }
   .card.is-hidden { display: none; }
 
-  /* live preview frame */
   .viewport {
-    position: relative;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background: var(--panel);
-    border: 1px solid var(--line);
+    position: relative; aspect-ratio: 16 / 10; overflow: hidden;
+    background: var(--panel); border: 1px solid var(--line); display: block;
     transition: border-color .4s cubic-bezier(.22,1,.36,1);
   }
   .card:hover .viewport { border-color: var(--line-strong); }
 
   .viewport iframe {
-    position: absolute;
-    top: 0; left: 0;
-    width: 1440px;
-    height: 900px;
-    border: 0;
-    transform-origin: 0 0;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity .7s ease, transform .8s cubic-bezier(.22,1,.36,1);
+    position: absolute; top: 0; left: 0; width: 1440px; height: 900px;
+    border: 0; transform-origin: 0 0; pointer-events: none; opacity: 0;
+    transition: opacity .7s ease;
   }
   .viewport iframe.is-loaded { opacity: 1; }
 
-  /* skeleton while the frame boots */
   .skeleton {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    color: var(--muted-dim);
-    text-transform: uppercase;
-    transition: opacity .5s ease;
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.14em; color: var(--muted-dim);
+    text-transform: uppercase; transition: opacity .5s ease;
   }
   .viewport.is-ready .skeleton { opacity: 0; }
 
-  /* hover scrim + open affordance */
   .scrim {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease;
     background: linear-gradient(180deg, rgba(8,8,10,0) 55%, rgba(8,8,10,0.86) 100%);
-    opacity: 0;
-    transition: opacity .45s ease;
-    display: flex;
-    align-items: flex-end;
-    padding: 20px;
+    display: flex; align-items: flex-end; padding: 20px;
   }
   .card:hover .scrim { opacity: 1; }
   .open-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    border: 1px solid var(--line-strong);
-    background: rgba(8,8,10,0.5);
-    backdrop-filter: blur(6px);
-    padding: 8px 13px;
-    transform: translateY(8px);
-    transition: transform .45s cubic-bezier(.22,1,.36,1);
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    border: 1px solid var(--line-strong); background: rgba(8,8,10,0.5);
+    backdrop-filter: blur(6px); padding: 8px 13px;
+    transform: translateY(8px); transition: transform .45s cubic-bezier(.22,1,.36,1);
   }
   .card:hover .open-tag { transform: translateY(0); }
 
-  /* Sits over each template's own navbar, so keep it hidden until hover. */
-  .live-dot {
-    position: absolute;
-    bottom: 12px; right: 12px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    background: rgba(8,8,10,0.6);
-    backdrop-filter: blur(6px);
-    border: 1px solid var(--line);
-    padding: 5px 9px;
-    text-transform: uppercase;
-    opacity: 0;
-    transition: opacity .45s ease;
-  }
-  .card:hover .live-dot { opacity: 1; }
-  .live-dot i {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: #4ade80;
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
-
-  /* ---------- CARD META ---------- */
-  .meta { padding-top: 16px; }
-  .meta-top {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .idx {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--muted-dim);
-  }
-  .name {
-    font-size: 19px;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-  }
+  /* ---------- META ---------- */
+  .meta { padding-top: 15px; display: flex; flex-direction: column; flex: 1; }
+  .meta-top { display: flex; align-items: baseline; gap: 10px; }
+  .idx { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted-dim); }
+  .name { font-size: 19px; font-weight: 700; letter-spacing: -0.015em; }
   .swatch {
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    margin-left: auto;
-    align-self: center;
-    border: 1px solid rgba(255,255,255,0.2);
+    width: 9px; height: 9px; border-radius: 50%; margin-left: auto;
+    align-self: center; border: 1px solid rgba(255,255,255,0.2);
   }
-  .genre {
-    margin-top: 5px;
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.45;
+  .cat {
+    margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ok);
   }
-  .tags {
-    margin-top: 11px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
+  .genre { margin-top: 6px; font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+
+  .actions { margin-top: 14px; display: flex; gap: 8px; }
+  .btn {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border: 1px solid var(--line); background: transparent; color: var(--muted);
+    padding: 9px 13px; cursor: pointer;
+    transition: color .25s, border-color .25s, background .25s;
   }
-  .tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9.5px;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--muted-dim);
-    border: 1px solid var(--line);
-    padding: 4px 7px;
+  .btn:hover { color: var(--fg); border-color: var(--line-strong); }
+  .btn.is-done { color: #08080a; background: var(--ok); border-color: var(--ok); }
+  .btn.is-missing { opacity: .4; cursor: not-allowed; }
+
+  /* ---------- PROMPT DIALOG ---------- */
+  dialog {
+    border: 1px solid var(--line-strong); background: var(--panel);
+    color: var(--fg); max-width: 860px; width: calc(100vw - 48px);
+    padding: 0; border-radius: 2px;
+  }
+  dialog::backdrop { background: rgba(0,0,0,.72); backdrop-filter: blur(3px); }
+  .dlg-head {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 22px; border-bottom: 1px solid var(--line);
+  }
+  .dlg-head h3 { font-size: 15px; font-weight: 700; }
+  .dlg-head .btn { margin-left: auto; }
+  .dlg-body {
+    padding: 20px 22px; max-height: 62vh; overflow: auto;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    line-height: 1.65; white-space: pre-wrap; color: rgba(255,255,255,.8);
   }
 
-  /* ---------- FOOTER ---------- */
   footer {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 40px 48px 80px;
-    border-top: 1px solid var(--line);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--muted-dim);
-    letter-spacing: 0.05em;
+    padding: 40px 0 80px; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--muted-dim); letter-spacing: 0.05em;
   }
-  footer a { color: var(--muted); }
-  footer a:hover { color: var(--fg); }
 
   @media (max-width: 900px) {
-    header { padding: 40px 22px 0; }
-    .controls { padding: 0 22px 20px; }
-    .grid { padding: 0 22px 60px; grid-template-columns: 1fr; gap: 34px; }
-    footer { padding: 30px 22px 50px; }
+    .shell { padding-inline: 22px; }
+    .top-row { padding-top: 40px; padding-bottom: 28px; }
+    .grid { grid-template-columns: 1fr; gap: 34px; }
   }
-
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
     html { scroll-behavior: auto; }
@@ -297,143 +183,225 @@
 </head>
 <body>
 
-<header>
+<div class="shell">
   <div class="top-row">
     <div class="wordmark">Template Library</div>
-    <div class="top-meta">18 TEMPLATES · BATCH 01–02</div>
+    <div class="top-meta" id="topMeta">BATCH 01–03</div>
   </div>
 
   <div class="masthead">
-    <h1>Eighteen templates. <em>Eighteen different studios.</em></h1>
+    <h1>Every template. <em>Every trade.</em></h1>
     <p class="lede">
-      Each one is a self-contained landing page with its own palette, layout logic, typographic voice and signature scroll behaviour — built to be lifted from, not shipped as-is. Previews below are live renders, not screenshots. Hover to inspect, click to open full-screen.
+      Self-contained landing pages, each with its own palette, layout logic, typographic voice
+      and signature scroll behaviour. Previews are live renders, not screenshots.
+      <b>Every card carries the prompt that builds it</b>, so you can copy one, swap the bracketed
+      details for a new client, and generate the whole site again.
     </p>
   </div>
-</header>
 
-<div class="controls" id="controls">
-  <button class="filter" data-filter="all" aria-pressed="true">All</button>
-  <button class="filter" data-filter="dark" aria-pressed="false">Dark</button>
-  <button class="filter" data-filter="light" aria-pressed="false">Light</button>
-  <button class="filter" data-filter="luxury" aria-pressed="false">Luxury</button>
-  <button class="filter" data-filter="tech" aria-pressed="false">Tech</button>
-  <button class="filter" data-filter="editorial" aria-pressed="false">Editorial</button>
-  <button class="filter" data-filter="commerce" aria-pressed="false">Commerce</button>
-  <span class="count" id="count"></span>
+  <div class="controls" id="controls"></div>
+  <main class="grid" id="grid"></main>
+
+  <footer>
+    <span>DESIGN_SYSTEM.md · ANIMATION_PLAYBOOK.md — the rules every template follows</span>
+    <span>node serve.js → localhost:4173</span>
+  </footer>
 </div>
 
-<main class="grid" id="grid">
-  <!-- cards injected -->
-</main>
-
-<footer>
-  <span>DESIGN_SYSTEM.md — aesthetic rules · ANIMATION_PLAYBOOK.md — the motion bar</span>
-  <span>_inspo-notes/ — reference captures</span>
-</footer>
+<dialog id="promptDlg">
+  <div class="dlg-head">
+    <h3 id="dlgTitle">Prompt</h3>
+    <button class="btn" id="dlgCopy">Copy</button>
+    <button class="btn" id="dlgClose">Close</button>
+  </div>
+  <div class="dlg-body" id="dlgBody"></div>
+</dialog>
 
 <script>
+/* Industry category is the primary axis, because briefs arrive as
+   "I need a school site", not "I need something dark". */
 const TEMPLATES = [
-  { n:'01', slug:'01-velora-dark-luxury',    name:'Velora',      genre:'Dark luxury car rental — video hero, type-clipped headline',       accent:'#ffffff', tags:['Dark','Video','Type-clip'],              cats:['dark','luxury'] },
-  { n:'02', slug:'02-healcure-medical',      name:'Healcure',    genre:'Healthcare landing — word-by-word reveal, bottom-aligned hero',    accent:'#ffffff', tags:['Photo','Word reveal','Tailwind'],       cats:['dark'] },
-  { n:'03', slug:'03-geptral-eco-cinematic', name:'Geptral',     genre:'Cinematic nature-tech — variable-weight wordmark, mask reveals',   accent:'#DE7D4D', tags:['Dark','Variable font','Custom cursor'], cats:['dark','tech'] },
-  { n:'04', slug:'04-adaline-minimal-ai',    name:'Fernline',    genre:'Minimal AI product — generative canvas flow-field hero',           accent:'#1F2E1A', tags:['Cream','Canvas','Generative'],          cats:['light','tech'] },
-  { n:'05', slug:'05-locomotive-editorial',  name:'Loco®',       genre:'Editorial agency — CSS duotone, marquee, pixel-glitch strip',      accent:'#8a1c1f', tags:['Duotone','Marquee','Glitch'],           cats:['dark','editorial'] },
-  { n:'06', slug:'06-graza-dtc-product',     name:'Hotshot',     genre:'Playful DTC product — flat brand colour, tilt-hover bottle',       accent:'#E4572E', tags:['Flat colour','Tilt 3D','Sticker'],      cats:['commerce'] },
-  { n:'07', slug:'07-noir-omakase', name:'Kuroba', genre:'Omakase counter — pinned tasting-menu scrub', accent:'#A32B1E', tags:['Dark','Pin-scrub','Serif'], cats:['dark','luxury'] },
-  { n:'08', slug:'08-brut-architecture', name:'Haldane Roux', genre:'Architecture studio — horizontal project track', accent:'#ff3c00', tags:['Concrete','Horizontal','Brutalist'], cats:['light','editorial'] },
-  { n:'09', slug:'09-atlas-realestate', name:'Campo Alto', genre:'Residential development — sticky stacking cards', accent:'#A0563A', tags:['Sand','Stacking','Count-up'], cats:['light','luxury'] },
-  { n:'10', slug:'10-cadence-fashion', name:'Cadence', genre:'FW26 lookbook — contextual cursor, velocity skew', accent:'#FF1E00', tags:['Mono B/W','Cursor','Skew'], cats:['editorial','commerce'] },
-  { n:'11', slug:'11-meridian-watches', name:'Meridian &amp; Cie', genre:'Independent horology — scrubbed exploded view', accent:'#1E3A63', tags:['Champagne','Scrub','Technical'], cats:['light','luxury'] },
-  { n:'12', slug:'12-frequency-artist', name:'Odessa Voss', genre:'Recording artist — canvas visualiser', accent:'#c8ff3d', tags:['Dark','Canvas','Reactive'], cats:['dark','editorial'] },
-  { n:'13', slug:'13-ledger-fintech', name:'Ledger', genre:'Treasury platform — scroll-drawn SVG charts', accent:'#3ddc97', tags:['Navy','Charts','Tabular'], cats:['dark','tech'] },
-  { n:'14', slug:'14-orbit-devtool', name:'orbit', genre:'Build cache — replayed terminal session', accent:'#5b5bd6', tags:['Light','Terminal','Mono'], cats:['light','tech'] },
-  { n:'15', slug:'15-solstice-resort', name:'Solstice Alaló', genre:'Private island — multi-depth parallax chapters', accent:'#B8763F', tags:['Warm','Parallax','Pin'], cats:['luxury'] },
-  { n:'16', slug:'16-monolith-portfolio', name:'Monolith', genre:'Creative portfolio — WebGL hover distortion', accent:'#ff4d17', tags:['Dark','WebGL','Shader'], cats:['dark','editorial'] },
-  { n:'17', slug:'17-select-conference', name:'Select', genre:'Dev conference — coded 1-bit dithered portraits', accent:'#3ECF8E', tags:['Cream','Dither','Mono'], cats:['light','tech'] },
-  { n:'18', slug:'18-longrange-commerce', name:'Halden', genre:'Premium homeware storefront — cart, drawer &amp; checkout', accent:'#0F6157', tags:['Porcelain','Drag rail','Commerce'], cats:['light','commerce'] },
+  { n:'01', slug:'01-velora-dark-luxury',    name:'Velora',        cat:'Automotive',            accent:'#ffffff', genre:'Dark luxury car rental — video hero, type-clipped headline' },
+  { n:'02', slug:'02-healcure-medical',      name:'Healcure',      cat:'Healthcare',            accent:'#ffffff', genre:'Healthcare landing — word-by-word reveal, bottom-aligned hero' },
+  { n:'03', slug:'03-geptral-eco-cinematic', name:'Geptral',       cat:'Tech & SaaS',           accent:'#DE7D4D', genre:'Cinematic nature-tech — variable-weight wordmark, mask reveals' },
+  { n:'04', slug:'04-adaline-minimal-ai',    name:'Adaline',       cat:'Tech & SaaS',           accent:'#1F2E1A', genre:'Minimal AI product — generative canvas flow-field hero' },
+  { n:'05', slug:'05-locomotive-editorial',  name:'Locomotive',    cat:'Creative & Agency',     accent:'#8a1c1f', genre:'Editorial agency — CSS duotone, marquee, pixel-glitch strip' },
+  { n:'06', slug:'06-graza-dtc-product',     name:'Hotshot',       cat:'Food & Drink',          accent:'#E4572E', genre:'Playful DTC product — flat brand colour, tilt-hover bottle' },
+  { n:'07', slug:'07-noir-omakase',          name:'Noir Omakase',  cat:'Food & Drink',          accent:'#8c2f2a', genre:'Fine-dining counter — pinned tasting-menu scrub' },
+  { n:'08', slug:'08-brut-architecture',     name:'Brut',          cat:'Property & Architecture', accent:'#f0511e', genre:'Architecture studio — horizontal project track, dense grid' },
+  { n:'09', slug:'09-atlas-realestate',      name:'Atlas',         cat:'Property & Architecture', accent:'#7d6a4f', genre:'Residential development — sticky stacking residence cards' },
+  { n:'10', slug:'10-cadence-fashion',       name:'Cadence',       cat:'Fashion & Luxury',      accent:'#ffffff', genre:'FW26 lookbook — contextual cursor, velocity skew' },
+  { n:'11', slug:'11-meridian-watches',      name:'Meridian',      cat:'Fashion & Luxury',      accent:'#26364f', genre:'Independent horology — scrubbed exploded view, SVG callouts' },
+  { n:'12', slug:'12-frequency-artist',      name:'Frequency',     cat:'Events & Music',        accent:'#c8ff3d', genre:'Recording artist — reactive canvas visualiser' },
+  { n:'13', slug:'13-ledger-fintech',        name:'Ledger',        cat:'Professional Services', accent:'#3ddc97', genre:'Treasury platform — scroll-drawn SVG charts' },
+  { n:'14', slug:'14-orbit-devtool',         name:'Orbit',         cat:'Tech & SaaS',           accent:'#5b5bd6', genre:'Developer tooling — replayed terminal session' },
+  { n:'15', slug:'15-solstice-resort',       name:'Solstice',      cat:'Hospitality & Travel',  accent:'#b8763f', genre:'Private island resort — multi-depth parallax chapters' },
+  { n:'16', slug:'16-monolith-portfolio',    name:'Monolith',      cat:'Creative & Agency',     accent:'#ff4d17', genre:'Creative portfolio — WebGL hover distortion' },
+  { n:'17', slug:'17-select-conference',     name:'Select',        cat:'Events & Music',        accent:'#111111', genre:'Dev conference — coded 1-bit dithered portraits' },
+  { n:'18', slug:'18-longrange-commerce',    name:'Longrange',     cat:'E-commerce & Retail',   accent:'#2BAE4C', genre:'Commerce architecture — cart, drawer, checkout flow' },
+  { n:'19', slug:'19-longrange-pharmacy',    name:'Long Range Rx', cat:'Healthcare',            accent:'#2BAE4C', genre:'Pharmacy storefront — product rails, filtered grid, live cart' },
+  { n:'20', slug:'20-tower-construction',    name:'Tower',         cat:'Construction & Trades', accent:'#F5A833', genre:'Civil engineering — scroll-drawn process line, mono figures' },
+  { n:'21', slug:'21-mirage-college',        name:'Mirage',        cat:'Education',             accent:'#BFA05A', genre:'Vocational college — pinned course browser, serif elegance' },
+  { n:'22', slug:'22-smile-dental',          name:'Smile Dental',  cat:'Healthcare',            accent:'#5B9DBF', genre:'Dental clinic — offset photo block, headline that resolves' },
+  { n:'23', slug:'23-caro-accounting',       name:'Caro',          cat:'Professional Services', accent:'#17A2B8', genre:'Accounting firm — pinned service stack, two-tone headline' },
+  { n:'24', slug:'24-safeway-furniture',     name:'Safeway',       cat:'E-commerce & Retail',   accent:'#8FB4F0', genre:'Fitted furniture — horizontal process track, materials spec' },
+  { n:'25', slug:'25-gordons-bnb',           name:"Gordon's Bnb",  cat:'Hospitality & Travel',  accent:'#B8873F', genre:'Boutique guesthouse — slow image sequence, live booking total' },
 ];
 
 const grid = document.getElementById('grid');
+const controls = document.getElementById('controls');
+const dlg = document.getElementById('promptDlg');
 
-TEMPLATES.forEach(t => {
-  const a = document.createElement('a');
-  a.className = 'card';
-  a.href = t.slug + '/index.html';
-  a.dataset.cats = t.cats.join(' ');
-  a.innerHTML = `
-    <div class="viewport">
+/* ---------- filters, built from the data so they never drift ---------- */
+const cats = ['All', ...[...new Set(TEMPLATES.map(t => t.cat))].sort()];
+controls.innerHTML = cats.map((c, i) =>
+  `<button class="filter" data-cat="${c}" aria-pressed="${i === 0}">${c}</button>`
+).join('') + '<span class="count" id="count"></span>';
+
+/* ---------- cards ---------- */
+grid.innerHTML = TEMPLATES.map(t => `
+  <article class="card" data-cat="${t.cat}">
+    <a class="viewport" href="${t.slug}/index.html">
       <div class="skeleton">Loading preview</div>
-      <iframe data-src="${t.slug}/index.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="${t.name} preview"></iframe>
-      <div class="live-dot"><i></i>Live</div>
+      <iframe data-src="${t.slug}/index.html" loading="lazy" scrolling="no"
+              tabindex="-1" aria-hidden="true" title="${t.name} preview"></iframe>
       <div class="scrim"><span class="open-tag">Open template →</span></div>
-    </div>
+    </a>
     <div class="meta">
       <div class="meta-top">
         <span class="idx">${t.n}</span>
         <span class="name">${t.name}</span>
         <span class="swatch" style="background:${t.accent}"></span>
       </div>
+      <div class="cat">${t.cat}</div>
       <div class="genre">${t.genre}</div>
-      <div class="tags">${t.tags.map(x => `<span class="tag">${x}</span>`).join('')}</div>
-    </div>`;
-  grid.appendChild(a);
-});
+      <div class="actions">
+        <a class="btn" href="${t.slug}/index.html">Open</a>
+        <button class="btn" data-prompt="${t.slug}" data-name="${t.name}">Copy prompt</button>
+        <button class="btn" data-view="${t.slug}" data-name="${t.name}">View prompt</button>
+      </div>
+    </div>
+  </article>
+`).join('');
 
-/* Scale each live iframe to fit its card, recomputed on resize */
+/* ---------- scale each live preview to its card ---------- */
 function fitFrames() {
   document.querySelectorAll('.viewport').forEach(vp => {
-    const frame = vp.querySelector('iframe');
-    if (!frame) return;
-    frame.style.transform = 'scale(' + (vp.clientWidth / 1440) + ')';
+    const f = vp.querySelector('iframe');
+    if (f) f.style.transform = 'scale(' + (vp.clientWidth / 1440) + ')';
   });
 }
 
-/* Only boot a preview once its card nears the viewport — 16 concurrent
-   page loads would otherwise stall the browser. */
+/* Booting 25 iframes at once would stall the browser, so each waits
+   until its card is near the viewport. */
 const io = new IntersectionObserver((entries, obs) => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
-    const vp = e.target;
-    const frame = vp.querySelector('iframe');
-    if (frame && !frame.src) {
-      frame.addEventListener('load', () => {
-        frame.classList.add('is-loaded');
-        vp.classList.add('is-ready');
+    const vp = e.target, f = vp.querySelector('iframe');
+    if (f && !f.src) {
+      f.addEventListener('load', () => {
+        f.classList.add('is-loaded'); vp.classList.add('is-ready');
       }, { once: true });
-      frame.src = frame.dataset.src;
+      f.src = f.dataset.src;
     }
     obs.unobserve(vp);
   });
 }, { rootMargin: '400px 0px' });
-
 document.querySelectorAll('.viewport').forEach(vp => io.observe(vp));
 
 fitFrames();
 window.addEventListener('resize', fitFrames);
 
-/* Filters */
+/* ---------- filtering ---------- */
 const countEl = document.getElementById('count');
-function applyFilter(f) {
+function applyFilter(cat) {
   let shown = 0;
   document.querySelectorAll('.card').forEach(c => {
-    const match = f === 'all' || c.dataset.cats.split(' ').includes(f);
+    const match = cat === 'All' || c.dataset.cat === cat;
     c.classList.toggle('is-hidden', !match);
     if (match) shown++;
   });
   countEl.textContent = shown + ' / ' + TEMPLATES.length + ' SHOWN';
   requestAnimationFrame(fitFrames);
 }
-
-document.getElementById('controls').addEventListener('click', e => {
+controls.addEventListener('click', e => {
   const btn = e.target.closest('.filter');
   if (!btn) return;
-  document.querySelectorAll('.filter').forEach(b =>
-    b.setAttribute('aria-pressed', String(b === btn))
-  );
-  applyFilter(btn.dataset.filter);
+  document.querySelectorAll('.filter').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+  applyFilter(btn.dataset.cat);
+});
+applyFilter('All');
+document.getElementById('topMeta').textContent = TEMPLATES.length + ' TEMPLATES · BATCH 01–03';
+
+/* ---------- prompts ---------- */
+const promptCache = {};
+async function loadPrompt(slug) {
+  if (promptCache[slug]) return promptCache[slug];
+  const res = await fetch(slug + '/prompt.md');
+  if (!res.ok) throw new Error('no prompt');
+  const text = await res.text();
+  promptCache[slug] = text;
+  return text;
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    /* clipboard API needs a secure context; fall back to a hidden textarea */
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch {}
+    ta.remove();
+    return ok;
+  }
+}
+
+grid.addEventListener('click', async e => {
+  const copyBtn = e.target.closest('[data-prompt]');
+  const viewBtn = e.target.closest('[data-view]');
+
+  if (copyBtn) {
+    const original = copyBtn.textContent;
+    try {
+      const text = await loadPrompt(copyBtn.dataset.prompt);
+      const ok = await copyText(text);
+      copyBtn.textContent = ok ? 'Copied ✓' : 'Press Ctrl+C';
+      copyBtn.classList.toggle('is-done', ok);
+    } catch {
+      copyBtn.textContent = 'No prompt yet';
+      copyBtn.classList.add('is-missing');
+    }
+    setTimeout(() => {
+      copyBtn.textContent = original;
+      copyBtn.classList.remove('is-done', 'is-missing');
+    }, 2000);
+  }
+
+  if (viewBtn) {
+    const body = document.getElementById('dlgBody');
+    document.getElementById('dlgTitle').textContent = viewBtn.dataset.name + ' — prompt';
+    body.textContent = 'Loading…';
+    dlg.showModal();
+    try {
+      body.textContent = await loadPrompt(viewBtn.dataset.view);
+    } catch {
+      body.textContent = 'No prompt.md for this template yet.';
+    }
+  }
 });
 
-applyFilter('all');
+document.getElementById('dlgClose').onclick = () => dlg.close();
+document.getElementById('dlgCopy').onclick = async ev => {
+  const ok = await copyText(document.getElementById('dlgBody').textContent);
+  ev.target.textContent = ok ? 'Copied ✓' : 'Press Ctrl+C';
+  setTimeout(() => { ev.target.textContent = 'Copy'; }, 2000);
+};
 </script>
 
 </body>

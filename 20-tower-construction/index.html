@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tower Construction — Building &amp; Civil Engineering Contractors</title>
+<meta name="description" content="Tower Construction. Building and civil engineering contractors serving Zimbabwe since 1980. Category &quot;A&quot; registered with the Construction Industry Federation of Zimbabwe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   TOWER CONSTRUCTION — building & civil engineering  (template 20, batch 03)
+
+   Rebuild of tower-construction-ten.vercel.app. Same idea, sharper edges,
+   real motion. The differentiator in the library is ENGINEERING CONFIDENCE:
+   mono figures, hard 0px corners everywhere, hairline structural rules,
+   tabular numerals on every number, no soft shadows, no rounded cards.
+
+   Ground  : white below the fold, navy above it and in the CTA/footer
+   Navy    : #0E2A5E   (brand)
+   Amber   : #F5A833   (THE one accent — CTA, index numbers, rules, line head)
+   Type    : Inter 800/900 display  +  JetBrains Mono for every label & figure
+   ========================================================================== */
+
+:root{
+  --navy:#0E2A5E;
+  --navy-2:#0A2049;
+  --navy-3:#061634;
+  --navy-line:rgba(255,255,255,.16);
+
+  --amber:#F5A833;
+  --amber-2:#E0961F;
+
+  --white:#FFFFFF;
+  --paper:#FFFFFF;
+  --paper-2:#F4F5F7;
+  --paper-3:#EDEFF2;
+
+  --ink:#0B1C36;
+  --ink-2:#374764;
+  --grey:#66738A;
+  --grey-2:#93A0B4;
+
+  --rule:#D9DEE6;
+  --rule-2:#C3CAD6;
+
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --wrap:1440px;
+  --gut:clamp(20px,4vw,72px);
+  --hdr:70px;
+
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease-io:cubic-bezier(.76,0,.24,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:auto;}
+section[id],main[id]{scroll-margin-top:86px;}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button,input,select,textarea{font:inherit;color:inherit;}
+h1,h2,h3,h4,p,figure,ol,ul{margin:0;}
+ol,ul{list-style:none;padding:0;}
+::selection{background:var(--amber);color:var(--navy-3);}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--gut);}
+.num{font-variant-numeric:tabular-nums lining-nums;font-feature-settings:"tnum" 1,"lnum" 1;}
+
+/* ---- display type -------------------------------------------------------- */
+.dsp{
+  font-family:var(--sans);font-weight:900;
+  letter-spacing:-.035em;line-height:.9;text-transform:uppercase;
+}
+.h2{font-size:clamp(34px,5.4vw,80px);}
+.h3{font-size:clamp(24px,2.6vw,38px);letter-spacing:-.03em;line-height:1;font-weight:800;text-transform:uppercase;}
+
+/* hand-split line masks */
+.ln{display:block;overflow:hidden;}
+.ln>span{display:block;padding-bottom:.09em;margin-bottom:-.09em;}
+
+/* ---- mono utilities ------------------------------------------------------ */
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums lining-nums;}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;
+  display:flex;align-items:center;gap:14px;color:var(--amber);
+}
+.eyebrow i{display:block;width:38px;height:2px;background:var(--amber);flex:none;}
+.eyebrow.dark{color:var(--navy);}
+.eyebrow.dark i{background:var(--navy);}
+
+.sec-idx{
+  font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.2em;
+  color:var(--grey-2);text-transform:uppercase;
+}
+
+/* ---- buttons ------------------------------------------------------------- */
+.btn{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  padding:17px 26px;border:2px solid transparent;border-radius:0;
+  cursor:pointer;position:relative;overflow:hidden;
+  transition:background-color .26s var(--ease),color .26s var(--ease),border-color .26s var(--ease);
+}
+.btn svg{flex:none;transition:transform .32s var(--ease);}
+.btn:hover svg{transform:translateX(5px);}
+.btn-amber{background:var(--amber);color:var(--navy-3);border-color:var(--amber);}
+.btn-amber:hover{background:var(--amber-2);border-color:var(--amber-2);}
+.btn-ghost{background:transparent;color:var(--white);border-color:rgba(255,255,255,.5);}
+.btn-ghost:hover{background:var(--white);color:var(--navy);border-color:var(--white);}
+.btn-navy{background:var(--navy);color:var(--white);border-color:var(--navy);}
+.btn-navy:hover{background:var(--navy-3);border-color:var(--navy-3);}
+
+/* ==========================================================================
+   PAGE-LOAD INTRO — formwork panels + plumb line + mono counter
+   ========================================================================== */
+.intro{position:fixed;inset:0;z-index:200;overflow:hidden;}
+.intro-half{position:absolute;left:0;width:100%;height:50.2%;background:var(--navy);}
+.intro-half.t{top:0;}
+.intro-half.b{bottom:0;}
+.intro-body{
+  position:absolute;inset:0;z-index:2;
+  display:flex;flex-direction:column;justify-content:center;
+  padding-inline:var(--gut);max-width:var(--wrap);margin:0 auto;
+  color:var(--white);pointer-events:none;
+}
+.intro-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;}
+.intro-name{
+  font-family:var(--sans);font-weight:900;text-transform:uppercase;
+  letter-spacing:-.03em;line-height:.9;font-size:clamp(28px,5vw,68px);
+}
+.intro-count{
+  font-family:var(--mono);font-weight:700;font-variant-numeric:tabular-nums;
+  font-size:clamp(28px,5vw,68px);line-height:.9;color:var(--amber);
+}
+.intro-count sup{font-size:.4em;vertical-align:super;margin-left:.15em;}
+.intro-plumb{height:2px;background:rgba(255,255,255,.18);margin:26px 0 18px;position:relative;}
+.intro-plumb i{position:absolute;inset:0;background:var(--amber);transform-origin:left center;transform:scaleX(0);}
+.intro-meta{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.62);
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.hdr-shell{position:fixed;top:0;left:0;right:0;z-index:90;}
+.topbar{
+  background:var(--navy-3);color:rgba(255,255,255,.72);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  height:34px;overflow:hidden;transition:height .4s var(--ease);
+}
+.topbar-in{display:flex;align-items:center;justify-content:space-between;height:34px;gap:20px;}
+.topbar b{color:var(--amber);font-weight:500;}
+.hdr-shell.is-stuck .topbar{height:0;}
+
+.hdr{
+  height:var(--hdr);
+  transition:background-color .4s var(--ease),border-color .4s var(--ease);
+  border-bottom:1px solid transparent;
+}
+.hdr-in{display:flex;align-items:center;justify-content:space-between;height:var(--hdr);gap:28px;}
+.hdr-shell.is-stuck .hdr{background:var(--navy);border-bottom-color:var(--navy-line);}
+
+.brand{display:flex;align-items:center;gap:12px;color:var(--white);}
+.brand .mark{width:26px;height:30px;flex:none;}
+.brand-txt strong{
+  display:block;font-weight:800;font-size:15px;letter-spacing:.06em;
+  text-transform:uppercase;line-height:1.1;
+}
+.brand-txt span{
+  display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:2px;
+}
+.nav{display:flex;align-items:center;gap:clamp(14px,1.9vw,30px);}
+.nav a{
+  font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(255,255,255,.78);
+  padding:6px 0;position:relative;transition:color .24s var(--ease);
+}
+.nav a::after{
+  content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;
+  background:var(--amber);transform:scaleX(0);transform-origin:right center;
+  transition:transform .34s var(--ease);
+}
+.nav a:hover{color:var(--white);}
+.nav a:hover::after,.nav a.is-active::after{transform:scaleX(1);transform-origin:left center;}
+.nav a.is-active{color:var(--white);}
+.hdr .btn{padding:13px 20px;font-size:11px;}
+.burger{display:none;background:none;border:0;padding:8px;cursor:pointer;}
+.burger i{display:block;width:22px;height:2px;background:var(--white);margin:4px 0;}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;background:var(--navy);}
+.hero-media{position:absolute;inset:-14% 0 -14% 0;will-change:transform;}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 38%;}
+.hero-veil{position:absolute;inset:0;background:var(--navy);mix-blend-mode:multiply;opacity:.88;}
+.hero-veil2{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,22,52,.72) 0%,rgba(6,22,52,.1) 34%,rgba(6,22,52,.28) 66%,rgba(6,22,52,.88) 100%);}
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(to right,rgba(255,255,255,.085) 1px,transparent 1px);
+  background-size:calc(100% / 6) 100%;
+}
+.hero-body{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;justify-content:center;color:var(--white);padding-top:calc(var(--hdr) + 74px);padding-bottom:44px;width:100%;}
+.hero h1{margin:26px 0 0;font-size:clamp(44px,10.8vw,152px);}
+.hero h1 .ln>span{display:block;}
+.hero-sub{
+  font-family:var(--mono);font-size:clamp(10px,1.05vw,13px);font-weight:500;
+  letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.7);
+  margin-top:20px;padding-top:16px;border-top:1px solid var(--navy-line);max-width:min(720px,64vw);
+}
+.hero-lede{max-width:600px;margin-top:22px;font-size:clamp(15px,1.25vw,18px);line-height:1.62;color:rgba(255,255,255,.86);}
+.hero-btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px;}
+.hero-foot{
+  position:relative;z-index:3;border-top:1px solid var(--navy-line);
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.hero-foot .cell{padding:20px 0 26px;border-left:1px solid var(--navy-line);padding-left:20px;}
+.hero-foot .cell:first-child{border-left:0;padding-left:0;}
+.hero-foot .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.hero-foot .v{font-family:var(--mono);font-size:clamp(13px,1.35vw,17px);font-weight:700;color:var(--white);margin-top:6px;font-variant-numeric:tabular-nums;}
+.hero-foot .v em{font-style:normal;color:var(--amber);}
+.hero-explore{
+  position:absolute;z-index:4;right:var(--gut);bottom:126px;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+}
+.hero-explore .lbl{
+  writing-mode:vertical-rl;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.72);
+}
+.hero-explore .bar{width:1px;height:64px;background:rgba(255,255,255,.28);position:relative;overflow:hidden;}
+.hero-explore .bar i{position:absolute;top:0;left:0;width:100%;height:34%;background:var(--amber);animation:runbar 2.4s var(--ease-io) infinite;}
+@keyframes runbar{0%{transform:translateY(-110%);}60%,100%{transform:translateY(310%);}}
+
+/* ---- ticker (supporting only) -------------------------------------------- */
+.ticker{background:var(--navy-3);color:var(--white);overflow:hidden;border-block:1px solid var(--navy-line);}
+.ticker-track{display:flex;width:max-content;}
+.ticker-track span{
+  font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.22em;
+  text-transform:uppercase;padding:15px 0;white-space:nowrap;display:flex;align-items:center;
+}
+.ticker-track span i{display:inline-block;width:5px;height:5px;background:var(--amber);margin:0 26px;flex:none;}
+
+/* ==========================================================================
+   SECTION FURNITURE
+   ========================================================================== */
+.sec{position:relative;padding-block:clamp(72px,9vw,148px);}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;}
+.rule{height:1px;background:var(--rule);width:100%;}
+
+/* ==========================================================================
+   ABOUT + STATS
+   ========================================================================== */
+.about-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:clamp(32px,6vw,110px);align-items:start;margin-top:clamp(34px,4vw,60px);}
+.about-copy p{color:var(--ink-2);font-size:clamp(15px,1.15vw,17px);line-height:1.72;margin-top:22px;max-width:56ch;}
+.about-copy p.lead{color:var(--ink);font-size:clamp(17px,1.4vw,21px);line-height:1.6;font-weight:500;}
+.sig{margin-top:36px;padding-top:20px;border-top:1px solid var(--rule);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;}
+.sig strong{font-size:15px;font-weight:700;letter-spacing:-.01em;}
+.sig span{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey);}
+
+.about-media{position:relative;}
+.about-media .ph{position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--paper-3);}
+.about-media img{width:100%;height:100%;object-fit:cover;will-change:transform;}
+.about-badge{
+  position:absolute;left:-1px;bottom:-1px;background:var(--navy);color:var(--white);
+  padding:20px 26px 18px;border-left:3px solid var(--amber);min-width:210px;
+}
+.about-badge .n{font-family:var(--mono);font-weight:700;font-size:34px;line-height:1;font-variant-numeric:tabular-nums;}
+.about-badge .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.66);margin-top:8px;}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(50px,6vw,96px);border-top:2px solid var(--ink);}
+.stat{padding:30px 16px 6px 22px;border-left:1px solid var(--rule);}
+.stat:first-child{border-left:0;padding-left:0;}
+.stat .n{
+  font-family:var(--mono);font-weight:700;font-size:clamp(24px,3.2vw,45px);line-height:1;
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--navy);white-space:nowrap;
+}
+.stat .n em{font-style:normal;font-size:.42em;color:var(--amber);margin-left:.16em;letter-spacing:0;}
+.stat .l{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey);margin-top:14px;}
+.stat .s{font-size:13.5px;color:var(--ink-2);margin-top:8px;line-height:1.5;max-width:24ch;}
+
+/* ==========================================================================
+   CAPABILITY (pinned)
+   ========================================================================== */
+.cap{background:var(--paper-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow:hidden;}
+@media (min-width:1024px){
+  .cap{min-height:100vh;display:flex;align-items:center;padding-block:clamp(56px,6vw,92px);}
+  .cap-wrap{width:100%;}
+  .cap .h2{font-size:clamp(34px,4.3vw,62px);}
+}
+.cap-inner{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(32px,6vw,100px);align-items:start;}
+.cap-left h2{margin-top:24px;}
+.cap-left p{color:var(--ink-2);font-size:clamp(15px,1.15vw,17.5px);line-height:1.7;margin-top:24px;max-width:44ch;}
+.cap-counter{
+  margin-top:34px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;
+  color:var(--grey);display:flex;align-items:center;gap:14px;
+}
+.cap-counter b{color:var(--navy);font-weight:700;font-size:20px;font-variant-numeric:tabular-nums;}
+
+.cap-rows{position:relative;padding-left:26px;}
+.cap-spine{position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--rule-2);}
+.cap-spine i{position:absolute;inset:0;background:var(--amber);transform-origin:top center;transform:scaleY(0);}
+.cap-row{
+  display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:baseline;
+  padding:clamp(16px,1.9vw,26px) 0;border-bottom:1px solid var(--rule);
+  opacity:.34;transition:opacity .5s var(--ease),color .5s var(--ease);
+}
+.cap-row:first-child{border-top:1px solid var(--rule);}
+.cap-row .i{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--grey-2);transition:color .5s var(--ease);}
+.cap-row .t{font-weight:700;font-size:clamp(15px,1.5vw,21px);letter-spacing:-.015em;text-transform:uppercase;}
+.cap-row .f{font-family:var(--mono);font-size:clamp(11.5px,1.05vw,14px);font-weight:500;letter-spacing:.04em;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.cap-row.is-on{opacity:1;}
+.cap-row.is-on .i{color:var(--amber);}
+
+.creds{display:grid;grid-template-columns:repeat(6,1fr);gap:0;margin-top:clamp(44px,5vw,76px);border:1px solid var(--rule-2);background:var(--rule-2);}
+.cred{background:var(--paper-2);padding:20px 18px;display:flex;flex-direction:column;gap:8px;transition:background-color .3s var(--ease);}
+.cred:hover{background:var(--white);}
+.cred .k{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-2);}
+.cred .v{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--navy);line-height:1.35;font-variant-numeric:tabular-nums;}
+
+/* ==========================================================================
+   SERVICES
+   ========================================================================== */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:clamp(34px,4vw,58px);}
+.svc{background:var(--paper);padding:clamp(26px,2.6vw,40px);position:relative;overflow:hidden;min-height:280px;display:flex;flex-direction:column;}
+.svc::before{content:"";position:absolute;inset:0;background:var(--navy);transform:scaleY(0);transform-origin:bottom center;transition:transform .5s var(--ease-io);}
+.svc>*{position:relative;z-index:1;}
+.svc:hover::before{transform:scaleY(1);transform-origin:top center;}
+.svc .i{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--amber);}
+.svc h3{margin-top:20px;transition:color .4s var(--ease);}
+.svc p{margin-top:16px;color:var(--ink-2);font-size:14.5px;line-height:1.62;transition:color .4s var(--ease);}
+.svc .spec{
+  margin-top:auto;padding-top:22px;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--grey);border-top:1px solid var(--rule);
+  transition:color .4s var(--ease),border-color .4s var(--ease);
+}
+.svc:hover h3{color:var(--white);}
+.svc:hover p{color:rgba(255,255,255,.8);}
+.svc:hover .spec{color:var(--amber);border-top-color:var(--navy-line);}
+
+/* ==========================================================================
+   GALLERY / SELECTED WORKS — offset editorial
+   ========================================================================== */
+.gal{display:grid;grid-template-columns:repeat(12,1fr);column-gap:clamp(18px,2.4vw,40px);row-gap:clamp(30px,4vw,72px);margin-top:clamp(38px,4vw,64px);}
+.proj{position:relative;display:flex;flex-direction:column;}
+.proj .ph{position:relative;overflow:hidden;background:var(--paper-3);clip-path:inset(0% 0% 0% 0%);}
+.proj .ph img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease);will-change:transform;}
+.proj:hover .ph img{transform:scale(1.045);}
+.proj .tag{
+  position:absolute;top:0;left:0;z-index:2;background:var(--amber);color:var(--navy-3);
+  font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  padding:8px 14px;
+}
+.proj-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-top:22px;padding-bottom:14px;border-bottom:2px solid var(--ink);}
+.proj-head h3{font-size:clamp(19px,1.85vw,27px);}
+.proj-head .yr{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--grey);font-variant-numeric:tabular-nums;}
+.proj-spec{margin-top:0;}
+.proj-spec div{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--rule);}
+.proj-spec .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey-2);}
+.proj-spec .v{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right;}
+.proj-spec div:last-child .v{color:var(--navy);font-weight:700;}
+
+/* offset editorial placement */
+.p1{grid-column:1 / span 7;}
+.p1 .ph{aspect-ratio:16/11;}
+.p2{grid-column:9 / span 4;margin-top:clamp(50px,7vw,132px);}
+.p2 .ph{aspect-ratio:3/4;}
+.p3{grid-column:2 / span 4;margin-top:clamp(46px,6vw,110px);}
+.p3 .ph{aspect-ratio:4/5;}
+.p4{grid-column:7 / span 6;margin-top:clamp(46px,10vw,210px);}
+.p4 .ph{aspect-ratio:16/10;}
+.p5{grid-column:1 / span 6;margin-top:clamp(46px,6vw,120px);}
+.p5 .ph{aspect-ratio:3/2;}
+.p6{grid-column:8 / span 5;margin-top:clamp(46px,8vw,178px);}
+.p6 .ph{aspect-ratio:4/5;}
+
+.gal-foot{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:clamp(50px,6vw,96px);padding-top:26px;border-top:2px solid var(--ink);}
+.gal-foot p{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey);}
+
+/* ==========================================================================
+   PROCESS — scroll-drawn SVG line (the signature)
+   ========================================================================== */
+.proc{background:var(--navy);color:var(--white);}
+.proc .sec-idx{color:rgba(255,255,255,.42);}
+.proc-canvas{position:relative;margin-top:clamp(44px,5vw,80px);--jog:clamp(34px,5vw,72px);}
+.proc-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible;}
+.proc-track{fill:none;stroke:rgba(255,255,255,.17);stroke-width:2;vector-effect:non-scaling-stroke;}
+.proc-live{fill:none;stroke:var(--amber);stroke-width:2;vector-effect:non-scaling-stroke;}
+.proc-head-mk{fill:var(--amber);}
+#procHead{opacity:0;}
+
+.proc-step{position:relative;display:grid;grid-template-columns:1fr clamp(120px,15vw,230px) 1fr;padding-block:clamp(22px,3vw,44px);}
+.proc-step .proc-card{grid-column:1;text-align:right;padding-right:clamp(14px,2vw,34px);}
+.proc-step.r .proc-card{grid-column:3;text-align:left;padding-left:clamp(14px,2vw,34px);padding-right:0;}
+.proc-node{
+  position:absolute;top:calc(clamp(22px,3vw,44px) + 8px);left:calc(50% - var(--jog));
+  width:16px;height:16px;transform:translateX(-50%) rotate(45deg);
+  border:2px solid rgba(255,255,255,.4);background:var(--navy);z-index:2;
+  transition:border-color .45s var(--ease),background-color .45s var(--ease),box-shadow .45s var(--ease);
+}
+.proc-step.r .proc-node{left:calc(50% + var(--jog));}
+.proc-step.is-on .proc-node{border-color:var(--amber);background:var(--amber);box-shadow:0 0 0 6px rgba(245,168,51,.16);}
+.proc-card{position:relative;z-index:1;}
+.proc-card .i{
+  font-family:var(--mono);font-size:clamp(28px,3.4vw,50px);font-weight:700;line-height:1;
+  color:rgba(255,255,255,.2);font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+  transition:color .45s var(--ease);
+}
+.proc-step.is-on .proc-card .i{color:var(--amber);}
+.proc-card h3{margin-top:14px;font-size:clamp(18px,1.9vw,28px);}
+.proc-card p{margin-top:14px;color:rgba(255,255,255,.72);font-size:14.5px;line-height:1.66;max-width:42ch;}
+.proc-step.r .proc-card p{margin-right:auto;}
+.proc-step:not(.r) .proc-card p{margin-left:auto;}
+.proc-card .meta{
+  margin-top:16px;display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);border:1px solid var(--navy-line);padding:7px 12px;
+  font-variant-numeric:tabular-nums;
+}
+.proc-foot{margin-top:clamp(44px,5vw,78px);padding-top:26px;border-top:1px solid var(--navy-line);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center;}
+.proc-foot p{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);}
+
+/* ==========================================================================
+   QUOTE
+   ========================================================================== */
+.quote{background:var(--navy-3);color:var(--white);}
+.quote .eyebrow{color:var(--amber);}
+.quote-grid{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(34px,6vw,96px);margin-top:clamp(34px,4vw,56px);align-items:start;}
+.quote-left p.lede{color:rgba(255,255,255,.78);font-size:clamp(15px,1.2vw,18px);line-height:1.7;margin-top:24px;max-width:40ch;}
+.contact-list{margin-top:36px;border-top:1px solid var(--navy-line);}
+.contact-list div{display:grid;grid-template-columns:118px 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--navy-line);}
+.contact-list .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);padding-top:3px;}
+.contact-list .v{font-size:14.5px;color:rgba(255,255,255,.92);line-height:1.5;}
+.contact-list .v.mono{font-family:var(--mono);font-size:13px;letter-spacing:.03em;}
+.sla{margin-top:26px;display:inline-flex;align-items:center;gap:12px;border:1px solid var(--amber);color:var(--amber);font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:10px 14px;}
+
+.form{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--navy-line);border:1px solid var(--navy-line);}
+.fld{background:var(--navy-3);padding:16px 18px 14px;position:relative;}
+.fld.full{grid-column:1 / -1;}
+.fld label{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.fld input,.fld select,.fld textarea{
+  width:100%;background:transparent;border:0;outline:none;color:var(--white);
+  font-size:15px;padding:9px 0 2px;border-radius:0;
+}
+.fld textarea{resize:vertical;min-height:96px;line-height:1.55;}
+.fld select{appearance:none;cursor:pointer;}
+.fld select option{background:var(--navy-3);color:var(--white);}
+.fld input::placeholder,.fld textarea::placeholder{color:rgba(255,255,255,.3);}
+.fld::after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--amber);transform:scaleX(0);transform-origin:left center;transition:transform .34s var(--ease);}
+.fld:focus-within::after{transform:scaleX(1);}
+.fld .chev{position:absolute;right:18px;bottom:16px;color:rgba(255,255,255,.45);pointer-events:none;}
+.form-foot{grid-column:1 / -1;background:var(--navy-3);padding:20px 18px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.form-foot small{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);max-width:38ch;line-height:1.6;}
+.form-msg{grid-column:1 / -1;background:var(--amber);color:var(--navy-3);padding:16px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:none;}
+.form-msg.is-on{display:block;}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.ftr{background:var(--navy);color:var(--white);padding-top:clamp(54px,6vw,90px);}
+.ftr-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.25fr;gap:clamp(26px,4vw,60px);padding-bottom:clamp(40px,5vw,70px);border-bottom:1px solid var(--navy-line);}
+.ftr h4{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:20px;}
+.ftr li{margin-bottom:11px;}
+.ftr li a{font-size:14px;color:rgba(255,255,255,.74);transition:color .24s var(--ease);}
+.ftr li a:hover{color:var(--amber);}
+.ftr-brand .brand{margin-bottom:20px;}
+.ftr-brand p{font-size:14px;color:rgba(255,255,255,.66);line-height:1.7;max-width:34ch;}
+.ftr-reg li{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.66);letter-spacing:.04em;line-height:1.5;font-variant-numeric:tabular-nums;}
+.ftr-reg li b{display:block;color:var(--white);font-weight:700;}
+.ftr-bot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-block:24px 30px;}
+.ftr-bot p,.ftr-bot a{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.ftr-bot a:hover{color:var(--amber);}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width:1180px){
+  .nav a:nth-child(n+6){display:none;}
+}
+@media (max-width:1023px){
+  .nav{display:none;}
+  .burger{display:block;}
+  .about-grid{grid-template-columns:1fr;}
+  .about-media{max-width:520px;}
+  .cap-inner{grid-template-columns:1fr;}
+  .cap-rows{margin-top:40px;}
+  .quote-grid{grid-template-columns:1fr;}
+  .creds{grid-template-columns:repeat(3,1fr);}
+  .svc-grid{grid-template-columns:repeat(2,1fr);}
+  .ftr-top{grid-template-columns:1fr 1fr;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .stat{padding-left:22px;}
+  .stat:nth-child(3),.stat:nth-child(4){border-top:1px solid var(--rule);margin-top:26px;padding-top:26px;}
+  .stat:nth-child(odd){border-left:0;padding-left:0;}
+  .gal{grid-template-columns:repeat(6,1fr);}
+  .p1{grid-column:1 / span 6;}
+  .p2{grid-column:2 / span 5;}
+  .p3{grid-column:1 / span 5;}
+  .p4{grid-column:2 / span 5;}
+  .p5{grid-column:1 / span 6;}
+  .p6{grid-column:2 / span 5;}
+  .p2,.p3,.p4,.p5,.p6{margin-top:clamp(40px,7vw,72px);}
+}
+@media (max-width:899px){
+  .proc-canvas{--jog:0px;}
+  .proc-step{grid-template-columns:1fr;padding-left:52px;}
+  .proc-step .proc-card,.proc-step.r .proc-card{grid-column:1;text-align:left;padding-left:0;padding-right:0;}
+  .proc-step:not(.r) .proc-card p{margin-left:0;}
+  .proc-node,.proc-step.r .proc-node{left:0;transform:translateX(0) rotate(45deg);}
+  .hero-foot{grid-template-columns:repeat(2,1fr);}
+  .hero-foot .cell:nth-child(odd){border-left:0;padding-left:0;}
+  .hero-foot .cell:nth-child(n+3){border-top:1px solid var(--navy-line);}
+  .hero-explore{display:none;}
+}
+@media (max-width:719px){
+  .topbar-in .t-hide{display:none;}
+  .topbar-in{justify-content:center;}
+  .svc-grid{grid-template-columns:1fr;}
+  .creds{grid-template-columns:repeat(2,1fr);}
+  .form{grid-template-columns:1fr;}
+  .ftr-top{grid-template-columns:1fr;}
+  .gal{grid-template-columns:1fr;}
+  .p1,.p2,.p3,.p4,.p5,.p6{grid-column:1 / -1;}
+  .contact-list div{grid-template-columns:1fr;gap:6px;}
+  .hero h1{font-size:clamp(40px,12.5vw,80px);}
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+  .intro{display:none !important;}
+  .ln>span{transform:none !important;}
+  .cap-row{opacity:1 !important;}
+  .cap-spine i{transform:scaleY(1) !important;}
+  .proc-live{stroke-dashoffset:0 !important;}
+  .hero-explore .bar i{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ======================= PAGE-LOAD INTRO ======================= -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-half t"></div>
+  <div class="intro-half b"></div>
+  <div class="intro-body">
+    <div class="intro-inner" style="width:100%">
+      <div class="intro-row">
+        <div class="intro-name" id="introName">Tower<br>Construction</div>
+        <div class="intro-count num"><span id="introNum">0</span><sup>%</sup></div>
+      </div>
+      <div class="intro-plumb"><i id="introBar"></i></div>
+      <div class="intro-meta">Est. 1980 &nbsp;·&nbsp; Harare, Zimbabwe &nbsp;·&nbsp; CIFOZ Category &ldquo;A&rdquo; &nbsp;·&nbsp; Reg. 0143/A</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= HEADER ======================= -->
+<div class="hdr-shell" id="hdrShell">
+  <div class="topbar">
+    <div class="wrap topbar-in">
+      <span class="t-hide">14 Bessemer Road, Graniteside, Harare</span>
+      <span>+263 24 277 1980 &nbsp;·&nbsp; <b>CIFOZ Category &ldquo;A&rdquo; — Reg. 0143/A</b></span>
+    </div>
+  </div>
+  <div class="hdr" id="hdr">
+    <div class="wrap hdr-in">
+      <a class="brand" href="#top" aria-label="Tower Construction, home">
+        <svg class="mark" viewBox="0 0 28 32" aria-hidden="true">
+          <path d="M14 1 L21.5 9.5 H6.5 Z" fill="currentColor"/>
+          <rect x="10.5" y="11.5" width="7" height="14.5" fill="currentColor"/>
+          <rect x="3" y="28" width="22" height="3" fill="#F5A833"/>
+        </svg>
+        <span class="brand-txt">
+          <strong>Tower Construction</strong>
+          <span>Building &amp; Civil Engineering</span>
+        </span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#top" class="is-active">Home</a>
+        <a href="#about">About</a>
+        <a href="#capability">Capability</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#process">Process</a>
+        <a href="#quote">Contact</a>
+      </nav>
+      <a href="#quote" class="btn btn-amber" data-magnet>Get a Quote</a>
+      <button class="burger" aria-label="Menu"><i></i><i></i><i></i></button>
+    </div>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ======================= HERO ======================= -->
+<section class="hero" id="hero">
+  <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+  <div class="hero-media" id="heroMedia">
+    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2400&q=80" alt="Tower crane over a reinforced concrete frame at sunset">
+  </div>
+  <div class="hero-veil"></div>
+  <div class="hero-veil2"></div>
+  <div class="hero-grid"></div>
+
+  <div class="wrap hero-body">
+    <p class="eyebrow" data-fade><i></i>Since 1980</p>
+    <h1 class="dsp">
+      <span class="ln"><span>Tower</span></span>
+      <span class="ln"><span>Construction</span></span>
+    </h1>
+    <p class="hero-sub" data-fade>Building &amp; Civil Engineering Contractors &nbsp;·&nbsp; Harare, Zimbabwe</p>
+    <p class="hero-lede" data-fade>Turning ambition into concrete reality. Forty-five years of structural, civil and industrial work across Zimbabwe &mdash; Category &ldquo;A&rdquo; registered with the Construction Industry Federation of Zimbabwe.</p>
+    <div class="hero-btns" data-fade>
+      <a href="#quote" class="btn btn-amber" data-magnet>Request a Quote
+        <svg width="15" height="10" viewBox="0 0 15 10" fill="none" aria-hidden="true"><path d="M0 5h13M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg>
+      </a>
+      <a href="#projects" class="btn btn-ghost">View Our Work</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="hero-foot" data-fade>
+      <div class="cell"><div class="k">Established</div><div class="v">1980</div></div>
+      <div class="cell"><div class="k">Projects delivered</div><div class="v">312</div></div>
+      <div class="cell"><div class="k">CIFOZ grading</div><div class="v"><em>Category &ldquo;A&rdquo;</em></div></div>
+      <div class="cell"><div class="k">Days without LTI</div><div class="v">2 190</div></div>
+    </div>
+  </div>
+
+  <div class="hero-explore" aria-hidden="true">
+    <span class="lbl">Explore</span>
+    <span class="bar"><i></i></span>
+  </div>
+</section>
+
+<!-- ======================= TICKER (supporting) ======================= -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<!-- ======================= ABOUT + STATS ======================= -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow dark"><i></i>01 &mdash; The Firm</p>
+      <span class="sec-idx">Harare &nbsp;/&nbsp; Est. 1980</span>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-copy">
+        <h2 class="dsp h2" data-lines>
+          <span class="ln"><span>Building</span></span>
+          <span class="ln"><span>Zimbabwe&rsquo;s</span></span>
+          <span class="ln"><span>Future</span></span>
+        </h2>
+        <p class="lead" data-fade>We are contractors, not consultants. Every job is priced by the people who will build it, run by a permanent site agent, and handed over with a full as-built set.</p>
+        <p data-fade>Tower Construction started in 1980 with two tipper trucks and a contract to build a grain depot outside Marondera. Forty-five years on we hold Category &ldquo;A&rdquo; registration with the Construction Industry Federation of Zimbabwe, run sixty-eight owned plant units out of the Msasa yard, and employ three hundred and forty people directly.</p>
+        <p data-fade>Concrete, roads, water, steel. We work across all ten provinces, in-house from setting out to commissioning, and we have never sub-let a structural frame. That is the whole method. It has not changed in forty-five years.</p>
+        <div class="sig" data-fade>
+          <strong>R. T. Mutasa</strong>
+          <span>Managing Director &nbsp;·&nbsp; Pr.Eng, ZIE</span>
+        </div>
+      </div>
+
+      <div class="about-media" data-reveal>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <div class="ph"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80" alt="Site engineer and crane operator on a concrete frame" loading="lazy" decoding="async"></div>
+        <div class="about-badge">
+          <div class="n num"><span data-count="45">0</span></div>
+          <div class="l">Years on site &nbsp;·&nbsp; 1980&ndash;2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="n"><span data-count="45">0</span></div>
+        <div class="l">Years trading</div>
+        <div class="s">Continuously registered and trading since March 1980.</div>
+      </div>
+      <div class="stat">
+        <div class="n"><span data-count="312">0</span></div>
+        <div class="l">Projects delivered</div>
+        <div class="s">Practical completion certificates issued, all provinces.</div>
+      </div>
+      <div class="stat">
+        <div class="n"><span data-count="1480000">0</span><em>m&sup2;</em></div>
+        <div class="l">Square metres built</div>
+        <div class="s">Gross floor area constructed to date, buildings only.</div>
+      </div>
+      <div class="stat">
+        <div class="n"><span data-count="2190">0</span></div>
+        <div class="l">Days without LTI</div>
+        <div class="s">No lost-time injury since 12 September 2019.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CAPABILITY (pinned) ======================= -->
+<section class="sec cap" id="capability">
+  <div class="wrap cap-wrap">
+    <div class="cap-inner">
+      <div class="cap-left">
+        <p class="eyebrow dark"><i></i>02 &mdash; Capability Statement</p>
+        <h2 class="dsp h2" data-lines>
+          <span class="ln"><span>Solid Ground.</span></span>
+          <span class="ln"><span>Solid Build.</span></span>
+        </h2>
+        <p data-fade>Ground conditions decide everything that follows. We survey before we price, we test before we pour, and we build to the tolerance on the drawing &mdash; not the tolerance we can get away with.</p>
+        <div class="cap-counter"><b class="num" id="capNum">01</b> <span class="num">/ 06</span> <span>Capability</span></div>
+      </div>
+
+      <div class="cap-rows" id="capRows">
+        <div class="cap-spine"><i id="capFill"></i></div>
+        <div class="cap-row"><span class="i">01</span><span class="t">Bonding capacity</span><span class="f">US$ 25M &nbsp;/&nbsp; single contract</span></div>
+        <div class="cap-row"><span class="i">02</span><span class="t">Owned plant fleet</span><span class="f">68 units &nbsp;/&nbsp; Msasa yard</span></div>
+        <div class="cap-row"><span class="i">03</span><span class="t">Direct workforce</span><span class="f">340 employed &nbsp;/&nbsp; 41 artisans</span></div>
+        <div class="cap-row"><span class="i">04</span><span class="t">Concrete batching</span><span class="f">60 m&sup3; / hr &nbsp;/&nbsp; own pump</span></div>
+        <div class="cap-row"><span class="i">05</span><span class="t">Survey &amp; setting out</span><span class="f">GNSS RTK + 2 total stations</span></div>
+        <div class="cap-row"><span class="i">06</span><span class="t">Quality management</span><span class="f">ISO 9001:2015 &nbsp;/&nbsp; cube tested</span></div>
+      </div>
+    </div>
+
+    <div class="creds" data-stagger>
+      <div class="cred"><span class="k">Grading</span><span class="v">CIFOZ<br>Category &ldquo;A&rdquo;</span></div>
+      <div class="cred"><span class="k">Registration</span><span class="v">Reg. No.<br>0143/A</span></div>
+      <div class="cred"><span class="k">Procurement</span><span class="v">PRAZ<br>S/2019/0442</span></div>
+      <div class="cred"><span class="k">Quality</span><span class="v">ISO 9001:2015<br>QMS/ZW/1187</span></div>
+      <div class="cred"><span class="k">Revenue</span><span class="v">ZIMRA BP<br>0200147993</span></div>
+      <div class="cred"><span class="k">Safety</span><span class="v">NSSA<br>41-77-0195</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= SERVICES ======================= -->
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow dark"><i></i>03 &mdash; Services</p>
+        <h2 class="dsp h2" data-lines style="margin-top:22px">
+          <span class="ln"><span>The Work</span></span>
+          <span class="ln"><span>We Take On</span></span>
+        </h2>
+      </div>
+      <span class="sec-idx">Six disciplines &nbsp;/&nbsp; all in-house</span>
+    </div>
+
+    <div class="svc-grid" data-stagger>
+      <article class="svc">
+        <span class="i">01</span>
+        <h3 class="dsp h3">Structural<br>Concrete</h3>
+        <p>Formwork, reinforcement and in-situ pours from pad footings to a fourteen-storey core. Own batching plant, own boom pump, own cube testing.</p>
+        <span class="spec">In-situ · Precast · Post-tension</span>
+      </article>
+      <article class="svc">
+        <span class="i">02</span>
+        <h3 class="dsp h3">Roads &amp;<br>Earthworks</h3>
+        <p>Bulk excavation, haul roads, subgrade, base and surfacing. Twenty-two earthmoving units on rotation across three provinces at any one time.</p>
+        <span class="spec">27.4 km surfaced in 2025</span>
+      </article>
+      <article class="svc">
+        <span class="i">03</span>
+        <h3 class="dsp h3">Industrial<br>Buildings</h3>
+        <p>Warehousing, workshops, retail and office. Design-and-build, or construct-only priced against your bill of quantities line by line.</p>
+        <span class="spec">18 400 m&sup2; largest single shed</span>
+      </article>
+      <article class="svc">
+        <span class="i">04</span>
+        <h3 class="dsp h3">Water &amp;<br>Sewer</h3>
+        <p>Bulk mains, pump stations, reservoirs and township reticulation for local authorities, mines and private estates.</p>
+        <span class="spec">41 km DN450 uPVC, Chiredzi</span>
+      </article>
+      <article class="svc">
+        <span class="i">05</span>
+        <h3 class="dsp h3">Steel &amp;<br>Cladding</h3>
+        <p>Portal frames, mezzanines, walkways and IBR cladding fabricated in the Msasa shop and erected by our own riggers.</p>
+        <span class="spec">620 tonnes fabricated in 2025</span>
+      </article>
+      <article class="svc">
+        <span class="i">06</span>
+        <h3 class="dsp h3">Refurbishment<br>&amp; Fit-Out</h3>
+        <p>Structural repair, fa&ccedil;ade work and occupied-building fit-out staged around a live tenant programme and after-hours access.</p>
+        <span class="spec">We work while you trade</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= GALLERY / PROJECTS ======================= -->
+<section class="sec" id="projects" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head" style="padding-top:clamp(40px,5vw,80px);border-top:2px solid var(--ink)">
+      <div>
+        <p class="eyebrow dark"><i></i>04 &mdash; Our Gallery</p>
+        <h2 class="dsp h2" data-lines style="margin-top:22px">
+          <span class="ln"><span>Six Jobs,</span></span>
+          <span class="ln"><span>Six Provinces</span></span>
+        </h2>
+      </div>
+      <span class="sec-idx">Selected works &nbsp;/&nbsp; 2021&ndash;2025</span>
+    </div>
+
+    <div class="gal">
+      <figure class="proj p1" data-proj>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <div class="ph"><span class="tag">Industrial</span><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80" alt="Msasa Logistics Park warehouse frame" loading="lazy" decoding="async"></div>
+        <figcaption>
+          <div class="proj-head"><h3 class="dsp h3">Msasa Logistics Park</h3><span class="yr num">2024</span></div>
+          <div class="proj-spec">
+            <div><span class="k">Location</span><span class="v">Msasa, Harare</span></div>
+            <div><span class="k">Floor area</span><span class="v">18 400 m&sup2;</span></div>
+            <div><span class="k">Client</span><span class="v">Private developer</span></div>
+            <div><span class="k">Contract value</span><span class="v">US$ 9.4M</span></div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="proj p2" data-proj>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <div class="ph"><span class="tag">Civil</span><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" alt="Bulk water main pipeline trench works" loading="lazy" decoding="async"></div>
+        <figcaption>
+          <div class="proj-head"><h3 class="dsp h3">Chiredzi Bulk Water Main</h3><span class="yr num">2023</span></div>
+          <div class="proj-spec">
+            <div><span class="k">Location</span><span class="v">Chiredzi, Masvingo</span></div>
+            <div><span class="k">Extent</span><span class="v">41 km DN450</span></div>
+            <div><span class="k">Client</span><span class="v">Municipal authority</span></div>
+            <div><span class="k">Contract value</span><span class="v">US$ 6.2M</span></div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="proj p3" data-proj>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <div class="ph"><span class="tag">Healthcare</span><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="Borrowdale Medical Centre completed facade" loading="lazy" decoding="async"></div>
+        <figcaption>
+          <div class="proj-head"><h3 class="dsp h3">Borrowdale Medical Centre</h3><span class="yr num">2022</span></div>
+          <div class="proj-spec">
+            <div><span class="k">Location</span><span class="v">Borrowdale, Harare</span></div>
+            <div><span class="k">Floor area</span><span class="v">6 900 m&sup2;</span></div>
+            <div><span class="k">Client</span><span class="v">Private healthcare group</span></div>
+            <div><span class="k">Contract value</span><span class="v">US$ 7.8M</span></div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="proj p4" data-proj>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <div class="ph"><span class="tag">Mining</span><img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1600&q=80" alt="Heavy industrial workshop steelwork" loading="lazy" decoding="async"></div>
+        <figcaption>
+          <div class="proj-head"><h3 class="dsp h3">Hwange Colliery Workshop</h3><span class="yr num">2021</span></div>
+          <div class="proj-spec">
+            <div><span class="k">Location</span><span class="v">Hwange, Mat. North</span></div>
+            <div><span class="k">Floor area</span><span class="v">11 200 m&sup2;</span></div>
+            <div><span class="k">Client</span><span class="v">Mining parastatal</span></div>
+            <div><span class="k">Contract value</span><span class="v">US$ 5.1M</span></div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="proj p5" data-proj>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <div class="ph"><span class="tag">Roads</span><img src="https://images.unsplash.com/photo-1449157291145-7efd050a4d0e?auto=format&fit=crop&w=1600&q=80" alt="Rehabilitated highway and bridge structure" loading="lazy" decoding="async"></div>
+        <figcaption>
+          <div class="proj-head"><h3 class="dsp h3">Nyanga Road Rehabilitation</h3><span class="yr num">2025</span></div>
+          <div class="proj-spec">
+            <div><span class="k">Location</span><span class="v">Nyanga, Manicaland</span></div>
+            <div><span class="k">Extent</span><span class="v">27.4 km</span></div>
+            <div><span class="k">Client</span><span class="v">Roads authority</span></div>
+            <div><span class="k">Contract value</span><span class="v">US$ 12.6M</span></div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="proj p6" data-proj>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <div class="ph"><span class="tag">Residential</span><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80" alt="Kariba Lakeside Apartments completed block" loading="lazy" decoding="async"></div>
+        <figcaption>
+          <div class="proj-head"><h3 class="dsp h3">Kariba Lakeside Apartments</h3><span class="yr num">2024</span></div>
+          <div class="proj-spec">
+            <div><span class="k">Location</span><span class="v">Kariba, Mash. West</span></div>
+            <div><span class="k">Floor area</span><span class="v">9 350 m&sup2;</span></div>
+            <div><span class="k">Client</span><span class="v">Hospitality investor</span></div>
+            <div><span class="k">Contract value</span><span class="v">US$ 8.3M</span></div>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="gal-foot">
+      <p>Total contract value shown &nbsp;·&nbsp; <span class="num" style="color:var(--navy);font-weight:700">US$ 49.4M</span></p>
+      <a href="#quote" class="btn btn-navy">Full project list on request
+        <svg width="15" height="10" viewBox="0 0 15 10" fill="none" aria-hidden="true"><path d="M0 5h13M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= PROCESS ======================= -->
+<section class="sec proc" id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow"><i></i>05 &mdash; Method</p>
+        <h2 class="dsp h2" data-lines style="margin-top:22px">
+          <span class="ln"><span>From Consultation</span></span>
+          <span class="ln"><span>to Handover</span></span>
+        </h2>
+      </div>
+      <span class="sec-idx">Six stages &nbsp;/&nbsp; one site agent</span>
+    </div>
+
+    <div class="proc-canvas" id="procCanvas">
+      <svg class="proc-svg" id="procSvg" preserveAspectRatio="none" aria-hidden="true">
+        <path class="proc-track" id="procTrack" d=""></path>
+        <path class="proc-live" id="procPath" d=""></path>
+        <g id="procHead"><rect class="proc-head-mk" x="-5" y="-5" width="10" height="10"></rect></g>
+      </svg>
+
+      <ol class="proc-list">
+        <li class="proc-step">
+          <span class="proc-node"></span>
+          <div class="proc-card">
+            <div class="i">01</div>
+            <h3 class="dsp h3">Consultation<br>&amp; Brief</h3>
+            <p>We meet on site, not in a boardroom. You tell us what has to be built, by when, and what it has to cost. We tell you straight away whether that is possible.</p>
+            <span class="meta">Typically 1 week</span>
+          </div>
+        </li>
+        <li class="proc-step r">
+          <span class="proc-node"></span>
+          <div class="proc-card">
+            <div class="i">02</div>
+            <h3 class="dsp h3">Survey<br>&amp; Feasibility</h3>
+            <p>Topographical survey, trial pits and a geotechnical report. If the ground will not carry it you find out now, not at foundation stage.</p>
+            <span class="meta">2&ndash;3 weeks</span>
+          </div>
+        </li>
+        <li class="proc-step">
+          <span class="proc-node"></span>
+          <div class="proc-card">
+            <div class="i">03</div>
+            <h3 class="dsp h3">Design<br>&amp; Costing</h3>
+            <p>Structural drawings coordinated with services, then a full bill of quantities priced line by line by the contracts manager who will run the job.</p>
+            <span class="meta">3&ndash;4 weeks</span>
+          </div>
+        </li>
+        <li class="proc-step r">
+          <span class="proc-node"></span>
+          <div class="proc-card">
+            <div class="i">04</div>
+            <h3 class="dsp h3">Mobilisation</h3>
+            <p>Site establishment, hoarding, temporary works, plant delivery and the safety file. Nothing breaks ground until that file is signed off.</p>
+            <span class="meta">1&ndash;2 weeks</span>
+          </div>
+        </li>
+        <li class="proc-step">
+          <span class="proc-node"></span>
+          <div class="proc-card">
+            <div class="i">05</div>
+            <h3 class="dsp h3">Construction</h3>
+            <p>Permanent site agent, weekly valuations, monthly progress photographs and a programme reissued every Friday whether the news is good or not.</p>
+            <span class="meta">Programme dependent</span>
+          </div>
+        </li>
+        <li class="proc-step r">
+          <span class="proc-node"></span>
+          <div class="proc-card">
+            <div class="i">06</div>
+            <h3 class="dsp h3">Commissioning<br>&amp; Handover</h3>
+            <p>Snag, test, commission, then hand over the as-builts and the O&amp;M manuals. Twelve-month defects liability period, honoured without argument.</p>
+            <span class="meta">12-month DLP</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="proc-foot">
+      <p>Average time from first site visit to breaking ground &nbsp;·&nbsp; <span class="num" style="color:var(--amber)">9 weeks</span></p>
+      <a href="#quote" class="btn btn-amber" data-magnet>Start at stage 01
+        <svg width="15" height="10" viewBox="0 0 15 10" fill="none" aria-hidden="true"><path d="M0 5h13M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= QUOTE ======================= -->
+<section class="sec quote" id="quote">
+  <div class="wrap">
+    <div class="quote-grid">
+      <div class="quote-left">
+        <p class="eyebrow"><i></i>06 &mdash; Contact</p>
+        <h2 class="dsp h2" data-lines style="margin-top:22px;color:#fff">
+          <span class="ln"><span>Request</span></span>
+          <span class="ln"><span>a Quote</span></span>
+        </h2>
+        <p class="lede">Send the drawings, the bill of quantities, or a sketch on the back of an envelope. We will tell you what it costs to build and how long it takes.</p>
+
+        <div class="contact-list">
+          <div><span class="k">Head office</span><span class="v">14 Bessemer Road, Graniteside,<br>Harare, Zimbabwe</span></div>
+          <div><span class="k">Plant yard</span><span class="v">Stand 4412, Msasa Industrial, Harare</span></div>
+          <div><span class="k">Telephone</span><span class="v mono">+263 24 277 1980</span></div>
+          <div><span class="k">Tenders</span><span class="v mono">tenders@towerconstruction.co.zw</span></div>
+          <div><span class="k">Hours</span><span class="v mono">Mon&ndash;Fri 07:30&ndash;17:00 &nbsp;·&nbsp; Sat 08:00&ndash;12:00</span></div>
+        </div>
+
+        <div class="sla">Response within 2 working days</div>
+      </div>
+
+      <form class="form" id="quoteForm" novalidate>
+        <div class="fld"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" placeholder="Tendai Moyo" required></div>
+        <div class="fld"><label for="f-org">Company / organisation</label><input id="f-org" name="org" type="text" placeholder="Moyo Properties (Pvt) Ltd"></div>
+        <div class="fld"><label for="f-email">Email</label><input id="f-email" name="email" type="email" placeholder="you@company.co.zw" required></div>
+        <div class="fld"><label for="f-tel">Telephone</label><input id="f-tel" name="tel" type="tel" placeholder="+263 77 000 0000"></div>
+        <div class="fld">
+          <label for="f-type">Project type</label>
+          <select id="f-type" name="type">
+            <option>Structural concrete</option>
+            <option>Roads &amp; earthworks</option>
+            <option>Industrial or commercial building</option>
+            <option>Water &amp; sewer reticulation</option>
+            <option>Steel fabrication &amp; cladding</option>
+            <option>Refurbishment &amp; fit-out</option>
+            <option>Other / not sure yet</option>
+          </select>
+          <svg class="chev" width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <div class="fld">
+          <label for="f-val">Estimated contract value</label>
+          <select id="f-val" name="value">
+            <option>Under US$ 250 000</option>
+            <option>US$ 250 000 &ndash; 1M</option>
+            <option>US$ 1M &ndash; 5M</option>
+            <option>US$ 5M &ndash; 15M</option>
+            <option>Over US$ 15M</option>
+          </select>
+          <svg class="chev" width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <div class="fld full"><label for="f-site">Site location</label><input id="f-site" name="site" type="text" placeholder="Stand number, suburb, town, province"></div>
+        <div class="fld full"><label for="f-notes">Scope notes</label><textarea id="f-notes" name="notes" placeholder="Floor area, storeys, programme, whether drawings exist, target start date."></textarea></div>
+        <div class="form-foot">
+          <small>Enquiries are logged and answered by a contracts manager, not a call centre.</small>
+          <button type="submit" class="btn btn-amber" data-magnet>Submit enquiry
+            <svg width="15" height="10" viewBox="0 0 15 10" fill="none" aria-hidden="true"><path d="M0 5h13M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg>
+          </button>
+        </div>
+        <div class="form-msg" id="formMsg">Enquiry logged. Reference TC-2026-0447. A contracts manager will be in touch within two working days.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <a class="brand" href="#top">
+          <svg class="mark" viewBox="0 0 28 32" aria-hidden="true">
+            <path d="M14 1 L21.5 9.5 H6.5 Z" fill="currentColor"/>
+            <rect x="10.5" y="11.5" width="7" height="14.5" fill="currentColor"/>
+            <rect x="3" y="28" width="22" height="3" fill="#F5A833"/>
+          </svg>
+          <span class="brand-txt">
+            <strong>Tower Construction</strong>
+            <span>Building &amp; Civil Engineering</span>
+          </span>
+        </a>
+        <p>Building and civil engineering contractors serving Zimbabwe since 1980. Category &ldquo;A&rdquo; registered, ISO 9001:2015 certified, bonded to US$ 25M on a single contract.</p>
+      </div>
+
+      <div>
+        <h4>Capability</h4>
+        <ul>
+          <li><a href="#services">Structural concrete</a></li>
+          <li><a href="#services">Roads &amp; earthworks</a></li>
+          <li><a href="#services">Industrial buildings</a></li>
+          <li><a href="#services">Water &amp; sewer</a></li>
+          <li><a href="#services">Steel &amp; cladding</a></li>
+          <li><a href="#services">Refurbishment</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About the firm</a></li>
+          <li><a href="#projects">Selected works</a></li>
+          <li><a href="#process">How we work</a></li>
+          <li><a href="#capability">SHEQ &amp; safety</a></li>
+          <li><a href="#quote">Plant hire</a></li>
+          <li><a href="#quote">Careers</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Registrations</h4>
+        <ul class="ftr-reg">
+          <li><b>CIFOZ Category &ldquo;A&rdquo;</b>Reg. 0143/A</li>
+          <li><b>PRAZ</b>S/2019/0442</li>
+          <li><b>ISO 9001:2015</b>QMS/ZW/1187</li>
+          <li><b>NSSA</b>41-77-0195</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ftr-bot">
+      <p>&copy; 1980&ndash;2026 Tower Construction (Private) Limited &nbsp;·&nbsp; Registered in Zimbabwe No. 1980/00447</p>
+      <p>Building &amp; Civil Engineering Contractors</p>
+      <a href="#top">Back to top &uarr;</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGSAP = typeof window.gsap !== 'undefined';
+  var $  = function(s,c){ return (c||document).querySelector(s); };
+  var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
+
+  /* ---------------------------------------------------------------- ticker */
+  (function buildTicker(){
+    var items = ['Structural concrete','Roads & earthworks','Water reticulation','Steel fabrication',
+                 'Industrial buildings','Bulk excavation','Sewer & drainage','Refurbishment'];
+    var track = document.getElementById('tickerTrack');
+    if(!track) return;
+    var html = '';
+    for(var pass=0; pass<2; pass++){
+      for(var i=0;i<items.length;i++){ html += '<span>'+items[i]+'<i></i></span>'; }
+    }
+    track.innerHTML = html;
+  })();
+
+  /* --------------------------------------------------- final-state fallback */
+  function paintFinalState(){
+    $$('.ln > span').forEach(function(s){ s.style.transform='none'; });
+    $$('[data-fade], [data-reveal], [data-stagger] > *, [data-proj]').forEach(function(el){
+      el.style.opacity=1; el.style.transform='none';
+    });
+    $$('.cap-row').forEach(function(r){ r.classList.add('is-on'); });
+    $$('.proc-step').forEach(function(r){ r.classList.add('is-on'); });
+    var fill = document.getElementById('capFill'); if(fill) fill.style.transform='scaleY(1)';
+    $$('[data-count]').forEach(function(el){ el.textContent = group(parseFloat(el.getAttribute('data-count'))); });
+    var intro = document.getElementById('intro'); if(intro) intro.remove();
+  }
+
+  function group(n){
+    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
+  if(!hasGSAP || REDUCE){ paintFinalState(); wireStatics(); return; }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ----------------------------------------------------------------- lenis */
+  var lenis = null;
+  if(typeof window.Lenis !== 'undefined'){
+    lenis = new Lenis({
+      duration: 1.05,
+      easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10*t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  /* ------------------------------------------------------- initial states */
+  gsap.set('.ln > span', { yPercent: 112 });
+  gsap.set('[data-fade]', { opacity: 0, y: 26 });
+  gsap.set('[data-reveal]', { opacity: 0, y: 34 });
+  $$('[data-stagger]').forEach(function(g){ gsap.set(g.children, { opacity: 0, y: 26 }); });
+  gsap.set('[data-proj] .ph', { clipPath: 'inset(0% 0% 100% 0%)' });
+  gsap.set('[data-proj] figcaption', { opacity: 0, y: 24 });
+
+  /* ------------------------------------------------------------ page intro */
+  function runIntro(){
+    var intro = document.getElementById('intro');
+    if(!intro){ heroIn(); return; }
+
+    var counter = { v: 0 };
+    var numEl = document.getElementById('introNum');
+
+    var tl = gsap.timeline({ onComplete: function(){ intro.remove(); ScrollTrigger.refresh(); } });
+    tl.fromTo('#introName', { yPercent: 30, opacity: 0 }, { yPercent: 0, opacity: 1, duration: .8, ease: 'power4.out' }, 0)
+      .fromTo('.intro-count', { opacity: 0 }, { opacity: 1, duration: .5, ease: 'power2.out' }, .1)
+      .to('#introBar', { scaleX: 1, duration: 1.5, ease: 'power2.inOut' }, .1)
+      .to(counter, {
+        v: 100, duration: 1.5, ease: 'power2.inOut',
+        onUpdate: function(){ numEl.textContent = Math.round(counter.v); }
+      }, .1)
+      .fromTo('.intro-meta', { opacity: 0 }, { opacity: 1, duration: .5 }, .5)
+      .to('.intro-body', { opacity: 0, y: -22, duration: .5, ease: 'power3.in' }, '+=0.18')
+      .to('.intro-half.t', { yPercent: -100, duration: 1.05, ease: 'power4.inOut' }, '-=0.18')
+      .to('.intro-half.b', { yPercent: 100, duration: 1.05, ease: 'power4.inOut' }, '<')
+      .add(heroIn, '-=0.72');
+  }
+
+  function heroIn(){
+    var tl = gsap.timeline();
+    tl.to('.hero h1 .ln > span', { yPercent: 0, duration: 1.15, ease: 'power4.out', stagger: .085 }, 0)
+      .to('.hero [data-fade]', { opacity: 1, y: 0, duration: .9, ease: 'power3.out', stagger: .075 }, .22)
+      .fromTo('.hero-explore', { opacity: 0 }, { opacity: 1, duration: .6 }, .8);
+  }
+
+  /* --------------------------------------------------- line-mask headings */
+  $$('[data-lines]').forEach(function(h){
+    gsap.to(h.querySelectorAll('.ln > span'), {
+      yPercent: 0, duration: 1.05, ease: 'power4.out', stagger: .075,
+      scrollTrigger: { trigger: h, start: 'top 84%' }
+    });
+  });
+
+  /* ----------------------------------------------------- generic reveals */
+  $$('[data-fade]').forEach(function(el){
+    if(el.closest('.hero')) return;
+    gsap.to(el, { opacity: 1, y: 0, duration: .9, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 90%' } });
+  });
+  $$('[data-reveal]').forEach(function(el){
+    gsap.to(el, { opacity: 1, y: 0, duration: 1.05, ease: 'power4.out',
+      scrollTrigger: { trigger: el, start: 'top 86%' } });
+  });
+  $$('[data-stagger]').forEach(function(g){
+    gsap.to(g.children, { opacity: 1, y: 0, duration: .9, ease: 'power3.out', stagger: .07,
+      scrollTrigger: { trigger: g, start: 'top 86%' } });
+  });
+
+  /* ------------------------------------------- MOTION 1 · hero parallax */
+  gsap.to('#heroMedia', {
+    yPercent: 13, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+  gsap.to('.about-media img', {
+    yPercent: -7, ease: 'none',
+    scrollTrigger: { trigger: '.about-media', start: 'top bottom', end: 'bottom top', scrub: .6 }
+  });
+
+  /* --------------------------------------------- MOTION 2 · count-up stats */
+  $$('[data-count]').forEach(function(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var obj = { v: 0 };
+    ScrollTrigger.create({
+      trigger: el, start: 'top 92%', once: true,
+      onEnter: function(){
+        gsap.to(obj, {
+          v: target, duration: 2.1, ease: 'power3.out',
+          onUpdate: function(){ el.textContent = group(obj.v); }
+        });
+      }
+    });
+  });
+
+  /* ------------------------------ MOTION 3 · clip-path reveals on gallery */
+  $$('[data-proj]').forEach(function(fig){
+    var img = fig.querySelector('img');
+    var tl = gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top 86%' } });
+    tl.to(fig.querySelector('.ph'), { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.15, ease: 'power4.inOut' }, 0)
+      .fromTo(img, { scale: 1.22 }, { scale: 1, duration: 1.4, ease: 'power4.out' }, 0)
+      .to(fig.querySelector('figcaption'), { opacity: 1, y: 0, duration: .8, ease: 'power3.out' }, .3);
+  });
+
+  /* --------------------------------- MOTION 4 · SIGNATURE scroll-drawn line */
+  var procST = null, procLen = 0, nodeAt = [];
+
+  function buildProcPath(){
+    var canvas = document.getElementById('procCanvas');
+    var svg    = document.getElementById('procSvg');
+    var live   = document.getElementById('procPath');
+    var track  = document.getElementById('procTrack');
+    if(!canvas || !svg) return null;
+
+    var nodes = $$('.proc-node', canvas);
+    var cr = canvas.getBoundingClientRect();
+    if(cr.width < 2) return null;
+
+    svg.setAttribute('viewBox', '0 0 ' + cr.width + ' ' + cr.height);
+
+    var pts = nodes.map(function(n){
+      var r = n.getBoundingClientRect();
+      return { x: r.left - cr.left + r.width / 2, y: r.top - cr.top + r.height / 2 };
+    });
+    if(!pts.length) return null;
+
+    // orthogonal dog-leg routing between nodes — engineering-drawing corners
+    var d = 'M ' + pts[0].x.toFixed(1) + ' 0 L ' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
+    var cum = [0];
+    var run = pts[0].y;
+    for(var i = 1; i < pts.length; i++){
+      var a = pts[i-1], b = pts[i];
+      if(Math.abs(a.x - b.x) < 1.5){
+        d += ' L ' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);
+        run += Math.abs(b.y - a.y);
+      }else{
+        var my = a.y + (b.y - a.y) / 2;
+        d += ' L ' + a.x.toFixed(1) + ' ' + my.toFixed(1) +
+             ' L ' + b.x.toFixed(1) + ' ' + my.toFixed(1) +
+             ' L ' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);
+        run += Math.abs(my - a.y) + Math.abs(b.x - a.x) + Math.abs(b.y - my);
+      }
+      cum.push(run);
+    }
+    var last = pts[pts.length-1];
+    d += ' L ' + last.x.toFixed(1) + ' ' + cr.height.toFixed(1);
+
+    live.setAttribute('d', d);
+    track.setAttribute('d', d);
+
+    var len = live.getTotalLength();
+    live.style.strokeDasharray  = len;
+    live.style.strokeDashoffset = len;
+
+    // node positions expressed as a fraction of total drawn length
+    var head = pts[0].y;                  // length consumed before node 1
+    nodeAt = cum.map(function(c){ return (head + c) / len; });
+
+    return { path: live, len: len };
+  }
+
+  function killProc(){
+    if(procST){ procST.kill(); procST = null; }
+  }
+
+  function initProc(){
+    killProc();
+    var built = buildProcPath();
+    if(!built) return;
+    procLen = built.len;
+    var live = built.path;
+    var headG = document.getElementById('procHead');
+    var steps = $$('.proc-step');
+
+    procST = ScrollTrigger.create({
+      trigger: '#procCanvas',
+      start: 'top 74%',
+      end: 'bottom 80%',
+      scrub: .55,
+      onUpdate: function(self){
+        var p = self.progress;
+        live.style.strokeDashoffset = procLen * (1 - p);
+        var pt = live.getPointAtLength(Math.max(0.01, procLen * p));
+        headG.setAttribute('transform', 'translate(' + pt.x + ',' + pt.y + ') rotate(45)');
+        headG.style.opacity = (p > 0.004 && p < 0.996) ? 1 : 0;
+        for(var i = 0; i < steps.length; i++){
+          steps[i].classList.toggle('is-on', p >= (nodeAt[i] || 0) - 0.004);
+        }
+      }
+    });
+  }
+
+  /* step cards ease in from their own side of the spine */
+  (function(){
+    var narrow = window.matchMedia('(max-width: 899px)').matches;
+    $$('.proc-step').forEach(function(step){
+      var dir = narrow ? -22 : (step.classList.contains('r') ? 38 : -38);
+      gsap.from(step.querySelector('.proc-card'), {
+        opacity: 0, x: dir, duration: .95, ease: 'power3.out',
+        scrollTrigger: { trigger: step, start: 'top 88%' }
+      });
+    });
+  })();
+
+  /* ------------------------------------ MOTION 5 · pinned capability scrub */
+  var mm = gsap.matchMedia();
+
+  mm.add('(min-width: 1024px)', function(){
+    var rows   = $$('.cap-row');
+    var fill   = document.getElementById('capFill');
+    var numEl  = document.getElementById('capNum');
+    var last   = -1;
+
+    var st = ScrollTrigger.create({
+      trigger: '#capability',
+      start: 'top top',
+      end: '+=2100',
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      scrub: .6,
+      onUpdate: function(self){
+        var p = self.progress;
+        gsap.set(fill, { scaleY: Math.min(1, p * 1.06) });
+        var idx = Math.min(rows.length - 1, Math.floor(p * rows.length * 1.02));
+        if(idx !== last){
+          last = idx;
+          for(var i = 0; i < rows.length; i++){ rows[i].classList.toggle('is-on', i <= idx); }
+          numEl.textContent = ('0' + (idx + 1)).slice(-2);
+        }
+      }
+    });
+
+    return function(){
+      st.kill();
+      rows.forEach(function(r){ r.classList.add('is-on'); });
+      gsap.set(fill, { scaleY: 1 });
+    };
+  });
+
+  mm.add('(max-width: 1023px)', function(){
+    var rows = $$('.cap-row');
+    var fill = document.getElementById('capFill');
+    var tl = gsap.timeline({ scrollTrigger: { trigger: '#capRows', start: 'top 78%', end: 'bottom 70%', scrub: .5 } });
+    tl.to(fill, { scaleY: 1, ease: 'none' }, 0);
+    rows.forEach(function(r, i){
+      ScrollTrigger.create({ trigger: r, start: 'top 82%', once: true,
+        onEnter: function(){ r.classList.add('is-on'); } });
+    });
+    return function(){ tl.scrollTrigger && tl.scrollTrigger.kill(); tl.kill(); };
+  });
+
+  /* -------------------------------------- MOTION 6 · magnetic amber buttons */
+  function magnetic(el){
+    var s = { x:0, y:0, tx:0, ty:0, on:false };
+    function move(e){
+      var r = el.getBoundingClientRect();
+      s.tx = (e.clientX - (r.left + r.width/2)) * 0.3;
+      s.ty = (e.clientY - (r.top + r.height/2)) * 0.42;
+    }
+    el.addEventListener('pointerenter', function(){ s.on = true; });
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerleave', function(){ s.on = false; s.tx = 0; s.ty = 0; });
+    gsap.ticker.add(function(){
+      s.x += (s.tx - s.x) * 0.14;
+      s.y += (s.ty - s.y) * 0.14;
+      if(Math.abs(s.x) > 0.01 || Math.abs(s.y) > 0.01 || s.on){
+        gsap.set(el, { x: s.x, y: s.y });
+      }
+    });
+  }
+  if(!window.matchMedia('(pointer: coarse)').matches){
+    $$('[data-magnet]').forEach(magnetic);
+  }
+
+  /* -------------------------------------------------- ticker (supporting) */
+  var tt = document.getElementById('tickerTrack');
+  if(tt){ gsap.to(tt, { xPercent: -50, duration: 34, ease: 'none', repeat: -1 }); }
+
+  /* ---------------------------------------------------------- header state */
+  var shell = document.getElementById('hdrShell');
+  function updateHdr(){
+    shell.classList.toggle('is-stuck', (window.scrollY || window.pageYOffset) > 60);
+  }
+  window.addEventListener('scroll', updateHdr, { passive: true });
+  if(lenis){ lenis.on('scroll', updateHdr); }
+  updateHdr();
+
+  /* ------------------------------------------------------- nav active link */
+  var links = $$('#nav a');
+  ['#about','#capability','#services','#projects','#process','#quote'].forEach(function(id){
+    var sec = document.querySelector(id);
+    if(!sec) return;
+    ScrollTrigger.create({
+      trigger: sec, start: 'top 45%', end: 'bottom 45%',
+      onToggle: function(self){
+        if(!self.isActive) return;
+        links.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href') === id); });
+      }
+    });
+  });
+  ScrollTrigger.create({
+    trigger: '#hero', start: 'top 45%', end: 'bottom 45%',
+    onToggle: function(self){
+      if(!self.isActive) return;
+      links.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href') === '#top'); });
+    }
+  });
+
+  /* ---------------------------------------------------------- interactions */
+  function wireAnchors(){
+    $$('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var id = a.getAttribute('href');
+        var t = id === '#top' ? 0 : document.querySelector(id);
+        if(t === null) return;
+        e.preventDefault();
+        if(lenis){ lenis.scrollTo(t, { offset: t === 0 ? 0 : -68, duration: 1.15 }); }
+        else{ window.scrollTo({ top: t === 0 ? 0 : t.getBoundingClientRect().top + window.scrollY - 68, behavior: 'smooth' }); }
+      });
+    });
+  }
+
+  function wireStatics(){
+    var form = document.getElementById('quoteForm');
+    if(form){
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        document.getElementById('formMsg').classList.add('is-on');
+      });
+    }
+    var burger = document.querySelector('.burger');
+    if(burger){
+      burger.addEventListener('click', function(){
+        var nav = document.getElementById('nav');
+        var open = nav.style.display === 'flex';
+        nav.style.display = open ? '' : 'flex';
+        nav.style.position = 'absolute';
+        nav.style.top = '100%';
+        nav.style.left = '0';
+        nav.style.right = '0';
+        nav.style.flexDirection = 'column';
+        nav.style.alignItems = 'flex-start';
+        nav.style.gap = '4px';
+        nav.style.background = '#0E2A5E';
+        nav.style.padding = open ? '0' : '18px 24px 24px';
+      });
+    }
+  }
+
+  wireAnchors();
+  wireStatics();
+
+  /* -------------------------------------------------------------- lifecycle */
+  window.addEventListener('load', function(){
+    initProc();
+    ScrollTrigger.refresh();
+  });
+
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      initProc();
+      ScrollTrigger.refresh();
+    }, 200);
+  });
+
+  initProc();
+  runIntro();
+
+})();
+</script>
+</body>
+</html>

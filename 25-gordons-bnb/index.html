@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gordon's Bnb — a quiet retreat, beautifully kept</title>
+<meta name="description" content="Gordon's Bnb is a four-room guesthouse in Chelmer Vale, built around slow mornings and warm hospitality. Rooms from $135 per night, breakfast at the long table, free cancellation until seven days before arrival.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   25 · GORDON'S BNB — boutique stay / small guesthouse
+   Original : gordons.rylolabz.com (Rylo Labz client site)
+
+   Palette  : warm oat paper #F2EBDF · warm near-black #221C14
+              hero/dark ground #17120C
+              single accent = warm gold #B8873F (mandated)
+   Type     : Playfair Display (high-contrast display serif)
+              DM Sans (neutral UI + tabular figures)
+
+   Motion   : THIS IS THE RESTRAINED TEMPLATE. Four techniques,
+              all slow and soft, nothing that snaps or bounces.
+              1 · pinned full-bleed crossfade image sequence
+                  (long holds + slow ken-burns drift) — signature
+              2 · line-mask reveals on the serif headings, 1.3-1.6s
+              3 · quiet parallax on room photography, +/-4% only
+              4 · soft count-up on the live booking total
+              Deliberately NOT used: marquees, magnetic cursors,
+              horizontal tracks, skew-on-velocity, stagger snaps.
+              See notes.md before "adding energy" to this page.
+   ============================================================ */
+
+:root{
+  --paper:    #F2EBDF;
+  --paper-2:  #EAE1D1;
+  --paper-3:  #DED2BD;
+  --ink:      #221C14;
+  --ink-2:    #3B3226;
+  --ink-3:    #6E624F;
+  --dark:     #17120C;
+  --dark-2:   #1F1810;
+  --cream:    #F6F1E7;
+  --cream-2:  rgba(246,241,231,.66);
+  --cream-3:  rgba(246,241,231,.42);
+  --gold:     #B8873F;
+  --gold-dk:  #9E7130;
+  --gold-l:   #8C6027;
+  --line-l:   rgba(34,28,20,.15);
+  --line-l2:  rgba(34,28,20,.08);
+  --line-d:   rgba(246,241,231,.18);
+  --line-d2:  rgba(246,241,231,.09);
+
+  --m:   clamp(20px, 5.4vw, 96px);
+  --gap: clamp(18px, 2.2vw, 40px);
+
+  --serif: "Playfair Display", "Iowan Old Style", Georgia, serif;
+  --sans:  "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:16px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+::selection{background:var(--gold);color:var(--cream)}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:var(--sans);
+  font-size:11px; font-weight:500;
+  letter-spacing:.22em; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:14px;
+  color:var(--gold);
+}
+.eyebrow::before{
+  content:""; width:clamp(24px,3vw,44px); height:1px;
+  background:currentColor; opacity:.9; flex:none;
+}
+.eyebrow--plain::before{display:none}
+/* the same accent, darkened only so 11px type still reads on paper */
+.sec .eyebrow,.house .eyebrow,.area .eyebrow,.revs .eyebrow,.notes .eyebrow{color:var(--gold-l)}
+.eyebrow--ink,.sec .eyebrow--ink{color:var(--ink-3)}
+
+h1,h2,h3,h4{margin:0;font-family:var(--serif);font-weight:400;letter-spacing:-.015em}
+h2{font-size:clamp(34px,4.6vw,68px);line-height:1.04}
+h3{font-size:clamp(24px,2.4vw,36px);line-height:1.12}
+p{margin:0}
+.lede{font-size:clamp(16px,1.28vw,19px);line-height:1.72;color:var(--ink-2);max-width:60ch}
+.muted{color:var(--ink-3)}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+
+/* line-mask wrapper (built by JS, also hand-written in the hero) */
+.ln{display:block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em}
+.ln-i{display:block}
+
+/* ---------- buttons ---------- */
+.pill{
+  display:inline-flex; align-items:center; gap:12px;
+  height:56px; padding:0 30px; border-radius:999px;
+  font-size:15px; font-weight:500; letter-spacing:.005em;
+  border:1px solid transparent; cursor:pointer;
+  transition:background .28s cubic-bezier(.33,1,.68,1),
+             border-color .28s cubic-bezier(.33,1,.68,1),
+             color .28s cubic-bezier(.33,1,.68,1);
+}
+.pill--gold{background:var(--gold);color:#1B1509;border-color:var(--gold)}
+.pill--gold:hover{background:var(--gold-dk);border-color:var(--gold-dk)}
+.pill--ghost-d{background:transparent;color:var(--cream);border-color:rgba(246,241,231,.45)}
+.pill--ghost-d:hover{border-color:var(--cream);background:rgba(246,241,231,.07)}
+.pill--ghost-l{background:transparent;color:var(--ink);border-color:var(--line-l)}
+.pill--ghost-l:hover{border-color:var(--ink);background:rgba(34,28,20,.04)}
+.pill--sm{height:44px;padding:0 22px;font-size:13.5px}
+.pill .arw{transition:transform .3s cubic-bezier(.33,1,.68,1)}
+.pill:hover .arw{transform:translateX(4px)}
+
+.txtlink{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:13px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;
+  padding:0 0 6px;border-bottom:1px solid var(--line-l);
+  background:none;border-left:0;border-right:0;border-top:0;cursor:pointer;
+  transition:border-color .3s cubic-bezier(.33,1,.68,1),color .3s cubic-bezier(.33,1,.68,1);
+}
+.txtlink:hover{border-color:var(--gold);color:var(--gold)}
+.txtlink .arw{transition:transform .3s cubic-bezier(.33,1,.68,1)}
+.txtlink:hover .arw{transform:translateX(4px)}
+
+/* ---------- monogram ---------- */
+.mono{display:inline-flex;width:46px;height:46px;flex:none}
+.mono svg{width:100%;height:100%;display:block}
+.mono--lg{width:76px;height:76px}
+
+/* ============================================================
+   CURTAIN (page-load intro)
+   ============================================================ */
+.curtain{
+  position:fixed; inset:0; z-index:300;
+  background:var(--paper);
+  display:grid; place-items:center;
+  clip-path:inset(0% 0% 0% 0%);
+  will-change:clip-path;
+}
+.curtain-in{display:flex;flex-direction:column;align-items:center;gap:18px;color:var(--ink)}
+.curtain-name{font-family:var(--serif);font-size:clamp(28px,4vw,44px);letter-spacing:-.01em}
+.curtain-sub{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)}
+.curtain.is-done{display:none}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:120;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; padding:22px var(--m);
+  color:var(--cream);
+  transition:background .5s cubic-bezier(.33,1,.68,1),
+             color .5s cubic-bezier(.33,1,.68,1),
+             padding .5s cubic-bezier(.33,1,.68,1),
+             border-color .5s cubic-bezier(.33,1,.68,1);
+  border-bottom:1px solid transparent;
+}
+.nav.is-solid{
+  background:rgba(242,235,223,.94);
+  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+  color:var(--ink); padding-top:14px; padding-bottom:14px;
+  border-bottom-color:var(--line-l2);
+}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-name{font-family:var(--serif);font-size:22px;letter-spacing:-.01em;white-space:nowrap}
+.nav-links{display:flex;align-items:center;gap:clamp(18px,2.4vw,38px)}
+.nav-links a{
+  font-size:14px;font-weight:400;position:relative;padding:6px 0;opacity:.9;
+  transition:opacity .3s cubic-bezier(.33,1,.68,1);
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:currentColor;transform:scaleX(0);transform-origin:left;
+  transition:transform .45s cubic-bezier(.33,1,.68,1);
+}
+.nav-links a:hover{opacity:1}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.navtoggle{display:none;background:none;border:1px solid currentColor;border-radius:999px;height:40px;padding:0 18px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+
+.navpanel{
+  position:fixed;inset:0;z-index:115;background:var(--paper);
+  padding:96px var(--m) var(--m);
+  display:flex;flex-direction:column;justify-content:space-between;
+  clip-path:inset(0 0 100% 0); pointer-events:none;
+  transition:clip-path .7s cubic-bezier(.65,0,.35,1);
+}
+.navpanel.is-open{clip-path:inset(0 0 0% 0);pointer-events:auto}
+.navpanel a{font-family:var(--serif);font-size:clamp(30px,8vw,48px);padding:10px 0;border-bottom:1px solid var(--line-l2)}
+.navpanel-foot{font-size:13px;color:var(--ink-3);padding-top:24px}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;background:var(--dark)}
+.hero-media{position:absolute;inset:0;isolation:isolate;overflow:hidden}
+.hero-media img{width:100%;height:100%;object-fit:cover;transform-origin:52% 55%}
+.wash-warm{position:absolute;inset:0;background:#4C3617;mix-blend-mode:multiply;opacity:.52;pointer-events:none}
+.wash-dark{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(19,14,8,.66) 0%, rgba(19,14,8,.20) 34%, rgba(19,14,8,.90) 100%),
+    linear-gradient(90deg, rgba(19,14,8,.60) 0%, rgba(19,14,8,.06) 58%);
+}
+.hero-body{position:relative;z-index:3;width:100%;padding:0 var(--m) clamp(46px,7vh,90px);color:var(--cream)}
+.hero-h1{
+  font-size:clamp(46px,8.6vw,150px);
+  line-height:.94; letter-spacing:-.028em;
+  margin:26px 0 0; max-width:14ch;
+}
+.hero-p{margin-top:26px;max-width:52ch;font-size:clamp(15.5px,1.24vw,19px);line-height:1.68;color:var(--cream-2)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+.hero-price{margin-top:26px;font-size:14.5px;color:var(--cream-3)}
+.hero-price strong{font-weight:500;color:var(--cream)}
+.hero-cue{
+  position:absolute;right:var(--m);bottom:clamp(46px,7vh,90px);z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  color:var(--cream-3);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
+}
+.hero-cue span{writing-mode:vertical-rl}
+.hero-cue i{display:block;width:1px;height:64px;background:currentColor;opacity:.5}
+
+/* ============================================================
+   SEQUENCE (signature: slow crossfade image sequence)
+   Default = static stacked (no-JS / mobile / reduced motion).
+   JS adds .is-pinned on desktop to switch to the held stage.
+   ============================================================ */
+.seq{position:relative;background:var(--dark);color:var(--cream);padding:clamp(70px,10vh,120px) 0}
+.seq-head{padding:0 var(--m) clamp(40px,6vh,72px);max-width:760px}
+.seq-head h2{margin-top:22px;color:var(--cream)}
+.seq-head p{margin-top:22px;color:var(--cream-2);max-width:52ch;font-size:16.5px}
+.seq-stage{position:relative}
+.seq-frame{position:relative;overflow:hidden;height:min(74vh,620px);margin-bottom:22px;isolation:isolate}
+.seq-img{position:absolute;inset:-2% -2%;background-size:cover;background-position:center;will-change:transform}
+.seq-frame .wash-warm{opacity:.40}
+.seq-frame .wash-dark{background:linear-gradient(180deg,rgba(19,14,8,.30) 0%,rgba(19,14,8,.10) 40%,rgba(19,14,8,.82) 100%)}
+.seq-cap{
+  position:absolute;left:var(--m);right:var(--m);bottom:clamp(28px,4vh,52px);z-index:4;
+  display:flex;flex-direction:column;gap:12px;
+}
+.seq-time{font-size:11px;letter-spacing:.24em;color:var(--gold);font-variant-numeric:tabular-nums}
+.seq-line{font-family:var(--serif);font-size:clamp(20px,2.5vw,38px);line-height:1.22;max-width:20ch;color:var(--cream)}
+.seq-meta{display:none}
+
+.seq.is-pinned{padding-bottom:0}
+.seq.is-pinned .seq-stage{position:relative;height:100svh;width:100%;overflow:hidden}
+.seq.is-pinned .seq-frame{position:absolute;inset:0;height:auto;margin:0}
+.seq.is-pinned .seq-meta{
+  display:flex;align-items:center;gap:20px;
+  position:absolute;left:var(--m);right:var(--m);bottom:clamp(28px,4vh,52px);
+  z-index:6;pointer-events:none;justify-content:flex-end;
+}
+.seq-rail{position:relative;width:min(240px,26vw);height:1px;background:rgba(246,241,231,.24)}
+.seq-bar{position:absolute;inset:0;background:var(--gold);transform-origin:left;transform:scaleX(0)}
+.seq-count{font-size:11.5px;letter-spacing:.2em;color:var(--cream-3);font-variant-numeric:tabular-nums}
+.seq-count b{color:var(--cream);font-weight:400}
+
+/* ============================================================
+   ROOMS
+   ============================================================ */
+.sec{padding:clamp(80px,12vh,170px) var(--m)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.86fr);gap:var(--gap);align-items:end}
+.sec-head h2{margin-top:24px;max-width:16ch}
+.sec-head .lede{padding-bottom:6px}
+
+.rooms{margin-top:clamp(56px,8vh,110px);display:flex;flex-direction:column;gap:clamp(70px,11vh,150px)}
+.room{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:clamp(28px,4.6vw,86px);align-items:center}
+.room:nth-child(even) .room-pic{order:2}
+.room-pic{position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--paper-3)}
+.room-pic img{position:absolute;left:0;top:-6%;width:100%;height:112%;object-fit:cover;will-change:transform}
+.room-idx{
+  position:absolute;top:0;left:0;z-index:3;
+  background:var(--paper);color:var(--ink);
+  padding:12px 18px 12px 16px;font-size:11.5px;letter-spacing:.2em;
+  font-variant-numeric:tabular-nums;
+}
+.room-body{max-width:56ch}
+.room-name{margin-top:4px;font-size:clamp(30px,3.5vw,52px);line-height:1.06}
+.room-note{margin-top:22px;font-size:16.5px;line-height:1.72;color:var(--ink-2)}
+.room-specs{margin:34px 0 0;border-top:1px solid var(--line-l)}
+.spec{
+  display:grid;grid-template-columns:132px minmax(0,1fr);gap:16px;
+  padding:14px 0;border-bottom:1px solid var(--line-l2);
+}
+.spec dt{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);padding-top:3px}
+.spec dd{margin:0;font-size:16px;color:var(--ink)}
+.spec dd .rate{font-family:var(--serif);font-size:22px}
+.room-cta{margin-top:30px}
+
+/* ============================================================
+   BOOKING
+   ============================================================ */
+.book{background:var(--dark);color:var(--cream);padding:clamp(80px,12vh,150px) var(--m)}
+.book h2{color:var(--cream);margin-top:24px;max-width:15ch}
+.book-lede{margin-top:22px;color:var(--cream-2);max-width:50ch;font-size:16.5px}
+.book-grid{
+  margin-top:clamp(48px,7vh,86px);
+  display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:clamp(0px,1px,1px);
+  border:1px solid var(--line-d);
+  transition:border-color .65s cubic-bezier(.33,1,.68,1);
+}
+.book-form{padding:clamp(28px,3.4vw,52px);border-right:1px solid var(--line-d)}
+.book-sum{padding:clamp(28px,3.4vw,52px);background:rgba(246,241,231,.035)}
+.field{margin-bottom:26px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-3);margin-bottom:10px}
+.field input,.field select{
+  width:100%;height:52px;padding:0 16px;
+  background:transparent;border:1px solid var(--line-d);border-radius:0;
+  color:var(--cream);font-size:15.5px;font-weight:300;color-scheme:dark;
+  transition:border-color .3s cubic-bezier(.33,1,.68,1);
+  -webkit-appearance:none;appearance:none;
+}
+.field select{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23F6F1E7' stroke-width='1.2'/></svg>");
+  background-repeat:no-repeat;background-position:right 16px center;background-size:12px;
+  padding-right:44px;
+}
+.field input:focus,.field select:focus{outline:none;border-color:var(--gold)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field-hint{margin-top:9px;font-size:13px;color:var(--cream-3);min-height:20px}
+.field-hint.is-warn{color:var(--gold)}
+
+.sum-room{font-family:var(--serif);font-size:clamp(26px,2.6vw,38px);line-height:1.1}
+.sum-when{margin-top:10px;font-size:14px;color:var(--cream-3);font-variant-numeric:tabular-nums}
+.sum-lines{margin:30px 0 0;border-top:1px solid var(--line-d2)}
+.sum-line{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--line-d2);font-size:15px}
+.sum-line span:last-child{font-variant-numeric:tabular-nums;color:var(--cream)}
+.sum-line span:first-child{color:var(--cream-2)}
+.sum-total{margin-top:30px;display:flex;align-items:baseline;justify-content:space-between;gap:20px}
+.sum-total-k{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-3)}
+.sum-total-v{font-size:clamp(44px,5.4vw,74px);line-height:1;font-weight:300;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.sum-fine{margin-top:20px;font-size:13.5px;color:var(--cream-3);line-height:1.6}
+.sum-actions{margin-top:32px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.sum-ok{font-size:13.5px;color:var(--gold);max-width:34ch;line-height:1.55}
+.book-grid.is-flash{border-color:var(--gold)}
+
+/* ============================================================
+   THE HOUSE
+   ============================================================ */
+.house{background:var(--paper);padding:clamp(80px,12vh,170px) var(--m)}
+.house-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:clamp(30px,5vw,96px);align-items:start}
+.house-top h2{margin-top:24px;max-width:13ch}
+.house-pic{position:relative;overflow:hidden;aspect-ratio:5/4;margin-top:clamp(0px,4vh,42px);background:var(--paper-3)}
+.house-pic img{position:absolute;left:0;top:-6%;width:100%;height:112%;object-fit:cover;will-change:transform}
+.house-caption{margin-top:14px;font-size:13px;color:var(--ink-3)}
+
+.house-parts{margin-top:clamp(52px,8vh,100px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(26px,3.4vw,64px)}
+.part{border-top:1px solid var(--line-l);padding-top:22px}
+.part h3{font-size:clamp(21px,1.9vw,27px);margin-bottom:14px}
+.part p{font-size:15.5px;line-height:1.72;color:var(--ink-2)}
+
+.quote{
+  margin-top:clamp(60px,9vh,120px);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);gap:clamp(24px,4vw,72px);
+  align-items:start;border-top:1px solid var(--line-l);padding-top:clamp(32px,5vh,60px);
+}
+.quote blockquote{margin:0;font-family:var(--serif);font-style:italic;font-size:clamp(24px,3.1vw,46px);line-height:1.24;letter-spacing:-.012em}
+.quote figcaption{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);padding-top:10px}
+
+.facts{margin-top:clamp(52px,8vh,96px);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);border-top:1px solid var(--line-l);padding-top:28px}
+.fact-v{font-family:var(--serif);font-size:clamp(30px,3.4vw,50px);line-height:1;font-variant-numeric:tabular-nums}
+.fact-k{margin-top:12px;font-size:12.5px;color:var(--ink-3);letter-spacing:.04em}
+
+/* ============================================================
+   THE AREA
+   ============================================================ */
+.area{background:var(--paper-2);padding:clamp(80px,12vh,170px) var(--m)}
+.area-pic{position:relative;overflow:hidden;aspect-ratio:21/9;margin-top:clamp(40px,6vh,72px);background:var(--paper-3)}
+.area-pic img{position:absolute;left:0;top:-6%;width:100%;height:112%;object-fit:cover;will-change:transform}
+.walks{margin-top:clamp(44px,6vh,80px);border-top:1px solid var(--line-l)}
+.walk{
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.5fr) auto;
+  gap:clamp(16px,3vw,52px);align-items:baseline;
+  padding:22px 14px;margin:0 -14px;border-bottom:1px solid var(--line-l2);
+  transition:background-color .45s cubic-bezier(.33,1,.68,1);
+}
+.walk:hover{background:rgba(34,28,20,.045)}
+.walk-name{font-family:var(--serif);font-size:clamp(19px,1.9vw,28px);line-height:1.2}
+.walk-note{font-size:15.5px;color:var(--ink-2)}
+.walk-time{
+  font-size:14px;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums;
+  display:inline-flex;align-items:center;gap:10px;
+}
+.walk-time i{display:block;width:0;height:1px;background:var(--gold);transition:width .5s cubic-bezier(.33,1,.68,1)}
+.walk:hover .walk-time{color:var(--ink)}
+.walk:hover .walk-time i{width:26px}
+.walks-foot{margin-top:24px;font-size:13.5px;color:var(--ink-3)}
+
+/* ============================================================
+   REVIEWS
+   ============================================================ */
+.revs{background:var(--paper);padding:clamp(80px,12vh,170px) var(--m)}
+.revs-head{display:flex;flex-wrap:wrap;gap:var(--gap);justify-content:space-between;align-items:flex-end}
+.revs-head h2{margin-top:24px;max-width:14ch}
+.score{text-align:right}
+.score-v{font-family:var(--serif);font-size:clamp(46px,6vw,86px);line-height:1;font-variant-numeric:tabular-nums}
+.score-k{margin-top:10px;font-size:13px;color:var(--ink-3)}
+.rev-grid{margin-top:clamp(50px,7vh,96px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,3.6vw,72px)}
+.rev{border-top:1px solid var(--line-l);padding-top:26px}
+.rev:nth-child(even){margin-top:clamp(0px,4vw,56px)}
+.rev q{display:block;font-family:var(--serif);font-style:italic;font-size:clamp(19px,1.75vw,26px);line-height:1.42;quotes:'\201C' '\201D'}
+.rev-by{margin-top:24px;display:flex;align-items:center;gap:14px}
+.rev-by img{width:40px;height:40px;border-radius:999px;object-fit:cover;flex:none;filter:grayscale(1) contrast(1.02)}
+.rev-nm{font-size:15px}
+.rev-mt{font-size:13px;color:var(--ink-3);margin-top:2px}
+
+/* ============================================================
+   HOUSE NOTES
+   ============================================================ */
+.notes{background:var(--paper);padding:0 var(--m) clamp(80px,12vh,150px)}
+.notes-in{border-top:1px solid var(--line-l);padding-top:clamp(40px,6vh,72px)}
+.notes-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:var(--gap);align-items:end}
+.notes-head h2{margin-top:22px;font-size:clamp(30px,3.4vw,48px)}
+.note-grid{margin-top:clamp(38px,5vh,64px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(30px,5vw,90px)}
+.note{
+  display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;align-items:baseline;
+  padding:20px 14px;margin:0 -14px;border-bottom:1px solid var(--line-l2);
+  transition:background-color .45s cubic-bezier(.33,1,.68,1);
+}
+.note:hover{background:rgba(34,28,20,.045)}
+.note dt{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.note dd{margin:0;font-size:15.5px;color:var(--ink-2);line-height:1.62}
+.note dd b{font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ============================================================
+   CLOSING CTA
+   ============================================================ */
+.close{position:relative;min-height:78svh;display:flex;align-items:flex-end;overflow:hidden;background:var(--dark)}
+.close-media{position:absolute;inset:0;isolation:isolate;overflow:hidden}
+.close-media img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.close-body{position:relative;z-index:3;padding:0 var(--m) clamp(56px,9vh,110px);color:var(--cream);width:100%}
+.close-body h2{color:var(--cream);margin-top:24px;max-width:13ch;font-size:clamp(34px,5.4vw,84px)}
+.close-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.close-price{margin-top:24px;font-size:14.5px;color:var(--cream-3)}
+.close-price strong{font-weight:500;color:var(--cream)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot{background:var(--dark-2);color:var(--cream);padding:clamp(64px,9vh,110px) var(--m) 34px}
+.foot-top{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:clamp(30px,4vw,72px)}
+.foot-brand{display:flex;align-items:center;gap:16px}
+.foot-brand .brand-name{font-size:26px}
+.foot-addr{margin-top:26px;font-size:15px;color:var(--cream-2);line-height:1.75;max-width:30ch}
+.foot-addr a:hover{color:var(--gold)}
+.foot-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-3);font-family:var(--sans);font-weight:500;margin-bottom:20px}
+.foot-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.foot-col a{font-size:15px;color:var(--cream-2);transition:color .3s cubic-bezier(.33,1,.68,1)}
+.foot-col a:hover{color:var(--cream)}
+.foot-bar{
+  margin-top:clamp(48px,7vh,86px);padding-top:26px;border-top:1px solid var(--line-d2);
+  display:flex;flex-wrap:wrap;gap:14px 32px;justify-content:space-between;
+  font-size:12.5px;color:var(--cream-3);
+}
+.foot-bar a:hover{color:var(--cream)}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1180px){
+  .house-parts{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:40px}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:34px}
+  .foot-top{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:46px}
+}
+@media (max-width:1023px){
+  .nav-links{display:none}
+  .navtoggle{display:inline-flex;align-items:center}
+  .nav-cta .pill{display:none}
+  .sec-head{grid-template-columns:1fr;gap:26px;align-items:start}
+  .room{grid-template-columns:1fr;gap:30px}
+  .room:nth-child(even) .room-pic{order:0}
+  .room-pic{aspect-ratio:3/2}
+  .book-grid{grid-template-columns:1fr}
+  .book-form{border-right:0;border-bottom:1px solid var(--line-d)}
+  .house-top{grid-template-columns:1fr;gap:32px}
+  .quote{grid-template-columns:1fr;gap:18px}
+  .rev-grid{grid-template-columns:1fr;gap:34px}
+  .rev:nth-child(even){margin-top:0}
+  .notes-head{grid-template-columns:1fr;gap:20px}
+  .note-grid{grid-template-columns:1fr}
+  .walk{grid-template-columns:1fr;gap:8px;padding:20px 14px}
+  .walk-time{margin-top:4px}
+  .seq-frame{height:min(62vh,480px)}
+}
+@media (max-width:640px){
+  .house-parts{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr;row-gap:26px}
+  .foot-top{grid-template-columns:1fr;row-gap:38px}
+  .field-row{grid-template-columns:1fr}
+  .note{grid-template-columns:1fr;gap:6px}
+  .spec{grid-template-columns:110px minmax(0,1fr);gap:12px}
+  .hero-cue{display:none}
+  .pill{height:52px;padding:0 24px;font-size:14.5px}
+  .revs-head{gap:22px}
+  .score{text-align:left}
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  .curtain{display:none}
+  .ln,.ln-i{overflow:visible;transform:none !important;opacity:1 !important}
+  .seq.is-pinned{padding-bottom:clamp(70px,10vh,120px)}
+  .seq.is-pinned .seq-stage{height:auto;overflow:visible}
+  .seq.is-pinned .seq-frame{position:relative;inset:auto;height:min(70vh,560px);margin-bottom:22px;opacity:1 !important}
+  .seq.is-pinned .seq-meta{display:none}
+  .navpanel{transition:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================ CURTAIN ============================ -->
+<div class="curtain" id="curtain">
+  <div class="curtain-in">
+    <span class="mono mono--lg" aria-hidden="true">
+      <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="none" stroke="currentColor" stroke-width=".9" opacity=".55"/><path d="M12.5 29.5 24 17.5 35.5 29.5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 31.5v-5.2M30.5 31.5v-5.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="24" cy="24" r="16.5" fill="none" stroke="currentColor" stroke-width=".6" opacity=".3"/></svg>
+    </span>
+    <span class="curtain-name">Gordon's Bnb</span>
+    <span class="curtain-sub">Chelmer Vale &middot; est. 1931</span>
+  </div>
+</div>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav" id="nav">
+  <a class="brand" href="#top" data-scroll>
+    <span class="mono" aria-hidden="true">
+      <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="none" stroke="currentColor" stroke-width=".9" opacity=".55"/><path d="M12.5 29.5 24 17.5 35.5 29.5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 31.5v-5.2M30.5 31.5v-5.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="24" cy="24" r="16.5" fill="none" stroke="currentColor" stroke-width=".6" opacity=".3"/></svg>
+    </span>
+    <span class="brand-name">Gordon's Bnb</span>
+  </a>
+
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#mornings" data-scroll>Mornings</a>
+    <a href="#rooms" data-scroll>Rooms</a>
+    <a href="#house" data-scroll>The house</a>
+    <a href="#area" data-scroll>The area</a>
+    <a href="#notes" data-scroll>House notes</a>
+  </nav>
+
+  <div class="nav-cta">
+    <a class="pill pill--gold pill--sm" href="#book" data-scroll>Book a stay</a>
+    <button class="navtoggle" id="navtoggle" aria-expanded="false" aria-controls="navpanel">Menu</button>
+  </div>
+</header>
+
+<div class="navpanel" id="navpanel">
+  <nav aria-label="Mobile">
+    <a href="#mornings" data-scroll>Mornings</a>
+    <a href="#rooms" data-scroll>Rooms</a>
+    <a href="#book" data-scroll>Book a stay</a>
+    <a href="#house" data-scroll>The house</a>
+    <a href="#area" data-scroll>The area</a>
+    <a href="#notes" data-scroll>House notes</a>
+  </nav>
+  <div class="navpanel-foot">
+    14 Marlow Rise, Chelmer Vale<br>
+    +44 1420 55 8813 &middot; hello@gordonsbnb.example
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="hero-media">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <img id="heroImg" src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=2400&q=80" alt="The front of Gordon's Bnb in late afternoon light">
+    <div class="wash-warm"></div>
+    <div class="wash-dark"></div>
+  </div>
+
+  <div class="hero-body">
+    <span class="eyebrow" id="heroEyebrow">Boutique bed &amp; breakfast</span>
+
+    <h1 class="hero-h1">
+      <span class="ln"><span class="ln-i">A quiet retreat,</span></span>
+      <span class="ln"><span class="ln-i">beautifully kept.</span></span>
+    </h1>
+
+    <p class="hero-p" id="heroP">Gordon's Bnb is a small guesthouse built around slow mornings, warm hospitality and a handful of rooms made to feel like your own.</p>
+
+    <div class="hero-actions" id="heroActions">
+      <a class="pill pill--gold" href="#book" data-scroll>Check availability</a>
+      <a class="pill pill--ghost-d" href="#rooms" data-scroll>Explore the rooms
+        <svg class="arw" width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <p class="hero-price" id="heroPrice">Rooms from <strong>$135</strong> per night</p>
+  </div>
+
+  <div class="hero-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+</section>
+
+<!-- ================= SIGNATURE: SLOW IMAGE SEQUENCE ================= -->
+<section class="seq" id="mornings">
+  <div class="seq-head">
+    <span class="eyebrow">A day, roughly</span>
+    <h2 class="js-split">One morning at Gordon's, from the valley up.</h2>
+    <p>Nothing here happens quickly. The sequence below moves at the pace the house does &mdash; five frames, each held long enough to actually look at.</p>
+  </div>
+
+  <div class="seq-stage" id="seqStage">
+
+    <article class="seq-frame">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <div class="seq-img" style="background-image:url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2200&q=80')" role="img" aria-label="Mist lifting off the valley before sunrise"></div>
+      <div class="wash-warm"></div><div class="wash-dark"></div>
+      <div class="seq-cap">
+        <span class="seq-time">06 : 40</span>
+        <p class="seq-line">The valley clears before the sun reaches the house.</p>
+      </div>
+    </article>
+
+    <article class="seq-frame">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <div class="seq-img" style="background-image:url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=2200&q=80')" role="img" aria-label="Two loaves cooling on the kitchen counter"></div>
+      <div class="wash-warm"></div><div class="wash-dark"></div>
+      <div class="seq-cap">
+        <span class="seq-time">07 : 10</span>
+        <p class="seq-line">Two loaves out of the oven. The kitchen door stays open.</p>
+      </div>
+    </article>
+
+    <article class="seq-frame">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <div class="seq-img" style="background-image:url('https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=2200&q=80')" role="img" aria-label="Breakfast laid out on the long table"></div>
+      <div class="wash-warm"></div><div class="wash-dark"></div>
+      <div class="seq-cap">
+        <span class="seq-time">08 : 00</span>
+        <p class="seq-line">Breakfast at the long table. Nobody is asked to hurry.</p>
+      </div>
+    </article>
+
+    <article class="seq-frame">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <div class="seq-img" style="background-image:url('https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=2200&q=80')" role="img" aria-label="Afternoon light across the floorboards of a made-up bedroom"></div>
+      <div class="wash-warm"></div><div class="wash-dark"></div>
+      <div class="seq-cap">
+        <span class="seq-time">11 : 30</span>
+        <p class="seq-line">Rooms turned over by hand. West light on the floorboards.</p>
+      </div>
+    </article>
+
+    <article class="seq-frame">
+      <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+      <div class="seq-img" style="background-image:url('https://images.unsplash.com/photo-1416331108676-a22ccb276e35?auto=format&fit=crop&w=2200&q=80')" role="img" aria-label="The courtyard garden late in the afternoon"></div>
+      <div class="wash-warm"></div><div class="wash-dark"></div>
+      <div class="seq-cap">
+        <span class="seq-time">17 : 45</span>
+        <p class="seq-line">The garden at the end of the day. Tea, if you want it.</p>
+      </div>
+    </article>
+
+    <div class="seq-meta" aria-hidden="true">
+      <div class="seq-rail"><span class="seq-bar" id="seqBar"></span></div>
+      <span class="seq-count"><b id="seqNow">01</b> &nbsp;/&nbsp; 05</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ROOMS ============================ -->
+<section class="sec" id="rooms">
+  <div class="sec-head">
+    <div>
+      <span class="eyebrow">Four rooms</span>
+      <h2 class="js-split">Every room is different. That is the point.</h2>
+    </div>
+    <p class="lede">We stopped at four. Each one was worked out around the light it gets and the shape of the wall it sits behind, so no two are alike. Rates include breakfast and are the same whether you book direct or not &mdash; we would just rather you booked direct.</p>
+  </div>
+
+  <div class="rooms">
+
+    <article class="room">
+      <div class="room-pic">
+        <span class="room-idx num">01</span>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1500&q=80" alt="The Garden Room, made up, with the courtyard door open" loading="lazy">
+      </div>
+      <div class="room-body">
+        <span class="eyebrow eyebrow--ink eyebrow--plain">Ground floor &middot; step-free</span>
+        <h3 class="room-name js-split">The Garden Room</h3>
+        <p class="room-note">Ground floor, with its own door onto the fig-tree courtyard. You can take coffee outside in a dressing gown and nobody will see you. There are no stairs at all between the front gate and the bed, which matters more to some guests than any view does.</p>
+        <dl class="room-specs">
+          <div class="spec"><dt>Size</dt><dd class="num">24 m&sup2;</dd></div>
+          <div class="spec"><dt>Bed</dt><dd>One queen &middot; sleeps 2</dd></div>
+          <div class="spec"><dt>View</dt><dd>The fig-tree courtyard</dd></div>
+          <div class="spec"><dt>Rate</dt><dd><span class="rate num">$135</span> <span class="muted">per night, breakfast included</span></dd></div>
+        </dl>
+        <button class="txtlink room-cta" data-room="garden">Check dates for this room
+          <svg class="arw" width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </article>
+
+    <article class="room">
+      <div class="room-pic">
+        <span class="room-idx num">02</span>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1500&q=80" alt="Room Two, West, with a deep window seat catching the last light" loading="lazy">
+      </div>
+      <div class="room-body">
+        <span class="eyebrow eyebrow--ink eyebrow--plain">First floor &middot; west facing</span>
+        <h3 class="room-name js-split">Room Two, West</h3>
+        <p class="room-note">It gets the last hour of light, every day, all year. There is a window seat deep enough to fall asleep in and a small oak desk that guests keep ending up at &mdash; we have posted more letters for this room than for the other three put together.</p>
+        <dl class="room-specs">
+          <div class="spec"><dt>Size</dt><dd class="num">28 m&sup2;</dd></div>
+          <div class="spec"><dt>Bed</dt><dd>One king &middot; sleeps 2</dd></div>
+          <div class="spec"><dt>View</dt><dd>The valley, west facing</dd></div>
+          <div class="spec"><dt>Rate</dt><dd><span class="rate num">$165</span> <span class="muted">per night, breakfast included</span></dd></div>
+        </dl>
+        <button class="txtlink room-cta" data-room="west">Check dates for this room
+          <svg class="arw" width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </article>
+
+    <article class="room">
+      <div class="room-pic">
+        <span class="room-idx num">03</span>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1500&q=80" alt="The Loft under the beams, with a bath beneath the skylight" loading="lazy">
+      </div>
+      <div class="room-body">
+        <span class="eyebrow eyebrow--ink eyebrow--plain">Top floor &middot; whole storey</span>
+        <h3 class="room-name js-split">The Loft</h3>
+        <p class="room-note">The whole top floor, under the original beams, with nobody above or beside you. A freestanding bath sits directly beneath the skylight, which is the single reason most people book it a second time. The sloped ceiling is generous but real &mdash; anyone over six foot should take the left side of the bed.</p>
+        <dl class="room-specs">
+          <div class="spec"><dt>Size</dt><dd class="num">33 m&sup2;</dd></div>
+          <div class="spec"><dt>Bed</dt><dd>One king and one single &middot; sleeps 3</dd></div>
+          <div class="spec"><dt>View</dt><dd>Rooftops and treetops</dd></div>
+          <div class="spec"><dt>Rate</dt><dd><span class="rate num">$190</span> <span class="muted">per night, breakfast included</span></dd></div>
+        </dl>
+        <button class="txtlink room-cta" data-room="loft">Check dates for this room
+          <svg class="arw" width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </article>
+
+    <article class="room">
+      <div class="room-pic">
+        <span class="room-idx num">04</span>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1500&q=80" alt="The Old Kitchen, with the range alcove now a reading nook" loading="lazy">
+      </div>
+      <div class="room-body">
+        <span class="eyebrow eyebrow--ink eyebrow--plain">Rear wing &middot; sleeps four</span>
+        <h3 class="room-name js-split">The Old Kitchen</h3>
+        <p class="room-note">The house's original 1931 kitchen. The range alcove is now a reading nook with a lamp in it, there is a small kitchenette behind a linen curtain, and it takes four people without anybody feeling squeezed. Families take this one, and so do two couples travelling together.</p>
+        <dl class="room-specs">
+          <div class="spec"><dt>Size</dt><dd class="num">41 m&sup2;</dd></div>
+          <div class="spec"><dt>Bed</dt><dd>One king and a sofa bed &middot; sleeps 4</dd></div>
+          <div class="spec"><dt>View</dt><dd>Courtyard and the orchard</dd></div>
+          <div class="spec"><dt>Rate</dt><dd><span class="rate num">$210</span> <span class="muted">per night, breakfast included</span></dd></div>
+        </dl>
+        <button class="txtlink room-cta" data-room="kitchen">Check dates for this room
+          <svg class="arw" width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================ BOOKING ============================ -->
+<section class="book" id="book">
+  <span class="eyebrow">Check the dates</span>
+  <h2 class="js-split">Pick your nights and see the whole number.</h2>
+  <p class="book-lede">No surprises at the end. Breakfast is in the rate, housekeeping is a single one-off charge, and nothing else gets added.</p>
+
+  <div class="book-grid" id="bookGrid">
+    <form class="book-form" id="bookForm" novalidate>
+      <div class="field">
+        <label for="fRoom">Room</label>
+        <select id="fRoom" name="room">
+          <option value="garden">The Garden Room &mdash; $135 per night</option>
+          <option value="west">Room Two, West &mdash; $165 per night</option>
+          <option value="loft" selected>The Loft &mdash; $190 per night</option>
+          <option value="kitchen">The Old Kitchen &mdash; $210 per night</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <div class="field-row">
+          <div>
+            <label for="fIn">Check in</label>
+            <input type="date" id="fIn" name="checkin">
+          </div>
+          <div>
+            <label for="fOut">Check out</label>
+            <input type="date" id="fOut" name="checkout">
+          </div>
+        </div>
+        <p class="field-hint" id="dateHint">Minimum stay is two nights, three over a bank holiday.</p>
+      </div>
+
+      <div class="field">
+        <label for="fGuests">Guests</label>
+        <select id="fGuests" name="guests">
+          <option value="1">1 guest</option>
+          <option value="2" selected>2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+        </select>
+        <p class="field-hint" id="guestHint"></p>
+      </div>
+    </form>
+
+    <div class="book-sum" aria-live="polite">
+      <p class="sum-room" id="sumRoom">The Loft</p>
+      <p class="sum-when" id="sumWhen">&mdash;</p>
+
+      <div class="sum-lines" id="sumLines"></div>
+
+      <div class="sum-total">
+        <span class="sum-total-k">Total</span>
+        <span class="sum-total-v num" id="sumTotal">$0</span>
+      </div>
+
+      <p class="sum-fine">Free cancellation until seven days before arrival. Card or transfer on arrival &mdash; no deposit for stays under four nights.</p>
+
+      <div class="sum-actions">
+        <button class="pill pill--gold" id="requestBtn" type="button">Request these dates</button>
+        <span class="sum-ok" id="requestOk" hidden>Thank you. Ruth answers from hello@gordonsbnb.example, usually the same day.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ THE HOUSE ============================ -->
+<section class="house" id="house">
+  <div class="house-top">
+    <div>
+      <span class="eyebrow">The house</span>
+      <h2 class="js-split">Ruth and Samson took it on in 2009.</h2>
+      <p class="lede" style="margin-top:26px">Ruth grew up two streets away and had walked past the house for thirty years before it came up for sale. Samson cooks. They live on the ground floor at the back, which is why somebody is always in when you arrive.</p>
+    </div>
+    <div>
+      <div class="house-pic">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80" alt="The long breakfast table laid for the morning" loading="lazy">
+      </div>
+      <p class="house-caption">The long table. Breakfast runs 7:30 to 9:30, and later if you ask the night before.</p>
+    </div>
+  </div>
+
+  <div class="house-parts">
+    <div class="part">
+      <h3>Who runs it</h3>
+      <p>Two people and, at weekends, their daughter Ada. There is no front desk and no night porter. If the bell goes at eleven, one of them will still answer it &mdash; but do call first, so somebody is awake and expecting you.</p>
+    </div>
+    <div class="part">
+      <h3>What breakfast is like</h3>
+      <p>One long table, everybody at it. Bread out of the oven at seven, eggs from four hens named Dot, Marge, Pin and one nobody got round to naming, figs from the courtyard in season, and coffee ground when you sit down. Porridge if you would rather. In your room if you say so the night before.</p>
+    </div>
+    <div class="part">
+      <h3>What the mornings are like</h3>
+      <p>Quiet until eight. Nobody knocks on a door before then, housekeeping starts at half ten, and the kettle in the hall is on from six for anybody who wakes early. Most guests read on the verandah for an hour before they decide what to do with the day.</p>
+    </div>
+  </div>
+
+  <figure class="quote">
+    <figcaption>Ruth Gordon &middot; keeper of the house</figcaption>
+    <blockquote class="js-split">We have four rooms. That is on purpose. We would rather know your name by the second morning.</blockquote>
+  </figure>
+
+  <div class="facts">
+    <div>
+      <p class="fact-v num">1931</p>
+      <p class="fact-k">The year the house was built</p>
+    </div>
+    <div>
+      <p class="fact-v num">4</p>
+      <p class="fact-k">Rooms, and it will stay four</p>
+    </div>
+    <div>
+      <p class="fact-v num">2009</p>
+      <p class="fact-k">Ruth and Samson took it on</p>
+    </div>
+    <div>
+      <p class="fact-v num">7:30</p>
+      <p class="fact-k">Bread on the table, every day</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ THE AREA ============================ -->
+<section class="area" id="area">
+  <div class="sec-head">
+    <div>
+      <span class="eyebrow">Within a walk</span>
+      <h2 class="js-split">Everything worth doing is close enough to walk to.</h2>
+    </div>
+    <p class="lede">Chelmer Vale is small. You will not need a car once you have parked, and the six things below are the six we actually send people to.</p>
+  </div>
+
+  <div class="area-pic">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2200&q=80" alt="The wooded path that runs from the end of Marlow Rise to the reservoir" loading="lazy">
+  </div>
+
+  <div class="walks">
+    <div class="walk">
+      <p class="walk-name">Loveridge Bakery</p>
+      <p class="walk-note">Sourdough out at seven, sold out by eleven most days. Take the cash, they have never fixed the card machine.</p>
+      <p class="walk-time"><i></i><span class="num">4 min walk</span></p>
+    </div>
+    <div class="walk">
+      <p class="walk-name">The Saturday market, Fenner Street</p>
+      <p class="walk-note">Vegetables, three cheesemongers, and a man who sells only honey and will talk to you about it for an hour.</p>
+      <p class="walk-time"><i></i><span class="num">6 min walk</span></p>
+    </div>
+    <div class="walk">
+      <p class="walk-name">The reservoir path</p>
+      <p class="walk-note">A flat 5.2 km loop on gravel, doable in an hour. Herons at the north end, early.</p>
+      <p class="walk-time"><i></i><span class="num">9 min walk</span></p>
+    </div>
+    <div class="walk">
+      <p class="walk-name">The Crown &amp; Anchor</p>
+      <p class="walk-note">A proper pub with a proper kitchen. Book a table on Fridays or you will be eating at the bar.</p>
+      <p class="walk-time"><i></i><span class="num">11 min walk</span></p>
+    </div>
+    <div class="walk">
+      <p class="walk-name">Chelmer Hill lookout</p>
+      <p class="walk-note">Twenty minutes up through the beeches and the whole valley opens underneath you. Best an hour before sunset.</p>
+      <p class="walk-time"><i></i><span class="num">22 min walk</span></p>
+    </div>
+    <div class="walk">
+      <p class="walk-name">Bus 14 to the mainline station</p>
+      <p class="walk-note">Every twenty minutes until 22:40. Eighteen minutes end to end, and it stops at the top of our road.</p>
+      <p class="walk-time"><i></i><span class="num">3 min walk</span></p>
+    </div>
+  </div>
+  <p class="walks-foot">Walking times measured from the front gate, at an unhurried pace, by Samson, twice.</p>
+</section>
+
+<!-- ============================ REVIEWS ============================ -->
+<section class="revs" id="reviews">
+  <div class="revs-head">
+    <div>
+      <span class="eyebrow">Guests</span>
+      <h2 class="js-split">What people say once they get home.</h2>
+    </div>
+    <div class="score">
+      <p class="score-v num" id="scoreV">9.7</p>
+      <p class="score-k">average from 214 stays</p>
+    </div>
+  </div>
+
+  <div class="rev-grid">
+    <article class="rev">
+      <q>We came for two nights and moved things around at work so we could stay a third. The bath under the skylight is not a gimmick.</q>
+      <div class="rev-by">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy">
+        <div>
+          <p class="rev-nm">Hannah Leverett</p>
+          <p class="rev-mt">The Loft &middot; stayed March 2026</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="rev">
+      <q>Samson noticed I was not eating the eggs and put porridge in front of me the next morning without my having asked. That is the whole place, really.</q>
+      <div class="rev-by">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy">
+        <div>
+          <p class="rev-nm">Anton Pirie</p>
+          <p class="rev-mt">Room Two, West &middot; stayed January 2026</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="rev">
+      <q>I slept nine hours, which I have not done at home in a year. The house is genuinely quiet, not quiet-for-a-guesthouse.</q>
+      <div class="rev-by">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy">
+        <div>
+          <p class="rev-nm">Fola Adeyemi</p>
+          <p class="rev-mt">The Garden Room &middot; stayed November 2025</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="rev">
+      <q>Four of us in the Old Kitchen and nobody was on top of anybody. Ruth lent us an umbrella on the Sunday and then refused to take it back.</q>
+      <div class="rev-by">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy">
+        <div>
+          <p class="rev-nm">Grete Sandvik</p>
+          <p class="rev-mt">The Old Kitchen &middot; stayed October 2025</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============================ HOUSE NOTES ============================ -->
+<section class="notes" id="notes">
+  <div class="notes-in">
+    <div class="notes-head">
+      <div>
+        <span class="eyebrow">Before you book</span>
+        <h2 class="js-split">House notes.</h2>
+      </div>
+      <p class="lede">Everything we would otherwise have to tell you on the phone. If something here is a problem, say so when you book and we will usually find a way round it.</p>
+    </div>
+
+    <div class="note-grid">
+      <dl style="margin:0">
+        <div class="note"><dt>Check-in</dt><dd><b>14:00</b> to <b>20:00</b>. Later by arrangement &mdash; please call, do not just arrive.</dd></div>
+        <div class="note"><dt>Check-out</dt><dd><b>10:30</b>. We will hold bags in the hall until six, no charge.</dd></div>
+        <div class="note"><dt>Children</dt><dd>Welcome from <b>eight</b> years. We have no cot and no highchair, and the stairs are steep.</dd></div>
+        <div class="note"><dt>Pets</dt><dd>No, sorry. There is a house cat, Biscuit, and she was here first.</dd></div>
+      </dl>
+      <dl style="margin:0">
+        <div class="note"><dt>Parking</dt><dd><b>Three</b> off-street spaces, free, first come. Street parking is unrestricted after six.</dd></div>
+        <div class="note"><dt>Cancellation</dt><dd>Free until <b>seven</b> days before arrival. Inside seven days we charge one night.</dd></div>
+        <div class="note"><dt>Payment</dt><dd>Card or bank transfer on arrival. No deposit for stays under four nights.</dd></div>
+        <div class="note"><dt>Smoking</dt><dd>Not in the house. There is an ashtray on the bench by the fig tree.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CLOSING CTA ============================ -->
+<section class="close">
+  <div class="close-media">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <img id="closeImg" src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=2200&q=80" alt="The house at dusk with the hall light on" loading="lazy">
+    <div class="wash-warm"></div>
+    <div class="wash-dark"></div>
+  </div>
+  <div class="close-body">
+    <span class="eyebrow">Stay with us</span>
+    <h2 class="js-split">Four rooms. One of them is probably yours.</h2>
+    <div class="close-actions">
+      <a class="pill pill--gold" href="#book" data-scroll>Check availability</a>
+      <a class="pill pill--ghost-d" href="#rooms" data-scroll>Look at the rooms again
+        <svg class="arw" width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <p class="close-price">Rooms from <strong>$135</strong> per night, breakfast included</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="foot">
+  <div class="foot-top">
+    <div>
+      <div class="foot-brand">
+        <span class="mono" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="none" stroke="currentColor" stroke-width=".9" opacity=".55"/><path d="M12.5 29.5 24 17.5 35.5 29.5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 31.5v-5.2M30.5 31.5v-5.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="24" cy="24" r="16.5" fill="none" stroke="currentColor" stroke-width=".6" opacity=".3"/></svg>
+        </span>
+        <span class="brand-name">Gordon's Bnb</span>
+      </div>
+      <p class="foot-addr">
+        14 Marlow Rise<br>
+        Chelmer Vale CV7 2LN<br>
+        <a href="tel:+441420558813">+44 1420 55 8813</a><br>
+        <a href="mailto:hello@gordonsbnb.example">hello@gordonsbnb.example</a>
+      </p>
+    </div>
+
+    <div class="foot-col">
+      <h4>Stay</h4>
+      <ul>
+        <li><a href="#rooms" data-scroll>The four rooms</a></li>
+        <li><a href="#book" data-scroll>Check availability</a></li>
+        <li><a href="#notes" data-scroll>House notes</a></li>
+        <li><a href="#book" data-scroll>Gift a night</a></li>
+        <li><a href="#book" data-scroll>Long stays</a></li>
+      </ul>
+    </div>
+
+    <div class="foot-col">
+      <h4>The house</h4>
+      <ul>
+        <li><a href="#house" data-scroll>Ruth and Samson</a></li>
+        <li><a href="#house" data-scroll>Breakfast</a></li>
+        <li><a href="#mornings" data-scroll>A morning here</a></li>
+        <li><a href="#area" data-scroll>Chelmer Vale</a></li>
+        <li><a href="#reviews" data-scroll>Guest reviews</a></li>
+      </ul>
+    </div>
+
+    <div class="foot-col">
+      <h4>Practical</h4>
+      <ul>
+        <li><a href="#area" data-scroll>Getting here</a></li>
+        <li><a href="#notes" data-scroll>Parking</a></li>
+        <li><a href="#notes" data-scroll>Cancellation</a></li>
+        <li><a href="#notes" data-scroll>Accessibility</a></li>
+        <li><a href="mailto:hello@gordonsbnb.example">Ask us anything</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot-bar">
+    <span>&copy; 2026 Gordon's Bnb &middot; Registered with the Chelmer Vale tourism board, no. 4412</span>
+    <span>Template 25 of the library &middot; <a href="#top" data-scroll>Back to the top</a></span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var HAS_GSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+  var DESKTOP = window.matchMedia('(min-width: 1024px)').matches;
+  var lenis = null;
+
+  if (HAS_GSAP) gsap.registerPlugin(ScrollTrigger);
+
+  /* ==========================================================
+     SMOOTH SCROLL — deliberately slow. 1.45s duration is part
+     of the calm; do not drop it to the usual 1.0.
+     ========================================================== */
+  if (typeof window.Lenis !== 'undefined' && !REDUCED) {
+    lenis = new Lenis({
+      duration: 1.45,
+      easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.4
+    });
+    if (HAS_GSAP) {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      requestAnimationFrame(function raf(t){ lenis.raf(t); requestAnimationFrame(raf); });
+    }
+  }
+
+  function goTo(target){
+    var el = typeof target === 'string' ? document.querySelector(target) : target;
+    if (!el) return;
+    if (lenis) lenis.scrollTo(el, { duration: 1.7, offset: 0 });
+    else el.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
+  }
+
+  document.querySelectorAll('[data-scroll]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if (!id || id.charAt(0) !== '#') return;
+      e.preventDefault();
+      closePanel();
+      goTo(id);
+    });
+  });
+
+  /* ==========================================================
+     LINE SPLITTER — hand-rolled, no paid plugin.
+     ========================================================== */
+  function splitLines(el){
+    if (!el.dataset.orig) el.dataset.orig = el.innerHTML;
+    var chunks = el.dataset.orig.split(/<br\s*\/?>/i);
+    el.innerHTML = chunks.map(function(c){
+      return c.trim().split(/\s+/).map(function(w){ return '<span class="w">' + w + '</span>'; }).join(' ');
+    }).join('<br>');
+
+    var words = Array.prototype.slice.call(el.querySelectorAll('.w'));
+    var lines = [], cur = null, top = null;
+    words.forEach(function(w){
+      var t = Math.round(w.offsetTop);
+      if (top === null || Math.abs(t - top) > 3) { top = t; cur = []; lines.push(cur); }
+      cur.push(w.textContent);
+    });
+
+    el.innerHTML = lines.map(function(l){
+      return '<span class="ln"><span class="ln-i">' + l.join(' ') + '</span></span>';
+    }).join('');
+    return Array.prototype.slice.call(el.querySelectorAll('.ln-i'));
+  }
+
+  function unsplit(el){
+    if (el.dataset.orig) el.innerHTML = el.dataset.orig;
+  }
+
+  /* ==========================================================
+     TECHNIQUE 2 — LINE MASK REVEALS
+     Long durations (1.25-1.5s) and a wide stagger. These are
+     the slowest reveals in the library on purpose.
+     ========================================================== */
+  var splitTargets = Array.prototype.slice.call(document.querySelectorAll('.js-split'));
+
+  function buildReveals(){
+    if (!HAS_GSAP || REDUCED) return;
+
+    // hero — hand-written lines, revealed by the intro timeline
+    splitTargets.forEach(function(el){
+      var lines = splitLines(el);
+      gsap.set(lines, { yPercent: 118 });
+      gsap.to(lines, {
+        yPercent: 0,
+        duration: 1.45,
+        ease: 'power3.out',
+        stagger: 0.09,
+        scrollTrigger: { trigger: el, start: 'top 86%', once: true }
+      });
+    });
+
+    // supporting soft rises for body copy under each heading
+    gsap.utils.toArray('.sec-head .lede, .seq-head p, .book-lede, .house-caption, .walks-foot, .notes-head .lede, .part, .fact-v, .fact-k, .rev, .score')
+      .forEach(function(el){
+        gsap.from(el, {
+          y: 22, opacity: 0,
+          duration: 1.15, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+        });
+      });
+  }
+
+  /* ==========================================================
+     TECHNIQUE 3 — QUIET PARALLAX
+     +/-4% only, scrub 1.2 so it lags behind the scroll and
+     never draws attention to itself.
+     ========================================================== */
+  function buildParallax(){
+    if (!HAS_GSAP || REDUCED || !window.matchMedia('(min-width: 900px)').matches) return;
+    gsap.utils.toArray('.room-pic img, .house-pic img, .area-pic img').forEach(function(img){
+      gsap.fromTo(img,
+        { yPercent: -4 },
+        { yPercent: 4, ease: 'none',
+          scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: 1.2 } });
+    });
+    gsap.fromTo('#closeImg', { yPercent: -3, scale: 1.06 }, {
+      yPercent: 3, ease: 'none',
+      scrollTrigger: { trigger: '.close', start: 'top bottom', end: 'bottom top', scrub: 1.2 }
+    });
+    gsap.to('#heroImg', {
+      yPercent: 8, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.2 }
+    });
+  }
+
+  /* ==========================================================
+     TECHNIQUE 1 (SIGNATURE) — SLOW CROSSFADE IMAGE SEQUENCE
+     Pinned full-bleed. Each frame gets a full viewport of
+     scroll: roughly two thirds hold, one third crossfade.
+     A slow ken-burns drift runs under the hold so the frame
+     is alive without moving fast enough to distract.
+     ========================================================== */
+  function buildSequence(){
+    var seq = document.querySelector('.seq');
+    var stage = document.getElementById('seqStage');
+    if (!seq || !stage) return;
+    if (!HAS_GSAP || REDUCED || !DESKTOP) return;   // stays as a stacked list
+
+    var frames = Array.prototype.slice.call(stage.querySelectorAll('.seq-frame'));
+    if (frames.length < 2) return;
+
+    seq.classList.add('is-pinned');
+
+    gsap.set(frames, { opacity: 0 });
+    gsap.set(frames[0], { opacity: 1 });
+
+    var nowEl = document.getElementById('seqNow');
+    var total = frames.length;              // timeline length in units
+    var HOLD_VH = 1.05;                     // viewport-heights of scroll per frame
+
+    var tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: stage,
+        start: 'top top',
+        end: function(){ return '+=' + Math.round(window.innerHeight * HOLD_VH * total); },
+        pin: stage,
+        pinSpacing: true,
+        scrub: 1.1,
+        invalidateOnRefresh: true,
+        onUpdate: function(self){
+          var i = Math.min(total, Math.floor(self.progress * total) + 1);
+          if (nowEl) nowEl.textContent = ('0' + i).slice(-2);
+        }
+      }
+    });
+
+    // slow drift under every frame — 1.0 -> 1.075 across its own window
+    frames.forEach(function(f, i){
+      var img = f.querySelector('.seq-img');
+      tl.fromTo(img, { scale: 1 }, { scale: 1.075, ease: 'none', duration: 1.25 }, Math.max(0, i - 0.25));
+    });
+
+    // the crossfades — long, soft, one per frame boundary
+    for (var i = 1; i < total; i++) {
+      tl.to(frames[i], { opacity: 1, duration: 0.38, ease: 'power1.inOut' }, i - 0.38);
+      tl.to(frames[i - 1], { opacity: 0, duration: 0.38, ease: 'power1.inOut' }, i - 0.38);
+    }
+
+    tl.to({}, { duration: 0.45 });   // hold on the last frame before the pin releases
+
+    var bar = document.getElementById('seqBar');
+    if (bar) tl.fromTo(bar, { scaleX: 0 }, { scaleX: 1, ease: 'none', duration: tl.duration() }, 0);
+  }
+
+  /* ==========================================================
+     TECHNIQUE 4 — SOFT COUNT-UP
+     Used on the live booking total and the review score only.
+     0.95s power2.out. Never bounces, never overshoots.
+     ========================================================== */
+  function countTo(el, value, opts){
+    opts = opts || {};
+    var dp = opts.decimals || 0;
+    var prefix = opts.prefix || '';
+    if (!HAS_GSAP || REDUCED) {
+      el.textContent = prefix + value.toFixed(dp);
+      el.dataset.v = value;
+      return;
+    }
+    var from = parseFloat(el.dataset.v || 0);
+    var obj = { v: from };
+    gsap.killTweensOf(obj);
+    gsap.to(obj, {
+      v: value, duration: 0.95, ease: 'power2.out',
+      onUpdate: function(){
+        el.textContent = prefix + (dp ? obj.v.toFixed(dp) : Math.round(obj.v).toLocaleString('en-US'));
+      },
+      onComplete: function(){
+        el.textContent = prefix + (dp ? value.toFixed(dp) : Math.round(value).toLocaleString('en-US'));
+        el.dataset.v = value;
+      }
+    });
+  }
+
+  function buildScoreCount(){
+    var el = document.getElementById('scoreV');
+    if (!el) return;
+    if (!HAS_GSAP || REDUCED) return;
+    el.dataset.v = 0;
+    el.textContent = '0.0';
+    ScrollTrigger.create({
+      trigger: el, start: 'top 88%', once: true,
+      onEnter: function(){ countTo(el, 9.7, { decimals: 1 }); }
+    });
+  }
+
+  /* ==========================================================
+     BOOKING — client-side only
+     ========================================================== */
+  var ROOMS = {
+    garden:  { name: "The Garden Room", rate: 135, sleeps: 2 },
+    west:    { name: "Room Two, West",  rate: 165, sleeps: 2 },
+    loft:    { name: "The Loft",        rate: 190, sleeps: 3 },
+    kitchen: { name: "The Old Kitchen", rate: 210, sleeps: 4 }
+  };
+  var HOUSEKEEPING = 30;
+
+  var fRoom = document.getElementById('fRoom');
+  var fIn = document.getElementById('fIn');
+  var fOut = document.getElementById('fOut');
+  var fGuests = document.getElementById('fGuests');
+  var dateHint = document.getElementById('dateHint');
+  var guestHint = document.getElementById('guestHint');
+  var sumRoom = document.getElementById('sumRoom');
+  var sumWhen = document.getElementById('sumWhen');
+  var sumLines = document.getElementById('sumLines');
+  var sumTotal = document.getElementById('sumTotal');
+
+  function iso(d){
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  }
+  function parseISO(s){
+    var p = (s || '').split('-');
+    if (p.length !== 3) return null;
+    var d = new Date(+p[0], +p[1] - 1, +p[2]);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  var LONG = { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' };
+  function pretty(d){ return d.toLocaleDateString('en-GB', LONG); }
+
+  function seedDates(){
+    if (!fIn || !fOut) return;
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var a = new Date(today); a.setDate(a.getDate() + 14);
+    var b = new Date(a); b.setDate(b.getDate() + 3);
+    fIn.value = iso(a); fOut.value = iso(b);
+    fIn.min = iso(today);
+    fOut.min = iso(new Date(today.getTime() + 86400000));
+  }
+
+  var bookLive = false;      // becomes true once the booking block has been seen
+  var lastTotal = 0;
+
+  function row(k, v){
+    return '<div class="sum-line"><span>' + k + '</span><span>' + v + '</span></div>';
+  }
+
+  function recalc(){
+    if (!fRoom || !sumTotal) return;
+    var room = ROOMS[fRoom.value] || ROOMS.loft;
+    var guests = parseInt(fGuests.value, 10) || 1;
+    var a = parseISO(fIn.value);
+    var b = parseISO(fOut.value);
+
+    sumRoom.textContent = room.name;
+
+    // guests vs capacity
+    if (guests > room.sleeps) {
+      guestHint.textContent = room.name + ' sleeps ' + room.sleeps + '. Try The Old Kitchen for four.';
+      guestHint.classList.add('is-warn');
+    } else {
+      guestHint.textContent = '';
+      guestHint.classList.remove('is-warn');
+    }
+
+    // dates
+    var nights = 0;
+    if (a && b) nights = Math.round((b - a) / 86400000);
+
+    if (!a || !b || nights <= 0) {
+      dateHint.textContent = 'Check-out needs to be after check-in.';
+      dateHint.classList.add('is-warn');
+      sumWhen.textContent = 'Pick two dates to see the total';
+      sumLines.innerHTML = row('Nights', '&mdash;') + row('Breakfast', 'included') + row('Linen and housekeeping', '&mdash;');
+      lastTotal = 0;
+      if (bookLive) countTo(sumTotal, 0, { prefix: '$' });
+      return;
+    }
+    if (nights < 2) {
+      dateHint.textContent = 'Minimum stay is two nights. We have added the second for you.';
+      dateHint.classList.add('is-warn');
+      var fix = new Date(a); fix.setDate(fix.getDate() + 2);
+      fOut.value = iso(fix);
+      b = fix; nights = 2;
+    } else {
+      dateHint.textContent = 'Minimum stay is two nights, three over a bank holiday.';
+      dateHint.classList.remove('is-warn');
+    }
+
+    var stay = room.rate * nights;
+    var total = stay + HOUSEKEEPING;
+
+    sumWhen.textContent = pretty(a) + '  →  ' + pretty(b) + '  ·  ' +
+      nights + (nights === 1 ? ' night' : ' nights') + '  ·  ' +
+      guests + (guests === 1 ? ' guest' : ' guests');
+
+    sumLines.innerHTML =
+      row('$' + room.rate + ' &times; ' + nights + (nights === 1 ? ' night' : ' nights'), '$' + stay.toLocaleString('en-US')) +
+      row('Breakfast, ' + guests + (guests === 1 ? ' guest' : ' guests'), 'included') +
+      row('Linen and housekeeping, one-off', '$' + HOUSEKEEPING);
+
+    lastTotal = total;
+    if (bookLive) countTo(sumTotal, total, { prefix: '$' });
+  }
+
+  if (fRoom) {
+    seedDates();
+    [fRoom, fIn, fOut, fGuests].forEach(function(el){
+      el.addEventListener('change', recalc);
+      el.addEventListener('input', recalc);
+    });
+    sumTotal.dataset.v = 0;
+    sumTotal.textContent = '$0';
+    recalc();
+
+    if (HAS_GSAP && !REDUCED) {
+      // the total waits, then counts up softly the first time you reach it
+      ScrollTrigger.create({
+        trigger: '#bookGrid', start: 'top 78%', once: true,
+        onEnter: function(){ bookLive = true; countTo(sumTotal, lastTotal, { prefix: '$' }); }
+      });
+    } else {
+      bookLive = true;
+      sumTotal.textContent = '$' + lastTotal.toLocaleString('en-US');
+      sumTotal.dataset.v = lastTotal;
+    }
+  }
+
+  // room -> booking hand-off
+  document.querySelectorAll('[data-room]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (fRoom) { fRoom.value = btn.getAttribute('data-room'); recalc(); }
+      goTo('#book');
+      var grid = document.getElementById('bookGrid');
+      if (grid) {
+        grid.classList.add('is-flash');
+        setTimeout(function(){ grid.classList.remove('is-flash'); }, 1400);
+      }
+    });
+  });
+
+  var reqBtn = document.getElementById('requestBtn');
+  var reqOk = document.getElementById('requestOk');
+  if (reqBtn && reqOk) {
+    reqBtn.addEventListener('click', function(){
+      reqOk.hidden = false;
+      if (HAS_GSAP && !REDUCED) gsap.fromTo(reqOk, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .7, ease: 'power2.out' });
+    });
+  }
+
+  /* ==========================================================
+     NAV
+     ========================================================== */
+  var nav = document.getElementById('nav');
+  var panel = document.getElementById('navpanel');
+  var toggle = document.getElementById('navtoggle');
+
+  function closePanel(){
+    if (!panel) return;
+    panel.classList.remove('is-open');
+    if (toggle) { toggle.setAttribute('aria-expanded', 'false'); toggle.textContent = 'Menu'; }
+    if (lenis) lenis.start();
+  }
+  if (toggle) {
+    toggle.addEventListener('click', function(){
+      var open = panel.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.textContent = open ? 'Close' : 'Menu';
+      if (lenis) { open ? lenis.stop() : lenis.start(); }
+    });
+  }
+
+  function navState(){
+    if (!nav) return;
+    var y = window.scrollY || window.pageYOffset;
+    nav.classList.toggle('is-solid', y > window.innerHeight * 0.86);
+  }
+  window.addEventListener('scroll', navState, { passive: true });
+  navState();
+
+  /* ==========================================================
+     PAGE-LOAD INTRO — a curtain that lifts, not a body fade.
+     ========================================================== */
+  function intro(){
+    var curtain = document.getElementById('curtain');
+    var heroLines = Array.prototype.slice.call(document.querySelectorAll('.hero-h1 .ln-i'));
+    var rest = ['#heroEyebrow', '#heroP', '#heroActions', '#heroPrice'].map(function(s){ return document.querySelector(s); }).filter(Boolean);
+
+    if (!HAS_GSAP || REDUCED) {
+      if (curtain) curtain.classList.add('is-done');
+      return;
+    }
+    if (lenis) lenis.stop();
+
+    gsap.set(heroLines, { yPercent: 118 });
+    gsap.set(rest, { opacity: 0, y: 18 });
+    gsap.set('#heroImg', { scale: 1.09 });
+
+    var tl = gsap.timeline({
+      defaults: { ease: 'power3.out' },
+      onComplete: function(){
+        if (curtain) curtain.classList.add('is-done');
+        if (lenis) lenis.start();
+        if (HAS_GSAP) ScrollTrigger.refresh();
+      }
+    });
+
+    tl.from('.curtain-in > *', { opacity: 0, y: 14, duration: .9, stagger: .1 }, 0)
+      .to('.curtain-in', { opacity: 0, duration: .55, ease: 'power2.inOut' }, 1.5)
+      .to('#curtain', { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.15, ease: 'power3.inOut' }, 1.75)
+      .to('#heroImg', { scale: 1, duration: 2.6, ease: 'power2.out' }, 1.75)
+      .to(heroLines, { yPercent: 0, duration: 1.5, ease: 'power3.out', stagger: .1 }, 2.15)
+      .to(rest, { opacity: 1, y: 0, duration: 1.1, stagger: .09 }, 2.5);
+  }
+
+  /* ==========================================================
+     BOOT
+     ========================================================== */
+  function boot(){
+    buildReveals();
+    buildParallax();
+    buildSequence();
+    buildScoreCount();
+    intro();
+    if (HAS_GSAP) ScrollTrigger.refresh();
+  }
+
+  var booted = false;
+  function bootOnce(){ if (booted) return; booted = true; boot(); }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(bootOnce);
+    setTimeout(bootOnce, 2500);            // safety net if the font promise never settles
+  } else {
+    window.addEventListener('load', bootOnce);
+  }
+
+  /* resize: drop the split lines back to plain text so nothing
+     ever ends up half-masked at a new width, then refresh. */
+  var rt = null, lastW = window.innerWidth;
+  window.addEventListener('resize', function(){
+    if (Math.abs(window.innerWidth - lastW) < 70) return;
+    lastW = window.innerWidth;
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      splitTargets.forEach(unsplit);
+      if (HAS_GSAP) ScrollTrigger.refresh();
+    }, 220);
+  });
+
+})();
+</script>
+</body>
+</html>

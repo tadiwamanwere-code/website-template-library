@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safeway Furniture — Fitted kitchens, wardrobes &amp; office furniture, Harare</title>
+<meta name="description" content="Safeway Furniture has been designing and manufacturing fitted kitchens, wardrobes and office furniture in Harare since 2012. Measured on site, made in our own workshop, installed by our own team.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200..900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   SAFEWAY FURNITURE — fitted furniture / joinery landing template
+   Ground:  deep navy, warm-leaning, never black
+   Accent:  periwinkle #8FB4F0 — pills, rules, active states. One accent only.
+   Type:    Outfit (heavy geometric display + body) / DM Mono (spec labels)
+   Voice:   a real workshop. Technical, unfussy, made by hand.
+   ========================================================================== */
+
+:root{
+  --navy-950:#070C16;
+  --navy-900:#0A1120;
+  --navy-860:#0D1526;
+  --navy-820:#111B2F;
+  --navy-780:#16233C;
+  --navy-720:#1D2C49;
+  --paper:#EDF1F8;
+  --mute:#94A3BF;
+  --mute-2:#6A7A97;
+  --accent:#8FB4F0;
+  --accent-deep:#5F84C4;
+  --ink:#0A1120;
+  --line:rgba(143,180,240,.13);
+  --line-2:rgba(143,180,240,.26);
+  --line-3:rgba(143,180,240,.42);
+  --shell:min(1440px, 91vw);
+  --display:'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:'DM Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --nav-h:84px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{ -webkit-text-size-adjust:100%; }
+html,body{margin:0;padding:0}
+body{
+  background:var(--navy-900);
+  color:var(--paper);
+  font-family:var(--display);
+  font-weight:400;
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+body.is-loading{overflow:hidden;height:100vh}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4,p,ul,ol,figure,blockquote{margin:0}
+ul,ol{list-style:none;padding:0}
+::selection{background:var(--accent);color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+.shell{width:var(--shell);margin-inline:auto}
+
+/* ---------- type primitives ---------------------------------------------- */
+.lab{
+  font-family:var(--mono);font-size:11px;font-weight:400;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--mute-2);
+}
+.eyebrow{
+  display:flex;align-items:center;gap:15px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.19em;
+  text-transform:uppercase;color:var(--accent);
+}
+.eyebrow::before{
+  content:"";width:36px;height:1px;background:var(--accent);flex:0 0 36px;opacity:.85;
+}
+.h1{
+  font-weight:800;letter-spacing:-.038em;line-height:.9;
+  font-size:clamp(3.3rem, 9.1vw, 9.4rem);
+}
+.h2{
+  font-weight:800;letter-spacing:-.032em;line-height:.95;
+  font-size:clamp(2.3rem, 5.1vw, 4.9rem);
+}
+.h3{font-weight:700;letter-spacing:-.024em;line-height:1.05;font-size:clamp(1.35rem,2.1vw,1.95rem)}
+.lede{color:var(--mute);font-size:clamp(1rem,1.16vw,1.16rem);line-height:1.66;font-weight:300}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+
+/* line-mask reveal scaffolding (JS splits on <br>) */
+/* padding gives descenders room inside the mask; the negative margin
+   puts the line spacing back where it was */
+[data-lines] .line{display:block;overflow:hidden;padding-bottom:.15em;margin-bottom:-.15em}
+[data-lines] .line > span{display:block;will-change:transform}
+
+/* ---------- buttons ------------------------------------------------------ */
+.pill{
+  display:inline-flex;align-items:center;gap:11px;
+  padding:15px 30px;border-radius:999px;
+  font-weight:600;font-size:15.5px;letter-spacing:-.008em;
+  border:1px solid transparent;position:relative;
+  transition:background .28s cubic-bezier(.22,1,.36,1), border-color .28s, color .28s;
+  will-change:transform;
+}
+.pill-solid{background:var(--accent);color:var(--ink)}
+.pill-solid:hover{background:#A9C6F6}
+.pill-ghost{border-color:var(--line-3);color:var(--paper)}
+.pill-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.pill svg{width:15px;height:15px;flex:0 0 15px;transition:transform .32s cubic-bezier(.22,1,.36,1)}
+.pill:hover svg{transform:translateX(4px)}
+.pill-sm{padding:11px 21px;font-size:13.5px}
+
+/* ==========================================================================
+   0 — INTRO: the tape measure runs out, then the curtain lifts
+   ========================================================================== */
+#loader{
+  position:fixed;inset:0;z-index:200;background:var(--navy-950);
+  display:flex;align-items:center;justify-content:center;
+  clip-path:inset(0 0 0 0);
+}
+.loader-in{width:min(620px,84vw);text-align:left}
+.loader-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px}
+.loader-read{
+  font-family:var(--mono);font-size:clamp(2rem,5vw,3.2rem);
+  color:var(--paper);letter-spacing:-.02em;line-height:1;
+}
+.loader-read em{font-style:normal;font-size:.38em;color:var(--mute-2);margin-left:.5em;letter-spacing:.14em}
+.ruler{position:relative;height:26px;overflow:hidden}
+.ruler-clip{position:absolute;inset:0;clip-path:inset(0 100% 0 0)}
+.ruler-minor,.ruler-major{position:absolute;left:0;right:0;bottom:0}
+.ruler-minor{height:9px;background-image:repeating-linear-gradient(90deg,var(--line-2) 0 1px,transparent 1px 11px)}
+.ruler-major{height:19px;background-image:repeating-linear-gradient(90deg,var(--line-3) 0 1px,transparent 1px 55px)}
+.ruler-base{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%}
+.loader-foot{margin-top:22px;display:flex;justify-content:space-between;gap:20px}
+
+/* ==========================================================================
+   1 — TOP BAR + NAV
+   ========================================================================== */
+.topbar{
+  background:var(--navy-950);border-bottom:1px solid var(--line);
+  position:relative;z-index:60;
+}
+.topbar-in{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  height:38px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--mute-2);
+}
+.tb-right{display:flex;align-items:center;gap:18px}
+.tb-right a{transition:color .25s}
+.tb-right a:hover{color:var(--accent)}
+.tb-sep{width:1px;height:12px;background:var(--line-2)}
+.tb-hours{white-space:nowrap}
+
+.nav{
+  position:sticky;top:0;z-index:80;height:var(--nav-h);
+  transition:background .4s cubic-bezier(.22,1,.36,1), border-color .4s, height .4s;
+  border-bottom:1px solid transparent;
+}
+.nav.is-stuck{
+  background:rgba(10,17,32,.86);backdrop-filter:blur(16px) saturate(150%);
+  border-bottom-color:var(--line);height:70px;
+}
+.nav-in{display:flex;align-items:center;gap:34px;height:100%}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto}
+.brand-mark{
+  width:38px;height:38px;flex:0 0 38px;border:1.5px solid var(--paper);border-radius:9px;
+  display:grid;place-items:center;
+}
+.brand-mark svg{width:20px;height:20px}
+.brand-word{display:flex;flex-direction:column;line-height:1}
+.brand-word b{font-weight:800;font-size:17px;letter-spacing:.01em}
+.brand-word i{
+  font-style:normal;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.34em;color:var(--mute-2);margin-top:3px;
+}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{
+  font-size:15px;font-weight:400;color:var(--paper);opacity:.82;position:relative;padding:4px 0;
+  transition:opacity .25s;
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--accent);
+  transform:scaleX(0);transform-origin:100% 50%;transition:transform .42s cubic-bezier(.22,1,.36,1);
+}
+.nav-links a:hover{opacity:1}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:0 50%}
+.burger{
+  display:none;width:44px;height:38px;background:none;border:1px solid var(--line-2);
+  border-radius:8px;cursor:pointer;padding:0;place-items:center;
+}
+.burger span{display:block;width:17px;height:1.5px;background:var(--paper);margin:3px auto;transition:transform .3s,opacity .3s}
+body.menu-on .burger span:nth-child(1){transform:translateY(4.5px) rotate(45deg)}
+body.menu-on .burger span:nth-child(2){opacity:0}
+body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45deg)}
+
+.mobile-menu{
+  position:fixed;inset:0;z-index:70;background:var(--navy-950);
+  padding:calc(var(--nav-h) + 46px) 0 40px;
+  transform:translateY(-100%);visibility:hidden;
+}
+.mobile-menu a{display:block;font-size:8vw;font-weight:700;letter-spacing:-.03em;padding:11px 0;border-bottom:1px solid var(--line)}
+.mm-foot{margin-top:30px;font-family:var(--mono);font-size:12px;color:var(--mute-2);line-height:2}
+
+/* ==========================================================================
+   2 — HERO
+   ========================================================================== */
+.hero{position:relative;min-height:calc(100svh - var(--nav-h) - 38px);display:flex;align-items:center;overflow:hidden}
+.hero-media{position:absolute;inset:0;z-index:0}
+.hero-media img{
+  width:100%;height:100%;object-fit:cover;object-position:62% 50%;
+  filter:saturate(.5) brightness(.66) contrast(1.05);
+  transform-origin:60% 50%;
+}
+.hero-wash{
+  position:absolute;inset:0;
+  background:linear-gradient(96deg,
+    rgba(10,17,32,.97) 0%,
+    rgba(10,17,32,.93) 28%,
+    rgba(10,17,32,.66) 58%,
+    rgba(10,17,32,.5) 78%,
+    rgba(10,17,32,.78) 100%);
+}
+.hero-wash-2{position:absolute;inset:0;background:#101E3A;mix-blend-mode:multiply;opacity:.55}
+.hero-vig{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,17,32,.72) 0%,transparent 24%,transparent 62%,rgba(10,17,32,.9) 100%)}
+.hero-in{position:relative;z-index:2;padding:clamp(64px,9vh,124px) 0 clamp(52px,7vh,86px)}
+.hero-copy{max-width:min(880px, 62vw)}
+.hero h1{margin:26px 0 0}
+.hero-p{max-width:600px;margin-top:26px;color:#C8D3E7;font-weight:300;font-size:clamp(1.02rem,1.3vw,1.24rem);line-height:1.6}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+.hero-trust{
+  display:flex;flex-wrap:wrap;align-items:center;gap:9px 16px;margin-top:34px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--mute);
+}
+.hero-trust i{font-style:normal;color:var(--accent-deep)}
+
+/* technical dimension overlay — reads as a workshop drawing, not decoration */
+.hero-dims{position:absolute;right:0;top:0;bottom:0;width:min(46vw,760px);z-index:1;pointer-events:none;display:none}
+.hero-dims svg{width:100%;height:100%}
+.hero-dims path,.hero-dims line{stroke:var(--accent);stroke-width:1;fill:none;opacity:.5}
+.hero-dims text{fill:var(--accent);font-family:var(--mono);font-size:11px;letter-spacing:.1em;opacity:.72}
+@media(min-width:1100px){.hero-dims{display:block}}
+
+.scroll-cue{
+  position:absolute;left:0;bottom:26px;z-index:3;display:flex;align-items:center;gap:12px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute-2);
+}
+.scroll-cue span{display:block;width:52px;height:1px;background:var(--line-3);position:relative;overflow:hidden}
+.scroll-cue span::after{content:"";position:absolute;inset:0;background:var(--accent);animation:cue 2.4s cubic-bezier(.76,0,.24,1) infinite}
+@keyframes cue{0%{transform:translateX(-100%)}55%,100%{transform:translateX(100%)}}
+
+/* ==========================================================================
+   3 — FIGURES / UNDER ONE ROOF
+   ========================================================================== */
+.section{padding:clamp(88px,11vw,168px) 0;position:relative}
+.eyebrow + .h2{margin-top:24px}
+.sec-head{max-width:820px}
+.sec-head .h2{margin-top:24px}
+.sec-head .lede{margin-top:26px;max-width:620px}
+.sec-head-split{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,5vw,90px);
+  align-items:end;max-width:none;
+}
+.sec-head-split .lede{margin-top:0;max-width:520px;padding-bottom:.5em}
+
+.figures{border-top:1px solid var(--line);background:var(--navy-860)}
+.fig-in{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(40px,6vw,110px);align-items:start}
+.fig-copy .h2{margin-top:24px}
+.fig-copy .lede{margin-top:26px}
+.fig-note{
+  margin-top:30px;padding-left:20px;border-left:2px solid var(--accent);
+  font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--mute);
+}
+.fig-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.fig{background:var(--navy-860);padding:clamp(26px,2.6vw,40px) clamp(22px,2.2vw,34px);position:relative}
+.fig-n{
+  font-weight:700;letter-spacing:-.045em;line-height:1;
+  font-size:clamp(2.5rem,4.3vw,4.1rem);
+  font-variant-numeric:tabular-nums;
+}
+.fig-n em{font-style:normal;font-size:.38em;font-weight:500;color:var(--accent);margin-left:.16em;letter-spacing:-.01em}
+.fig-l{margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute-2);line-height:1.7}
+.fig-bar{position:absolute;left:0;top:0;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%}
+
+/* ==========================================================================
+   4 — PROCESS: the horizontal track (signature motion)
+   ========================================================================== */
+.process{background:var(--navy-900);border-top:1px solid var(--line)}
+.proc-head{padding:clamp(88px,11vw,150px) 0 clamp(40px,5vw,64px)}
+.proc-head-in{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,5vw,90px);align-items:end}
+.proc-pin{position:relative;height:100svh;overflow:hidden}
+.proc-track{
+  display:flex;align-items:center;gap:clamp(22px,2.6vw,52px);
+  height:100%;padding-inline:max(4.5vw,32px);will-change:transform;
+}
+.step{
+  flex:0 0 auto;width:min(1060px,80vw);
+  border:1px solid var(--line);background:var(--navy-860);
+  display:grid;grid-template-columns:.92fr 1.08fr;
+  min-height:min(600px,66vh);position:relative;overflow:hidden;
+}
+.step-photo{position:relative;overflow:hidden;background:var(--navy-820)}
+.step-photo img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:saturate(.48) brightness(.62) contrast(1.06);will-change:transform;
+}
+.step-photo::after{content:"";position:absolute;inset:0;background:#101E3A;mix-blend-mode:multiply;opacity:.42}
+.step-index{
+  position:absolute;left:22px;top:18px;z-index:2;
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent);
+}
+.step-ghost{
+  position:absolute;right:-.06em;bottom:-.28em;z-index:1;
+  font-weight:800;font-size:clamp(9rem,17vw,17rem);line-height:1;
+  color:rgba(143,180,240,.055);letter-spacing:-.06em;pointer-events:none;
+}
+.step-body{padding:clamp(28px,3vw,52px);display:flex;flex-direction:column;position:relative;z-index:2}
+.step-kicker{display:flex;align-items:baseline;gap:14px}
+.step-kicker .h3{font-size:clamp(1.7rem,2.7vw,2.5rem);font-weight:800;letter-spacing:-.032em}
+.step-when{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);background:var(--accent);padding:4px 10px;border-radius:999px;white-space:nowrap;
+}
+.step-text{margin-top:20px;color:#BFCCE3;font-weight:300;font-size:clamp(.98rem,1.08vw,1.09rem);line-height:1.65;max-width:52ch}
+.step-specs{margin-top:auto;padding-top:26px;display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(18px,2vw,34px)}
+.step-specs div{padding:14px 0;border-top:1px solid var(--line)}
+.step-specs dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--mute-2)}
+.step-specs dd{margin:6px 0 0;font-size:14.5px;font-weight:500;color:var(--paper);line-height:1.45}
+.step-foot{
+  margin-top:22px;padding-top:16px;border-top:1px dashed var(--line-2);
+  font-family:var(--mono);font-size:12px;color:var(--accent);line-height:1.7;
+}
+
+.proc-rail{
+  position:absolute;left:max(4.5vw,32px);right:max(4.5vw,32px);bottom:30px;z-index:5;
+}
+.proc-rail-line{height:1px;background:var(--line-2);position:relative}
+.proc-rail-fill{position:absolute;left:0;top:0;height:1px;background:var(--accent);width:0%}
+.proc-rail-nodes{display:flex;justify-content:space-between;margin-top:13px}
+.proc-node{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;
+  color:var(--mute-2);transition:color .35s;display:flex;gap:9px;align-items:center;
+}
+.proc-node b{font-weight:400;color:var(--line-3)}
+.proc-node.is-on{color:var(--paper)}
+.proc-node.is-on b{color:var(--accent)}
+
+/* ==========================================================================
+   5 — MATERIALS SPEC SHEET
+   ========================================================================== */
+.mat{background:var(--navy-860);border-top:1px solid var(--line)}
+.mat-body{margin-top:clamp(44px,5vw,74px);display:grid;grid-template-columns:290px 1fr;gap:clamp(28px,3.4vw,60px);align-items:start}
+.mat-rail{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.mat-tab{
+  display:flex;align-items:center;gap:13px;width:100%;text-align:left;
+  background:none;border:0;border-bottom:1px solid var(--line);
+  padding:16px 4px;cursor:pointer;color:var(--mute);
+  font-size:15.5px;font-weight:500;letter-spacing:-.012em;
+  transition:color .28s,padding-left .34s cubic-bezier(.22,1,.36,1);position:relative;
+}
+.mat-tab::before{
+  content:"";position:absolute;left:0;top:50%;width:0;height:1px;background:var(--accent);
+  transform:translateY(-50%);transition:width .34s cubic-bezier(.22,1,.36,1);
+}
+.mat-tab:hover{color:var(--paper)}
+.mat-tab.is-on{color:var(--paper);padding-left:26px}
+.mat-tab.is-on::before{width:16px}
+.mat-tab i{font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--mute-2);letter-spacing:.1em}
+.mat-tab em{margin-left:auto;font-style:normal;font-family:var(--mono);font-size:11px;color:var(--mute-2)}
+.mat-tab.is-on em{color:var(--accent)}
+
+.mat-panel{min-width:0}
+.mat-cols{
+  display:grid;grid-template-columns:2.05fr 1.7fr .68fr 1.6fr .82fr;gap:20px;
+  padding:0 0 12px;border-bottom:1px solid var(--line-2);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-2);
+}
+.mat-row{
+  display:grid;grid-template-columns:2.05fr 1.7fr .68fr 1.6fr .82fr;gap:20px;
+  padding:19px 0;border-bottom:1px solid var(--line);align-items:baseline;
+  transition:background .3s;position:relative;
+}
+.mat-row::before{
+  content:"";position:absolute;left:-16px;right:-16px;top:0;bottom:0;background:var(--navy-820);
+  opacity:0;transition:opacity .3s;z-index:0;
+}
+.mat-row:hover::before{opacity:1}
+.mat-row > *{position:relative;z-index:1}
+.mat-name{font-size:16.5px;font-weight:600;letter-spacing:-.015em}
+.mat-name small{display:block;font-size:12.5px;font-weight:300;color:var(--mute-2);margin-top:5px;letter-spacing:0}
+.mat-spec,.mat-thk,.mat-use{font-family:var(--mono);font-size:12.5px;color:var(--mute);line-height:1.6}
+.mat-thk{color:var(--paper)}
+.mat-cost{font-family:var(--mono);font-size:12.5px;text-align:right;color:var(--accent);white-space:nowrap}
+.mat-cost.is-inc{color:var(--mute-2)}
+.mat-foot{
+  margin-top:26px;font-family:var(--mono);font-size:12px;color:var(--mute-2);
+  line-height:1.85;max-width:74ch;
+}
+.mat-foot b{color:var(--paper);font-weight:400}
+
+/* ==========================================================================
+   6 — CLOSED / OPEN REVEAL
+   ========================================================================== */
+.inside{background:var(--navy-900);border-top:1px solid var(--line)}
+.rv{
+  --p:70;
+  position:relative;margin-top:clamp(40px,4.6vw,66px);
+  aspect-ratio:16/8.4;border:1px solid var(--line);overflow:hidden;
+  background:var(--navy-820);cursor:ew-resize;touch-action:pan-y;user-select:none;
+}
+.rv-layer{position:absolute;inset:0;margin:0}
+.rv-layer img{width:100%;height:100%;object-fit:cover;filter:saturate(.55) brightness(.7)}
+.rv-layer::after{content:"";position:absolute;inset:0;background:#0E1B34;mix-blend-mode:multiply;opacity:.4}
+.rv-top{clip-path:inset(0 0 0 calc(var(--p) * 1%));will-change:clip-path}
+.rv-bar{
+  position:absolute;top:0;bottom:0;left:calc(var(--p) * 1%);width:2px;background:var(--accent);
+  z-index:4;transform:translateX(-1px);
+}
+.rv-grip{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--ink);
+  display:grid;place-items:center;box-shadow:0 10px 40px rgba(7,12,22,.55);
+}
+.rv-grip svg{width:22px;height:22px}
+.rv-chip{
+  position:absolute;bottom:20px;z-index:3;
+  font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  padding:8px 14px;border:1px solid var(--line-2);background:rgba(10,17,32,.7);
+  backdrop-filter:blur(8px);color:var(--paper);
+}
+.rv-chip-l{left:20px}
+.rv-chip-r{right:20px}
+.rv-hint{
+  position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:3;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);
+  transition:opacity .4s;
+}
+.rv.is-touched .rv-hint{opacity:0}
+.rv-specs{
+  margin-top:1px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-top:0;
+}
+.rv-specs li{background:var(--navy-900);padding:24px clamp(16px,1.6vw,26px)}
+.rv-specs b{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.015em}
+.rv-specs span{display:block;margin-top:7px;font-family:var(--mono);font-size:11.5px;color:var(--mute-2);line-height:1.7}
+
+/* ==========================================================================
+   7 — ROOM TYPES
+   ========================================================================== */
+.rooms{background:var(--navy-860);border-top:1px solid var(--line)}
+.room-grid{margin-top:clamp(46px,5vw,78px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,3.2vw,58px)}
+.room{border-top:1px solid var(--line-2);padding-top:24px;position:relative}
+.room:nth-child(even){transform:translateY(clamp(30px,6vw,86px))}
+.par-frame{position:relative;overflow:hidden;background:var(--navy-820)}
+.par-frame img{
+  position:absolute;left:0;top:-14%;width:100%;height:128%;object-fit:cover;
+  filter:saturate(.5) brightness(.7);will-change:transform;
+}
+.par-frame::after{content:"";position:absolute;inset:0;background:#101E3A;mix-blend-mode:multiply;opacity:.34}
+.room-img{aspect-ratio:4/3;margin-top:22px}
+.room-top{display:flex;align-items:baseline;justify-content:space-between;gap:18px}
+.room-top .lab{color:var(--accent)}
+.room-name{margin-top:14px;font-size:clamp(1.5rem,2.3vw,2.15rem);font-weight:700;letter-spacing:-.03em;line-height:1.06}
+.room-text{margin-top:14px;color:var(--mute);font-weight:300;font-size:15.5px;line-height:1.62;max-width:46ch}
+.room-list{margin-top:20px;display:flex;flex-direction:column;gap:9px}
+.room-list li{display:flex;gap:11px;font-family:var(--mono);font-size:12px;color:var(--mute);line-height:1.6}
+.room-list li::before{content:"";width:9px;height:1px;background:var(--accent);flex:0 0 9px;margin-top:9px}
+.room-meta{
+  margin-top:24px;display:flex;flex-wrap:wrap;gap:10px 28px;align-items:baseline;
+  padding-top:18px;border-top:1px solid var(--line);
+}
+.room-price{font-size:clamp(1.2rem,1.7vw,1.55rem);font-weight:700;letter-spacing:-.028em}
+.room-price small{font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--mute-2);margin-left:8px;letter-spacing:.06em}
+.room-lead{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.06em}
+
+/* ==========================================================================
+   8 — RECENT INSTALLATIONS
+   ========================================================================== */
+.work{background:var(--navy-900);border-top:1px solid var(--line)}
+.work-grid{
+  margin-top:clamp(46px,5vw,76px);
+  display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(18px,2vw,34px);
+}
+.shot{grid-column:span 4;display:block}
+.shot-a{grid-column:span 7}
+.shot-b{grid-column:span 5}
+.shot-c{grid-column:span 5;margin-top:clamp(0px,4vw,64px)}
+.shot-d{grid-column:span 7}
+.shot-e{grid-column:span 4}
+.shot-f{grid-column:span 8}
+.shot .par-frame{aspect-ratio:16/11}
+.shot-b .par-frame,.shot-e .par-frame{aspect-ratio:4/5}
+.shot-cap{
+  margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;
+  padding-top:13px;border-top:1px solid var(--line);
+}
+.shot-cap b{font-size:16px;font-weight:600;letter-spacing:-.018em}
+.shot-cap span{font-family:var(--mono);font-size:11.5px;color:var(--mute-2);letter-spacing:.08em}
+.shot-cap i{font-style:normal;font-family:var(--mono);font-size:11.5px;color:var(--accent);margin-left:auto}
+
+/* ==========================================================================
+   9 — BOOK A MEASURE
+   ========================================================================== */
+.quote{background:var(--navy-860);border-top:1px solid var(--line)}
+.quote-in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,5vw,96px);align-items:start}
+.quote-copy .h2{margin-top:24px}
+.quote-copy .lede{margin-top:24px}
+.steps-next{margin-top:36px;border-top:1px solid var(--line)}
+.steps-next li{display:grid;grid-template-columns:52px 1fr;gap:14px;padding:20px 0;border-bottom:1px solid var(--line)}
+.steps-next b{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.16em;padding-top:4px}
+.steps-next p{font-size:15.5px;font-weight:300;color:var(--mute);line-height:1.6}
+.steps-next p strong{font-weight:600;color:var(--paper)}
+.quote-note{
+  margin-top:26px;font-family:var(--mono);font-size:12px;color:var(--mute-2);line-height:1.85;
+  padding-left:20px;border-left:2px solid var(--line-2);
+}
+.form{border:1px solid var(--line);background:var(--navy-900);padding:clamp(26px,3vw,44px);position:relative}
+.form-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.form-head .h3{font-size:clamp(1.3rem,1.8vw,1.6rem)}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+.f-full{grid-column:1/-1}
+.field label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-2);margin-bottom:8px}
+.field input,.field select,.field textarea{
+  width:100%;background:transparent;border:0;border-bottom:1px solid var(--line-2);
+  padding:10px 0;font-size:15.5px;font-family:var(--display);
+  transition:border-color .3s;border-radius:0;
+}
+.field select{appearance:none;background-image:none;cursor:pointer}
+.field.is-select{position:relative}
+.field.is-select::after{
+  content:"";position:absolute;right:3px;bottom:19px;width:7px;height:7px;
+  border-right:1px solid var(--mute-2);border-bottom:1px solid var(--mute-2);
+  transform:rotate(45deg);pointer-events:none;
+}
+.field select option{background:var(--navy-820);color:var(--paper)}
+.field textarea{resize:vertical;min-height:70px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-bottom-color:var(--accent)}
+.field input::placeholder,.field textarea::placeholder{color:var(--mute-2);opacity:.6}
+.f-submit{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.f-small{font-family:var(--mono);font-size:11px;color:var(--mute-2);line-height:1.7;max-width:30ch}
+.form-done{
+  position:absolute;inset:0;background:var(--navy-900);z-index:5;
+  display:none;flex-direction:column;justify-content:center;padding:clamp(26px,3vw,44px);
+}
+.form-done.is-on{display:flex}
+.form-done .h3{margin-bottom:16px}
+.form-done p{color:var(--mute);font-weight:300;font-size:15.5px;line-height:1.62;max-width:40ch}
+.form-ref{margin-top:26px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--accent)}
+
+/* ==========================================================================
+   10 — FOOTER
+   ========================================================================== */
+.foot{background:var(--navy-950);border-top:1px solid var(--line);padding:clamp(64px,7vw,104px) 0 34px}
+.foot-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.25fr;gap:clamp(28px,3.4vw,60px)}
+.foot-brand .brand{margin-right:0}
+.foot-blurb{margin-top:22px;color:var(--mute-2);font-weight:300;font-size:15px;line-height:1.62;max-width:36ch}
+.foot-addr{margin-top:26px;display:grid;gap:18px}
+.foot-addr div{padding-left:16px;border-left:1px solid var(--line-2)}
+.foot-addr dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.foot-addr dd{margin:7px 0 0;font-size:14.5px;color:var(--mute);line-height:1.6}
+.foot-col h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--mute-2);font-weight:400}
+.foot-col ul{margin-top:20px;display:grid;gap:11px}
+.foot-col a{font-size:15px;color:var(--paper);opacity:.78;transition:opacity .25s,color .25s}
+.foot-col a:hover{opacity:1;color:var(--accent)}
+.foot-bot{
+  margin-top:clamp(48px,6vw,86px);padding-top:24px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 26px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--mute-2);
+}
+.foot-word{
+  margin-top:clamp(40px,5vw,72px);line-height:.78;font-weight:800;letter-spacing:-.045em;
+  font-size:clamp(3rem,13.4vw,13.4rem);color:transparent;
+  -webkit-text-stroke:1px rgba(143,180,240,.17);white-space:nowrap;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media(max-width:1200px){
+  .mat-cols,.mat-row{grid-template-columns:2fr 1.7fr .8fr 1.5fr .9fr;gap:14px}
+  .step{width:86vw}
+}
+@media(max-width:1023px){
+  :root{--nav-h:70px}
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .burger{display:grid}
+  .tb-hours{display:none}
+  .hero-copy{max-width:100%}
+  .hero-dims{display:none}
+  .sec-head-split{grid-template-columns:1fr;align-items:start;gap:26px}
+  .sec-head-split .lede{padding-bottom:0}
+  .fig-in{grid-template-columns:1fr;gap:44px}
+  .proc-head-in{grid-template-columns:1fr;gap:26px}
+  .proc-pin{height:auto;overflow:visible;width:var(--shell);margin-inline:auto;padding-bottom:clamp(70px,11vw,110px)}
+  .proc-track{flex-direction:column;height:auto;padding-inline:0;gap:34px;transform:none!important}
+  .step{width:100%;grid-template-columns:1fr;min-height:0}
+  .step-photo{aspect-ratio:16/9;position:relative}
+  .proc-rail{display:none}
+  .mat-body{grid-template-columns:1fr;gap:30px}
+  .mat-rail{position:static;display:grid;grid-template-columns:1fr 1fr;column-gap:24px}
+  .mat-tab{border-bottom:1px solid var(--line)}
+  .mat-cols{display:none}
+  .mat-row{grid-template-columns:1fr;gap:8px;padding:22px 0}
+  .mat-cost{text-align:left}
+  .mat-spec::before{content:"Spec — ";color:var(--mute-2)}
+  .mat-thk::before{content:"Thickness — ";color:var(--mute-2)}
+  .mat-use::before{content:"Where — ";color:var(--mute-2)}
+  .mat-cost::before{content:"Cost — ";color:var(--mute-2)}
+  .rv{aspect-ratio:16/11}
+  .rv-specs{grid-template-columns:1fr 1fr}
+  .room-grid{grid-template-columns:1fr;gap:52px}
+  .room:nth-child(even){transform:none}
+  .work-grid{grid-template-columns:1fr 1fr}
+  .shot,.shot-a,.shot-b,.shot-c,.shot-d,.shot-e,.shot-f{grid-column:span 1;margin-top:0}
+  .shot .par-frame,.shot-b .par-frame,.shot-e .par-frame{aspect-ratio:4/3}
+  .par-frame img{top:0;height:100%;transform:none!important}
+  .quote-in{grid-template-columns:1fr;gap:48px}
+  .foot-top{grid-template-columns:1fr 1fr;gap:40px}
+  .foot-brand{grid-column:1/-1}
+}
+@media(max-width:640px){
+  body{font-size:16px}
+  .topbar-in{height:auto;padding:9px 0;flex-direction:column;align-items:flex-start;gap:4px}
+  .tb-right{gap:12px;font-size:10.5px}
+  .fig-grid{grid-template-columns:1fr}
+  .step-specs{grid-template-columns:1fr}
+  .rv-specs{grid-template-columns:1fr}
+  .work-grid{grid-template-columns:1fr}
+  .f-grid{grid-template-columns:1fr}
+  .foot-top{grid-template-columns:1fr}
+  .hero-cta .pill{flex:1 1 auto;justify-content:center}
+}
+
+/* ==========================================================================
+   REDUCED MOTION — everything lands in its final state
+   ========================================================================== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  #loader{display:none!important}
+  .proc-pin{height:auto;overflow:visible;width:var(--shell);margin-inline:auto;padding-bottom:clamp(70px,11vw,110px)}
+  .proc-track{flex-direction:column;height:auto;padding-inline:0;gap:34px;transform:none!important}
+  .step{width:100%;grid-template-columns:1fr;min-height:0}
+  .step-photo{aspect-ratio:16/9;position:relative}
+  .proc-rail{display:none}
+  .par-frame img{top:0;height:100%;transform:none!important}
+  .fig-bar{transform:scaleX(1)}
+  .ruler-base{transform:scaleX(1)}
+}
+</style>
+<noscript><style>
+  #loader{display:none!important}
+  body.is-loading{overflow:visible!important;height:auto!important}
+  .mat-row[hidden]{display:grid!important}
+  .mobile-menu{display:none}
+</style></noscript>
+</head>
+<body class="is-loading" id="top">
+
+<!-- =====================================================================
+     INTRO — the tape runs out
+     ===================================================================== -->
+<div id="loader" aria-hidden="true">
+  <div class="loader-in">
+    <div class="loader-top">
+      <div class="lab">Safeway Furniture — Greendale, Harare</div>
+      <div class="lab" id="loadPct">Measuring</div>
+    </div>
+    <div class="loader-read"><span id="loadNum" class="num">0</span><em>MM</em></div>
+    <div class="ruler" style="margin-top:18px">
+      <div class="ruler-clip" id="rulerClip">
+        <div class="ruler-minor"></div>
+        <div class="ruler-major"></div>
+      </div>
+      <div class="ruler-base" id="rulerBase"></div>
+    </div>
+    <div class="loader-foot">
+      <span class="lab">Wall to wall</span>
+      <span class="lab">Tolerance ±2 mm</span>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     TOP BAR
+     ===================================================================== -->
+<div class="topbar">
+  <div class="shell topbar-in">
+    <span class="tb-hours">Showroom Mon–Fri 07:30–17:00 &middot; Sat 08:00–13:00</span>
+    <div class="tb-right">
+      <a href="#quote">34 Amby Drive, Greendale, Harare</a>
+      <span class="tb-sep"></span>
+      <a href="tel:+263772868870">+263 772 868 870</a>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     NAV
+     ===================================================================== -->
+<header class="nav" id="nav">
+  <div class="shell nav-in">
+    <a class="brand" href="#top" aria-label="Safeway Furniture, home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M3 8h18M3 15h18M7 3v18"/>
+        </svg>
+      </span>
+      <span class="brand-word"><b>SAFEWAY</b><i>FURNITURE</i></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#workshop">Under one roof</a>
+      <a href="#process">Process</a>
+      <a href="#materials">Materials</a>
+      <a href="#rooms">What we fit</a>
+      <a href="#work">Our work</a>
+      <a href="#quote">Contact</a>
+    </nav>
+    <a class="pill pill-solid nav-cta" href="#quote" data-mag>Get a quote</a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="shell">
+    <a href="#workshop">Under one roof</a>
+    <a href="#process">Process</a>
+    <a href="#materials">Materials</a>
+    <a href="#rooms">What we fit</a>
+    <a href="#work">Our work</a>
+    <a href="#quote">Get a quote</a>
+    <div class="mm-foot">
+      34 Amby Drive, Greendale, Harare<br>
+      +263 772 868 870<br>
+      Established 2012
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- =====================================================================
+     HERO
+     ===================================================================== -->
+<section class="hero" id="hero">
+  <div class="hero-media">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <img id="heroImg" src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?auto=format&fit=crop&w=2400&q=80" alt="A dark fitted kitchen with handleless matt fronts and a stone worktop">
+  </div>
+  <div class="hero-wash-2"></div>
+  <div class="hero-wash"></div>
+  <div class="hero-vig"></div>
+
+  <div class="hero-dims" aria-hidden="true">
+    <svg viewBox="0 0 760 900" preserveAspectRatio="xMidYMid meet">
+      <g id="dimDraw">
+        <path d="M90 150 L670 150"/>
+        <path d="M90 138 L90 162"/>
+        <path d="M670 138 L670 162"/>
+        <path d="M90 150 l16 -6 M90 150 l16 6 M670 150 l-16 -6 M670 150 l-16 6"/>
+        <path d="M700 210 L700 690"/>
+        <path d="M688 210 L712 210"/>
+        <path d="M688 690 L712 690"/>
+        <path d="M700 210 l-6 16 M700 210 l6 16 M700 690 l-6 -16 M700 690 l6 -16"/>
+        <path d="M90 168 L90 700"/>
+        <path d="M120 700 L680 700" stroke-dasharray="4 7"/>
+      </g>
+      <text x="330" y="138" text-anchor="middle">3 600 MM</text>
+      <text x="716" y="456" transform="rotate(90 716 456)" text-anchor="middle">2 340 MM</text>
+      <text x="120" y="724">WALL TO WALL &middot; SURVEYED 14.02</text>
+    </svg>
+  </div>
+
+  <div class="shell hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow">Home and office furniture &middot; Harare</p>
+      <h1 class="h1" data-lines>Built to fit<br>your space.</h1>
+      <p class="hero-p" data-fade>Safeway Furniture has been designing and manufacturing fitted kitchens, wardrobes and office furniture in Zimbabwe since 2012 — measured on site, made in our own workshop, installed by our own team.</p>
+      <div class="hero-cta" data-fade>
+        <a class="pill pill-solid" href="#quote" data-mag>Request a free quote</a>
+        <a class="pill pill-ghost" href="#work" data-mag>See our work
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <p class="hero-trust" data-fade>
+        <span>Established 2012</span><i>&middot;</i>
+        <span>Manufacturer &amp; supplier</span><i>&middot;</i>
+        <span>Free measure and quote</span>
+      </p>
+    </div>
+    <div class="scroll-cue" data-fade><span></span>Scroll</div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     UNDER ONE ROOF + COUNT-UPS
+     ===================================================================== -->
+<section class="section figures" id="workshop">
+  <div class="shell fig-in">
+    <div class="fig-copy">
+      <p class="eyebrow">01 — Under one roof</p>
+      <h2 class="h2" data-lines>We measure it,<br>we make it,<br>we fit it.</h2>
+      <p class="lede">Most fitted-furniture companies in Harare are middlemen. They take your dimensions, send a drawing to a workshop across town, and hope. We own the beam saw, the edgebander, the CNC and the spray booth, and the fitters who arrive at your house are on our payroll. When something is 3 mm out, there is nobody to blame and nobody to phone. We just fix it.</p>
+      <p class="fig-note">Vertical integration is not a slogan here. It is why a Safeway kitchen leaves the floor in 26 working days instead of 60.</p>
+    </div>
+    <div class="fig-grid">
+      <div class="fig">
+        <span class="fig-bar" data-bar></span>
+        <div class="fig-n num" data-count="1240">0</div>
+        <div class="fig-l">Kitchens &amp; wardrobes<br>installed since 2012</div>
+      </div>
+      <div class="fig">
+        <span class="fig-bar" data-bar></span>
+        <div class="fig-n num" data-count="13">0</div>
+        <div class="fig-l">Years trading<br>from the same workshop</div>
+      </div>
+      <div class="fig">
+        <span class="fig-bar" data-bar></span>
+        <div class="fig-n num" data-count="26">0</div>
+        <div class="fig-l">Average lead time<br>in working days</div>
+      </div>
+      <div class="fig">
+        <span class="fig-bar" data-bar></span>
+        <div class="fig-n num" data-count="1800">0<em>m²</em></div>
+        <div class="fig-l">Workshop floor<br>Msasa, Harare</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PROCESS — horizontal track (signature)
+     ===================================================================== -->
+<section class="process" id="process">
+  <div class="proc-head">
+    <div class="shell proc-head-in">
+      <div>
+        <p class="eyebrow">02 — The journey</p>
+        <h2 class="h2" data-lines>Measure. Design.<br>Manufacture. Install.</h2>
+      </div>
+      <p class="lede">Four steps, four dates in your diary, and one company answering for all of them. Here is exactly what happens, who does it, and how long it takes.</p>
+    </div>
+  </div>
+
+  <div class="proc-pin" id="procPin">
+    <div class="proc-track" id="procTrack">
+
+      <article class="step">
+        <div class="step-photo par-still">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=80" alt="An empty room being surveyed before a fitted installation" loading="lazy">
+          <span class="step-index">Step 01 / 04</span>
+          <span class="step-ghost" aria-hidden="true">01</span>
+        </div>
+        <div class="step-body">
+          <div class="step-kicker">
+            <h3 class="h3">Measure</h3>
+            <span class="step-when">60–90 minutes</span>
+          </div>
+          <p class="step-text">A cabinetmaker comes to the room, not a salesman. We laser-measure wall to wall at three heights, find how far out of square the room actually is, mark every service — water, waste, gas, sockets, the geyser pipe nobody mentioned — and photograph the whole run. You get the survey, whether or not you order from us.</p>
+          <dl class="step-specs">
+            <div><dt>Where</dt><dd>Your site</dd></div>
+            <div><dt>Who comes</dt><dd>One cabinetmaker</dd></div>
+            <div><dt>You get</dt><dd>Dimensioned survey + photo set</dd></div>
+            <div><dt>Cost</dt><dd>Free within 40 km of Harare CBD</dd></div>
+          </dl>
+          <p class="step-foot">Working tolerance: ±2 mm across a 6 metre run.</p>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-photo">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80" alt="A design studio desk with elevations and cabinet drawings" loading="lazy">
+          <span class="step-index">Step 02 / 04</span>
+          <span class="step-ghost" aria-hidden="true">02</span>
+        </div>
+        <div class="step-body">
+          <div class="step-kicker">
+            <h3 class="h3">Design</h3>
+            <span class="step-when">3–5 working days</span>
+          </div>
+          <p class="step-text">We draw the run in 3D, then price it line by line so you can see what every choice costs before you make it. Swap quartz for laminate and watch the number move. Two revisions are included. Nothing reaches the workshop until you have signed a drawing with real dimensions on it, not a mood board.</p>
+          <dl class="step-specs">
+            <div><dt>Where</dt><dd>Greendale studio</dd></div>
+            <div><dt>Revisions</dt><dd>Two included</dd></div>
+            <div><dt>You get</dt><dd>3D views, elevations, itemised quote</dd></div>
+            <div><dt>Deposit</dt><dd>60% at sign-off</dd></div>
+          </dl>
+          <p class="step-foot">Balance is due on the day we hand over, not before.</p>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-photo">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1580901368919-7738efb0f87e?auto=format&fit=crop&w=1400&q=80" alt="Inside the joinery workshop, boards cut and stacked" loading="lazy">
+          <span class="step-index">Step 03 / 04</span>
+          <span class="step-ghost" aria-hidden="true">03</span>
+        </div>
+        <div class="step-body">
+          <div class="step-kicker">
+            <h3 class="h3">Manufacture</h3>
+            <span class="step-when">12–18 working days</span>
+          </div>
+          <p class="step-text">Boards are cut on our beam saw, edged on a PUR bander for a joint you cannot feel with a fingernail, and drilled on the CNC to the 32 mm system so shelves land where the drawing says. Sprayed fronts go through a dust-extracted booth: primer, denib, two coats, cure. Every carcass is dry-assembled and numbered before it leaves the floor.</p>
+          <dl class="step-specs">
+            <div><dt>Where</dt><dd>Msasa workshop, 1 800 m²</dd></div>
+            <div><dt>Made by</dt><dd>14 cabinetmakers, 3 sprayers</dd></div>
+            <div><dt>Checked</dt><dd>Dry-assembled and numbered</dd></div>
+            <div><dt>Outsourced</dt><dd>Nothing</dd></div>
+          </dl>
+          <p class="step-foot">Cutting, edging, drilling, spraying and assembly all happen under one roof.</p>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-photo">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img src="https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&w=1400&q=80" alt="A fitter installing cabinetry on site" loading="lazy">
+          <span class="step-index">Step 04 / 04</span>
+          <span class="step-ghost" aria-hidden="true">04</span>
+        </div>
+        <div class="step-body">
+          <div class="step-kicker">
+            <h3 class="h3">Install</h3>
+            <span class="step-when">1–3 days</span>
+          </div>
+          <p class="step-text">Our own fitters, never a subcontractor. Floors get covered before a single unit comes through the door. Units are scribed to the wall so there is no filler strip, doors are set to a 3 mm shadow gap across the run, worktops are templated and fitted, and the offcuts leave with us. You walk the job, we close the snag list, you sign the handover.</p>
+          <dl class="step-specs">
+            <div><dt>Where</dt><dd>Your site</dd></div>
+            <div><dt>Team</dt><dd>Two fitters, one finisher</dd></div>
+            <div><dt>You get</dt><dd>Snags closed, handover signed</dd></div>
+            <div><dt>Guarantee</dt><dd>5 years cabinetry, 2 years moving parts</dd></div>
+          </dl>
+          <p class="step-foot">96% of our installs in 2025 finished on or before the promised date.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="proc-rail" aria-hidden="true">
+      <div class="proc-rail-line"><span class="proc-rail-fill" id="procFill"></span></div>
+      <div class="proc-rail-nodes" id="procNodes">
+        <span class="proc-node is-on"><b>01</b>Measure</span>
+        <span class="proc-node"><b>02</b>Design</span>
+        <span class="proc-node"><b>03</b>Manufacture</span>
+        <span class="proc-node"><b>04</b>Install</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     MATERIALS SPEC SHEET
+     ===================================================================== -->
+<section class="section mat" id="materials">
+  <div class="shell">
+    <header class="sec-head-split">
+      <div>
+        <p class="eyebrow">03 — Materials &amp; finishes</p>
+        <h2 class="h2" data-lines>What it is<br>actually made of.</h2>
+      </div>
+      <p class="lede">Everybody quotes "quality materials". Here is the real list, with grades, thicknesses and what each choice adds to the price. Ask the next three quotes for the same sheet.</p>
+    </header>
+
+    <div class="mat-body">
+      <aside class="mat-rail" id="matRail" aria-label="Material categories">
+        <button type="button" class="mat-tab is-on" data-g="board" aria-pressed="true"><i>01</i> Carcass board <em>4</em></button>
+        <button type="button" class="mat-tab" data-g="front" aria-pressed="false"><i>02</i> Doors &amp; fronts <em>4</em></button>
+        <button type="button" class="mat-tab" data-g="edge" aria-pressed="false"><i>03</i> Edging <em>3</em></button>
+        <button type="button" class="mat-tab" data-g="hard" aria-pressed="false"><i>04</i> Hinges &amp; runners <em>5</em></button>
+        <button type="button" class="mat-tab" data-g="top" aria-pressed="false"><i>05</i> Worktops <em>5</em></button>
+        <button type="button" class="mat-tab" data-g="hand" aria-pressed="false"><i>06</i> Handles &amp; opening <em>3</em></button>
+      </aside>
+
+      <div class="mat-panel">
+        <div class="mat-cols" aria-hidden="true">
+          <span>Option</span><span>Specification</span><span>Thickness</span><span>Where we use it</span><span>Cost</span>
+        </div>
+        <div class="mat-rows" id="matRows">
+
+          <!-- 01 carcass board -->
+          <div class="mat-row" data-g="board">
+            <div class="mat-name">Melamine-faced chipboard<small>The default carcass. 42 decors in stock.</small></div>
+            <div class="mat-spec">E1 low-emission core, MFC facing both sides</div>
+            <div class="mat-thk">18 mm</div>
+            <div class="mat-use">Standard carcasses, shelves, dividers</div>
+            <div class="mat-cost is-inc">Included</div>
+          </div>
+          <div class="mat-row" data-g="board">
+            <div class="mat-name">Moisture-resistant MDF<small>Green core. Swells far less if a pipe weeps.</small></div>
+            <div class="mat-spec">MR grade, E1, machine-primed faces</div>
+            <div class="mat-thk">16 &amp; 18 mm</div>
+            <div class="mat-use">Sink runs, bathrooms, laundries</div>
+            <div class="mat-cost">+8%</div>
+          </div>
+          <div class="mat-row" data-g="board">
+            <div class="mat-name">Birch plywood<small>For units where the edge is meant to be seen.</small></div>
+            <div class="mat-spec">13-ply, BB/BB face, void-free core</div>
+            <div class="mat-thk">18 mm</div>
+            <div class="mat-use">Open shelving, exposed-edge units</div>
+            <div class="mat-cost">+22%</div>
+          </div>
+          <div class="mat-row" data-g="board">
+            <div class="mat-name">Marine plywood<small>Overkill indoors. Correct outdoors.</small></div>
+            <div class="mat-spec">BS 1088, phenolic glue line</div>
+            <div class="mat-thk">18 mm</div>
+            <div class="mat-use">Outdoor kitchens, braai areas, pool bars</div>
+            <div class="mat-cost">+35%</div>
+          </div>
+
+          <!-- 02 doors & fronts -->
+          <div class="mat-row" data-g="front" hidden>
+            <div class="mat-name">2-pack polyurethane spray<small>Our house finish. Sprayed in our own booth.</small></div>
+            <div class="mat-spec">Matt 10% or satin 35% sheen, MDF substrate</div>
+            <div class="mat-thk">18 mm</div>
+            <div class="mat-use">Most fitted kitchens and wardrobes</div>
+            <div class="mat-cost is-inc">Included</div>
+          </div>
+          <div class="mat-row" data-g="front" hidden>
+            <div class="mat-name">High-gloss acrylic<small>Mirror finish, wipes clean, shows every fingerprint.</small></div>
+            <div class="mat-spec">1 mm acrylic face, anti-scratch film, ABS-wrapped</div>
+            <div class="mat-thk">18 mm</div>
+            <div class="mat-use">Handleless contemporary runs</div>
+            <div class="mat-cost">+18%</div>
+          </div>
+          <div class="mat-row" data-g="front" hidden>
+            <div class="mat-name">Real-wood veneer<small>Book-matched across the run, not door by door.</small></div>
+            <div class="mat-spec">0.6 mm oak, ash or mukwa on MDF, lacquered</div>
+            <div class="mat-thk">19 mm</div>
+            <div class="mat-use">Studies, boardrooms, wardrobe fronts</div>
+            <div class="mat-cost">+26%</div>
+          </div>
+          <div class="mat-row" data-g="front" hidden>
+            <div class="mat-name">Solid mukwa frame and panel<small>Local hardwood, cut and dried before we touch it.</small></div>
+            <div class="mat-spec">Kiln-dried to 10–12% moisture, oiled or lacquered</div>
+            <div class="mat-thk">22 mm</div>
+            <div class="mat-use">Traditional kitchens, feature islands</div>
+            <div class="mat-cost">+40%</div>
+          </div>
+
+          <!-- 03 edging -->
+          <div class="mat-row" data-g="edge" hidden>
+            <div class="mat-name">2 mm ABS edge banding<small>PUR glue line. You cannot pick it with a nail.</small></div>
+            <div class="mat-spec">Colour-matched, radiused, PUR hot-melt</div>
+            <div class="mat-thk">2 mm</div>
+            <div class="mat-use">Every exposed front and end panel</div>
+            <div class="mat-cost is-inc">Included</div>
+          </div>
+          <div class="mat-row" data-g="edge" hidden>
+            <div class="mat-name">0.8 mm ABS<small>Thin edge where nothing rubs against it.</small></div>
+            <div class="mat-spec">EVA hot-melt, colour-matched</div>
+            <div class="mat-thk">0.8 mm</div>
+            <div class="mat-use">Carcass interiors, shelf backs</div>
+            <div class="mat-cost is-inc">Included</div>
+          </div>
+          <div class="mat-row" data-g="edge" hidden>
+            <div class="mat-name">Solid timber lipping<small>Sanded flush, then finished with the face.</small></div>
+            <div class="mat-spec">6 mm hardwood, glued and cramped</div>
+            <div class="mat-thk">6 mm</div>
+            <div class="mat-use">Plywood and veneered units</div>
+            <div class="mat-cost">+12%</div>
+          </div>
+
+          <!-- 04 hinges & runners -->
+          <div class="mat-row" data-g="hard" hidden>
+            <div class="mat-name">Blum CLIP top BLUMOTION<small>Soft-close built into the hinge, not bolted on.</small></div>
+            <div class="mat-spec">110°, 3-way adjustment, clip-on arm</div>
+            <div class="mat-thk">—</div>
+            <div class="mat-use">Every door we hang, as standard</div>
+            <div class="mat-cost is-inc">Included</div>
+          </div>
+          <div class="mat-row" data-g="hard" hidden>
+            <div class="mat-name">Blum TANDEM undermount<small>Runners hidden under the box, not beside it.</small></div>
+            <div class="mat-spec">Full extension, 30 kg dynamic load</div>
+            <div class="mat-thk">—</div>
+            <div class="mat-use">Standard drawer boxes</div>
+            <div class="mat-cost is-inc">Included</div>
+          </div>
+          <div class="mat-row" data-g="hard" hidden>
+            <div class="mat-name">Blum LEGRABOX pure<small>Steel-sided. Loaded pan drawers stop dead level.</small></div>
+            <div class="mat-spec">40 kg load, 70 mm steel side, soft-close</div>
+            <div class="mat-thk">—</div>
+            <div class="mat-use">Pan drawers, cutlery, deep pull-outs</div>
+            <div class="mat-cost">+14%</div>
+          </div>
+          <div class="mat-row" data-g="hard" hidden>
+            <div class="mat-name">Hettich Sensys 8645i<small>Our alternative when Blum stock runs short.</small></div>
+            <div class="mat-spec">110°, integrated damper, Silent System</div>
+            <div class="mat-thk">—</div>
+            <div class="mat-use">Wardrobe and office doors</div>
+            <div class="mat-cost is-inc">Included</div>
+          </div>
+          <div class="mat-row" data-g="hard" hidden>
+            <div class="mat-name">Blum AVENTOS HF<small>For wall units you open above head height.</small></div>
+            <div class="mat-spec">Bi-fold lift system, gas stay, stop anywhere</div>
+            <div class="mat-thk">—</div>
+            <div class="mat-use">Tall wall runs, over-fridge units</div>
+            <div class="mat-cost">+9%</div>
+          </div>
+
+          <!-- 05 worktops -->
+          <div class="mat-row" data-g="top" hidden>
+            <div class="mat-name">Postformed laminate<small>Honest budget top. Ten-year life if you use a board.</small></div>
+            <div class="mat-spec">HPL over chipboard, square or bullnose front</div>
+            <div class="mat-thk">38 mm</div>
+            <div class="mat-use">Rentals, back-of-house, laundries</div>
+            <div class="mat-cost">from $78/m</div>
+          </div>
+          <div class="mat-row" data-g="top" hidden>
+            <div class="mat-name">Engineered quartz<small>Templated after the units are in, never before.</small></div>
+            <div class="mat-spec">93% quartz, mitred 40 mm edge available</div>
+            <div class="mat-thk">20 mm</div>
+            <div class="mat-use">Most fitted kitchens</div>
+            <div class="mat-cost">from $260/m</div>
+          </div>
+          <div class="mat-row" data-g="top" hidden>
+            <div class="mat-name">Granite<small>Honed or polished. Takes a hot pot without flinching.</small></div>
+            <div class="mat-spec">Slab-matched, undermount sink cut-out</div>
+            <div class="mat-thk">30 mm</div>
+            <div class="mat-use">Heat-heavy kitchens, outdoor runs</div>
+            <div class="mat-cost">from $210/m</div>
+          </div>
+          <div class="mat-row" data-g="top" hidden>
+            <div class="mat-name">Solid mukwa or teak<small>Staved and oiled. Sand it back in ten years.</small></div>
+            <div class="mat-spec">Staved lamination, hard-wax oil, 3 coats</div>
+            <div class="mat-thk">40 mm</div>
+            <div class="mat-use">Islands, breakfast bars, dry runs</div>
+            <div class="mat-cost">from $190/m</div>
+          </div>
+          <div class="mat-row" data-g="top" hidden>
+            <div class="mat-name">Stainless steel<small>Wrapped over ply in our own metal bay.</small></div>
+            <div class="mat-spec">1.2 mm 304 grade, welded corners</div>
+            <div class="mat-thk">40 mm</div>
+            <div class="mat-use">Commercial kitchens, retail prep</div>
+            <div class="mat-cost">from $240/m</div>
+          </div>
+
+          <!-- 06 handles & opening -->
+          <div class="mat-row" data-g="hand" hidden>
+            <div class="mat-name">Brushed stainless bar<small>Drilled on the CNC, so the run reads straight.</small></div>
+            <div class="mat-spec">128 / 160 / 320 mm centres, solid section</div>
+            <div class="mat-thk">—</div>
+            <div class="mat-use">Standard on painted and veneered fronts</div>
+            <div class="mat-cost is-inc">Included</div>
+          </div>
+          <div class="mat-row" data-g="hand" hidden>
+            <div class="mat-name">J-pull integrated rail<small>No handle to catch a hip on in a narrow galley.</small></div>
+            <div class="mat-spec">Anodised aluminium, full-width, recessed</div>
+            <div class="mat-thk">—</div>
+            <div class="mat-use">Handleless contemporary kitchens</div>
+            <div class="mat-cost">+6%</div>
+          </div>
+          <div class="mat-row" data-g="hand" hidden>
+            <div class="mat-name">Push-to-open<small>Blum TIP-ON. Mechanical, so nothing to wire or charge.</small></div>
+            <div class="mat-spec">Mechanical latch, adjustable trigger depth</div>
+            <div class="mat-thk">—</div>
+            <div class="mat-use">Flat-front runs and island returns</div>
+            <div class="mat-cost">+7%</div>
+          </div>
+
+        </div>
+        <p class="mat-foot"><b>Every quote names the board, the edging, the hinge brand and the worktop by grade.</b> If a competing quote says "board" and "soft-close hinges" with no brand on it, you are being sold whatever is cheapest that week. Percentages above are added to the cabinetry line, not the whole job. Worktop rates are per linear metre at 600 mm depth, supplied and fitted.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     CLOSED / OPEN REVEAL
+     ===================================================================== -->
+<section class="section inside" id="inside">
+  <div class="shell">
+    <header class="sec-head-split">
+      <div>
+        <p class="eyebrow">04 — Inside the unit</p>
+        <h2 class="h2" data-lines>Anyone can make<br>a nice front.</h2>
+      </div>
+      <p class="lede">Closed, every fitted kitchen in Harare looks the same. Drag the handle and look at what is behind the door: the box, the back, the runners, the feet. That is where the money either went or did not.</p>
+    </header>
+
+    <div class="rv" id="rv" style="--p:70">
+      <figure class="rv-layer">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1800&q=80" alt="A fitted kitchen run with all fronts closed" loading="lazy">
+      </figure>
+      <figure class="rv-layer rv-top" id="rvTop">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=1800&q=80" alt="The same run with drawers and doors open, showing the carcass and runners" loading="lazy">
+      </figure>
+      <div class="rv-chip rv-chip-l">Fronts closed</div>
+      <div class="rv-chip rv-chip-r">Fronts open</div>
+      <div class="rv-hint" id="rvHint">Drag &nbsp;&larr;&nbsp;&rarr;</div>
+      <div class="rv-bar" id="rvBar" role="slider" tabindex="0"
+           aria-label="Reveal the inside of the unit" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70">
+        <span class="rv-grip" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M9 6l-5 6 5 6M15 6l5 6-5 6"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <ul class="rv-specs">
+      <li><b>18 mm backs</b><span>Screwed and grooved into the carcass, not 3 mm hardboard pinned on</span></li>
+      <li><b>Adjustable feet</b><span>100–150 mm, so a sloping slab does not become your problem</span></li>
+      <li><b>32 mm shelf pins</b><span>System-drilled on the CNC, so shelves sit level across the run</span></li>
+      <li><b>40 kg drawers</b><span>Steel-sided boxes that stay square when loaded with cast iron</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =====================================================================
+     ROOM TYPES
+     ===================================================================== -->
+<section class="section rooms" id="rooms">
+  <div class="shell">
+    <header class="sec-head-split">
+      <div>
+        <p class="eyebrow">05 — What we fit</p>
+        <h2 class="h2" data-lines>Four rooms<br>we know cold.</h2>
+      </div>
+      <p class="lede">Prices are honest starting points for work we do every week, supplied and installed in Harare. A survey turns them into a real number in three to five days.</p>
+    </header>
+
+    <div class="room-grid">
+
+      <article class="room">
+        <div class="room-top">
+          <span class="lab">01 / Kitchens</span>
+          <span class="lab">Most requested</span>
+        </div>
+        <h3 class="room-name">Fitted kitchens</h3>
+        <p class="room-text">Full runs, islands, sculleries and pantries. Sprayed or veneered fronts, quartz or granite tops, Blum throughout.</p>
+        <div class="par-frame room-img">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img data-par="9" src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1400&q=80" alt="A fitted kitchen with an island and stone worktop" loading="lazy">
+        </div>
+        <ul class="room-list">
+          <li>Scullery and pantry runs planned with the main kitchen</li>
+          <li>Appliance housings templated to your actual model numbers</li>
+          <li>Worktops templated after installation, never off the drawing</li>
+        </ul>
+        <div class="room-meta">
+          <span class="room-price">from $2,850<small>per 4 m run, fitted</small></span>
+          <span class="room-lead">Lead time 24–32 working days</span>
+        </div>
+      </article>
+
+      <article class="room">
+        <div class="room-top">
+          <span class="lab">02 / Bedrooms</span>
+          <span class="lab">Floor to ceiling</span>
+        </div>
+        <h3 class="room-name">Bedroom wardrobes</h3>
+        <p class="room-text">Hinged, sliding or walk-in. Internals planned around what you actually own: long hang, shirt rails, shoe trays, drawer banks.</p>
+        <div class="par-frame room-img">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img data-par="12" src="https://images.unsplash.com/photo-1616627561950-9f746e330187?auto=format&fit=crop&w=1400&q=80" alt="A fitted bedroom wardrobe run" loading="lazy">
+        </div>
+        <ul class="room-list">
+          <li>Scribed to the ceiling, so there is no dust shelf on top</li>
+          <li>Soft-close sliding gear rated for 80 kg doors</li>
+          <li>LED rail on a door switch, wired by our own electrician</li>
+        </ul>
+        <div class="room-meta">
+          <span class="room-price">from $980<small>per 2.4 m run, fitted</small></span>
+          <span class="room-lead">Lead time 18–24 working days</span>
+        </div>
+      </article>
+
+      <article class="room">
+        <div class="room-top">
+          <span class="lab">03 / Workplace</span>
+          <span class="lab">Home &amp; commercial</span>
+        </div>
+        <h3 class="room-name">Office furniture</h3>
+        <p class="room-text">Desks, credenzas, storage walls, reception counters and boardroom tables. Built for a working week, not a photograph.</p>
+        <div class="par-frame room-img">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img data-par="9" src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=1400&q=80" alt="A fitted office with desks and storage" loading="lazy">
+        </div>
+        <ul class="room-list">
+          <li>Cable management cut in at the workshop, not drilled on site</li>
+          <li>Lockable pedestals keyed alike or keyed differently</li>
+          <li>Boardroom tables shipped in sections for lift access</li>
+        </ul>
+        <div class="room-meta">
+          <span class="room-price">from $640<small>per desk and return</small></span>
+          <span class="room-lead">Lead time 14–20 working days</span>
+        </div>
+      </article>
+
+      <article class="room">
+        <div class="room-top">
+          <span class="lab">04 / Retail</span>
+          <span class="lab">Trading fast</span>
+        </div>
+        <h3 class="room-name">Shopfitting</h3>
+        <p class="room-text">Pharmacy, boutique and hardware fit-outs. Bays, gondolas, till counters and back-of-house, phased so you keep trading.</p>
+        <div class="par-frame room-img">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img data-par="13" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1400&q=80" alt="A fitted retail interior with shelving bays" loading="lazy">
+        </div>
+        <ul class="room-list">
+          <li>Night and weekend installation to protect trading hours</li>
+          <li>Standard bay module so you can extend the shop later</li>
+          <li>Melamine or laminate faces chosen for wipe-down wear</li>
+        </ul>
+        <div class="room-meta">
+          <span class="room-price">from $1,450<small>per 1.2 m bay, fitted</small></span>
+          <span class="room-lead">Lead time 20–28 working days</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     RECENT INSTALLATIONS
+     ===================================================================== -->
+<section class="section work" id="work">
+  <div class="shell">
+    <header class="sec-head-split">
+      <div>
+        <p class="eyebrow">06 — Recent installations</p>
+        <h2 class="h2" data-lines>Signed off<br>in the last year.</h2>
+      </div>
+      <p class="lede">Every one of these was measured, made and fitted by Safeway. Addresses withheld, suburbs are real.</p>
+    </header>
+
+    <div class="work-grid">
+
+      <figure class="shot shot-a">
+        <div class="par-frame">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img data-par="10" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=80" alt="Handleless matt kitchen with island" loading="lazy">
+        </div>
+        <figcaption class="shot-cap"><b>Handleless matt kitchen, 5.2 m run</b><span>Borrowdale Brooke</span><i>Kitchen &middot; 2025</i></figcaption>
+      </figure>
+
+      <figure class="shot shot-b">
+        <div class="par-frame">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img data-par="14" src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&q=80" alt="Walk-in wardrobe in oak veneer" loading="lazy">
+        </div>
+        <figcaption class="shot-cap"><b>Walk-in wardrobe, oak veneer</b><span>Mount Pleasant</span><i>Wardrobe &middot; 2025</i></figcaption>
+      </figure>
+
+      <figure class="shot shot-c">
+        <div class="par-frame">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img data-par="12" src="https://images.unsplash.com/photo-1604709177225-055f99402ea3?auto=format&fit=crop&w=1400&q=80" alt="Scullery with quartz worktops" loading="lazy">
+        </div>
+        <figcaption class="shot-cap"><b>Scullery and pantry, quartz tops</b><span>Greendale</span><i>Kitchen &middot; 2025</i></figcaption>
+      </figure>
+
+      <figure class="shot shot-d">
+        <div class="par-frame">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img data-par="9" src="https://images.unsplash.com/photo-1524230572899-a752b3835840?auto=format&fit=crop&w=1600&q=80" alt="Reception desk and storage wall" loading="lazy">
+        </div>
+        <figcaption class="shot-cap"><b>Reception desk and storage wall</b><span>Msasa</span><i>Office &middot; 2024</i></figcaption>
+      </figure>
+
+      <figure class="shot shot-e">
+        <div class="par-frame">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img data-par="13" src="https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=1400&q=80" alt="Boardroom table and credenza in mukwa" loading="lazy">
+        </div>
+        <figcaption class="shot-cap"><b>Boardroom table and credenza, mukwa</b><span>Highlands</span><i>Office &middot; 2024</i></figcaption>
+      </figure>
+
+      <figure class="shot shot-f">
+        <div class="par-frame">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img data-par="10" src="https://images.unsplash.com/photo-1503174971373-b1f69850bded?auto=format&fit=crop&w=1600&q=80" alt="Pharmacy shopfitting with display bays" loading="lazy">
+        </div>
+        <figcaption class="shot-cap"><b>Pharmacy fit-out, 11 bays and dispensary</b><span>Avondale</span><i>Retail &middot; 2024</i></figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     BOOK A MEASURE
+     ===================================================================== -->
+<section class="section quote" id="quote">
+  <div class="shell quote-in">
+    <div class="quote-copy">
+      <p class="eyebrow">07 — Free measure and quote</p>
+      <h2 class="h2" data-lines>Book the measure.<br>Then decide.</h2>
+      <p class="lede">No charge, no obligation, no pressure at the kitchen table. We survey anywhere inside 40 km of Harare CBD free of charge, and you keep the dimensioned drawing whatever you decide to do with it.</p>
+
+      <ol class="steps-next">
+        <li><b>01</b><p>We phone you back <strong>within one working day</strong> to agree a time that suits the household.</p></li>
+        <li><b>02</b><p>A cabinetmaker measures on site, <strong>usually within 72 hours</strong>, and takes the photo set.</p></li>
+        <li><b>03</b><p>Your 3D drawing and itemised quote land in your inbox <strong>in 3 to 5 working days</strong>.</p></li>
+      </ol>
+
+      <p class="quote-note">Outside the 40 km radius we still come, and we still do not charge if you order. Bulawayo, Mutare and Gweru surveys are quoted per trip.</p>
+    </div>
+
+    <form class="form" id="quoteForm" novalidate>
+      <div class="form-head">
+        <h3 class="h3">Request a free measure</h3>
+        <span class="lab">Est. 2 min</span>
+      </div>
+      <div class="f-grid">
+        <div class="field">
+          <label for="fName">Your name</label>
+          <input id="fName" name="name" type="text" autocomplete="name" placeholder="Tendai Moyo" required>
+        </div>
+        <div class="field">
+          <label for="fPhone">Phone / WhatsApp</label>
+          <input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+263 7.. ... ..." required>
+        </div>
+        <div class="field">
+          <label for="fSuburb">Suburb</label>
+          <input id="fSuburb" name="suburb" type="text" placeholder="Borrowdale" required>
+        </div>
+        <div class="field is-select">
+          <label for="fRoom">What are we fitting?</label>
+          <select id="fRoom" name="room">
+            <option>Fitted kitchen</option>
+            <option>Bedroom wardrobes</option>
+            <option>Home office</option>
+            <option>Commercial office</option>
+            <option>Retail shopfitting</option>
+            <option>More than one room</option>
+          </select>
+        </div>
+        <div class="field is-select f-full">
+          <label for="fWeek">When suits you</label>
+          <select id="fWeek" name="week">
+            <option>This week</option>
+            <option>Next week</option>
+            <option>Within the month</option>
+            <option>Still planning — send me the price guide</option>
+          </select>
+        </div>
+        <div class="field f-full">
+          <label for="fNotes">Anything we should know</label>
+          <textarea id="fNotes" name="notes" rows="2" placeholder="Approximate run length, whether the room is stripped, access for a bakkie"></textarea>
+        </div>
+      </div>
+      <div class="f-submit">
+        <button class="pill pill-solid" type="submit" data-mag>Book my free measure</button>
+        <span class="f-small">Or WhatsApp the workshop directly on +263 772 868 870.</span>
+      </div>
+
+      <div class="form-done" id="formDone" aria-live="polite">
+        <h3 class="h3">Booked. We will call you.</h3>
+        <p>Your request is with the survey desk. Expect a call within one working day to fix a time, and the survey itself usually within 72 hours.</p>
+        <p class="form-ref" id="formRef">REF SW-0000-0000</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- =====================================================================
+     FOOTER
+     ===================================================================== -->
+<footer class="foot">
+  <div class="shell">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="#top">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8h18M3 15h18M7 3v18"/></svg>
+          </span>
+          <span class="brand-word"><b>SAFEWAY</b><i>FURNITURE</i></span>
+        </a>
+        <p class="foot-blurb">Designing and manufacturing fitted kitchens, wardrobes and office furniture in Zimbabwe since 2012. Measured on site, made in our own workshop, installed by our own team.</p>
+        <dl class="foot-addr">
+          <div>
+            <dt>Showroom</dt>
+            <dd>34 Amby Drive, Greendale, Harare<br>Mon–Fri 07:30–17:00 &middot; Sat 08:00–13:00</dd>
+          </div>
+          <div>
+            <dt>Workshop</dt>
+            <dd>Stand 7, Martin Drive, Msasa, Harare<br>1 800 m² &middot; Visits by appointment</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="foot-col">
+        <h4>What we make</h4>
+        <ul>
+          <li><a href="#rooms">Fitted kitchens</a></li>
+          <li><a href="#rooms">Bedroom wardrobes</a></li>
+          <li><a href="#rooms">Office furniture</a></li>
+          <li><a href="#rooms">Retail shopfitting</a></li>
+          <li><a href="#materials">Worktops</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#workshop">Under one roof</a></li>
+          <li><a href="#process">Our process</a></li>
+          <li><a href="#materials">Materials list</a></li>
+          <li><a href="#work">Recent installations</a></li>
+          <li><a href="#quote">Free measure</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+263772868870">+263 772 868 870</a></li>
+          <li><a href="tel:+263242495210">+263 242 495 210</a></li>
+          <li><a href="mailto:quotes@safewayfurniture.co.zw">quotes@safewayfurniture.co.zw</a></li>
+          <li><a href="#quote">WhatsApp the workshop</a></li>
+          <li><a href="#quote">Request the price guide</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-word" aria-hidden="true">BUILT TO FIT</div>
+
+    <div class="foot-bot">
+      <span>© 2026 Safeway Furniture (Pvt) Ltd &middot; Established 2012</span>
+      <span>Manufacturer &amp; supplier &middot; Free measure and quote</span>
+      <span>Harare, Zimbabwe</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasGSAP = typeof window.gsap !== "undefined";
+  var body    = document.body;
+  var loader  = document.getElementById("loader");
+
+  /* ------------------------------------------------------------------
+     Hand-rolled line splitter — split a heading on <br> into
+     overflow:hidden wrappers. No paid SplitText plugin.
+     ------------------------------------------------------------------ */
+  function splitLines(el) {
+    if (!el || el.dataset.split === "1") return [];
+    var parts = el.innerHTML.split(/<br\s*\/?>/i);
+    el.innerHTML = "";
+    var inners = [];
+    parts.forEach(function (p) {
+      var line = document.createElement("span");
+      line.className = "line";
+      var inner = document.createElement("span");
+      inner.innerHTML = p.trim();
+      line.appendChild(inner);
+      el.appendChild(line);
+      inners.push(inner);
+    });
+    el.dataset.split = "1";
+    return inners;
+  }
+  var allHeadings = Array.prototype.slice.call(document.querySelectorAll("[data-lines]"));
+  var splitMap = allHeadings.map(function (h) { return { el: h, lines: splitLines(h) }; });
+
+  /* Numbers, formatted the same way everywhere. The first child of a
+     figure is always the text node holding the digits; any unit sits
+     in a trailing <em> that we never touch. */
+  function fmt(n) { return Math.round(n).toLocaleString("en-US"); }
+  function digitsOf(el) { return el.firstChild; }
+  function paintCounts() {
+    document.querySelectorAll("[data-count]").forEach(function (el) {
+      digitsOf(el).nodeValue = fmt(Number(el.dataset.count));
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     Nav: sticky state, mobile menu
+     ------------------------------------------------------------------ */
+  var nav = document.getElementById("nav");
+  function navState() { nav.classList.toggle("is-stuck", window.scrollY > 30); }
+  navState();
+  window.addEventListener("scroll", navState, { passive: true });
+
+  var burger = document.getElementById("burger");
+  var menu   = document.getElementById("mobileMenu");
+  var menuOpen = false;
+  function setMenu(on) {
+    menuOpen = on;
+    body.classList.toggle("menu-on", on);
+    burger.setAttribute("aria-expanded", on ? "true" : "false");
+    if (hasGSAP) {
+      gsap.to(menu, {
+        yPercent: on ? 0 : -100,
+        duration: REDUCED ? 0.01 : (on ? 0.72 : 0.5),
+        ease: on ? "expo.out" : "power3.in",
+        autoAlpha: 1,
+        onStart: function () { if (on) gsap.set(menu, { visibility: "visible" }); },
+        onComplete: function () { if (!on) gsap.set(menu, { visibility: "hidden" }); }
+      });
+      if (on && !REDUCED) {
+        gsap.fromTo(menu.querySelectorAll("a"),
+          { yPercent: 60, opacity: 0 },
+          { yPercent: 0, opacity: 1, duration: 0.7, stagger: 0.05, ease: "power3.out", delay: 0.12 });
+      }
+    } else {
+      menu.style.transform = on ? "translateY(0)" : "translateY(-100%)";
+      menu.style.visibility = on ? "visible" : "hidden";
+    }
+  }
+  burger.addEventListener("click", function () { setMenu(!menuOpen); });
+  menu.addEventListener("click", function (e) { if (e.target.tagName === "A") setMenu(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && menuOpen) setMenu(false); });
+
+  /* ------------------------------------------------------------------
+     Materials spec sheet — tab filter (works with or without GSAP)
+     ------------------------------------------------------------------ */
+  var matRail = document.getElementById("matRail");
+  var matRows = Array.prototype.slice.call(document.querySelectorAll(".mat-row"));
+  function showGroup(g, animate) {
+    var shown = [];
+    matRows.forEach(function (r) {
+      var on = r.dataset.g === g;
+      r.hidden = !on;
+      if (on) shown.push(r);
+    });
+    matRail.querySelectorAll(".mat-tab").forEach(function (t) {
+      var on = t.dataset.g === g;
+      t.classList.toggle("is-on", on);
+      t.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    if (animate && hasGSAP && !REDUCED) {
+      gsap.fromTo(shown,
+        { y: 22, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.62, stagger: 0.045, ease: "power3.out", overwrite: true });
+    }
+  }
+  matRail.addEventListener("click", function (e) {
+    var t = e.target.closest(".mat-tab");
+    if (t) showGroup(t.dataset.g, true);
+  });
+
+  /* ------------------------------------------------------------------
+     Closed / open reveal — drag, keyboard, and scroll-driven
+     ------------------------------------------------------------------ */
+  var rv    = document.getElementById("rv");
+  var rvBar = document.getElementById("rvBar");
+  var rvState = { p: 100 };
+  var rvTween = null;
+  var rvDragging = false;
+  var rvTouched = false;
+
+  function paintRv() {
+    rvState.p = Math.max(2, Math.min(98, rvState.p));
+    rv.style.setProperty("--p", rvState.p);
+    rvBar.setAttribute("aria-valuenow", Math.round(rvState.p));
+  }
+  function rvFromClientX(x) {
+    var r = rv.getBoundingClientRect();
+    rvState.p = ((x - r.left) / r.width) * 100;
+    paintRv();
+  }
+  function rvTakeOver() {
+    if (!rvTouched) {
+      rvTouched = true;
+      rv.classList.add("is-touched");
+      if (rvTween) { rvTween.scrollTrigger && rvTween.scrollTrigger.kill(); rvTween.kill(); rvTween = null; }
+    }
+  }
+  rv.addEventListener("pointerdown", function (e) {
+    rvDragging = true; rvTakeOver();
+    rv.setPointerCapture(e.pointerId);
+    rvFromClientX(e.clientX);
+  });
+  rv.addEventListener("pointermove", function (e) { if (rvDragging) rvFromClientX(e.clientX); });
+  ["pointerup", "pointercancel"].forEach(function (t) {
+    rv.addEventListener(t, function () { rvDragging = false; });
+  });
+  rvBar.addEventListener("keydown", function (e) {
+    var step = e.shiftKey ? 10 : 3;
+    if (e.key === "ArrowLeft")  { rvTakeOver(); rvState.p -= step; paintRv(); e.preventDefault(); }
+    if (e.key === "ArrowRight") { rvTakeOver(); rvState.p += step; paintRv(); e.preventDefault(); }
+    if (e.key === "Home")       { rvTakeOver(); rvState.p = 5;  paintRv(); e.preventDefault(); }
+    if (e.key === "End")        { rvTakeOver(); rvState.p = 95; paintRv(); e.preventDefault(); }
+  });
+
+  /* ------------------------------------------------------------------
+     Booking form — no backend, so it confirms locally
+     ------------------------------------------------------------------ */
+  var qForm = document.getElementById("quoteForm");
+  qForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = document.getElementById("fName");
+    var phone = document.getElementById("fPhone");
+    if (!name.value.trim() || !phone.value.trim()) {
+      (name.value.trim() ? phone : name).focus();
+      return;
+    }
+    var d = new Date();
+    var ref = "REF SW-" + String(d.getDate()).padStart(2, "0") + String(d.getMonth() + 1).padStart(2, "0")
+            + "-" + String(Math.floor(1000 + Math.random() * 8999));
+    document.getElementById("formRef").textContent = ref;
+    var done = document.getElementById("formDone");
+    done.classList.add("is-on");
+    if (hasGSAP && !REDUCED) {
+      gsap.fromTo(done, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" });
+    }
+  });
+
+  /* ------------------------------------------------------------------
+     No GSAP? Show the finished page and stop.
+     ------------------------------------------------------------------ */
+  if (!hasGSAP) {
+    body.classList.remove("is-loading");
+    if (loader) loader.style.display = "none";
+    paintCounts();
+    document.querySelectorAll("[data-bar]").forEach(function (b) { b.style.transform = "scaleX(1)"; });
+    showGroup("board", false);
+    rvState.p = 62; paintRv();
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+  showGroup("board", false);
+
+  /* ------------------------------------------------------------------
+     Lenis smooth scroll wired into ScrollTrigger
+     ------------------------------------------------------------------ */
+  var lenis = null;
+  if (!REDUCED && typeof window.Lenis !== "undefined") {
+    lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 1, smoothWheel: true, touchMultiplier: 1.5 });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  /* ------------------------------------------------------------------
+     REDUCED MOTION — land everything in its final state
+     ------------------------------------------------------------------ */
+  if (REDUCED) {
+    body.classList.remove("is-loading");
+    if (loader) loader.style.display = "none";
+    paintCounts();
+    gsap.set("[data-lines] .line > span, [data-fade]", { yPercent: 0, y: 0, opacity: 1 });
+    document.querySelectorAll("[data-bar]").forEach(function (b) { b.style.transform = "scaleX(1)"; });
+    rvState.p = 62; paintRv();
+    return;
+  }
+
+  gsap.set("[data-lines] .line > span", { yPercent: 108 });
+  gsap.set("[data-fade]", { y: 26, opacity: 0 });
+  gsap.set(".hero .eyebrow", { opacity: 0, x: -18 });
+  gsap.set(menu, { yPercent: -100, visibility: "hidden" });
+
+  /* ------------------------------------------------------------------
+     1 — INTRO: the tape runs out, then the curtain lifts
+     ------------------------------------------------------------------ */
+  if (lenis) lenis.stop();
+
+  var loadObj = { v: 0 };
+  var heroLines = splitMap.filter(function (s) { return s.el.classList.contains("h1"); })[0];
+
+  /* Scroll is handed back the moment the curtain clears, not when the
+     last hero tween finishes — otherwise the page feels stuck. */
+  var unlocked = false;
+  function unlock() {
+    if (unlocked) return;
+    unlocked = true;
+    body.classList.remove("is-loading");
+    if (lenis) lenis.start();
+    ScrollTrigger.refresh();
+  }
+
+  var intro = gsap.timeline({ onComplete: unlock });
+
+  intro
+    .to("#rulerClip", { clipPath: "inset(0 0% 0 0)", duration: 1.15, ease: "power2.inOut" }, 0)
+    .to("#rulerBase", { scaleX: 1, duration: 1.15, ease: "power2.inOut" }, 0)
+    .to(loadObj, {
+      v: 3600, duration: 1.15, ease: "power2.inOut",
+      onUpdate: function () { document.getElementById("loadNum").textContent = fmt(loadObj.v); }
+    }, 0)
+    .call(function () { document.getElementById("loadPct").textContent = "Surveyed"; }, null, 1.16)
+    .to(".loader-in", { y: -34, opacity: 0, duration: 0.7, ease: "power3.inOut" }, 1.32)
+    .to(loader, { clipPath: "inset(0 0 100% 0)", duration: 1.0, ease: "expo.inOut" }, 1.44)
+    .set(loader, { display: "none" }, 2.44)
+    .call(unlock, null, 2.46)
+    /* hero settles */
+    .fromTo("#heroImg", { scale: 1.2 }, { scale: 1, duration: 2.0, ease: "power3.out" }, 1.5)
+    .fromTo(".hero .eyebrow", { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }, 1.8)
+    .to(heroLines.lines, { yPercent: 0, duration: 1.15, stagger: 0.085, ease: "power4.out" }, 1.88)
+    .to(".hero [data-fade]", { y: 0, opacity: 1, duration: 0.9, stagger: 0.075, ease: "power3.out" }, 2.28);
+
+  /* Hero dimension lines draw themselves in, like a survey sheet */
+  var dimPaths = document.querySelectorAll("#dimDraw path");
+  dimPaths.forEach(function (p) {
+    var len = p.getTotalLength();
+    gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+  });
+  intro.to(dimPaths, { strokeDashoffset: 0, duration: 1.1, stagger: 0.045, ease: "power2.out" }, 2.1)
+       .fromTo(".hero-dims text", { opacity: 0 }, { opacity: 0.72, duration: 0.7, stagger: 0.08, ease: "power2.out" }, 2.7);
+
+  /* ------------------------------------------------------------------
+     2 — Heading line reveals on scroll (every h2)
+     ------------------------------------------------------------------ */
+  splitMap.forEach(function (s) {
+    if (s.el.classList.contains("h1")) return;
+    gsap.to(s.lines, {
+      yPercent: 0, duration: 1.05, stagger: 0.075, ease: "power4.out",
+      scrollTrigger: { trigger: s.el, start: "top 84%" }
+    });
+  });
+  gsap.utils.toArray(".eyebrow").forEach(function (el) {
+    if (el.closest(".hero")) return;
+    gsap.fromTo(el, { opacity: 0, x: -16 }, {
+      opacity: 1, x: 0, duration: 0.8, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%" }
+    });
+  });
+  gsap.utils.toArray(".sec-head-split .lede, .fig-copy .lede, .fig-note, .quote-copy .lede").forEach(function (el) {
+    gsap.fromTo(el, { opacity: 0, y: 22 }, {
+      opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%" }
+    });
+  });
+
+  /* ------------------------------------------------------------------
+     3 — Count-ups on the workshop figures
+     ------------------------------------------------------------------ */
+  gsap.utils.toArray("[data-count]").forEach(function (el, i) {
+    var target = Number(el.dataset.count);
+    var node = digitsOf(el);
+    var obj = { v: 0 };
+    ScrollTrigger.create({
+      trigger: el.closest(".fig"),
+      start: "top 86%",
+      once: true,
+      onEnter: function () {
+        gsap.to(obj, {
+          v: target, duration: 1.9, ease: "power3.out", delay: i * 0.09,
+          onUpdate: function () { node.nodeValue = fmt(obj.v); }
+        });
+      }
+    });
+  });
+  gsap.utils.toArray("[data-bar]").forEach(function (el, i) {
+    gsap.to(el, {
+      scaleX: 1, duration: 1.1, ease: "power3.inOut", delay: i * 0.09,
+      scrollTrigger: { trigger: el.closest(".fig"), start: "top 86%", once: true }
+    });
+  });
+  gsap.utils.toArray(".fig").forEach(function (el, i) {
+    gsap.fromTo(el, { y: 34, opacity: 0 }, {
+      y: 0, opacity: 1, duration: 0.9, ease: "power3.out", delay: i * 0.06,
+      scrollTrigger: { trigger: ".fig-grid", start: "top 88%" }
+    });
+  });
+
+  /* ------------------------------------------------------------------
+     4 — Staggered spec rows on first scroll into the materials sheet
+     ------------------------------------------------------------------ */
+  ScrollTrigger.create({
+    trigger: ".mat-panel",
+    start: "top 78%",
+    once: true,
+    onEnter: function () {
+      gsap.fromTo(matRows.filter(function (r) { return !r.hidden; }),
+        { y: 26, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, stagger: 0.055, ease: "power3.out" });
+      gsap.fromTo(".mat-tab", { x: -14, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.6, stagger: 0.05, ease: "power3.out" });
+    }
+  });
+
+  /* ------------------------------------------------------------------
+     5 — Reveal, list and card entrances
+     ------------------------------------------------------------------ */
+  gsap.utils.toArray(".rv-specs li").forEach(function (el, i) {
+    gsap.fromTo(el, { y: 24, opacity: 0 }, {
+      y: 0, opacity: 1, duration: 0.7, delay: i * 0.06, ease: "power3.out",
+      scrollTrigger: { trigger: ".rv-specs", start: "top 90%" }
+    });
+  });
+  gsap.utils.toArray(".room").forEach(function (el) {
+    gsap.fromTo(el, { y: 46, opacity: 0 }, {
+      y: 0, opacity: 1, duration: 1.0, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 88%" }
+    });
+    gsap.fromTo(el.querySelectorAll(".room-list li"), { x: -14, opacity: 0 }, {
+      x: 0, opacity: 1, duration: 0.6, stagger: 0.06, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 78%" }
+    });
+  });
+  gsap.utils.toArray(".shot").forEach(function (el) {
+    gsap.fromTo(el.querySelector(".par-frame"),
+      { clipPath: "inset(0% 0% 100% 0%)" },
+      { clipPath: "inset(0% 0% 0% 0%)", duration: 1.15, ease: "expo.out",
+        scrollTrigger: { trigger: el, start: "top 88%" } });
+    gsap.fromTo(el.querySelector(".shot-cap"), { y: 16, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 82%" } });
+  });
+  gsap.utils.toArray(".steps-next li").forEach(function (el, i) {
+    gsap.fromTo(el, { y: 22, opacity: 0 }, {
+      y: 0, opacity: 1, duration: 0.7, delay: i * 0.07, ease: "power3.out",
+      scrollTrigger: { trigger: ".steps-next", start: "top 88%" }
+    });
+  });
+  gsap.fromTo("#quoteForm", { y: 42, opacity: 0 }, {
+    y: 0, opacity: 1, duration: 1.0, ease: "power3.out",
+    scrollTrigger: { trigger: "#quoteForm", start: "top 88%" }
+  });
+  gsap.fromTo(".foot-word", { opacity: 0, y: 40 }, {
+    opacity: 1, y: 0, duration: 1.2, ease: "power3.out",
+    scrollTrigger: { trigger: ".foot-word", start: "top 94%" }
+  });
+
+  /* ------------------------------------------------------------------
+     6 — Desktop-only: horizontal process track, parallax, magnetics
+     ------------------------------------------------------------------ */
+  var mm = gsap.matchMedia();
+
+  mm.add("(min-width: 1024px)", function () {
+
+    /* ---- SIGNATURE: vertical scroll drives the four process steps ---- */
+    var track = document.getElementById("procTrack");
+    var pin   = document.getElementById("procPin");
+    var fill  = document.getElementById("procFill");
+    var nodes = Array.prototype.slice.call(document.querySelectorAll(".proc-node"));
+
+    function travel() { return Math.max(0, track.scrollWidth - window.innerWidth); }
+
+    var hTween = gsap.to(track, {
+      x: function () { return -travel(); },
+      ease: "none",
+      scrollTrigger: {
+        trigger: pin,
+        start: "top top",
+        end: function () { return "+=" + travel(); },
+        pin: true,
+        scrub: 0.85,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: function (self) {
+          fill.style.width = (self.progress * 100).toFixed(2) + "%";
+          var idx = Math.min(nodes.length - 1, Math.floor(self.progress * nodes.length + 0.12));
+          nodes.forEach(function (n, i) { n.classList.toggle("is-on", i === idx); });
+        }
+      }
+    });
+
+    /* Photos drift inside the track — parallax on the horizontal axis */
+    gsap.utils.toArray(".step").forEach(function (step) {
+      gsap.fromTo(step.querySelector(".step-photo img"),
+        { scale: 1.18, xPercent: -5 },
+        { scale: 1.05, xPercent: 5, ease: "none",
+          scrollTrigger: {
+            trigger: step, containerAnimation: hTween,
+            start: "left right", end: "right left", scrub: true
+          } });
+      gsap.fromTo(step.querySelector(".step-body"),
+        { opacity: 0.25 },
+        { opacity: 1, ease: "power2.out",
+          scrollTrigger: {
+            trigger: step, containerAnimation: hTween,
+            start: "left 92%", end: "left 45%", scrub: true
+          } });
+    });
+
+    /* ---- Parallax on gallery and room imagery, several speeds ---- */
+    gsap.utils.toArray("[data-par]").forEach(function (img) {
+      var d = parseFloat(img.dataset.par) || 10;
+      gsap.fromTo(img, { yPercent: -d }, {
+        yPercent: d, ease: "none",
+        scrollTrigger: {
+          trigger: img.closest(".par-frame"),
+          start: "top bottom", end: "bottom top", scrub: true
+        }
+      });
+    });
+
+    /* ---- Scroll-driven wipe on the closed/open unit, until you grab it ---- */
+    rvState.p = 98;
+    paintRv();
+    rvTween = gsap.to(rvState, {
+      p: 30, ease: "power1.inOut",
+      onUpdate: paintRv,
+      scrollTrigger: { trigger: "#rv", start: "top 78%", end: "bottom 62%", scrub: 0.7 }
+    });
+
+    /* ---- Magnetic pills ---- */
+    var mags = gsap.utils.toArray("[data-mag]");
+    var pointers = mags.map(function (el) {
+      var state = { x: 0, y: 0, tx: 0, ty: 0, on: false };
+      var setX = gsap.quickSetter(el, "x", "px");
+      var setY = gsap.quickSetter(el, "y", "px");
+      function enter() { state.on = true; }
+      function move(e) {
+        var r = el.getBoundingClientRect();
+        state.tx = (e.clientX - (r.left + r.width / 2)) * 0.32;
+        state.ty = (e.clientY - (r.top + r.height / 2)) * 0.42;
+      }
+      function leave() { state.on = false; state.tx = 0; state.ty = 0; }
+      el.addEventListener("pointerenter", enter);
+      el.addEventListener("pointermove", move);
+      el.addEventListener("pointerleave", leave);
+      return { state: state, setX: setX, setY: setY, el: el, enter: enter, move: move, leave: leave };
+    });
+    function magLoop() {
+      pointers.forEach(function (p) {
+        p.state.x += (p.state.tx - p.state.x) * 0.16;
+        p.state.y += (p.state.ty - p.state.y) * 0.16;
+        p.setX(p.state.x); p.setY(p.state.y);
+      });
+    }
+    gsap.ticker.add(magLoop);
+
+    return function cleanup() {
+      gsap.ticker.remove(magLoop);
+      pointers.forEach(function (p) {
+        p.el.removeEventListener("pointerenter", p.enter);
+        p.el.removeEventListener("pointermove", p.move);
+        p.el.removeEventListener("pointerleave", p.leave);
+        gsap.set(p.el, { x: 0, y: 0 });
+      });
+      gsap.set(track, { clearProps: "transform" });
+    };
+  });
+
+  /* Below 1024px the reveal simply starts part-open and waits for a finger. */
+  mm.add("(max-width: 1023px)", function () {
+    rvState.p = 58;
+    paintRv();
+  });
+
+  /* ------------------------------------------------------------------
+     Anchors routed through Lenis
+     ------------------------------------------------------------------ */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var id = a.getAttribute("href");
+      if (!id || id === "#") return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(target, { offset: -60, duration: 1.25 });
+      else target.scrollIntoView({ behavior: "smooth" });
+    });
+  });
+
+  window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+  }
+})();
+</script>
+</body>
+</html>

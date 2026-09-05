@@ -54,6 +54,40 @@ This library is a growing set of **standalone design showcases** (hero + a coupl
 | 15 | `15-solstice-resort` | Private island resort | Multi-depth parallax chapters |
 | 16 | `16-monolith-portfolio` | Creative portfolio | WebGL hover distortion |
 | 17 | `17-select-conference` | Dev conference | Coded 1-bit dithered portraits |
+| 18 | `18-longrange-commerce` | Homeware storefront | Working cart, drawer and checkout |
+
+**Batch 03 — real client rebuilds** (Rylo Labz work from `C:dev`, rebuilt as templates)
+
+Each keeps its original's idea and palette. The brief was to polish and animate, not
+redesign. Originals, screenshots and measured design tokens are in
+`_inspo-notes/rylo-originals/`.
+
+| # | Folder | Industry | Signature motion |
+|---|--------|----------|------------------|
+| 19 | `19-longrange-pharmacy` | Pharmacy e-commerce | three.js floating pills behind the hero |
+| 20 | `20-tower-construction` | Construction | Scroll-drawn SVG process line |
+| 21 | `21-mirage-college` | Education | Pinned course browser |
+| 22 | `22-smile-dental` | Dental clinic | Dot cloud that resolves into the headline |
+| 23 | `23-caro-accounting` | Professional services | Pinned service stack |
+| 24 | `24-safeway-furniture` | Fitted furniture | Horizontal process track |
+| 25 | `25-gordons-bnb` | Boutique stay | Slow pinned crossfade sequence |
+
+Two notes for anyone editing batch 03:
+
+- **19 relaxes the one-accent rule on purpose.** A real storefront needs a commerce
+  palette: green for add-to-cart, coral for urgency, yellow for highlight. Coral is
+  deliberately not the brand green, because a discount badge in the same green as the
+  add-to-cart button stops reading as a flag.
+- **25 runs a deliberately small motion budget.** The original is a quiet guesthouse
+  and the tone is unhurried. Long holds and gentle easing are the point. Do not add energy.
+
+## Prompts
+
+Every template carries a `prompt.md`: a self-contained prompt that rebuilds it for a
+new brand, with `[SQUARE BRACKET]` placeholders. The gallery exposes these through
+**Copy prompt** and **View prompt** buttons, and the global `landing-page` skill
+(`~/.claude/skills/landing-page/SKILL.md`) indexes them by industry so a client brief
+maps straight to a template. A new template is not finished until its `prompt.md` exists.
 
 ## Previewing
 

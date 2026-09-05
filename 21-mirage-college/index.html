@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mirage International — College of Beauty Therapy, Harare</title>
+<meta name="description" content="ITEC and VTCT accredited beauty therapy diplomas in Harare. Train on real, paying clients inside a working spa. Diplomas from US$2,000, full kit included. Next intake 5 October 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   MIRAGE INTERNATIONAL COLLEGE — beauty therapy school, Harare
+   Palette : deep olive ground / cream text / warm gold #BFA05A
+   Type    : Playfair Display (high-contrast display serif)
+             Source Sans 3 (humanist sans, body + UI)
+   Motion  : pinned course browser (scrub + snap + cross-dissolve)
+             hand-split line mask reveals · count-ups
+             clip-path gallery reveals · parallax · magnetic CTA
+   ============================================================ */
+
+:root{
+  --olive-900:#0E1310;
+  --olive-850:#141A14;
+  --olive-800:#1A2117;
+  --olive-700:#232B1F;
+  --olive-600:#2E3728;
+  --olive-500:#3C4735;
+
+  --paper:    #F6F2E9;
+  --paper-2:  #EFE9DB;
+  --paper-3:  #E6DECB;
+
+  --cream:    #F4EFE4;
+  --cream-2:  #E4DCCB;
+  --cream-so: rgba(244,239,228,.66);
+  --cream-fa: rgba(244,239,228,.40);
+
+  --ink:      #1B211A;
+  --ink-2:    #3A4235;
+  --ink-so:   rgba(27,33,26,.62);
+  --ink-fa:   rgba(27,33,26,.38);
+
+  --gold:     #BFA05A;
+  --gold-lt:  #D6BC80;
+  --gold-dk:  #9C7F3E;
+
+  --line-d:   rgba(244,239,228,.16);
+  --line-d2:  rgba(244,239,228,.09);
+  --line-l:   rgba(27,33,26,.16);
+  --line-l2:  rgba(27,33,26,.09);
+
+  --m:   clamp(20px, 5vw, 90px);
+  --gap: clamp(20px, 2.4vw, 40px);
+
+  --f-d: "Playfair Display", "Times New Roman", Georgia, serif;
+  --f-u: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+
+  --e:    cubic-bezier(.16,1,.3,1);
+  --e-io: cubic-bezier(.76,0,.24,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:auto; }
+html,body{ overflow-x:clip; }
+body{
+  margin:0;
+  background:var(--olive-800);
+  color:var(--cream);
+  font-family:var(--f-u);
+  font-weight:400;
+  font-size:16.5px;
+  line-height:1.66;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-variant-numeric:tabular-nums lining-nums;
+}
+img{ display:block; max-width:100%; }
+a{ color:inherit; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+h1,h2,h3,h4{ margin:0; font-weight:400; }
+p{ margin:0; }
+ul,ol,dl{ margin:0; padding:0; list-style:none; }
+::selection{ background:var(--gold); color:var(--olive-900); }
+
+.wrap{ width:min(1460px, 100% - var(--m) * 2); margin-inline:auto; }
+
+/* ---------- typography scale ---------- */
+.h1{
+  font-family:var(--f-d);
+  font-weight:500;
+  font-size:clamp(46px, 8.2vw, 132px);
+  line-height:.98;
+  letter-spacing:-.022em;
+}
+.h2{
+  font-family:var(--f-d);
+  font-weight:500;
+  font-size:clamp(32px, 4.6vw, 74px);
+  line-height:1.05;
+  letter-spacing:-.018em;
+}
+.h3{
+  font-family:var(--f-d);
+  font-weight:500;
+  font-size:clamp(24px, 2.4vw, 38px);
+  line-height:1.14;
+  letter-spacing:-.012em;
+}
+em{ font-style:italic; }
+.h1 .em, .h2 .em, .h3 .em{ color:var(--gold); font-style:italic; }
+.on-paper .h2 .em, .on-paper .h3 .em{ color:var(--gold-dk); }
+
+.eyebrow{
+  display:flex; align-items:center; gap:16px;
+  font-size:12px; font-weight:600;
+  letter-spacing:.19em; text-transform:uppercase;
+  color:var(--gold);
+}
+.eyebrow .rule{
+  display:block; width:38px; height:1px;
+  background:var(--gold); transform-origin:left center;
+}
+.on-paper .eyebrow{ color:var(--gold-dk); }
+.on-paper .eyebrow .rule{ background:var(--gold-dk); }
+
+.lede{
+  font-size:clamp(17px,1.35vw,20px);
+  line-height:1.62;
+  color:var(--cream-so);
+  max-width:62ch;
+  font-weight:300;
+}
+.on-paper .lede{ color:var(--ink-so); }
+
+.lbl{
+  font-size:11px; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--cream-fa);
+}
+.on-paper .lbl{ color:var(--ink-fa); }
+
+/* ---------- line-mask primitive ---------- */
+.ln{ display:block; overflow:hidden; padding-bottom:.04em; margin-bottom:-.04em; }
+.ln-i{ display:block; will-change:transform; }
+.w{ display:inline-block; }
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:.65em;
+  font-size:15.5px; font-weight:500; letter-spacing:.005em;
+  padding:17px 32px; border-radius:999px;
+  text-decoration:none; white-space:nowrap;
+  border:1px solid transparent;
+  transition:background .35s var(--e), border-color .35s var(--e), color .35s var(--e);
+}
+.btn-gold{ background:var(--gold); color:#1A2117; }
+.btn-gold:hover{ background:var(--gold-lt); }
+.btn-line{ border-color:rgba(244,239,228,.34); color:var(--cream); }
+.btn-line:hover{ border-color:var(--cream); }
+.btn-line--ink{ border-color:rgba(27,33,26,.26); color:var(--ink); }
+.btn-line--ink:hover{ border-color:var(--ink); }
+.btn .arw{ display:block; transition:transform .38s var(--e); }
+.btn:hover .arw{ transform:translateX(6px); }
+.btn-sm{ padding:11px 24px; font-size:14.5px; }
+
+/* ---------- header ---------- */
+.hdr{
+  position:fixed; inset:0 0 auto 0; z-index:60;
+  display:flex; align-items:center; gap:var(--gap);
+  padding:20px var(--m);
+  transition:background .5s var(--e), padding .5s var(--e), border-color .5s var(--e);
+  border-bottom:1px solid transparent;
+}
+.hdr.is-solid{
+  background:rgba(20,26,20,.86);
+  -webkit-backdrop-filter:blur(14px) saturate(1.2);
+  backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom-color:var(--line-d2);
+  padding-top:13px; padding-bottom:13px;
+}
+.brand{ display:flex; align-items:center; gap:14px; text-decoration:none; margin-right:auto; }
+.mono-m{
+  display:grid; place-items:center;
+  width:46px; height:46px; border-radius:50%;
+  border:1px solid rgba(244,239,228,.42);
+  background:rgba(244,239,228,.07);
+  font-family:var(--f-d); font-size:21px; line-height:1;
+  padding-bottom:2px;
+  transition:border-color .4s var(--e), background .4s var(--e);
+}
+.brand:hover .mono-m{ border-color:var(--gold); background:rgba(191,160,90,.13); }
+.brand-txt{ display:block; line-height:1.1; }
+.brand-1{ display:block; font-family:var(--f-d); font-size:19px; letter-spacing:-.005em; }
+.brand-2{ display:block; font-size:10px; font-weight:600; letter-spacing:.19em; text-transform:uppercase; color:var(--cream-fa); margin-top:3px; }
+
+.nav{ display:flex; align-items:center; gap:clamp(14px,1.9vw,32px); }
+.nav a{
+  position:relative; text-decoration:none; font-size:15px; font-weight:400;
+  color:var(--cream-so); padding:4px 0;
+  transition:color .3s var(--e);
+}
+.nav a::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:var(--gold); transform:scaleX(0); transform-origin:right center;
+  transition:transform .45s var(--e);
+}
+.nav a:hover{ color:var(--cream); }
+.nav a:hover::after{ transform:scaleX(1); transform-origin:left center; }
+
+.burger{ display:none; width:40px; height:40px; place-items:center; }
+.burger span{ display:block; width:20px; height:1px; background:var(--cream); transition:transform .4s var(--e), opacity .3s; }
+.burger span+span{ margin-top:6px; }
+.hdr.menu-open .burger span:nth-child(1){ transform:translateY(3.5px) rotate(45deg); }
+.hdr.menu-open .burger span:nth-child(2){ transform:translateY(-3.5px) rotate(-45deg); }
+
+.mnav{
+  position:fixed; inset:74px 0 auto 0; z-index:55;
+  background:rgba(14,19,16,.97);
+  -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line-d2);
+  padding:12px var(--m) 30px;
+  display:none; flex-direction:column;
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path .6s var(--e-io);
+}
+.mnav.is-open{ clip-path:inset(0 0 0% 0); }
+.mnav a{
+  text-decoration:none; font-family:var(--f-d); font-size:26px;
+  padding:14px 0; border-bottom:1px solid var(--line-d2);
+}
+
+/* ---------- intro curtain ---------- */
+.intro{
+  position:fixed; inset:0; z-index:200;
+  background:var(--olive-900);
+  display:grid; place-items:center;
+  will-change:transform;
+}
+.intro-in{ text-align:center; }
+.intro-m{
+  width:76px; height:76px; margin:0 auto 22px;
+  border-radius:50%; display:grid; place-items:center;
+  border:1px solid var(--gold);
+  font-family:var(--f-d); font-size:32px; color:var(--gold);
+  padding-bottom:3px;
+}
+.intro-t{ font-family:var(--f-d); font-size:clamp(22px,2.4vw,32px); letter-spacing:-.01em; }
+.intro-s{ font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--cream-fa); margin-top:10px; }
+.intro-r{ width:180px; height:1px; background:var(--gold); margin:26px auto 0; transform:scaleX(0); transform-origin:left center; }
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative; min-height:100svh;
+  display:flex; align-items:center;
+  padding:150px 0 96px;
+  overflow:hidden;
+  background:var(--olive-800);
+}
+.hero-media{ position:absolute; inset:-8% 0; z-index:0; }
+.hero-media img{
+  width:100%; height:100%; object-fit:cover; object-position:62% 50%;
+  filter:saturate(.58) contrast(1.03) brightness(.92);
+  will-change:transform;
+}
+.hero-tint{
+  position:absolute; inset:0;
+  background:#33402C; mix-blend-mode:multiply; opacity:.62;
+}
+.hero-scrim{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(100deg, rgba(14,19,16,.95) 0%, rgba(14,19,16,.86) 30%, rgba(14,19,16,.44) 62%, rgba(14,19,16,.58) 100%),
+    linear-gradient(to bottom, rgba(14,19,16,.72) 0%, rgba(14,19,16,0) 34%, rgba(14,19,16,0) 62%, rgba(14,19,16,.72) 100%);
+}
+.hero-inner{ position:relative; z-index:2; width:100%; }
+.hero-eyebrow{ margin-bottom:clamp(20px,2.4vw,34px); }
+.h1.hero-h1{ max-width:15ch; }
+.hero-p{
+  margin-top:clamp(22px,2.6vw,36px);
+  max-width:54ch;
+  font-size:clamp(17px,1.4vw,21px);
+  line-height:1.6; font-weight:300;
+  color:rgba(244,239,228,.82);
+}
+.hero-cta{ display:flex; flex-wrap:wrap; gap:14px; margin-top:clamp(30px,3.4vw,46px); }
+.price-line{
+  margin-top:26px; font-size:15px; color:var(--cream-so);
+}
+.price-line b{ font-weight:600; color:var(--cream); }
+.scroll-cue{
+  position:absolute; z-index:2; left:var(--m); bottom:34px;
+  display:flex; align-items:center; gap:14px;
+  font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--cream-fa);
+}
+.scroll-cue i{ display:block; width:56px; height:1px; background:var(--cream-fa); overflow:hidden; position:relative; }
+.scroll-cue i::after{ content:""; position:absolute; inset:0; background:var(--gold); animation:cue 2.6s var(--e-io) infinite; }
+@keyframes cue{ 0%{transform:translateX(-100%)} 55%{transform:translateX(0)} 100%{transform:translateX(100%)} }
+
+/* ---------- intake bar ---------- */
+.intake{ background:var(--olive-900); border-block:1px solid var(--line-d2); }
+.intake-grid{ display:grid; grid-template-columns:repeat(4,1fr); }
+.ib{ padding:26px 30px 26px 0; border-left:1px solid var(--line-d2); padding-left:30px; }
+.ib:first-child{ border-left:0; padding-left:0; }
+.ib-k{ display:block; font-size:11px; font-weight:600; letter-spacing:.17em; text-transform:uppercase; color:var(--gold); }
+.ib-v{ display:block; margin-top:8px; font-size:16px; color:rgba(244,239,228,.86); font-weight:300; }
+
+/* ---------- generic section ---------- */
+section{ position:relative; }
+.pad{ padding:clamp(78px,9vw,150px) 0; }
+.on-paper{ background:var(--paper); color:var(--ink); }
+.on-paper .lbl{ color:var(--ink-fa); }
+.sec-head{ display:grid; grid-template-columns:1fr; gap:clamp(20px,2.2vw,30px); max-width:none; }
+@media(min-width:1024px){
+  .sec-head{ grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); align-items:end; column-gap:clamp(40px,6vw,110px); }
+  .sec-head .eyebrow{ grid-column:1 / -1; }
+}
+
+/* ---------- COURSES: pinned browser ---------- */
+.courses{ background:var(--paper); color:var(--ink); }
+.cb{
+  margin-top:clamp(48px,6vw,90px);
+  display:grid;
+  grid-template-columns:minmax(230px,275px) minmax(0,1fr);
+  gap:clamp(30px,4vw,74px);
+  height:calc(100vh - 116px);
+  min-height:560px;
+  max-height:880px;
+  align-items:stretch;
+}
+.cb-index{ position:relative; display:flex; flex-direction:column; padding-left:22px; }
+.cb-rail{ position:absolute; left:0; top:6px; bottom:44px; width:1px; background:var(--line-l2); }
+.cb-rail-fill{ position:absolute; inset:0 auto 0 0; width:1px; background:var(--gold); transform:scaleY(0); transform-origin:top center; }
+.cb-list{ display:flex; flex-direction:column; gap:2px; }
+.cb-list button{
+  display:block; width:100%; text-align:left;
+  padding:13px 0 14px; border-bottom:1px solid var(--line-l2);
+  opacity:.42; transition:opacity .45s var(--e), padding-left .45s var(--e);
+}
+.cb-list button:hover{ opacity:.72; }
+.cb-list li.is-on button{ opacity:1; padding-left:10px; }
+.ci-n{ display:block; font-size:11px; font-weight:600; letter-spacing:.16em; color:var(--gold-dk); }
+.ci-t{ display:block; margin-top:5px; font-family:var(--f-d); font-size:19px; line-height:1.22; letter-spacing:-.008em; }
+.ci-m{ display:block; margin-top:5px; font-size:12.5px; color:var(--ink-so); }
+.cb-hint{ margin-top:auto; padding-top:22px; font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-fa); }
+
+.cb-stage{ position:relative; }
+.course{
+  position:absolute; inset:0;
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,42%);
+  gap:clamp(26px,3.2vw,58px); align-items:center;
+  opacity:0; pointer-events:none;
+}
+.course.is-on{ opacity:1; pointer-events:auto; }
+.c-detail{ min-width:0; }
+.c-award{ display:flex; align-items:baseline; gap:14px; font-size:11.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-dk); }
+.c-award .c-n{ font-family:var(--f-d); font-size:32px; letter-spacing:0; color:var(--ink-fa); line-height:1; }
+.c-title{ font-family:var(--f-d); font-weight:500; font-size:clamp(30px,3.5vw,56px); line-height:1.02; letter-spacing:-.02em; margin-top:14px; max-width:14ch; }
+.c-desc{ margin-top:16px; max-width:46ch; color:var(--ink-so); font-weight:300; font-size:16.5px; }
+.c-spec{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); margin-top:clamp(22px,2.4vw,32px); border-top:1px solid var(--line-l); }
+.c-spec > div{ padding:13px 18px 13px 0; border-bottom:1px solid var(--line-l2); }
+.c-spec > div:nth-child(odd){ border-right:1px solid var(--line-l2); }
+.c-spec > div:nth-child(even){ padding-left:20px; }
+.c-spec dt{ font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-fa); }
+.c-spec dd{ margin:5px 0 0; font-size:16px; }
+.c-spec dd b{ font-weight:600; }
+.c-cols{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(18px,2.2vw,38px); margin-top:clamp(20px,2.2vw,30px); }
+.c-cols h4{ font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-dk); }
+.c-cols ul{ margin-top:11px; }
+.c-cols li{ font-size:14.6px; line-height:1.5; color:var(--ink-2); padding:6px 0 6px 16px; position:relative; }
+.c-cols li::before{ content:""; position:absolute; left:0; top:14px; width:7px; height:1px; background:var(--gold); }
+
+.c-media{ position:relative; margin:0; height:100%; display:flex; flex-direction:column; justify-content:center; min-width:0; }
+.c-frame{
+  position:relative; overflow:hidden;
+  height:min(64vh, 560px);
+  background:var(--olive-700);
+}
+.c-frame img{ width:100%; height:100%; object-fit:cover; filter:saturate(.72) contrast(1.02); will-change:transform; }
+.c-frame::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(14,19,16,.42), rgba(14,19,16,0) 46%);
+  pointer-events:none;
+}
+.c-media figcaption{ margin-top:14px; font-size:12.5px; color:var(--ink-fa); letter-spacing:.01em; }
+
+/* stacked (mobile / reduced-motion) course layout */
+.cb--stacked{ display:block; height:auto; min-height:0; }
+.cb--stacked .cb-index{ display:none; }
+.cb--stacked .cb-stage{ position:static; }
+.cb--stacked .course{
+  position:static; opacity:1; pointer-events:auto;
+  display:block; padding:clamp(34px,5vw,54px) 0;
+  border-top:1px solid var(--line-l2);
+}
+.cb--stacked .course:first-child{ border-top:0; padding-top:0; }
+.cb--stacked .c-media{ height:auto; margin-top:30px; }
+.cb--stacked .c-frame{ height:min(58vh,440px); }
+
+/* ---------- the working spa ---------- */
+.spa{ background:var(--olive-800); }
+.spa-grid{ display:grid; gap:clamp(40px,5vw,80px); }
+@media(min-width:1024px){
+  .spa-grid{ grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr); align-items:center; }
+}
+.spa-copy .h2{ margin-top:clamp(20px,2.4vw,32px); max-width:13ch; }
+.spa-copy p.body{ margin-top:22px; max-width:50ch; color:var(--cream-so); font-weight:300; font-size:17px; }
+.spa-copy p.body + p.body{ margin-top:16px; }
+.spa-media{ position:relative; min-height:clamp(380px,52vw,640px); }
+.spa-im{ position:absolute; margin:0; overflow:hidden; background:var(--olive-700); }
+.spa-im img{ width:100%; height:100%; object-fit:cover; filter:saturate(.66) contrast(1.03); }
+.spa-im-1{ left:0; top:0; width:66%; height:74%; }
+.spa-im-2{ right:0; bottom:0; width:52%; height:56%; outline:10px solid var(--olive-800); }
+@media(max-width:1023px){
+  .spa-im-1{ width:74%; height:70%; }
+  .spa-im-2{ width:54%; height:52%; }
+}
+
+.floor{
+  display:grid; gap:0;
+  margin-top:clamp(56px,7vw,110px);
+  border-top:1px solid var(--line-d2);
+}
+@media(min-width:900px){ .floor{ grid-template-columns:repeat(4,minmax(0,1fr)); } }
+.floor li{
+  padding:30px 26px 34px 0;
+  border-left:1px solid var(--line-d2);
+  padding-left:26px;
+  border-bottom:1px solid var(--line-d2);
+}
+@media(min-width:900px){
+  .floor li{ border-bottom:0; }
+  .floor li:first-child{ border-left:0; padding-left:0; }
+  .floor li:nth-child(2){ margin-top:22px; }
+  .floor li:nth-child(3){ margin-top:44px; }
+  .floor li:nth-child(4){ margin-top:66px; }
+}
+@media(max-width:899px){ .floor li{ border-left:0; padding-left:0; } .floor li:last-child{ border-bottom:0; } }
+.fl-n{ font-size:11px; font-weight:600; letter-spacing:.17em; text-transform:uppercase; color:var(--gold); }
+.floor h3{ font-family:var(--f-d); font-size:clamp(21px,1.7vw,27px); margin-top:11px; letter-spacing:-.01em; }
+.floor p{ margin-top:11px; font-size:14.8px; line-height:1.56; color:var(--cream-so); font-weight:300; }
+.spa-stats{
+  margin-top:clamp(46px,5vw,80px);
+  font-family:var(--f-d); font-size:clamp(20px,2.1vw,32px); line-height:1.34;
+  letter-spacing:-.012em; max-width:36ch;
+}
+.spa-stats b{ font-weight:500; color:var(--gold); font-style:italic; }
+
+/* ---------- gallery ---------- */
+.gal{ background:var(--olive-850); }
+.gal-grid{ display:grid; gap:clamp(12px,1.4vw,22px); margin-top:clamp(40px,5vw,74px); }
+@media(min-width:900px){
+  .gal-grid{ grid-template-columns:repeat(12,1fr); grid-auto-rows:clamp(90px,9.4vw,140px); }
+  .g1{ grid-column:1/6;  grid-row:1/3; }
+  .g2{ grid-column:6/10; grid-row:1/2; }
+  .g3{ grid-column:10/13;grid-row:1/3; }
+  .g4{ grid-column:6/10; grid-row:2/4; }
+  .g5{ grid-column:1/6;  grid-row:3/4; }
+  .g6{ grid-column:10/13;grid-row:3/4; }
+}
+@media(max-width:899px){ .gal-grid{ grid-template-columns:repeat(2,1fr); } .gal-fig{ height:clamp(150px,32vw,240px); } .g1{ grid-column:1/3; height:clamp(200px,52vw,320px); } }
+.gal-fig{ position:relative; margin:0; overflow:hidden; background:var(--olive-700); clip-path:inset(0 0 0 0); }
+.gal-fig img{ width:100%; height:100%; object-fit:cover; filter:saturate(.62) contrast(1.04); transition:filter .8s var(--e); }
+.gal-fig:hover img{ filter:saturate(.9) contrast(1.02); }
+.gal-cap{
+  position:absolute; left:14px; bottom:12px; z-index:2;
+  font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(244,239,228,.9); text-shadow:0 1px 12px rgba(14,19,16,.9);
+}
+
+/* ---------- outcomes ---------- */
+.out{ background:var(--paper); color:var(--ink); }
+.stats{
+  display:grid; gap:0; margin-top:clamp(46px,5.4vw,86px);
+  border-top:1px solid var(--line-l);
+}
+@media(min-width:820px){ .stats{ grid-template-columns:repeat(4,minmax(0,1fr)); } }
+.stat{ padding:28px 24px 30px 0; border-bottom:1px solid var(--line-l2); }
+@media(min-width:820px){
+  .stat{ border-left:1px solid var(--line-l2); padding-left:26px; border-bottom:0; }
+  .stat:first-child{ border-left:0; padding-left:0; }
+}
+.stat-n{ font-family:var(--f-d); font-weight:500; font-size:clamp(46px,5.4vw,86px); line-height:1; letter-spacing:-.03em; }
+.stat-n .pc{ font-size:.5em; color:var(--gold-dk); vertical-align:.42em; margin-left:.06em; }
+.stat-l{ margin-top:14px; font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-dk); }
+.stat-d{ margin-top:9px; font-size:14.5px; line-height:1.5; color:var(--ink-so); max-width:26ch; }
+
+.out-2{ display:grid; gap:clamp(40px,5vw,84px); margin-top:clamp(56px,6.4vw,104px); }
+@media(min-width:1024px){ .out-2{ grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); } }
+.emp h3{ font-family:var(--f-d); font-size:clamp(22px,2vw,30px); letter-spacing:-.012em; }
+.emp ul{ margin-top:22px; border-top:1px solid var(--line-l2); }
+.emp li{
+  display:flex; justify-content:space-between; align-items:baseline; gap:20px;
+  padding:14px 0; border-bottom:1px solid var(--line-l2);
+  font-size:16px;
+  transition:padding-left .5s var(--e), color .4s var(--e);
+}
+.emp li:hover{ padding-left:12px; }
+.emp li span{ font-size:12.5px; color:var(--ink-fa); letter-spacing:.02em; text-align:right; }
+
+.quote{ margin:0; }
+.q-media{ overflow:hidden; background:var(--paper-3); height:clamp(240px,26vw,340px); }
+.q-media img{ width:100%; height:100%; object-fit:cover; filter:saturate(.7); }
+.quote blockquote{ margin:26px 0 0; font-family:var(--f-d); font-size:clamp(21px,2vw,29px); line-height:1.32; letter-spacing:-.012em; }
+.quote figcaption{ margin-top:18px; font-size:13px; color:var(--ink-so); }
+.quote figcaption b{ display:block; font-weight:600; color:var(--ink); font-size:14.5px; letter-spacing:.01em; }
+
+/* ---------- open day + enrolment ---------- */
+.oday{ background:var(--paper-2); color:var(--ink); }
+.od-grid{ display:grid; gap:clamp(44px,5.4vw,96px); }
+@media(min-width:1024px){ .od-grid{ grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr); } }
+.od-date{ font-family:var(--f-d); font-weight:500; font-size:clamp(38px,5.2vw,80px); line-height:1; letter-spacing:-.028em; margin-top:clamp(18px,2.2vw,30px); }
+.od-time{ margin-top:16px; font-size:17px; color:var(--ink-so); }
+.od-list{ margin-top:clamp(26px,3vw,42px); border-top:1px solid var(--line-l); }
+.od-list li{ padding:13px 0; border-bottom:1px solid var(--line-l2); font-size:15.6px; display:flex; gap:16px; align-items:baseline; }
+.od-list li i{ font-style:normal; font-size:11px; font-weight:600; letter-spacing:.14em; color:var(--gold-dk); min-width:34px; }
+.od-cta{ display:flex; flex-wrap:wrap; gap:14px; margin-top:clamp(28px,3vw,42px); }
+.od-addr{ margin-top:24px; font-size:14.5px; color:var(--ink-so); line-height:1.6; }
+
+.steps{ counter-reset:s; }
+.steps h3{ font-family:var(--f-d); font-size:clamp(22px,2vw,30px); letter-spacing:-.012em; margin-bottom:22px; }
+.steps li{
+  display:grid; grid-template-columns:60px minmax(0,1fr); gap:20px;
+  padding:22px 0; border-top:1px solid var(--line-l2);
+}
+.steps li:last-child{ border-bottom:1px solid var(--line-l2); }
+.st-n{ font-family:var(--f-d); font-size:26px; color:var(--gold-dk); line-height:1; letter-spacing:-.01em; }
+.st-t{ font-size:17px; font-weight:600; letter-spacing:.005em; }
+.st-d{ margin-top:7px; font-size:14.6px; line-height:1.55; color:var(--ink-so); }
+
+/* ---------- fees ---------- */
+.fees{ background:var(--paper); color:var(--ink); }
+.tbl-wrap{ margin-top:clamp(40px,4.8vw,74px); overflow-x:auto; }
+table.fees-t{ width:100%; min-width:760px; border-collapse:collapse; }
+.fees-t th, .fees-t td{ text-align:left; padding:20px 22px 20px 0; vertical-align:top; }
+.fees-t thead th{
+  font-size:10.5px; font-weight:600; letter-spacing:.17em; text-transform:uppercase;
+  color:var(--ink-fa); padding-bottom:14px; border-bottom:1px solid var(--line-l);
+}
+.fees-t tbody tr{ border-bottom:1px solid var(--line-l2); transition:background .45s var(--e); }
+.fees-t tbody tr:hover{ background:rgba(191,160,90,.09); }
+.fees-t tbody tr td:first-child{ position:relative; padding-left:0; transition:padding-left .5s var(--e); }
+.fees-t tbody tr td:first-child::before{
+  content:""; position:absolute; left:0; top:20px; bottom:20px; width:2px;
+  background:var(--gold); transform:scaleY(0); transform-origin:top center;
+  transition:transform .5s var(--e);
+}
+.fees-t tbody tr:hover td:first-child{ padding-left:18px; }
+.fees-t tbody tr:hover td:first-child::before{ transform:scaleY(1); }
+.f-name{ font-family:var(--f-d); font-size:20px; line-height:1.2; letter-spacing:-.01em; }
+.f-meta{ margin-top:6px; font-size:12.5px; color:var(--ink-fa); letter-spacing:.02em; }
+.f-big{ font-size:18px; font-weight:600; }
+.f-sub{ display:block; margin-top:5px; font-size:12.5px; color:var(--ink-fa); }
+.fees-note{ margin-top:clamp(30px,3.4vw,52px); display:grid; gap:12px; max-width:82ch; }
+.fees-note li{ position:relative; padding-left:20px; font-size:15px; color:var(--ink-so); line-height:1.55; }
+.fees-note li::before{ content:""; position:absolute; left:0; top:11px; width:9px; height:1px; background:var(--gold-dk); }
+
+/* ---------- closing CTA ---------- */
+.cta{ position:relative; overflow:hidden; background:var(--olive-900); }
+.cta-media{ position:absolute; inset:-6% 0; z-index:0; }
+.cta-media img{ width:100%; height:100%; object-fit:cover; filter:saturate(.4) contrast(1.02) brightness(.55); }
+.cta-scrim{ position:absolute; inset:0; background:linear-gradient(to right, rgba(14,19,16,.94), rgba(14,19,16,.72) 58%, rgba(14,19,16,.86)); }
+.cta-in{ position:relative; z-index:2; }
+.cta .h2{ margin-top:clamp(20px,2.4vw,32px); max-width:16ch; }
+.cta-p{ margin-top:24px; max-width:48ch; color:var(--cream-so); font-weight:300; font-size:17.5px; }
+.cta-row{ display:flex; flex-wrap:wrap; gap:14px; margin-top:clamp(30px,3.4vw,46px); }
+.cta-fine{ margin-top:24px; font-size:14.5px; color:var(--cream-fa); }
+
+/* ---------- footer ---------- */
+.ft{ background:var(--olive-900); border-top:1px solid var(--line-d2); padding:clamp(60px,7vw,110px) 0 34px; }
+.ft-top{ display:grid; gap:clamp(34px,4vw,60px); }
+@media(min-width:900px){ .ft-top{ grid-template-columns:minmax(0,1.5fr) repeat(4,minmax(0,1fr)); } }
+.ft-brand .mono-m{ margin-bottom:20px; }
+.ft-brand p{ max-width:34ch; font-size:15px; color:var(--cream-so); font-weight:300; }
+.ft-col h4{ font-size:10.5px; font-weight:600; letter-spacing:.17em; text-transform:uppercase; color:var(--gold); }
+.ft-col ul{ margin-top:18px; display:grid; gap:11px; }
+.ft-col a, .ft-col li{ font-size:15px; color:var(--cream-so); text-decoration:none; font-weight:300; transition:color .3s var(--e); }
+.ft-col a:hover{ color:var(--cream); }
+.ft-bot{
+  margin-top:clamp(46px,5vw,80px); padding-top:24px; border-top:1px solid var(--line-d2);
+  display:flex; flex-wrap:wrap; gap:12px 26px; justify-content:space-between;
+  font-size:12.5px; color:var(--cream-fa);
+}
+.ft-bot a{ text-decoration:none; }
+.ft-bot a:hover{ color:var(--cream-so); }
+
+/* ---------- image failure fallback ---------- */
+img[data-failed]{ opacity:0; }
+.c-frame[data-fail], .gal-fig[data-fail], .spa-im[data-fail], .q-media[data-fail], .hero-media[data-fail], .cta-media[data-fail]{
+  background-color:var(--olive-700);
+  background-image:repeating-linear-gradient(135deg, rgba(191,160,90,.10) 0 1px, transparent 1px 11px);
+}
+
+/* ---------- responsive ---------- */
+/* short laptop screens: the pinned browser must never overflow its viewport */
+@media(min-width:1024px) and (max-height:840px){
+  .c-title{ font-size:clamp(28px,2.8vw,42px); }
+  .c-desc{ font-size:15.4px; margin-top:12px; }
+  .c-spec{ margin-top:20px; }
+  .c-spec > div{ padding-top:10px; padding-bottom:10px; }
+  .c-cols{ margin-top:18px; }
+  .c-cols li{ font-size:14px; padding:5px 0 5px 15px; }
+  .c-cols li::before{ top:13px; }
+  .c-frame{ height:min(54vh,440px); }
+  .ci-t{ font-size:17px; }
+  .cb-list button{ padding:10px 0 11px; }
+}
+@media(max-width:1180px){
+  .nav{ gap:16px; }
+  .nav a{ font-size:14px; }
+}
+@media(max-width:1023px){
+  .nav, .hdr .btn{ display:none; }
+  .burger{ display:grid; }
+  .mnav{ display:flex; }
+  .brand-1{ font-size:17px; }
+  .mono-m{ width:42px; height:42px; font-size:19px; }
+  .intake-grid{ grid-template-columns:repeat(2,1fr); }
+  .ib{ padding:20px 20px 20px 20px; border-top:1px solid var(--line-d2); }
+  .ib:first-child, .ib:nth-child(2){ border-top:0; }
+  .ib:nth-child(odd){ border-left:0; padding-left:0; }
+}
+@media(max-width:640px){
+  .intake-grid{ grid-template-columns:1fr; }
+  .ib{ border-left:0; padding-left:0; }
+  .ib:nth-child(2){ border-top:1px solid var(--line-d2); }
+  .c-spec{ grid-template-columns:1fr; }
+  .c-spec > div:nth-child(odd){ border-right:0; }
+  .c-spec > div:nth-child(even){ padding-left:0; }
+  .c-cols{ grid-template-columns:1fr; }
+  .hero{ padding-top:130px; }
+  .scroll-cue{ display:none; }
+  .steps li{ grid-template-columns:44px minmax(0,1fr); gap:14px; }
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  .intro{ display:none; }
+  .cb{ display:block; height:auto; min-height:0; }
+  .cb-index{ display:none; }
+  .cb-stage{ position:static; }
+  .course{ position:static; opacity:1; pointer-events:auto; display:block; padding:40px 0; border-top:1px solid var(--line-l2); }
+  .course:first-child{ border-top:0; padding-top:0; }
+  .c-media{ height:auto; margin-top:28px; }
+  .ln-i{ transform:none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ INTRO CURTAIN ============ -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-in">
+    <div class="intro-m">M</div>
+    <div class="intro-t">Mirage International</div>
+    <div class="intro-s">College of Beauty Therapy</div>
+    <div class="intro-r" id="introRule"></div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="hdr" id="hdr">
+  <a class="brand" href="#top" aria-label="Mirage International College, home">
+    <span class="mono-m" aria-hidden="true">M</span>
+    <span class="brand-txt">
+      <span class="brand-1">Mirage International</span>
+      <span class="brand-2">College of Beauty Therapy</span>
+    </span>
+  </a>
+  <nav class="nav" aria-label="Primary">
+    <a href="#courses">Courses</a>
+    <a href="#spa">The Spa</a>
+    <a href="#outcomes">Outcomes</a>
+    <a href="#openday">Open Day</a>
+    <a href="#fees">Fees</a>
+  </nav>
+  <a class="btn btn-gold btn-sm" href="#enquire">Enquire</a>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+</header>
+<div class="mnav" id="mnav">
+  <a href="#courses">Courses</a>
+  <a href="#spa">The Spa</a>
+  <a href="#outcomes">Outcomes</a>
+  <a href="#openday">Open Day</a>
+  <a href="#fees">Fees</a>
+  <a href="#enquire">Enquire</a>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-media" id="heroMedia">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <img id="heroImg" src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=2000&q=80" alt="A student therapist working on a client's back in the Mirage teaching spa">
+    <div class="hero-tint"></div>
+    <div class="hero-scrim"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="wrap">
+      <p class="eyebrow hero-eyebrow"><span class="rule" id="heroRule"></span>ITEC / VTCT Accredited · Harare</p>
+      <h1 class="h1 hero-h1" id="heroH1">
+        <span class="ln"><span class="ln-i">A world-class</span></span>
+        <span class="ln"><span class="ln-i">beauty career,</span></span>
+        <span class="ln"><span class="ln-i"><em class="em">beautifully</em> taught.</span></span>
+      </h1>
+      <p class="hero-p" data-hero-fade>Mirage International College is the first of its kind in Zimbabwe: an accredited beauty school where you train on real, paying clients inside a working spa.</p>
+      <div class="hero-cta" data-hero-fade>
+        <a class="btn btn-gold" href="#enquire" data-mag>Enquire on WhatsApp</a>
+        <a class="btn btn-line" href="#courses">Explore courses
+          <svg class="arw" width="17" height="10" viewBox="0 0 17 10" fill="none" aria-hidden="true"><path d="M0 5h15M11 1l4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg>
+        </a>
+      </div>
+      <p class="price-line" data-hero-fade>Diplomas from <b>US$2,000</b> · full kit included</p>
+    </div>
+  </div>
+
+  <div class="scroll-cue" data-hero-fade><i></i> Scroll</div>
+</section>
+
+<!-- ============ INTAKE BAR ============ -->
+<div class="intake">
+  <div class="wrap">
+    <div class="intake-grid">
+      <div class="ib"><span class="ib-k">Next intake</span><span class="ib-v">Monday 5 October 2026</span></div>
+      <div class="ib"><span class="ib-k">Accreditation</span><span class="ib-v">ITEC &amp; VTCT, United Kingdom</span></div>
+      <div class="ib"><span class="ib-k">Class size</span><span class="ib-v">Twelve students, two tutors</span></div>
+      <div class="ib"><span class="ib-k">Where you train</span><span class="ib-v">Mirage Spa, Fifth Street, Avondale</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ COURSES — pinned browser ============ -->
+<section class="courses on-paper pad" id="courses">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="rule"></span>The courses</p>
+      <h2 class="h2 split">Five ways in. <em class="em">One</em> standard of teaching.</h2>
+      <p class="lede">Two full diplomas, one advanced skin qualification and two short courses. Every one is written to the awarding body syllabus, taught in groups of twelve, and finished on the floor of a spa that takes paying bookings six days a week.</p>
+    </div>
+
+    <div class="cb" id="cb">
+      <aside class="cb-index">
+        <div class="cb-rail"><span class="cb-rail-fill" id="cbFill"></span></div>
+        <ol class="cb-list" id="cbList">
+          <li class="is-on"><button type="button" data-i="0"><span class="ci-n">01</span><span class="ci-t">Beauty Specialist Techniques</span><span class="ci-m">ITEC Level 2 · 9 months</span></button></li>
+          <li><button type="button" data-i="1"><span class="ci-n">02</span><span class="ci-t">Body &amp; Spa Therapy</span><span class="ci-m">ITEC Level 3 · 12 months</span></button></li>
+          <li><button type="button" data-i="2"><span class="ci-n">03</span><span class="ci-t">Advanced Facial &amp; Skin Science</span><span class="ci-m">VTCT Level 3 · 8 months</span></button></li>
+          <li><button type="button" data-i="3"><span class="ci-n">04</span><span class="ci-t">Nail Technology &amp; Gel Systems</span><span class="ci-m">Short course · 10 weeks</span></button></li>
+          <li><button type="button" data-i="4"><span class="ci-n">05</span><span class="ci-t">Lash &amp; Brow Artistry</span><span class="ci-m">Short course · 6 weeks</span></button></li>
+        </ol>
+        <p class="cb-hint">Scroll to move through the courses</p>
+      </aside>
+
+      <div class="cb-stage" id="cbStage">
+
+        <!-- 01 -->
+        <article class="course is-on" data-i="0">
+          <div class="c-detail">
+            <p class="c-award"><span class="c-n">01</span> ITEC Level 2 Diploma · Ofqual regulated</p>
+            <h3 class="c-title">Beauty Specialist Techniques</h3>
+            <p class="c-desc">The foundation year, and the one most of our students start with. You leave able to run a full treatment list on your own: facials, waxing, manicure, pedicure, lash and brow, make-up.</p>
+            <dl class="c-spec">
+              <div><dt>Duration</dt><dd>9 months, full-time</dd></div>
+              <div><dt>Timetable</dt><dd>Mon–Thu, 08:30–15:30</dd></div>
+              <div><dt>Next intake</dt><dd>5 October 2026</dd></div>
+              <div><dt>Fee</dt><dd><b>US$2,000</b></dd></div>
+            </dl>
+            <div class="c-cols">
+              <div>
+                <h4>What's included</h4>
+                <ul>
+                  <li>Full professional kit and two uniforms</li>
+                  <li>ITEC registration and examination fees</li>
+                  <li>120 supervised client hours on the spa floor</li>
+                  <li>Anatomy, physiology and salon hygiene units</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Where it takes you</h4>
+                <ul>
+                  <li>Salon or day-spa therapist</li>
+                  <li>Hotel spa assistant therapist</li>
+                  <li>Mobile and home-studio practice</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <figure class="c-media">
+            <div class="c-frame">
+              <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80" alt="Treatment couch prepared with folded towels in the teaching spa">
+            </div>
+            <figcaption>Level 2 students prepare room three before the first booking of the day.</figcaption>
+          </figure>
+        </article>
+
+        <!-- 02 -->
+        <article class="course" data-i="1">
+          <div class="c-detail">
+            <p class="c-award"><span class="c-n">02</span> ITEC Level 3 Diploma · Ofqual regulated</p>
+            <h3 class="c-title">Body &amp; Spa Therapy</h3>
+            <p class="c-desc">The qualification hotels and cruise lines ask for by name. Massage is the core of it, taught slowly and properly, with the spa's wet room and heat therapies used from the third month.</p>
+            <dl class="c-spec">
+              <div><dt>Duration</dt><dd>12 months, full-time</dd></div>
+              <div><dt>Timetable</dt><dd>Mon–Fri, 08:30–15:30</dd></div>
+              <div><dt>Next intake</dt><dd>1 February 2027</dd></div>
+              <div><dt>Fee</dt><dd><b>US$2,850</b></dd></div>
+            </dl>
+            <div class="c-cols">
+              <div>
+                <h4>What's included</h4>
+                <ul>
+                  <li>Swedish, aromatherapy, hot stone, Indian head</li>
+                  <li>Body wraps, exfoliation and the wet room</li>
+                  <li>240 supervised client hours before assessment</li>
+                  <li>Kit, oils, ITEC registration and exam fees</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Where it takes you</h4>
+                <ul>
+                  <li>Hotel and lodge spa therapist</li>
+                  <li>Cruise ship spa contracts</li>
+                  <li>Your own treatment practice</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <figure class="c-media">
+            <div class="c-frame">
+              <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=80" alt="A therapist performing a back massage on a client">
+            </div>
+            <figcaption>Third-term massage assessment, observed by two tutors.</figcaption>
+          </figure>
+        </article>
+
+        <!-- 03 -->
+        <article class="course" data-i="2">
+          <div class="c-detail">
+            <p class="c-award"><span class="c-n">03</span> VTCT Level 3 Diploma · Ofqual regulated</p>
+            <h3 class="c-title">Advanced Facial &amp; Skin Science</h3>
+            <p class="c-desc">For therapists who already hold Level 2 and want the clinical end of the trade. Skin analysis first, machinery second. You will consult on real skins from week two under a tutor's eye.</p>
+            <dl class="c-spec">
+              <div><dt>Duration</dt><dd>8 months, three days a week</dd></div>
+              <div><dt>Entry</dt><dd>Level 2 Beauty or equivalent</dd></div>
+              <div><dt>Next intake</dt><dd>5 October 2026</dd></div>
+              <div><dt>Fee</dt><dd><b>US$2,600</b></dd></div>
+            </dl>
+            <div class="c-cols">
+              <div>
+                <h4>What's included</h4>
+                <ul>
+                  <li>Skin analysis, Fitzpatrick typing, consultation</li>
+                  <li>Chemical peels, microneedling, LED and galvanic</li>
+                  <li>160 supervised client hours in the skin room</li>
+                  <li>VTCT registration, exam fees and product allowance</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Where it takes you</h4>
+                <ul>
+                  <li>Aesthetics and skin clinic therapist</li>
+                  <li>Brand educator or product trainer</li>
+                  <li>Senior therapist, medi-spa</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <figure class="c-media">
+            <div class="c-frame">
+              <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1200&q=80" alt="Skincare products and tools laid out for a facial treatment">
+            </div>
+            <figcaption>The skin room, where every consultation is written up and filed.</figcaption>
+          </figure>
+        </article>
+
+        <!-- 04 -->
+        <article class="course" data-i="3">
+          <div class="c-detail">
+            <p class="c-award"><span class="c-n">04</span> Mirage Short Course · Centre certificate</p>
+            <h3 class="c-title">Nail Technology &amp; Gel Systems</h3>
+            <p class="c-desc">Ten evenings a month for ten weeks, built for people already in work. Small groups of eight, one tutor, and enough supervised hours to take paying clients the week you finish.</p>
+            <dl class="c-spec">
+              <div><dt>Duration</dt><dd>10 weeks, evenings</dd></div>
+              <div><dt>Timetable</dt><dd>Tue &amp; Thu, 17:30–20:00</dd></div>
+              <div><dt>Next intake</dt><dd>First Monday monthly</dd></div>
+              <div><dt>Fee</dt><dd><b>US$780</b></dd></div>
+            </dl>
+            <div class="c-cols">
+              <div>
+                <h4>What's included</h4>
+                <ul>
+                  <li>Manicure, pedicure and nail anatomy</li>
+                  <li>Gel polish, BIAB, acrylic and hard gel</li>
+                  <li>60 supervised client hours in the nail bar</li>
+                  <li>Starter kit: lamp, files, gels, forms</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Where it takes you</h4>
+                <ul>
+                  <li>Nail technician, salon or nail bar</li>
+                  <li>Home studio and mobile work</li>
+                  <li>An add-on service to an existing list</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <figure class="c-media">
+            <div class="c-frame">
+              <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80" alt="Close-up of a manicure in progress at the nail bar">
+            </div>
+            <figcaption>The nail bar runs walk-in bookings on Thursday evenings.</figcaption>
+          </figure>
+        </article>
+
+        <!-- 05 -->
+        <article class="course" data-i="4">
+          <div class="c-detail">
+            <p class="c-award"><span class="c-n">05</span> Mirage Short Course · Centre certificate</p>
+            <h3 class="c-title">Lash &amp; Brow Artistry</h3>
+            <p class="c-desc">Six Saturdays. The highest-margin service in the trade and the fastest to add to an existing column, taught with the same insistence on hygiene as the diplomas.</p>
+            <dl class="c-spec">
+              <div><dt>Duration</dt><dd>6 weeks, Saturdays</dd></div>
+              <div><dt>Timetable</dt><dd>Sat, 09:00–14:00</dd></div>
+              <div><dt>Next intake</dt><dd>17 October 2026</dd></div>
+              <div><dt>Fee</dt><dd><b>US$540</b></dd></div>
+            </dl>
+            <div class="c-cols">
+              <div>
+                <h4>What's included</h4>
+                <ul>
+                  <li>Classic, hybrid and Russian volume lashes</li>
+                  <li>Lash lift, tinting and brow lamination</li>
+                  <li>45 supervised client hours on live models</li>
+                  <li>Adhesives, tweezers, tray set and mannequin</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Where it takes you</h4>
+                <ul>
+                  <li>Lash artist, salon or private studio</li>
+                  <li>Weekend income alongside other work</li>
+                  <li>Brow bar residency</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <figure class="c-media">
+            <div class="c-frame">
+              <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80" alt="Brushes and tools arranged for lash and brow work">
+            </div>
+            <figcaption>Saturday lash intake, working on live models from week two.</figcaption>
+          </figure>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE WORKING SPA ============ -->
+<section class="spa pad" id="spa">
+  <div class="wrap">
+    <div class="spa-grid">
+      <div class="spa-copy">
+        <p class="eyebrow"><span class="rule"></span>The proposition</p>
+        <h2 class="h2 split">Your hands are on a real client in <em class="em">week five</em>.</h2>
+        <p class="body">Mirage Spa on Fifth Street is not a practice room with a plastic couch in it. It is a working spa with six treatment rooms, a price list, a booking diary and around forty paying clients a week. The college sits above it.</p>
+        <p class="body">Students move onto the floor in week five, supervised, on discounted treatments the public books like any other. They learn what a difficult back feels like, how to hold a consultation, how to keep a room turning over, and what to say when a client is unhappy. None of that can be taught on a mannequin.</p>
+      </div>
+      <div class="spa-media">
+        <figure class="spa-im spa-im-1 reveal-img" data-para="-7">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=1200&q=80" alt="A facial treatment underway in a softly lit spa room">
+        </figure>
+        <figure class="spa-im spa-im-2 reveal-img" data-para="6">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1519415943484-9fa1873496d4?auto=format&fit=crop&w=1000&q=80" alt="The reception and retail shelf of the Mirage teaching spa">
+        </figure>
+      </div>
+    </div>
+
+    <ol class="floor">
+      <li>
+        <span class="fl-n">Week 01–04</span>
+        <h3>The practical room</h3>
+        <p>Theory, anatomy and technique on each other. Nobody touches a paying client until the tutor signs the sheet.</p>
+      </li>
+      <li>
+        <span class="fl-n">Week 05</span>
+        <h3>First supervised client</h3>
+        <p>One treatment, one tutor in the room, one written consultation. The client pays a student rate and knows exactly who they are booking.</p>
+      </li>
+      <li>
+        <span class="fl-n">Week 12</span>
+        <h3>The full list</h3>
+        <p>Facials, waxing, nails and brows across two rooms. You start being booked by name, and repeat clients begin to build.</p>
+      </li>
+      <li>
+        <span class="fl-n">Week 30</span>
+        <h3>Your own column</h3>
+        <p>A half-day column in the diary, run start to finish: greeting, consultation, treatment, retail, rebooking, room turnaround.</p>
+      </li>
+    </ol>
+
+    <p class="spa-stats">A Level 2 graduate leaves with <b>120 supervised client hours</b>. A Level 3 graduate leaves with <b>240</b>. Six rooms, six days a week, and every hour countersigned.</p>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="gal pad" id="gallery">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="rule"></span>Inside the college</p>
+      <h2 class="h2 split">A calm building, run like a business.</h2>
+      <p class="lede">Two teaching rooms, a skin room, a nail bar, a wet room and a spa floor. Photographed on an ordinary Tuesday, not a prospectus shoot.</p>
+    </div>
+
+    <div class="gal-grid">
+      <figure class="gal-fig g1 reveal-img">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1400&q=80" alt="The main teaching floor with treatment stations">
+        <figcaption class="gal-cap">Teaching floor</figcaption>
+      </figure>
+      <figure class="gal-fig g2 reveal-img">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=1200&q=80" alt="A quiet treatment room with a made-up couch">
+        <figcaption class="gal-cap">Room two</figcaption>
+      </figure>
+      <figure class="gal-fig g3 reveal-img">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=1000&q=80" alt="A student applying a facial mask to a client">
+        <figcaption class="gal-cap">Skin room</figcaption>
+      </figure>
+      <figure class="gal-fig g4 reveal-img">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1522337094846-8a818192de1f?auto=format&fit=crop&w=1200&q=80" alt="Towels, oils and tools laid out on a trolley">
+        <figcaption class="gal-cap">Trolley setup</figcaption>
+      </figure>
+      <figure class="gal-fig g5 reveal-img">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1620331311520-246422fd82f9?auto=format&fit=crop&w=1200&q=80" alt="The nail bar with lamps and gel colours">
+        <figcaption class="gal-cap">Nail bar</figcaption>
+      </figure>
+      <figure class="gal-fig g6 reveal-img">
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=1000&q=80" alt="A massage in progress in the spa's wet room wing">
+        <figcaption class="gal-cap">Wet room wing</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUTCOMES ============ -->
+<section class="out on-paper pad" id="outcomes">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="rule"></span>Outcomes</p>
+      <h2 class="h2 split">Eleven years of graduates, and where they went.</h2>
+      <p class="lede">We publish these figures every January, taken from our own placement register and from ITEC's results returns. They are not projections.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <p class="stat-n"><span data-count="412">0</span></p>
+        <p class="stat-l">Graduates since 2015</p>
+        <p class="stat-d">Full diplomas awarded across ITEC and VTCT.</p>
+      </div>
+      <div class="stat">
+        <p class="stat-n"><span data-count="68400" data-sep="1">0</span></p>
+        <p class="stat-l">Client hours logged</p>
+        <p class="stat-d">Supervised hours worked on paying clients in the teaching spa.</p>
+      </div>
+      <div class="stat">
+        <p class="stat-n"><span data-count="94">0</span><span class="pc">%</span></p>
+        <p class="stat-l">First-time pass rate</p>
+        <p class="stat-d">ITEC written and practical, 2023–2025 cohorts combined.</p>
+      </div>
+      <div class="stat">
+        <p class="stat-n"><span data-count="87">0</span><span class="pc">%</span></p>
+        <p class="stat-l">In work within six months</p>
+        <p class="stat-d">Employed, self-employed or on a ship contract.</p>
+      </div>
+    </div>
+
+    <div class="out-2">
+      <div class="emp">
+        <h3>Where our graduates work</h3>
+        <ul>
+          <li>Meikles Hotel Spa <span>Harare</span></li>
+          <li>Amanzi Spa <span>Highlands</span></li>
+          <li>Victoria Falls Safari Lodge <span>Victoria Falls</span></li>
+          <li>Rainbow Towers Wellness <span>Harare</span></li>
+          <li>Elephant Hills Resort Spa <span>Victoria Falls</span></li>
+          <li>Royal Caribbean &amp; Celebrity <span>Ship spa contracts</span></li>
+          <li>Emirates Palace Spa <span>Abu Dhabi</span></li>
+          <li>Independent studios <span>Borrowdale · Bulawayo · Mutare</span></li>
+        </ul>
+      </div>
+
+      <figure class="quote">
+        <div class="q-media reveal-img">
+          <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=900&q=80" alt="Portrait of Tendai Marowa, a Mirage graduate">
+        </div>
+        <blockquote>“I had done two hundred and forty real treatments before I ever went for an interview. The spa manager stopped asking questions halfway through.”</blockquote>
+        <figcaption>
+          <b>Tendai Marowa</b>
+          ITEC Level 3, class of 2023 · now Senior Therapist, Elephant Hills Resort Spa
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPEN DAY + ENROLMENT ============ -->
+<section class="oday on-paper pad" id="openday">
+  <div class="wrap">
+    <div class="od-grid">
+      <div>
+        <p class="eyebrow"><span class="rule"></span>Open day</p>
+        <p class="od-date">Saturday<br>26 September</p>
+        <p class="od-time">10:00 – 14:00 · 14 Fifth Street, Avondale, Harare · No booking needed, but it helps us plan.</p>
+        <ul class="od-list">
+          <li><i>10:00</i> Doors open, tour of the teaching spa and the six rooms</li>
+          <li><i>11:00</i> Talk: what the ITEC Level 2 year actually looks like</li>
+          <li><i>11:45</i> Meet the tutors, and two graduates who now work in the trade</li>
+          <li><i>12:30</i> Sample treatment: fifteen-minute facial or hand massage</li>
+          <li><i>13:15</i> Fees, payment plans and kit, with the registrar</li>
+        </ul>
+        <div class="od-cta">
+          <a class="btn btn-gold" href="#enquire" data-mag>Tell us you're coming</a>
+          <a class="btn btn-line btn-line--ink" href="#fees">See the fees
+            <svg class="arw" width="17" height="10" viewBox="0 0 17 10" fill="none" aria-hidden="true"><path d="M0 5h15M11 1l4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg>
+          </a>
+        </div>
+        <p class="od-addr">Mirage International College<br>14 Fifth Street, Avondale, Harare<br>+263 77 419 6280 · admissions@mirage.ac.zw</p>
+      </div>
+
+      <div class="steps">
+        <h3>Enrolling, in four steps</h3>
+        <ol>
+          <li>
+            <span class="st-n">01</span>
+            <div>
+              <p class="st-t">Enquire</p>
+              <p class="st-d">WhatsApp or email the registrar. Tell us which course and which intake. You will get the full prospectus and the syllabus as a PDF the same day.</p>
+            </div>
+          </li>
+          <li>
+            <span class="st-n">02</span>
+            <div>
+              <p class="st-t">Visit, or call</p>
+              <p class="st-d">Twenty minutes with a tutor, in person or on the phone. We look at your schooling, your hours and whether Level 2 or a short course is the right start.</p>
+            </div>
+          </li>
+          <li>
+            <span class="st-n">03</span>
+            <div>
+              <p class="st-t">Place your deposit</p>
+              <p class="st-d">US$400 on the diplomas, US$150–200 on short courses. It holds one of the twelve places and comes off the fee. Refundable up to two weeks before the intake.</p>
+            </div>
+          </li>
+          <li>
+            <span class="st-n">04</span>
+            <div>
+              <p class="st-t">Kit fitting and induction</p>
+              <p class="st-d">The Friday before term. Uniform fitted, kit issued and signed for, spa floor rules, and your first timetable.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEES ============ -->
+<section class="fees on-paper pad" id="fees">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="rule"></span>Fees &amp; payment plans</p>
+      <h2 class="h2 split">One fee. No surprises after it.</h2>
+      <p class="lede">The figure below is what you pay in total. Kit, uniform, awarding-body registration and examination fees are inside it. Instalment plans are interest free and set up with the registrar at enrolment.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="fees-t">
+        <thead>
+          <tr>
+            <th scope="col">Course</th>
+            <th scope="col">Paid in full</th>
+            <th scope="col">Plan A</th>
+            <th scope="col">Plan B</th>
+            <th scope="col">Deposit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="f-name">Beauty Specialist Techniques</span><span class="f-meta">ITEC Level 2 · 9 months</span></td>
+            <td><span class="f-big">US$2,000</span><span class="f-sub">2.5% off if paid by intake day</span></td>
+            <td><span class="f-big">3 × US$667</span><span class="f-sub">Monthly, terms 1–3</span></td>
+            <td><span class="f-big">6 × US$334</span><span class="f-sub">Monthly, over the year</span></td>
+            <td><span class="f-big">US$400</span><span class="f-sub">Comes off the fee</span></td>
+          </tr>
+          <tr>
+            <td><span class="f-name">Body &amp; Spa Therapy</span><span class="f-meta">ITEC Level 3 · 12 months</span></td>
+            <td><span class="f-big">US$2,850</span><span class="f-sub">2.5% off if paid by intake day</span></td>
+            <td><span class="f-big">3 × US$950</span><span class="f-sub">Monthly, terms 1–3</span></td>
+            <td><span class="f-big">6 × US$475</span><span class="f-sub">Monthly, over the year</span></td>
+            <td><span class="f-big">US$400</span><span class="f-sub">Comes off the fee</span></td>
+          </tr>
+          <tr>
+            <td><span class="f-name">Advanced Facial &amp; Skin Science</span><span class="f-meta">VTCT Level 3 · 8 months</span></td>
+            <td><span class="f-big">US$2,600</span><span class="f-sub">2.5% off if paid by intake day</span></td>
+            <td><span class="f-big">3 × US$867</span><span class="f-sub">Monthly, terms 1–3</span></td>
+            <td><span class="f-big">6 × US$434</span><span class="f-sub">Monthly, over the course</span></td>
+            <td><span class="f-big">US$400</span><span class="f-sub">Comes off the fee</span></td>
+          </tr>
+          <tr>
+            <td><span class="f-name">Nail Technology &amp; Gel Systems</span><span class="f-meta">Short course · 10 weeks</span></td>
+            <td><span class="f-big">US$780</span><span class="f-sub">Kit included</span></td>
+            <td><span class="f-big">2 × US$390</span><span class="f-sub">Week 1 and week 5</span></td>
+            <td><span class="f-big">—</span><span class="f-sub">Not offered on short courses</span></td>
+            <td><span class="f-big">US$200</span><span class="f-sub">Comes off the fee</span></td>
+          </tr>
+          <tr>
+            <td><span class="f-name">Lash &amp; Brow Artistry</span><span class="f-meta">Short course · 6 weeks</span></td>
+            <td><span class="f-big">US$540</span><span class="f-sub">Kit included</span></td>
+            <td><span class="f-big">2 × US$270</span><span class="f-sub">Week 1 and week 4</span></td>
+            <td><span class="f-big">—</span><span class="f-sub">Not offered on short courses</span></td>
+            <td><span class="f-big">US$150</span><span class="f-sub">Comes off the fee</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul class="fees-note">
+      <li>Kit and two uniforms are included on every course. You do not buy a separate kit list.</li>
+      <li>ITEC and VTCT registration and examination fees are included. A resit, if you need one, is US$60.</li>
+      <li>Instalment plans carry no interest and no administration charge.</li>
+      <li>Deposits are refundable in full up to fourteen days before the intake date.</li>
+      <li>Sibling and returning-student discount: 10% off a second course taken within two years.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CLOSING CTA ============ -->
+<section class="cta pad" id="enquire">
+  <div class="cta-media">
+    <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+    <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=1800&q=80" alt="A softly lit corridor of treatment rooms">
+  </div>
+  <div class="cta-scrim"></div>
+  <div class="cta-in">
+    <div class="wrap">
+      <p class="eyebrow"><span class="rule"></span>Enrol</p>
+      <h2 class="h2 split">Twelve places. The next intake is <em class="em">5 October</em>.</h2>
+      <p class="cta-p">Send us one message and the registrar will call you back the same working day. There is no application fee and no obligation. If a different course suits you better, we will say so.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="#" data-mag>Enquire on WhatsApp</a>
+        <a class="btn btn-line" href="#openday">Come to the open day
+          <svg class="arw" width="17" height="10" viewBox="0 0 17 10" fill="none" aria-hidden="true"><path d="M0 5h15M11 1l4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg>
+        </a>
+      </div>
+      <p class="cta-fine">Diplomas from US$2,000 · full kit included · interest-free payment plans</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <span class="mono-m" aria-hidden="true">M</span>
+        <p>An accredited college of beauty therapy in Avondale, Harare, teaching above a working spa since 2015.</p>
+      </div>
+      <div class="ft-col">
+        <h4>Courses</h4>
+        <ul>
+          <li><a href="#courses">Beauty Specialist Techniques</a></li>
+          <li><a href="#courses">Body &amp; Spa Therapy</a></li>
+          <li><a href="#courses">Advanced Facial &amp; Skin</a></li>
+          <li><a href="#courses">Nail Technology</a></li>
+          <li><a href="#courses">Lash &amp; Brow Artistry</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>The college</h4>
+        <ul>
+          <li><a href="#spa">The teaching spa</a></li>
+          <li><a href="#outcomes">Outcomes</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#fees">Fees &amp; plans</a></li>
+          <li><a href="#openday">Enrolment</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Visit</h4>
+        <ul>
+          <li>14 Fifth Street</li>
+          <li>Avondale, Harare</li>
+          <li>Mon–Fri 08:00–17:00</li>
+          <li>Sat 09:00–13:00</li>
+          <li><a href="#openday">Open day, 26 September</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+263774196280">+263 77 419 6280</a></li>
+          <li><a href="#enquire">WhatsApp the registrar</a></li>
+          <li><a href="mailto:admissions@mirage.ac.zw">admissions@mirage.ac.zw</a></li>
+          <li><a href="#enquire">Request the prospectus</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 Mirage International College of Beauty Therapy</span>
+      <span>ITEC centre 1187/ZW · VTCT centre 92341</span>
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Student handbook</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGSAP = !!(window.gsap && window.ScrollTrigger);
+  if (hasGSAP) gsap.registerPlugin(ScrollTrigger);
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!REDUCED) window.scrollTo(0, 0);
+
+  /* ---------------------------------------------------------
+     0 · image fallback — a missing placeholder becomes a
+         textured olive plate rather than a broken icon
+     --------------------------------------------------------- */
+  Array.prototype.forEach.call(document.images, function(img){
+    var mark = function(){
+      img.setAttribute('data-failed','1');
+      var p = img.parentElement;
+      if (p) p.setAttribute('data-fail','1');
+    };
+    if (img.complete && img.naturalWidth === 0) mark();
+    img.addEventListener('error', mark);
+  });
+
+  /* ---------------------------------------------------------
+     1 · Lenis smooth scroll, wired into ScrollTrigger
+     --------------------------------------------------------- */
+  var lenis = null;
+  if (!REDUCED && window.Lenis && hasGSAP) {
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  function goTo(target, offset){
+    if (lenis) lenis.scrollTo(target, { offset: offset || 0, duration: 1.15 });
+    else {
+      var y = (typeof target === 'number') ? target
+            : target.getBoundingClientRect().top + window.pageYOffset + (offset || 0);
+      window.scrollTo({ top: y, behavior: REDUCED ? 'auto' : 'smooth' });
+    }
+  }
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href');
+    if (id === '#' || id.length < 2) return;
+    var el = document.querySelector(id);
+    if (!el) return;
+    e.preventDefault();
+    closeMenu();
+    goTo(el, -78);
+  });
+
+  /* ---------------------------------------------------------
+     2 · header state + mobile menu
+     --------------------------------------------------------- */
+  var hdr = document.getElementById('hdr');
+  var mnav = document.getElementById('mnav');
+  var burger = document.getElementById('burger');
+
+  function closeMenu(){
+    hdr.classList.remove('menu-open');
+    mnav.classList.remove('is-open');
+    burger.setAttribute('aria-expanded','false');
+  }
+  burger.addEventListener('click', function(){
+    var open = !mnav.classList.contains('is-open');
+    hdr.classList.toggle('menu-open', open);
+    mnav.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+  });
+
+  if (hasGSAP) {
+    ScrollTrigger.create({
+      start: 70, end: 99999,
+      onToggle: function(self){ hdr.classList.toggle('is-solid', self.isActive); }
+    });
+  } else {
+    window.addEventListener('scroll', function(){
+      hdr.classList.toggle('is-solid', window.pageYOffset > 70);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     3 · hand-rolled line splitter  →  overflow-hidden masks
+     --------------------------------------------------------- */
+  function wordify(root){
+    var frag = document.createDocumentFragment();
+    function walk(node, cls){
+      Array.prototype.slice.call(node.childNodes).forEach(function(n){
+        if (n.nodeType === 3) {
+          n.textContent.split(/(\s+)/).forEach(function(t){
+            if (!t) return;
+            if (!t.trim()) { frag.appendChild(document.createTextNode(' ')); return; }
+            var s = document.createElement('span');
+            s.className = 'w' + (cls ? ' ' + cls : '');
+            s.textContent = t;
+            frag.appendChild(s);
+          });
+        } else if (n.nodeType === 1) {
+          walk(n, n.tagName === 'EM' ? 'em' : (n.className || ''));
+        }
+      });
+    }
+    walk(root, '');
+    root.innerHTML = '';
+    root.appendChild(frag);
+  }
+
+  function splitLines(el){
+    if (!el.dataset.orig) el.dataset.orig = el.innerHTML;
+    else el.innerHTML = el.dataset.orig;
+
+    wordify(el);
+    var words = Array.prototype.slice.call(el.querySelectorAll('.w'));
+    if (!words.length) return;
+
+    var lines = [], cur = [], top = null;
+    words.forEach(function(w){
+      var t = Math.round(w.offsetTop);
+      if (top === null || Math.abs(t - top) > 4) {
+        if (cur.length) lines.push(cur);
+        cur = []; top = t;
+      }
+      cur.push(w);
+    });
+    if (cur.length) lines.push(cur);
+
+    el.innerHTML = '';
+    lines.forEach(function(ws){
+      var outer = document.createElement('span'); outer.className = 'ln';
+      var inner = document.createElement('span'); inner.className = 'ln-i';
+      ws.forEach(function(w, i){
+        if (i) inner.appendChild(document.createTextNode(' '));
+        inner.appendChild(w);
+      });
+      outer.appendChild(inner);
+      el.appendChild(outer);
+    });
+  }
+
+  var headingTriggers = [];
+  function buildHeadings(){
+    headingTriggers.forEach(function(t){ t.kill(); });
+    headingTriggers = [];
+    if (!hasGSAP || REDUCED) {
+      document.querySelectorAll('.split').forEach(function(el){
+        if (el.dataset.orig) el.innerHTML = el.dataset.orig;
+      });
+      return;
+    }
+    document.querySelectorAll('.split').forEach(function(el){
+      splitLines(el);
+      var tw = gsap.fromTo(el.querySelectorAll('.ln-i'),
+        { yPercent: 112 },
+        {
+          yPercent: 0, duration: 1.15, ease: 'power4.out', stagger: 0.075,
+          scrollTrigger: { trigger: el, start: 'top 88%' }
+        });
+      if (tw.scrollTrigger) headingTriggers.push(tw.scrollTrigger);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     4 · page-load curtain, then the hero settles
+     --------------------------------------------------------- */
+  var intro = document.getElementById('intro');
+  function runIntro(){
+    if (!hasGSAP || REDUCED) {
+      if (intro) intro.parentNode.removeChild(intro);
+      return;
+    }
+    if (lenis) lenis.stop();
+    else document.documentElement.style.overflow = 'hidden';
+
+    var tl = gsap.timeline({
+      onComplete: function(){
+        intro.parentNode.removeChild(intro);
+        document.documentElement.style.overflow = '';
+        if (lenis) lenis.start();
+        ScrollTrigger.refresh();
+      }
+    });
+
+    tl.from('.intro-m', { scale: .82, opacity: 0, duration: .95, ease: 'power3.out' })
+      .from('.intro-t', { yPercent: 40, opacity: 0, duration: .8, ease: 'power3.out' }, '-=.6')
+      .from('.intro-s', { opacity: 0, duration: .6, ease: 'power2.out' }, '-=.5')
+      .to('#introRule', { scaleX: 1, duration: .9, ease: 'power3.inOut' }, '-=.45')
+      .to('.intro-in', { opacity: 0, y: -14, duration: .5, ease: 'power2.in' }, '+=.18')
+      .to(intro, { yPercent: -100, duration: 1.05, ease: 'power4.inOut' }, '-=.18')
+      .from('#heroImg', { scale: 1.14, duration: 1.8, ease: 'power3.out' }, '<')
+      .from('#heroRule', { scaleX: 0, duration: .8, ease: 'power3.out' }, '-=1.35')
+      .from('#heroH1 .ln-i', { yPercent: 112, duration: 1.2, ease: 'power4.out', stagger: .085 }, '-=1.5')
+      .from('[data-hero-fade]', { y: 26, opacity: 0, duration: .95, ease: 'power3.out', stagger: .08 }, '-=.95');
+  }
+
+  /* ---------------------------------------------------------
+     5 · SIGNATURE — pinned course browser
+         scroll drives the index; panels cross-dissolve
+     --------------------------------------------------------- */
+  var cb = document.getElementById('cb');
+  var courses = Array.prototype.slice.call(document.querySelectorAll('#cbStage .course'));
+  var items = Array.prototype.slice.call(document.querySelectorAll('#cbList li'));
+  var fill = document.getElementById('cbFill');
+  var current = 0;
+  var pinST = null;
+
+  function setCourse(i, instant){
+    if (i === current || !courses[i]) return;
+    var prev = courses[current];
+    current = i;
+
+    items.forEach(function(li, k){ li.classList.toggle('is-on', k === i); });
+
+    var next = courses[i];
+    courses.forEach(function(c){ c.classList.toggle('is-on', c === next); });
+
+    if (!hasGSAP) return;
+    if (instant) {
+      gsap.set(prev, { opacity: 0 });
+      gsap.set(next, { opacity: 1 });
+      return;
+    }
+    gsap.to(prev, { opacity: 0, duration: .5, ease: 'power2.inOut', overwrite: true });
+    gsap.fromTo(next, { opacity: 0 }, { opacity: 1, duration: .68, ease: 'power2.out', overwrite: true });
+    gsap.fromTo(next.querySelector('.c-frame img'),
+      { scale: 1.13 }, { scale: 1, duration: 1.5, ease: 'power3.out', overwrite: true });
+    gsap.fromTo(next.querySelectorAll('.c-detail > *'),
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: .8, ease: 'power3.out', stagger: .055, delay: .06, overwrite: true });
+  }
+
+  function buildCourseBrowser(){
+    if (pinST) { pinST.kill(true); pinST = null; }
+    var n = courses.length;
+
+    var desktop = window.matchMedia('(min-width:1024px)').matches;
+    if (!hasGSAP || REDUCED || !desktop) {
+      cb.classList.add('cb--stacked');
+      courses.forEach(function(c){ c.classList.add('is-on'); if (hasGSAP) gsap.set(c, { clearProps: 'opacity' }); });
+      return;
+    }
+
+    cb.classList.remove('cb--stacked');
+    courses.forEach(function(c, k){ gsap.set(c, { opacity: k === 0 ? 1 : 0 }); c.classList.toggle('is-on', k === 0); });
+    items.forEach(function(li, k){ li.classList.toggle('is-on', k === 0); });
+    current = 0;
+
+    pinST = ScrollTrigger.create({
+      trigger: cb,
+      start: 'top top+=92',
+      end: function(){ return '+=' + Math.round(window.innerHeight * 0.92 * n); },
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      scrub: true,
+      snap: {
+        snapTo: 1 / (n - 1),
+        duration: { min: 0.18, max: 0.5 },
+        delay: 0.03,
+        ease: 'power2.inOut'
+      },
+      onUpdate: function(self){
+        gsap.set(fill, { scaleY: self.progress });
+        setCourse(Math.round(self.progress * (n - 1)));
+      }
+    });
+
+    items.forEach(function(li, k){
+      var btn = li.querySelector('button');
+      btn.onclick = function(){
+        if (!pinST) { goTo(courses[k], -100); return; }
+        var target = pinST.start + (pinST.end - pinST.start) * (k / (n - 1));
+        goTo(target + 2);
+      };
+    });
+  }
+
+  /* ---------------------------------------------------------
+     6 · count-ups on the outcome figures
+     --------------------------------------------------------- */
+  function buildCounts(){
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var end = parseFloat(el.dataset.count);
+      var sep = el.dataset.sep === '1';
+      var fmt = function(v){
+        var s = Math.round(v).toString();
+        return sep ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : s;
+      };
+      if (!hasGSAP || REDUCED) { el.textContent = fmt(end); return; }
+      el.textContent = fmt(0);
+      var o = { v: 0 };
+      ScrollTrigger.create({
+        trigger: el, start: 'top 90%', once: true,
+        onEnter: function(){
+          gsap.to(o, {
+            v: end, duration: 2.2, ease: 'power3.out',
+            onUpdate: function(){ el.textContent = fmt(o.v); }
+          });
+        }
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     7 · clip-path image reveals + parallax layers
+     --------------------------------------------------------- */
+  function buildReveals(){
+    if (!hasGSAP || REDUCED) return;
+
+    document.querySelectorAll('.reveal-img').forEach(function(el){
+      var img = el.querySelector('img');
+      gsap.fromTo(el,
+        { clipPath: 'inset(0% 0% 100% 0%)' },
+        { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.35, ease: 'power4.inOut',
+          scrollTrigger: { trigger: el, start: 'top 90%' } });
+      if (img) {
+        gsap.fromTo(img, { scale: 1.24 },
+          { scale: 1, duration: 1.7, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 90%' } });
+      }
+    });
+
+    document.querySelectorAll('[data-para]').forEach(function(el){
+      gsap.to(el, {
+        yPercent: parseFloat(el.dataset.para), ease: 'none',
+        scrollTrigger: { trigger: el.closest('section') || el, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    });
+
+    gsap.to('#heroImg', {
+      yPercent: 9, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+    gsap.to('.cta-media img', {
+      yPercent: 7, ease: 'none',
+      scrollTrigger: { trigger: '.cta', start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+
+    /* supporting: staggered rise on lists and blocks */
+    [['.intake-grid .ib', .06], ['.floor li', .09], ['.stat', .08],
+     ['.emp li', .045], ['.steps li', .07], ['.fees-t tbody tr', .05],
+     ['.od-list li', .05], ['.fees-note li', .05]].forEach(function(pair){
+      var els = document.querySelectorAll(pair[0]);
+      if (!els.length) return;
+      gsap.from(els, {
+        y: 26, opacity: 0, duration: .95, ease: 'power3.out', stagger: pair[1],
+        scrollTrigger: { trigger: els[0].closest('section') || els[0], start: 'top 78%' }
+      });
+    });
+
+    gsap.utils.toArray('.eyebrow .rule').forEach(function(r){
+      gsap.from(r, {
+        scaleX: 0, duration: .9, ease: 'power3.out',
+        scrollTrigger: { trigger: r, start: 'top 92%' }
+      });
+    });
+
+    gsap.utils.toArray('.lede, .spa-copy p.body, .cta-p, .od-time, .quote blockquote, .quote figcaption, .spa-stats, .od-date')
+      .forEach(function(el){
+        gsap.from(el, {
+          y: 22, opacity: 0, duration: 1, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 90%' }
+        });
+      });
+  }
+
+  /* ---------------------------------------------------------
+     8 · magnetic primary buttons (desktop, pointer only)
+     --------------------------------------------------------- */
+  function buildMagnetic(){
+    if (!hasGSAP || REDUCED) return;
+    if (!window.matchMedia('(hover:hover) and (min-width:1024px)').matches) return;
+    document.querySelectorAll('[data-mag]').forEach(function(el){
+      var tx = 0, ty = 0, cx = 0, cy = 0;
+      el.addEventListener('mousemove', function(e){
+        var r = el.getBoundingClientRect();
+        tx = (e.clientX - (r.left + r.width / 2)) * .3;
+        ty = (e.clientY - (r.top + r.height / 2)) * .38;
+      });
+      el.addEventListener('mouseleave', function(){ tx = 0; ty = 0; });
+      gsap.ticker.add(function(){
+        cx += (tx - cx) * .13; cy += (ty - cy) * .13;
+        if (Math.abs(cx) < .02 && Math.abs(cy) < .02 && tx === 0 && ty === 0) {
+          el.style.transform = '';
+          return;
+        }
+        el.style.transform = 'translate(' + cx.toFixed(2) + 'px,' + cy.toFixed(2) + 'px)';
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     9 · boot
+     --------------------------------------------------------- */
+  function boot(){
+    buildHeadings();
+    buildCourseBrowser();
+    buildCounts();
+    buildReveals();
+    buildMagnetic();
+    runIntro();
+    if (hasGSAP) ScrollTrigger.refresh();
+  }
+
+  var booted = false;
+  function bootOnce(){ if (booted) return; booted = true; boot(); }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(bootOnce);
+  window.addEventListener('load', bootOnce);
+  setTimeout(bootOnce, 2200);
+
+  /* re-measure on width change only (ignore mobile URL-bar height jitter) */
+  var lastW = window.innerWidth, rt;
+  window.addEventListener('resize', function(){
+    if (window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      buildHeadings();
+      buildCourseBrowser();
+      if (hasGSAP) ScrollTrigger.refresh();
+    }, 220);
+  });
+
+})();
+</script>
+</body>
+</html>

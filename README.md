@@ -32,7 +32,8 @@ Website Template Library/
 ├── _inspo-notes/           ← reference captures from real sites
 └── NN-name/
     ├── index.html          ← the template
-    └── notes.md            ← inspiration, motion techniques, accent, type pairing
+    ├── notes.md            ← inspiration, motion techniques, accent, type pairing
+    └── prompt.md           ← the prompt that rebuilds this page for a new brand
 ```
 
 ---
@@ -52,7 +53,25 @@ The most important rule is the last one in the playbook: **templates must feel l
 
 **Batch 01 (01–06)** — hero sections and signature-section showcases. Two were built to exact client specs (Velora, Healcure); four were drawn from studied references (Geptral, Fernline, Loco®, Hotshot).
 
-**Batch 02 (07–16)** — full landing pages with scroll-driven motion, spanning agency, luxury, and tech genres.
+**Batch 02 (07–18)** — full landing pages with scroll-driven motion, spanning agency, luxury, and tech genres.
+
+**Batch 03 (19–25)** — real Rylo Labz client sites from `C:dev`, rebuilt as reusable templates. These cover the industries an agency actually gets briefed on: pharmacy e-commerce, construction, education, dental, accounting, fitted furniture and boutique hospitality. The brief was to keep each original's idea and polish it, not redesign it. Originals and design notes are in `_inspo-notes/rylo-originals/`.
+
+---
+
+## Prompts and the `landing-page` skill
+
+Every template ships a **`prompt.md`** — a complete, self-contained prompt that
+rebuilds that page for a new brand, with `[SQUARE BRACKET]` placeholders for
+anything brand-specific.
+
+In the gallery, each card has **Copy prompt** and **View prompt** buttons. Copy
+one, swap the brackets for a client's real details, and generate the site.
+
+There is also a global Claude Code skill at
+`~/.claude/skills/landing-page/SKILL.md`. It indexes all templates by industry,
+so asking for "a site for a construction company" picks the right template and
+its prompt automatically.
 
 ---
 
