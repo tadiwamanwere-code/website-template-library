@@ -15,7 +15,7 @@ node serve.js
 
 Then open **http://localhost:4173**
 
-The gallery lazy-loads each preview as you scroll, so all 18 templates don't boot at once. Filter by palette or genre with the controls, hover a card to inspect, click to open the template full-screen.
+The gallery lazy-loads each preview as you scroll, so all 25 templates don't boot at once. Filter by industry with the controls, copy a template's prompt from its card, hover a card to inspect, click to open the template full-screen.
 
 Individual templates *can* be opened directly from disk if you just want to look at one, but HTTP is more reliable.
 

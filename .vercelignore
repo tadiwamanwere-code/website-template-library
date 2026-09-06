@@ -1,0 +1,4 @@
+# Reference screenshots and the local dev server. Kept in the repo, not needed on the site.
+# Note: each template's prompt.md IS needed. The gallery fetches it for the Copy prompt button.
+_inspo-notes
+serve.js
