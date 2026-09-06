@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Long Range Pharmacy — health shop &amp; dispensary, Harare</title>
+<meta name="description" content="Long Range Pharmacies — medicines, vitamins, skin care and sports nutrition, dispensed by pharmacists across three Harare branches.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   LONG RANGE PHARMACY — pharmacy / health e-commerce template
+   Brand kit lifted verbatim from the client's tailwind.config.js.
+   NOTE: this template deliberately relaxes the library's "one accent" rule.
+   A storefront needs a commerce palette: green CTA, coral urgency, yellow
+   highlight. See notes.md before "fixing" it.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+:root{
+  /* brand green — nav, buttons, add-to-cart. Never used for discounts. */
+  --green:#12A85A; --green-d:#04783F; --green-l:#4CC787;
+  /* brand yellow — highlight flashes only */
+  --yellow:#F5E900; --yellow-d:#F7D51D;
+  /* pine: deep forest-teal used as near-black ink, keeps a green cast */
+  --pine:#0B322C; --pine-7:#12463E; --pine-9:#062420;
+  --ink:#24272A; --muted:#58615C;
+  --ground:#F4F7F5; --white:#FFFFFF;
+  /* mint studio palette — sampled off the product render so the CSS floor and
+     the podium read as one continuous set with the product on it */
+  --mint-50:#F3FAF8; --mint-100:#E6F4F0; --mint-200:#D4ECE7;
+  --mint-300:#BFE3DC; --mint-400:#A6D7CF; --mint-500:#8DC5BE; --mint-600:#70A9A2;
+  /* coral — URGENCY ONLY: promo strip, sale flashes, basket count */
+  --coral:#F0644A; --coral-d:#D9503A; --coral-soft:#FCEDE8;
+  --cream:#FBF3EE;
+  --blush:#FBE4EC; --blush-deep:#F3D0DE; --blush-ink:#9D2B54;
+
+  --line:rgba(11,50,44,.12);
+  --line-2:rgba(11,50,44,.07);
+  --shadow-card:0 10px 30px -8px rgba(4,120,63,.18);
+  --shadow-hover:0 22px 48px -12px rgba(4,120,63,.32);
+  --shadow-pill:0 8px 24px -6px rgba(18,168,90,.45);
+
+  --display:'Montserrat',system-ui,sans-serif;
+  --ui:'Manrope','Inter',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  --marker:'Permanent Marker',cursive;
+
+  --ease:cubic-bezier(.22,1,.36,1);
+  --pad:clamp(18px,4vw,40px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--white);color:var(--pine);
+  font-family:var(--body);font-size:15px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body.is-locked{overflow:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--green-d);outline-offset:3px}
+::selection{background:var(--mint-300);color:var(--pine-9)}
+
+.wrap{width:100%;max-width:1280px;margin:0 auto;padding:0 var(--pad)}
+.tnum{font-variant-numeric:tabular-nums lining-nums}
+
+/* line-mask reveal wrapper — JS sets the hidden state, so with no JS the
+   copy simply sits there in its final position */
+.lnw{display:block;overflow:hidden;padding-bottom:.08em}
+.ln{display:block}
+
+.eyebrow{
+  font-family:var(--ui);font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.2em;color:rgba(11,50,44,.6);margin:0;
+}
+h1,h2,h3,h4{font-family:var(--display);margin:0;letter-spacing:-.03em;line-height:1.12}
+h2.sec-title{font-size:clamp(24px,2.4vw,31px);font-weight:800;color:var(--pine)}
+p{margin:0}
+
+.sec-head{margin-bottom:34px;text-align:center}
+.sec-head p{margin:10px auto 0;max-width:54ch;font-size:14px;color:rgba(11,50,44,.62)}
+.sec{padding:clamp(52px,6vw,76px) 0}
+
+/* ── buttons ─────────────────────────────────────────────────────────── */
+.btn{
+  font-family:var(--ui);display:inline-flex;align-items:center;gap:9px;
+  height:50px;padding:0 30px;font-size:13px;font-weight:700;letter-spacing:.02em;
+  position:relative;overflow:hidden;isolation:isolate;border-radius:999px;
+}
+.btn span{position:relative;z-index:2}
+.btn::before{content:'';position:absolute;inset:0;z-index:0;transition:none}
+.btn::after{
+  content:'';position:absolute;inset:0;z-index:1;transform:scaleX(0);transform-origin:left;
+  transition:transform .5s var(--ease);
+}
+.btn:hover::after{transform:scaleX(1)}
+.btn--green{color:#fff;box-shadow:var(--shadow-pill)}
+.btn--green::before{background:var(--green)}
+.btn--green::after{background:var(--green-d)}
+.btn--pine{color:#fff}
+.btn--pine::before{background:var(--pine)}
+.btn--pine::after{background:var(--green)}
+.btn--ghost{color:var(--pine);border:1px solid var(--line);border-radius:999px}
+.btn--ghost::after{background:var(--mint-100)}
+.btn--ghost:hover{color:var(--pine-9)}
+.btn--sq{border-radius:2px}
+
+.link-arrow{
+  font-family:var(--ui);font-size:13px;font-weight:700;display:inline-flex;
+  align-items:center;gap:7px;color:var(--pine);
+}
+.link-arrow svg{transition:transform .35s var(--ease)}
+.link-arrow:hover svg{transform:translateX(5px)}
+
+/* ── intro curtain ───────────────────────────────────────────────────── */
+#curtain{position:fixed;inset:0;z-index:9000;display:grid;place-items:center;pointer-events:none}
+#curtain .cpanel{position:absolute;left:0;right:0;height:50.5%;background:var(--mint-200)}
+#curtain .cpanel--t{top:0}
+#curtain .cpanel--b{bottom:0}
+#curtain .cmark{position:relative;z-index:2;text-align:center}
+#curtain .cmark .word{
+  font-family:var(--display);font-weight:800;font-size:clamp(30px,5vw,52px);
+  letter-spacing:-.055em;color:var(--ink);line-height:1;
+}
+#curtain .cmark .word i{font-style:normal;color:var(--green)}
+#curtain .cmark .sub{font-family:var(--marker);font-size:15px;color:var(--green);margin-top:6px}
+#curtain .crule{width:min(240px,52vw);height:2px;background:rgba(11,50,44,.14);margin:22px auto 0;position:relative;overflow:hidden}
+#curtain .crule i{position:absolute;inset:0;background:var(--green);transform:scaleX(0);transform-origin:left}
+#curtain.done{display:none}
+
+/* ── promo strip (coral = urgency) ───────────────────────────────────── */
+.promo-strip{background:var(--coral);color:#fff;overflow:hidden;position:relative}
+.promo-strip .track{display:flex;width:max-content;will-change:transform}
+.promo-strip .track>div{display:flex;align-items:center;flex:none}
+.promo-strip span{
+  font-family:var(--ui);font-size:11.5px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;padding:9px 0;white-space:nowrap;
+}
+.promo-strip .dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.65);margin:0 26px}
+
+/* ── header ──────────────────────────────────────────────────────────── */
+.hdr{position:sticky;top:0;z-index:800;background:#fff;border-bottom:1px solid var(--line-2)}
+.hdr-main{display:flex;align-items:center;gap:clamp(14px,3vw,38px);padding:16px 0;transition:padding .4s var(--ease)}
+.hdr.stuck .hdr-main{padding:9px 0}
+.hdr.stuck .dept-bar{max-height:0;opacity:0}
+
+.logo{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1;flex:none}
+.logo .word{
+  font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:-.055em;
+  color:var(--ink);text-transform:lowercase;
+}
+.logo .word i{font-style:normal;color:var(--green)}
+.logo .sub{font-family:var(--marker);font-size:12.5px;color:var(--green);margin-top:3px;letter-spacing:.02em}
+
+.search{flex:1;min-width:0;display:flex;align-items:center;gap:10px;height:46px;padding:0 6px 0 18px;
+  border:1px solid var(--line);border-radius:999px;background:var(--ground);transition:border-color .3s}
+.search:focus-within{border-color:var(--green)}
+.search input{flex:1;min-width:0;border:0;background:none;font-size:14px;outline:none;color:var(--pine)}
+.search input::placeholder{color:rgba(11,50,44,.42)}
+.search button{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center}
+
+.hdr-acts{display:flex;align-items:center;gap:6px;flex:none}
+.iconbtn{position:relative;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;
+  color:var(--pine);transition:background .25s}
+.iconbtn:hover{background:var(--mint-100)}
+.badge{
+  position:absolute;top:3px;right:2px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;
+  background:var(--coral);color:#fff;font-family:var(--ui);font-size:10.5px;font-weight:800;
+  display:grid;place-items:center;line-height:1;border:2px solid #fff;
+}
+.badge[data-empty="1"]{display:none}
+.hdr-phone{display:none}
+@media(min-width:1180px){
+  .hdr-phone{display:block;flex:none;text-align:right;line-height:1.35}
+  .hdr-phone b{font-family:var(--ui);font-size:13.5px;font-weight:700;color:var(--pine);display:block}
+  .hdr-phone small{font-size:11px;color:var(--muted)}
+}
+
+/* department bar — brand green, the way the original carries its nav */
+.dept-bar{background:var(--green);max-height:52px;opacity:1;overflow:hidden;
+  transition:max-height .45s var(--ease),opacity .3s}
+.dept-bar .wrap{display:flex;align-items:center;gap:clamp(10px,2vw,28px);height:46px;overflow-x:auto;scrollbar-width:none}
+.dept-bar .wrap::-webkit-scrollbar{display:none}
+.dept-bar a{
+  font-family:var(--ui);font-size:12.5px;font-weight:600;color:#fff;white-space:nowrap;
+  position:relative;padding:4px 0;
+}
+.dept-bar a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--yellow);
+  transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.dept-bar a:hover::after{transform:scaleX(1)}
+.dept-bar .free{margin-left:auto;font-family:var(--ui);font-size:11.5px;font-weight:700;color:var(--pine-9);
+  background:var(--yellow);padding:4px 12px;border-radius:999px;white-space:nowrap}
+
+.burger{display:none;width:42px;height:42px;place-items:center;border-radius:50%}
+@media(max-width:900px){.burger{display:grid}}
+
+/* ── hero ────────────────────────────────────────────────────────────── */
+.hero{padding-top:clamp(16px,2vw,28px)}
+.hero-panel{
+  position:relative;isolation:isolate;background:#fff;overflow:hidden;
+  min-height:460px;display:grid;grid-template-columns:52% 48%;
+}
+#scene{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0}
+.hero-copy{position:relative;z-index:4;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(30px,4vw,58px) clamp(22px,3.4vw,58px) 84px}
+.hero-slide{display:none}
+.hero-slide.active{display:block}
+.hero-copy h1{
+  font-family:var(--display);font-size:clamp(2.1rem,3.6vw,3.4rem);font-weight:800;
+  line-height:1.08;letter-spacing:-.035em;color:var(--pine);margin-top:16px;
+}
+.hero-copy .sub{margin-top:18px;max-width:38ch;font-size:15px;line-height:1.7;color:rgba(11,50,44,.7)}
+.hero-copy .cta{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.hero-copy .trust{font-family:var(--ui);font-size:12px;font-weight:600;color:var(--muted)}
+
+.hero-nav{position:absolute;left:clamp(22px,3.4vw,58px);bottom:26px;z-index:5;display:flex;align-items:center;gap:12px}
+.hero-nav .arw{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.7);
+  display:grid;place-items:center;color:var(--pine);transition:background .25s,border-color .25s}
+.hero-nav .arw:hover{background:#fff;border-color:rgba(11,50,44,.35)}
+.hero-nav .bars{display:flex;align-items:center;gap:8px}
+.hero-nav .bar{position:relative;height:3px;width:9px;border-radius:999px;background:rgba(11,50,44,.22);
+  overflow:hidden;transition:width .5s var(--ease)}
+.hero-nav .bar[aria-selected="true"]{width:46px;background:rgba(11,50,44,.18)}
+.hero-nav .bar i{position:absolute;inset:0;background:var(--pine);transform:scaleX(0);transform-origin:left;display:none}
+.hero-nav .bar[aria-selected="true"] i{display:block}
+
+/* ── the mint studio: floor, podium, product ─────────────────────────── */
+.studio{position:relative;z-index:3;overflow:hidden}
+.studio .wall{z-index:1;position:absolute;left:0;right:0;top:0;height:62%;background:var(--mint-100)}
+.studio .floor{z-index:1;position:absolute;left:0;right:0;bottom:0;top:62%;background:var(--mint-300)}
+.studio .horizon{z-index:1;position:absolute;left:0;right:0;top:62%;height:1px;background:rgba(112,169,162,.45)}
+.studio .pool{z-index:1;position:absolute;left:50%;bottom:8%;width:74%;height:52px;transform:translateX(-50%);
+  border-radius:50%;background:var(--mint-400);opacity:.75;filter:blur(9px)}
+.podium{z-index:3;position:absolute;left:50%;bottom:11%;width:60%;max-width:330px;height:92px;transform:translateX(-50%)}
+.podium i{position:absolute;left:0;right:0;display:block}
+.podium .base{bottom:0;height:44px;border-radius:50%;background:var(--mint-600)}
+.podium .body{top:22px;bottom:22px;background:var(--mint-500)}
+.podium .top{top:0;height:44px;border-radius:50%;background:var(--mint-400)}
+.hero-shot{
+  z-index:4;position:absolute;left:50%;bottom:calc(11% + 46px);width:56%;max-width:300px;aspect-ratio:4/5;
+  transform:translateX(-50%);border-radius:14px;overflow:hidden;background:var(--mint-200);
+  box-shadow:0 26px 46px -22px rgba(11,50,44,.45);
+}
+.hero-shot img{width:100%;height:100%;object-fit:cover}
+.flash{
+  position:absolute;z-index:6;display:grid;place-items:center;text-align:center;border-radius:50%;
+  font-family:var(--ui);font-weight:800;line-height:1.1;
+}
+.flash--sale{right:7%;top:16%;width:88px;height:88px;background:var(--coral);color:#fff;font-size:12px}
+.flash--price{left:6%;bottom:20%;width:78px;height:78px;background:var(--yellow);color:var(--pine-9);font-size:12px}
+.flash em{font-style:normal;display:block;font-size:17px}
+
+@media(max-width:900px){
+  .hero-panel{grid-template-columns:1fr;min-height:0}
+  .hero-copy{padding-bottom:96px;order:2}
+  .studio{order:1;min-height:340px}
+  .hero-nav{bottom:22px}
+}
+
+/* ── service bar ─────────────────────────────────────────────────────── */
+.services{background:var(--cream);display:grid;grid-template-columns:repeat(4,1fr);
+  gap:22px 26px;padding:28px clamp(20px,3vw,40px);margin-top:22px}
+.services .item{display:flex;align-items:center;gap:14px}
+.services svg{flex:none;color:var(--pine)}
+.services b{font-family:var(--ui);display:block;font-size:14px;font-weight:700;color:var(--pine);line-height:1.25}
+.services small{display:block;font-size:12.5px;color:rgba(11,50,44,.6);line-height:1.3;margin-top:3px}
+@media(max-width:760px){.services{grid-template-columns:1fr 1fr}}
+
+/* ── promo tiles ─────────────────────────────────────────────────────── */
+.promos{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+.promo{position:relative;isolation:isolate;display:flex;min-height:300px;overflow:hidden}
+.promo .art{position:absolute;inset:0 0 0 46%;overflow:hidden}
+.promo .art img{width:100%;height:100%;object-fit:cover}
+.promo .art .veil{position:absolute;inset:0}
+.promo .copy{position:relative;z-index:3;width:60%;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(24px,3vw,38px)}
+.promo h3{font-size:clamp(21px,2.1vw,28px);font-weight:800;letter-spacing:-.03em;margin-top:12px;line-height:1.14}
+.promo .btn{margin-top:24px;height:44px;padding:0 26px;align-self:flex-start}
+.promo--light{background:#E7DCC8;color:var(--pine)}
+.promo--dark{background:#1F211F;color:#fff}
+.promo--dark .eyebrow{color:rgba(255,255,255,.6)}
+.promo .sheen{position:absolute;inset:0 auto 0 -34%;width:34%;z-index:4;transform:skewX(-12deg);opacity:0;
+  pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.42),transparent)}
+.promo--dark .sheen{background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent)}
+.promo .roundel{
+  position:absolute;right:24px;top:50%;transform:translateY(-50%);z-index:5;width:88px;height:88px;
+  border-radius:50%;background:var(--coral);color:#fff;display:grid;place-items:center;text-align:center;
+  font-family:var(--ui);font-size:12px;font-weight:800;line-height:1.15;
+}
+.promo .roundel em{font-style:normal;display:block;font-size:20px}
+.scribble{font-family:var(--marker);font-size:15px;color:var(--green-d);align-self:flex-start;
+  display:inline-block;position:relative;padding:5px 12px}
+.scribble svg{position:absolute;left:-12px;top:-11px;width:calc(100% + 24px);height:calc(100% + 22px);
+  overflow:visible;pointer-events:none}
+.scribble svg path{fill:none;stroke:var(--coral);stroke-width:2.2;stroke-linecap:round}
+@media(max-width:860px){
+  .promos{grid-template-columns:1fr}
+  .promo .copy{width:64%}
+  .promo .roundel{width:70px;height:70px;font-size:10.5px;right:14px}
+}
+
+/* ── category strip (filters the grid below) ─────────────────────────── */
+.cats{display:grid;grid-template-columns:repeat(7,1fr);gap:16px}
+.cat{display:block;text-align:center;width:100%}
+.cat .frame{display:block;aspect-ratio:1;overflow:hidden;background:var(--mint-100);position:relative}
+.cat .frame img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.cat:hover .frame img{transform:scale(1.07)}
+.cat .frame::after{content:'';position:absolute;inset:0;border:2px solid transparent;transition:border-color .3s}
+.cat[aria-pressed="true"] .frame::after{border-color:var(--green)}
+.cat p{font-family:var(--ui);margin-top:11px;font-size:12.5px;font-weight:700;color:var(--pine);transition:color .25s}
+.cat[aria-pressed="true"] p,.cat:hover p{color:var(--green-d)}
+@media(max-width:1000px){.cats{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.cats{grid-template-columns:repeat(3,1fr);gap:12px}}
+
+/* ── product grid ────────────────────────────────────────────────────── */
+.shop-bar{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:26px}
+.shop-bar .count{font-family:var(--ui);font-size:12.5px;font-weight:600;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr);gap:14px}}
+
+.card{
+  position:relative;display:flex;flex-direction:column;height:100%;background:#fff;
+  border:1px solid var(--line-2);border-radius:14px;overflow:hidden;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s;
+}
+@media(hover:hover) and (min-width:1024px){
+  .card:hover{transform:translateY(-4px);border-color:rgba(18,168,90,.4);box-shadow:var(--shadow-card)}
+}
+.card .frame{position:relative;aspect-ratio:1;background:var(--mint-50);overflow:hidden}
+.card .frame img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+@media(hover:hover){.card:hover .frame img{transform:scale(1.06)}}
+.card .flags{position:absolute;left:11px;top:11px;display:flex;flex-direction:column;gap:6px;z-index:2}
+.flag{font-family:var(--ui);font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  padding:4px 9px;border-radius:999px;color:#fff}
+.flag--sale{background:var(--coral)}
+.flag--best{background:var(--pine)}
+.flag--low{background:var(--yellow);color:var(--pine-9)}
+.flag--out{background:rgba(11,50,44,.55)}
+.wish{position:absolute;right:11px;top:11px;z-index:2;width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,.92);border:1px solid var(--line-2);display:grid;place-items:center;
+  color:rgba(11,50,44,.4);transition:color .25s,transform .25s}
+.wish:hover{transform:scale(1.08);color:var(--coral)}
+.wish[aria-pressed="true"]{color:var(--coral)}
+.wish[aria-pressed="true"] svg{fill:currentColor}
+.card .meta{display:flex;flex-direction:column;flex:1;padding:14px 15px 16px}
+.card .brand{font-family:var(--ui);font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--green-d)}
+.card h3{font-family:var(--ui);font-size:13.5px;font-weight:600;line-height:1.4;letter-spacing:0;
+  color:var(--pine);margin-top:6px;min-height:2.8em}
+.card .price{display:flex;align-items:baseline;gap:8px;margin-top:auto;padding-top:10px}
+.card .price b{font-family:var(--ui);font-size:17px;font-weight:800;color:var(--pine)}
+.card .price s{font-size:12.5px;color:rgba(11,50,44,.42)}
+.card .price .off{font-family:var(--ui);font-size:10.5px;font-weight:800;color:var(--coral)}
+.card .add{
+  margin-top:12px;height:40px;border-radius:999px;background:var(--green);color:#fff;
+  font-family:var(--ui);font-size:11.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:8px;transition:background .3s;
+}
+.card .add:hover{background:var(--green-d)}
+.card .add.added{background:var(--pine)}
+.card .add[disabled]{background:var(--ground);color:rgba(11,50,44,.42);cursor:not-allowed}
+.card.is-out .frame img{filter:saturate(.25);opacity:.65}
+.empty-note{grid-column:1/-1;padding:52px 0;text-align:center;color:var(--muted);font-size:14px}
+
+/* ── split banner + counters ─────────────────────────────────────────── */
+.banner{background:var(--ground)}
+.banner .row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,64px);align-items:center}
+.banner h2{font-size:clamp(28px,3.4vw,44px);font-weight:800;letter-spacing:-.035em;line-height:1.08}
+.banner .lead{margin-top:18px;max-width:42ch;font-size:15px;line-height:1.75;color:rgba(11,50,44,.68)}
+.banner .btn{margin-top:28px}
+.banner .media{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--mint-200)}
+.banner .media img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.banner .tag{position:absolute;left:0;bottom:0;background:var(--green);color:#fff;padding:14px 22px;
+  font-family:var(--ui);font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:clamp(38px,5vw,64px);
+  border-top:1px solid var(--line);padding-top:32px}
+.stats .n{font-family:var(--display);font-size:clamp(28px,3.4vw,44px);font-weight:800;letter-spacing:-.04em;
+  color:var(--pine);line-height:1}
+.stats .n em{font-style:normal;color:var(--green)}
+.stats .l{font-family:var(--ui);margin-top:9px;font-size:11.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)}
+@media(max-width:860px){.banner .row{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+
+/* ── bestsellers band ────────────────────────────────────────────────── */
+.best{background:var(--coral-soft)}
+
+/* ── offer tiles ─────────────────────────────────────────────────────── */
+.offers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.offer{display:flex;flex-direction:column;overflow:hidden}
+.offer .frame{aspect-ratio:4/3;overflow:hidden}
+.offer .frame img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.offer:hover .frame img{transform:scale(1.05)}
+.offer .pad{flex:1;display:flex;flex-direction:column;padding:24px}
+.offer h3{font-size:19px;font-weight:800;line-height:1.2;letter-spacing:-.02em}
+.offer .link-arrow{margin-top:auto;padding-top:18px;align-self:flex-start}
+@media(max-width:860px){.offers{grid-template-columns:1fr}}
+
+/* ── prescription upload ─────────────────────────────────────────────── */
+.rx{background:var(--mint-50)}
+.rx .row{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,64px);align-items:start}
+.rx h2{font-size:clamp(28px,3.4vw,42px);font-weight:800;letter-spacing:-.035em;line-height:1.08}
+.rx .lead{margin-top:18px;max-width:44ch;font-size:15px;line-height:1.75;color:rgba(11,50,44,.7)}
+.rx-steps{list-style:none;margin:32px 0 0;padding:0;display:grid;gap:14px}
+.rx-steps li{display:grid;grid-template-columns:38px 1fr auto;gap:16px;align-items:start;
+  background:#fff;border:1px solid var(--line-2);border-radius:12px;padding:16px 18px}
+.rx-steps .ix{font-family:var(--ui);font-size:12px;font-weight:800;color:var(--green-d);
+  border:1px solid var(--mint-300);border-radius:8px;height:34px;display:grid;place-items:center}
+.rx-steps b{font-family:var(--ui);font-size:14px;font-weight:700;color:var(--pine);display:block}
+.rx-steps p{font-size:13px;line-height:1.55;color:var(--muted);margin-top:4px}
+.rx-steps .when{font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--green-d);white-space:nowrap;padding-top:3px}
+.rx-note{margin-top:24px}
+
+.dropzone{background:#fff;border:2px dashed var(--mint-400);border-radius:16px;padding:clamp(24px,3vw,36px);
+  text-align:center;transition:border-color .3s,background .3s}
+.dropzone.over{border-color:var(--green);background:var(--mint-50)}
+.dropzone .icn{width:52px;height:52px;margin:0 auto;display:grid;place-items:center;border:1px solid var(--mint-300);
+  border-radius:12px;color:var(--green-d)}
+.dropzone h3{font-family:var(--ui);font-size:16px;font-weight:700;margin-top:16px;letter-spacing:-.01em}
+.dropzone .hint{font-size:13px;color:var(--muted);margin-top:7px}
+.dropzone .btn{margin-top:20px;height:46px}
+.dropzone .fine{font-size:11.5px;color:rgba(11,50,44,.5);margin-top:14px}
+.rx-files{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px;text-align:left}
+.rx-files li{display:flex;align-items:center;gap:11px;background:var(--mint-50);border:1px solid var(--mint-200);
+  border-radius:10px;padding:10px 13px;font-size:13px}
+.rx-files .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.rx-files .sz{font-family:var(--ui);font-size:11.5px;color:var(--muted)}
+.rx-files .rm{color:var(--muted);line-height:0}
+.rx-files .rm:hover{color:var(--coral)}
+.rx-panel{margin-top:18px;background:var(--blush);border-radius:16px;padding:22px 24px}
+.rx-panel b{font-family:var(--ui);font-size:12.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--blush-ink)}
+.rx-panel p{font-size:13.5px;line-height:1.65;color:var(--pine);margin-top:9px}
+@media(max-width:900px){.rx .row{grid-template-columns:1fr}}
+
+/* ── visit us ────────────────────────────────────────────────────────── */
+.visit .row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,60px);align-items:center}
+.visit .portrait{aspect-ratio:4/3;background:var(--blush);border-radius:22px;overflow:hidden;position:relative}
+.visit .portrait img{width:100%;height:100%;object-fit:cover;object-position:center 28%}
+.branches{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:12px}
+.branches li{border:1px solid var(--line-2);border-radius:14px;padding:16px 18px;
+  transition:border-color .3s,transform .3s var(--ease)}
+.branches li:hover{border-color:rgba(18,168,90,.4);transform:translateX(4px)}
+.branches b{font-family:var(--ui);font-size:14px;font-weight:700;display:flex;align-items:center;gap:9px;color:var(--pine)}
+.branches .addr{font-size:13px;color:var(--muted);margin-top:5px;padding-left:23px}
+.branches .tel{padding-left:23px;margin-top:6px;display:flex;flex-wrap:wrap;gap:16px}
+.branches .tel a{font-family:var(--ui);font-size:13px;font-weight:700;color:var(--green-d)}
+.branches .tel a:hover{text-decoration:underline}
+.hours{display:inline-flex;align-items:center;gap:9px;margin-top:14px;font-family:var(--ui);font-size:13px;
+  font-weight:700;color:var(--green-d)}
+@media(max-width:900px){.visit .row{grid-template-columns:1fr}}
+
+/* ── contact ─────────────────────────────────────────────────────────── */
+.contact{background:var(--pine);color:#fff}
+.contact h2{color:#fff;font-size:clamp(28px,3.4vw,42px);font-weight:800;letter-spacing:-.035em}
+.contact .row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4vw,70px)}
+.contact .lead{margin-top:18px;max-width:42ch;color:rgba(255,255,255,.72);font-size:15px;line-height:1.75}
+.contact .eyebrow{color:rgba(255,255,255,.5)}
+.clist{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:18px}
+.clist li{display:flex;gap:15px;align-items:flex-start}
+.clist .ic{flex:none;padding-top:0;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:9px;
+  display:grid;place-items:center;color:var(--green-l)}
+.clist span{padding-top:6px;font-size:14.5px}
+.clist small{display:block;color:rgba(255,255,255,.55);font-size:12.5px}
+.form{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:18px;
+  padding:clamp(22px,3vw,32px)}
+.form .fld{margin-bottom:14px}
+.form label{font-family:var(--ui);display:block;font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:7px}
+.form input,.form select,.form textarea{width:100%;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:13px 15px;color:#fff;font-size:14px;
+  outline:none;transition:border-color .25s,background .25s}
+.form input:focus,.form select:focus,.form textarea:focus{border-color:var(--green-l);background:rgba(255,255,255,.1)}
+.form select option{color:var(--pine)}
+.form textarea{resize:vertical;min-height:104px}
+.form .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form .btn{width:100%;justify-content:center;margin-top:6px}
+.form .ok{margin-top:14px;font-size:13px;color:var(--green-l);display:none}
+.form.sent .ok{display:block}
+@media(max-width:900px){.contact .row{grid-template-columns:1fr}.form .two{grid-template-columns:1fr}}
+
+/* ── instagram ───────────────────────────────────────────────────────── */
+.ig{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;list-style:none;margin:0;padding:0}
+.ig li{aspect-ratio:1;overflow:hidden;background:var(--mint-100);position:relative}
+.ig img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.ig li:hover img{transform:scale(1.08)}
+@media(max-width:760px){.ig{grid-template-columns:repeat(3,1fr)}}
+
+/* ── footer ──────────────────────────────────────────────────────────── */
+footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp(46px,5vw,68px) 0 0}
+.fcols{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1.3fr;gap:clamp(22px,3vw,44px)}
+.fcols h4{font-family:var(--ui);font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--pine);margin-bottom:16px}
+.fcols ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.fcols a{font-size:13.5px;color:var(--muted);transition:color .25s}
+.fcols a:hover{color:var(--green-d)}
+.fcols .blurb{font-size:13.5px;line-height:1.7;color:var(--muted);margin-top:16px;max-width:32ch}
+.news{display:flex;gap:8px;margin-top:14px}
+.news input{flex:1;min-width:0;border:1px solid var(--line);border-radius:999px;padding:11px 16px;
+  background:#fff;font-size:13.5px;outline:none}
+.news input:focus{border-color:var(--green)}
+.news button{flex:none;width:44px;height:44px;border-radius:50%;background:var(--green);color:#fff;display:grid;
+  place-items:center}
+.fbot{margin-top:clamp(34px,4vw,52px);border-top:1px solid var(--line-2);padding:20px 0 26px;
+  display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;
+  font-size:12.5px;color:var(--muted)}
+.pay{display:flex;gap:8px;align-items:center}
+.pay span{font-family:var(--ui);font-size:10px;font-weight:800;letter-spacing:.1em;border:1px solid var(--line);
+  border-radius:5px;padding:5px 9px;color:var(--muted)}
+@media(max-width:1000px){.fcols{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:640px){.fcols{grid-template-columns:1fr 1fr}}
+
+/* ── cart drawer + toast ─────────────────────────────────────────────── */
+.scrim{position:fixed;inset:0;z-index:900;background:rgba(6,36,32,.42);opacity:0;visibility:hidden;
+  transition:opacity .4s var(--ease),visibility .4s}
+.scrim.open{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:901;width:min(400px,92vw);background:#fff;
+  display:flex;flex-direction:column;transform:translateX(100%);transition:transform .5s var(--ease)}
+.drawer.open{transform:none}
+.drawer .dh{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;
+  border-bottom:1px solid var(--line-2)}
+.drawer .dh b{font-family:var(--display);font-size:17px;font-weight:800;letter-spacing:-.02em}
+.dl{flex:1;overflow-y:auto;padding:16px 22px;list-style:none;margin:0;display:grid;gap:14px;align-content:start}
+.dl li{display:grid;grid-template-columns:64px 1fr auto;gap:13px;align-items:center}
+.dl .th{display:block;width:64px;height:64px;border-radius:10px;overflow:hidden;background:var(--mint-50)}
+.dl .th img{width:100%;height:100%;object-fit:cover}
+.dl h5{font-family:var(--ui);margin:0;font-size:13px;font-weight:600;line-height:1.35}
+.dl .qty{display:flex;align-items:center;gap:10px;margin-top:7px}
+.dl .qty button{width:24px;height:24px;border:1px solid var(--line);border-radius:50%;display:grid;
+  place-items:center;font-size:14px;line-height:1;color:var(--pine)}
+.dl .qty b{font-family:var(--ui);font-size:13px;font-weight:700;min-width:14px;text-align:center}
+.dl .ln-price{font-family:var(--ui);font-size:14px;font-weight:800}
+.drawer .df{border-top:1px solid var(--line-2);padding:20px 22px}
+.drawer .df .sum{display:flex;justify-content:space-between;font-family:var(--ui);font-size:15px;font-weight:800}
+.drawer .df small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+.drawer .df .btn{width:100%;justify-content:center;margin-top:16px}
+.dempty{padding:52px 22px;text-align:center;color:var(--muted);font-size:14px}
+
+.toast{position:fixed;left:50%;bottom:26px;z-index:950;transform:translate(-50%,20px);opacity:0;
+  background:var(--pine);color:#fff;border-radius:999px;padding:12px 22px;font-family:var(--ui);font-size:13px;
+  font-weight:600;pointer-events:none;transition:opacity .3s,transform .4s var(--ease);max-width:90vw}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* fly-to-basket chip */
+.fly{position:fixed;z-index:940;width:52px;height:52px;border-radius:12px;overflow:hidden;pointer-events:none;
+  box-shadow:var(--shadow-card)}
+.fly img{width:100%;height:100%;object-fit:cover}
+
+/* broken-image guard: a frame with no photo still reads as a mint pack tile */
+[data-frame].is-empty{background:var(--mint-100);position:relative}
+[data-frame].is-empty::after{
+  content:'';position:absolute;left:50%;top:50%;width:38%;height:19%;transform:translate(-50%,-50%) rotate(-32deg);
+  border-radius:999px;background:var(--mint-400);box-shadow:inset 0 0 0 4px var(--mint-500);
+}
+
+/* ── mobile nav sheet ────────────────────────────────────────────────── */
+.msheet{position:fixed;inset:0;z-index:880;background:#fff;transform:translateY(-100%);
+  transition:transform .5s var(--ease);display:flex;flex-direction:column;padding:22px var(--pad)}
+.msheet.open{transform:none}
+.msheet .top{display:flex;justify-content:space-between;align-items:center}
+.msheet nav{margin-top:34px;display:grid;gap:4px}
+.msheet nav a{font-family:var(--display);font-size:23px;font-weight:800;letter-spacing:-.03em;padding:9px 0;
+  border-bottom:1px solid var(--line-2)}
+
+/* ── degradation ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+  #curtain{display:none}
+  #scene{display:none}
+  .promo-strip .track{transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ intro curtain ════════════════════════════════════════════════════ -->
+<div id="curtain" aria-hidden="true">
+  <div class="cpanel cpanel--t"></div>
+  <div class="cpanel cpanel--b"></div>
+  <div class="cmark">
+    <div class="word">long<i>range</i><i>.</i></div>
+    <div class="sub">Pharmacy</div>
+    <div class="crule"><i></i></div>
+  </div>
+</div>
+
+<!-- ══ promo strip — coral, urgency only ════════════════════════════════ -->
+<div class="promo-strip" role="region" aria-label="Current offers">
+  <div class="track" id="strip">
+    <div>
+      <span>Free delivery in Harare on orders over $50</span><i class="dot"></i>
+      <span>Prescriptions checked by a pharmacist in 30 minutes</span><i class="dot"></i>
+      <span>Up to 25% off vitamins this week</span><i class="dot"></i>
+      <span>Three branches · open every day 07:30–18:30</span><i class="dot"></i>
+    </div>
+  </div>
+</div>
+
+<!-- ══ header ═══════════════════════════════════════════════════════════ -->
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-main">
+    <a class="logo" href="#top" aria-label="Long Range Pharmacy home">
+      <span class="word">long<i>range</i><i>.</i></span>
+      <span class="sub">Pharmacy</span>
+    </a>
+
+    <form class="search" role="search" onsubmit="return false">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+      <input id="q" type="search" placeholder="Search medicines, vitamins, skin care…" aria-label="Search products">
+      <button type="submit" aria-label="Search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </form>
+
+    <div class="hdr-phone">
+      <b>+263 77 160 0539</b>
+      <small>Open daily 07:30–18:30</small>
+    </div>
+
+    <div class="hdr-acts">
+      <button class="iconbtn" id="wishBtn" aria-label="Saved products">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.6 12 20 12 20Z"/></svg>
+        <span class="badge" id="wishCount" data-empty="1">0</span>
+      </button>
+      <button class="iconbtn" id="cartBtn" aria-label="Open basket">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="badge" id="cartCount" data-empty="1">0</span>
+      </button>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav class="dept-bar" aria-label="Departments">
+    <div class="wrap">
+      <a href="#shop" data-jump="Medicines">Medicines</a>
+      <a href="#shop" data-jump="Vitamins">Vitamins</a>
+      <a href="#shop" data-jump="Skin Care">Skin Care</a>
+      <a href="#shop" data-jump="Baby &amp; Child">Baby &amp; Child</a>
+      <a href="#shop" data-jump="Sports Nutrition">Sports Nutrition</a>
+      <a href="#shop" data-jump="Hair &amp; Personal">Hair &amp; Personal</a>
+      <a href="#shop" data-jump="Home Health">Home Health</a>
+      <a href="#prescriptions">Prescriptions</a>
+      <span class="free">Free delivery over $50</span>
+    </div>
+  </nav>
+</header>
+
+<div class="msheet" id="msheet" aria-hidden="true">
+  <div class="top">
+    <span class="logo"><span class="word">long<i>range</i><i>.</i></span><span class="sub">Pharmacy</span></span>
+    <button class="iconbtn" id="mclose" aria-label="Close menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav>
+    <a href="#shop">Shop all</a>
+    <a href="#categories">Departments</a>
+    <a href="#prescriptions">Prescriptions</a>
+    <a href="#branches">Branches</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<main id="top">
+
+<!-- ══ hero — split 52/48, mint studio on the right ═════════════════════ -->
+<section class="hero wrap" aria-roledescription="carousel" aria-label="Featured ranges" id="hero">
+  <div class="hero-panel">
+    <div class="hero-copy">
+      <div class="hero-slide active" data-slide="0">
+        <p class="eyebrow"><span class="lnw"><span class="ln">Skin care</span></span></p>
+        <h1>
+          <span class="lnw"><span class="ln">Be ready</span></span>
+          <span class="lnw"><span class="ln">for radiant</span></span>
+          <span class="lnw"><span class="ln">skin every day</span></span>
+        </h1>
+        <p class="sub">Dermatologist-picked cleansers, serums and moisturisers, checked over the counter before they reach the shelf.</p>
+        <div class="cta">
+          <a class="btn btn--pine" href="#shop" data-jump="Skin Care"><span>Shop skin care</span></a>
+          <span class="trust">126 lines in stock today</span>
+        </div>
+      </div>
+
+      <div class="hero-slide" data-slide="1">
+        <p class="eyebrow"><span class="lnw"><span class="ln">Sports nutrition</span></span></p>
+        <h1>
+          <span class="lnw"><span class="ln">Fuel your</span></span>
+          <span class="lnw"><span class="ln">next session</span></span>
+          <span class="lnw"><span class="ln">the right way</span></span>
+        </h1>
+        <p class="sub">Whey, creatine and recovery blends. Genuine stock, batch numbers you can read, prices that hold all month.</p>
+        <div class="cta">
+          <a class="btn btn--pine" href="#shop" data-jump="Sports Nutrition"><span>Shop supplements</span></a>
+          <span class="trust">Sealed tubs · no repacks</span>
+        </div>
+      </div>
+
+      <div class="hero-slide" data-slide="2">
+        <p class="eyebrow"><span class="lnw"><span class="ln">Repeat prescriptions</span></span></p>
+        <h1>
+          <span class="lnw"><span class="ln">Send us the</span></span>
+          <span class="lnw"><span class="ln">script, collect</span></span>
+          <span class="lnw"><span class="ln">it the same day</span></span>
+        </h1>
+        <p class="sub">Upload a photo before 11:00 and a pharmacist dispenses it that afternoon. Delivery across Harare in two to four hours.</p>
+        <div class="cta">
+          <a class="btn btn--pine" href="#prescriptions"><span>Upload a prescription</span></a>
+          <span class="trust">Checked in 30 minutes</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- the mint studio: CSS floor + podium in the same colour family as the
+         product artwork, so the shot reads as one continuous set -->
+    <div class="studio" data-studio>
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <span class="wall"></span>
+      <span class="floor"></span>
+      <span class="horizon"></span>
+      <span class="pool"></span>
+      <div class="podium"><i class="base"></i><i class="body"></i><i class="top"></i></div>
+      <div class="hero-shot" data-frame>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img id="heroShot" src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=760&h=950&q=70" alt="Bottles of facial serum and moisturiser on a mint studio floor" width="760" height="950">
+      </div>
+      <span class="flash flash--sale" id="flashSale">up to<em>25%</em>off</span>
+      <span class="flash flash--price" id="flashPrice">from<em>$5</em>a pack</span>
+    </div>
+
+    <div class="hero-nav">
+      <button class="arw" id="heroPrev" aria-label="Previous slide">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <div class="bars" role="tablist" aria-label="Featured ranges">
+        <button class="bar" role="tab" aria-selected="true" aria-label="Skin care" data-go="0"><i></i></button>
+        <button class="bar" role="tab" aria-selected="false" aria-label="Sports nutrition" data-go="1"><i></i></button>
+        <button class="bar" role="tab" aria-selected="false" aria-label="Repeat prescriptions" data-go="2"><i></i></button>
+      </div>
+      <button class="arw" id="heroNext" aria-label="Next slide">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ service bar ════════════════════════════════════════════════════ -->
+  <div class="services" data-stagger>
+    <div class="item" data-fade>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 7h11v10H2zM13 10h4l4 3.5V17h-8z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>
+      <div><b>Free delivery</b><small>On orders over $50</small></div>
+    </div>
+    <div class="item" data-fade>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 20v-5h5"/></svg>
+      <div><b>Easy returns</b><small>30 days, unopened packs</small></div>
+    </div>
+    <div class="item" data-fade>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.3-3 8-7 9.5-4-1.5-7-5.2-7-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg>
+      <div><b>MCAZ registered</b><small>Genuine stock, traceable batches</small></div>
+    </div>
+    <div class="item" data-fade>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="3" y="13" width="4" height="6" rx="1.6"/><rect x="17" y="13" width="4" height="6" rx="1.6"/><path d="M20 19v1a3 3 0 0 1-3 3h-3"/></svg>
+      <div><b>Talk to a pharmacist</b><small>Every day, no appointment</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ promo tiles ══════════════════════════════════════════════════════ -->
+<section class="wrap" aria-label="This week at Long Range">
+  <div class="promos">
+    <article class="promo promo--light" data-promo data-dir="left">
+      <div class="art" data-parallax data-frame>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc4038e8?auto=format&fit=crop&w=900&h=760&q=70" alt="Skin care bottles arranged on a warm champagne surface" loading="lazy" width="900" height="760">
+        <span class="veil" style="background:linear-gradient(90deg,#E7DCC8 0%,rgba(231,220,200,0) 62%)"></span>
+      </div>
+      <div class="copy">
+        <p class="eyebrow">New in our shop</p>
+        <h3>
+          <span class="lnw"><span class="ln">Fragrance</span></span>
+          <span class="lnw"><span class="ln">and skin care</span></span>
+          <span class="lnw"><span class="ln">that lasts</span></span>
+        </h3>
+        <p class="scribble" data-scribble>free samples with every order
+          <svg viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true"><path d="M18 30C18 12 62 6 112 6c48 0 92 7 92 24 0 18-46 24-94 24C60 54 18 47 18 30Z"/></svg>
+        </p>
+        <a class="btn btn--pine btn--sq" href="#shop" data-jump="Skin Care"><span>Shop now</span></a>
+      </div>
+      <span class="sheen" aria-hidden="true"></span>
+    </article>
+
+    <article class="promo promo--dark" data-promo data-dir="right">
+      <div class="art" data-parallax data-frame>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=900&h=760&q=70" alt="A tub of protein powder with a scoop beside it" loading="lazy" width="900" height="760">
+        <span class="veil" style="background:linear-gradient(90deg,#1F211F 0%,rgba(31,33,31,0) 58%)"></span>
+      </div>
+      <div class="copy">
+        <p class="eyebrow">Check our offer</p>
+        <h3>
+          <span class="lnw"><span class="ln">Natural protein</span></span>
+          <span class="lnw"><span class="ln">powders on sale</span></span>
+        </h3>
+        <a class="btn btn--sq" href="#shop" data-jump="Sports Nutrition" style="background:#fff;color:#1F211F"><span>Shop now</span></a>
+      </div>
+      <span class="roundel" aria-hidden="true"><em>40%</em>off</span>
+      <span class="sheen" aria-hidden="true"></span>
+    </article>
+  </div>
+</section>
+
+<!-- ══ category strip — filters the grid below ══════════════════════════ -->
+<section class="sec wrap" id="categories" aria-label="Shop by category">
+  <div class="sec-head">
+    <h2 class="sec-title"><span class="lnw"><span class="ln">Shop by category</span></span></h2>
+    <p>Everything on our shop floor, minus the queue. Pick a department and the shelf below changes.</p>
+  </div>
+  <div class="cats" id="cats" data-stagger></div>
+</section>
+
+<!-- ══ product rail ═════════════════════════════════════════════════════ -->
+<section class="sec wrap" id="shop" style="padding-top:0" aria-label="Latest delivery">
+  <div class="shop-bar">
+    <div>
+      <h2 class="sec-title"><span class="lnw"><span class="ln">Latest delivery</span></span></h2>
+      <p style="font-size:14px;color:rgba(11,50,44,.62);margin-top:8px">Carefully selected products, in stock at our Harare branches.</p>
+    </div>
+    <p class="count" id="shopCount">Showing 16 products</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- ══ split banner + count-ups ═════════════════════════════════════════ -->
+<section class="sec banner" id="about" aria-label="About Long Range">
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <p class="eyebrow">Since 2004 · Bright Health Group</p>
+        <h2 style="margin-top:16px">
+          <span class="lnw"><span class="ln">A dispensary first,</span></span>
+          <span class="lnw"><span class="ln">a shop second.</span></span>
+        </h2>
+        <p class="lead">Three branches, one bonded store and a pharmacist on the floor at every one of them. Everything on this page is stock we hold in Harare, priced the same at the till as it is on the screen.</p>
+        <a class="btn btn--green" href="#branches"><span>Find your branch</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <!-- clip-path reveal + inner parallax: the frame wipes open, the
+           photograph travels slower than the frame it sits in -->
+      <div class="media" data-clip data-frame>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?auto=format&fit=crop&w=1100&h=850&q=70" alt="Shelves of stock inside a Long Range Pharmacies branch" loading="lazy" width="1100" height="850">
+        <span class="tag">Graniteside dispensary</span>
+      </div>
+    </div>
+
+    <div class="stats" data-stagger>
+      <div data-fade>
+        <p class="n tnum"><span data-count="1180400" data-group="1">0</span></p>
+        <p class="l">Scripts dispensed</p>
+      </div>
+      <div data-fade>
+        <p class="n tnum"><span data-count="22">0</span><em>yrs</em></p>
+        <p class="l">Trading since 2004</p>
+      </div>
+      <div data-fade>
+        <p class="n tnum"><span data-count="3">0</span></p>
+        <p class="l">Harare branches</p>
+      </div>
+      <div data-fade>
+        <p class="n tnum"><span data-count="14">0</span></p>
+        <p class="l">Pharmacists on the floor</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ bestsellers ══════════════════════════════════════════════════════ -->
+<section class="sec best" aria-label="Bestsellers">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="lnw"><span class="ln">What Harare buys most</span></span></h2>
+      <p>The four lines that leave our shelves fastest, restocked every Tuesday.</p>
+    </div>
+    <div class="grid" id="bestGrid"></div>
+  </div>
+</section>
+
+<!-- ══ offer tiles ══════════════════════════════════════════════════════ -->
+<section class="sec wrap" aria-label="Latest offers">
+  <div class="sec-head">
+    <h2 class="sec-title"><span class="lnw"><span class="ln">Don’t miss our latest offers</span></span></h2>
+  </div>
+  <div class="offers" data-stagger>
+    <article class="offer" data-fade style="background:#DCEBE4">
+      <div class="frame" data-frame>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?auto=format&fit=crop&w=760&h=570&q=70" alt="A glass dropper bottle of night serum" loading="lazy" width="760" height="570">
+      </div>
+      <div class="pad">
+        <h3>New serums<br>for your evening<br>routine</h3>
+        <a class="link-arrow" href="#shop" data-jump="Skin Care">Show products
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <article class="offer" data-fade style="background:#E4EEF2">
+      <div class="frame" data-frame>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=760&h=570&q=70" alt="Baby bath and bedtime essentials on a shelf" loading="lazy" width="760" height="570">
+      </div>
+      <div class="pad">
+        <h3>Baby bath<br>and bedtime<br>essentials</h3>
+        <a class="link-arrow" href="#shop" data-jump="Baby &amp; Child">Show products
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <article class="offer" data-fade style="background:#FBF3EE">
+      <div class="frame" data-frame>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=760&h=570&q=70" alt="Bottles of vitamins and daily supplements" loading="lazy" width="760" height="570">
+      </div>
+      <div class="pad">
+        <h3>Winter immunity<br>bundles, three<br>for the price of two</h3>
+        <a class="link-arrow" href="#shop" data-jump="Vitamins">Show products
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ══ prescription upload ══════════════════════════════════════════════ -->
+<section class="sec rx" id="prescriptions" aria-label="Order with a prescription">
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <p class="eyebrow">Order with prescription</p>
+        <h2 style="margin-top:16px">
+          <span class="lnw"><span class="ln">Send us the script.</span></span>
+          <span class="lnw"><span class="ln">We do the queueing.</span></span>
+        </h2>
+        <p class="lead">Photograph the prescription, add the delivery address, and a registered pharmacist checks it before anything is dispensed. You get a price before we fill it, every time.</p>
+
+        <ul class="rx-steps" data-stagger>
+          <li data-fade>
+            <span class="ix">01</span>
+            <div><b>Upload it</b><p>A clear photo or a PDF. Both sides if the repeat is on the back.</p></div>
+            <span class="when">2 min</span>
+          </li>
+          <li data-fade>
+            <span class="ix">02</span>
+            <div><b>A pharmacist checks it</b><p>Dose, interactions and stock. We call you if anything needs a substitute.</p></div>
+            <span class="when">30 min</span>
+          </li>
+          <li data-fade>
+            <span class="ix">03</span>
+            <div><b>Dispensed and sent</b><p>Uploaded before 11:00 goes out the same afternoon. Delivery $3 flat.</p></div>
+            <span class="when">2–4 hrs</span>
+          </li>
+        </ul>
+
+        <p class="rx-note">
+          <span class="scribble" data-scribble>the check is free — always
+            <svg viewBox="0 0 240 60" preserveAspectRatio="none" aria-hidden="true"><path d="M20 30C20 12 66 6 118 6c50 0 102 7 102 24 0 18-50 24-100 24C66 54 20 47 20 30Z"/></svg>
+          </span>
+        </p>
+      </div>
+
+      <div>
+        <div class="dropzone" id="drop">
+          <span class="icn" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </span>
+          <h3>Drop your prescription here</h3>
+          <p class="hint">JPG, PNG, HEIC or PDF · up to 10 MB each</p>
+          <button class="btn btn--green" id="pick" type="button"><span>Choose a file</span></button>
+          <input type="file" id="rxfile" accept="image/*,.pdf" multiple hidden>
+          <p class="fine">Nothing is uploaded from this demo — the picker is wired, the endpoint is not.</p>
+          <ul class="rx-files" id="rxlist"></ul>
+        </div>
+
+        <div class="rx-panel">
+          <b>What happens next</b>
+          <p>You will get a WhatsApp message from the Graniteside dispensary within 30 minutes of sending, with the total and the collection or delivery time. Medical aid claims are processed at the counter — bring the card on collection.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ visit us ═════════════════════════════════════════════════════════ -->
+<section class="sec visit" id="branches" aria-label="Visit a branch">
+  <div class="wrap">
+    <div class="row">
+      <div class="portrait" data-clip data-frame>
+        <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
+        <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&w=1000&h=760&q=70" alt="A Long Range pharmacist at the dispensing counter" loading="lazy" width="1000" height="760">
+      </div>
+      <div>
+        <p class="eyebrow">Come and see us</p>
+        <h2 class="sec-title" style="font-size:clamp(26px,3vw,38px);margin-top:14px">
+          <span class="lnw"><span class="ln">Three branches,</span></span>
+          <span class="lnw"><span class="ln">open every day</span></span>
+        </h2>
+        <p class="hours">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          Open daily 07:30 – 18:30
+        </p>
+
+        <ul class="branches" data-stagger>
+          <li data-fade>
+            <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg> Graniteside (HQ)</b>
+            <p class="addr">Shop 3, Kelvin Corner, Graniteside, Harare</p>
+            <p class="tel"><a href="tel:+263771600539">+263 77 160 0539</a><a href="tel:+263774426597">+263 77 442 6597</a></p>
+          </li>
+          <li data-fade>
+            <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg> Southerton</b>
+            <p class="addr">10 Highfield Junction, Southerton, Harare</p>
+            <p class="tel"><a href="tel:+263785986848">+263 78 598 6848</a><a href="tel:+263786334877">+263 78 633 4877</a></p>
+          </li>
+          <li data-fade>
+            <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg> Shawasha Hills</b>
+            <p class="addr">Shop 5, Shawasha Hills Shopping Mall, Harare</p>
+            <p class="tel"><a href="tel:+263773440533">+263 77 344 0533</a></p>
+          </li>
+        </ul>
+
+        <a class="btn btn--green" style="margin-top:22px" href="https://wa.me/263773440533" target="_blank" rel="noreferrer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+          <span>WhatsApp +263 77 344 0533</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ contact ══════════════════════════════════════════════════════════ -->
+<section class="sec contact" id="contact" aria-label="Contact us">
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h2 style="margin-top:16px">
+          <span class="lnw"><span class="ln">Ask a pharmacist,</span></span>
+          <span class="lnw"><span class="ln">not a search engine.</span></span>
+        </h2>
+        <p class="lead">Questions about a prescription, a dose, a substitute or an order already on its way — call, message, or leave the details here and we will come back to you the same day.</p>
+
+        <ul class="clist">
+          <li>
+            <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4Z"/></svg></span>
+            <span><a href="tel:+263771600539">+263 77 160 0539</a><small>Graniteside dispensary</small></span>
+          </li>
+          <li>
+            <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg></span>
+            <span><a href="https://wa.me/263773440533" target="_blank" rel="noreferrer">WhatsApp +263 77 344 0533</a><small>Fastest for prescriptions</small></span>
+          </li>
+          <li>
+            <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></span>
+            <span>Shop 3, Kelvin Corner, Graniteside<small>Harare, Zimbabwe</small></span>
+          </li>
+          <li>
+            <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <span>Monday – Sunday<small>07:30 – 18:30, public holidays included</small></span>
+          </li>
+        </ul>
+      </div>
+
+      <form class="form" id="contactForm" novalidate>
+        <div class="two">
+          <div class="fld"><label for="cf-name">Your name</label><input id="cf-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="fld"><label for="cf-phone">Phone</label><input id="cf-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required></div>
+        </div>
+        <div class="fld"><label for="cf-branch">Branch</label>
+          <select id="cf-branch" name="branch">
+            <option>Graniteside (HQ)</option><option>Southerton</option><option>Shawasha Hills</option>
+          </select>
+        </div>
+        <div class="fld"><label for="cf-msg">How can we help?</label><textarea id="cf-msg" name="message" required></textarea></div>
+        <button class="btn btn--green" type="submit"><span>Send the message</span></button>
+        <p class="ok" role="status">Thank you — a pharmacist will call you back today. (Demo form: nothing was sent.)</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══ instagram strip ══════════════════════════════════════════════════ -->
+<section class="sec wrap" aria-label="Instagram">
+  <div class="sec-head">
+    <h2 class="sec-title"><span class="lnw"><span class="ln">Follow us on Instagram</span></span></h2>
+    <p><a href="https://instagram.com" target="_blank" rel="noreferrer" style="color:var(--green-d);font-weight:700">@longrangepharmacies</a></p>
+  </div>
+  <ul class="ig" id="ig" data-stagger></ul>
+</section>
+
+</main>
+
+<!-- ══ footer ═══════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div>
+        <span class="logo"><span class="word">long<i>range</i><i>.</i></span><span class="sub">Pharmacy</span></span>
+        <p class="blurb">Community pharmacy and health shop, trading in Harare since 2004. Part of Bright Health Group.</p>
+        <div class="pay"><span>VISA</span><span>MASTERCARD</span><span>ECOCASH</span><span>ZIPIT</span></div>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#shop" data-jump="Medicines">Medicines</a></li>
+          <li><a href="#shop" data-jump="Vitamins">Vitamins</a></li>
+          <li><a href="#shop" data-jump="Skin Care">Skin care</a></li>
+          <li><a href="#shop" data-jump="Baby &amp; Child">Baby &amp; child</a></li>
+          <li><a href="#shop" data-jump="Sports Nutrition">Sports nutrition</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#prescriptions">Prescription upload</a></li>
+          <li><a href="#prescriptions">Repeat medication</a></li>
+          <li><a href="#branches">Blood pressure checks</a></li>
+          <li><a href="#branches">Blood sugar testing</a></li>
+          <li><a href="#contact">Medical aid claims</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About us</a></li>
+          <li><a href="#branches">Branches</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Delivery &amp; returns</a></li>
+          <li><a href="#">Privacy notice</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Stock &amp; offers by email</h4>
+        <p style="font-size:13.5px;color:var(--muted);line-height:1.6">One message a month. New lines, price drops, nothing else.</p>
+        <form class="news" onsubmit="return false" aria-label="Newsletter">
+          <label class="sr-only" for="nl" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Email address</label>
+          <input id="nl" type="email" placeholder="you@example.com" autocomplete="email">
+          <button type="submit" aria-label="Subscribe">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="fbot">
+      <p>© 2026 Long Range Pharmacies · Bright Health Group. Registered with the Medicines Control Authority of Zimbabwe.</p>
+      <p>Template 19 · Website Template Library</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ cart drawer ══════════════════════════════════════════════════════ -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Your basket" aria-hidden="true">
+  <div class="dh">
+    <b>Your basket</b>
+    <button class="iconbtn" id="closeCart" aria-label="Close basket">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <ul class="dl" id="cartList"></ul>
+  <div class="df">
+    <div class="sum"><span>Subtotal</span><span class="tnum" id="subtotal">$0.00</span></div>
+    <small id="shipNote">Add $50.00 more for free Harare delivery.</small>
+    <button class="btn btn--green" type="button" id="checkout"><span>Checkout</span></button>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three/r128/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ════════════════════════════════════════════════════════════════════════
+   0 · environment
+   ════════════════════════════════════════════════════════════════════════ */
+var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var hasGSAP = typeof window.gsap !== 'undefined';
+var hasST   = hasGSAP && typeof window.ScrollTrigger !== 'undefined';
+var desktop = window.matchMedia('(min-width:1024px)').matches;
+var $  = function(s,r){ return (r||document).querySelector(s); };
+var $$ = function(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+if (hasST) gsap.registerPlugin(ScrollTrigger);
+
+/* A photo that fails to load must not leave a white hole: the frame keeps a
+   mint pack-tile drawn in CSS instead. */
+document.addEventListener('error', function(e){
+  var t = e.target;
+  if (t && t.tagName === 'IMG'){
+    var f = t.closest('[data-frame]');
+    if (f) f.classList.add('is-empty');
+    t.style.visibility = 'hidden';
+  }
+}, true);
+
+/* ════════════════════════════════════════════════════════════════════════
+   1 · catalogue — 16 real lines, prices in USD, stock as at today
+   Every image below is a free-licence Unsplash placeholder.
+   PLACEHOLDER: swap for Higgsfield-generated asset
+   ════════════════════════════════════════════════════════════════════════ */
+var U = function(id,w,h){
+  return 'https://images.unsplash.com/photo-'+id+'?auto=format&fit=crop&w='+w+'&h='+h+'&q=70';
+};
+
+var CATS = [
+  { name:'Medicines',        img:'1587854692152-cbe660dbde88' },
+  { name:'Vitamins',         img:'1556228720-195a672e8a03'   },
+  { name:'Skin Care',        img:'1620916566398-39f1143ab7be' },
+  { name:'Baby & Child',     img:'1519689680058-324335c77eba' },
+  { name:'Sports Nutrition', img:'1593095948071-474c5cc2989d' },
+  { name:'Hair & Personal',  img:'1608248543803-ba4f8c70ae0b' },
+  { name:'Home Health',      img:'1576091160550-2173dba999ef' }
+];
+
+var PRODUCTS = [
+  { id:'p01', name:'Panado Paracetamol 500mg, 24 tablets', brand:'Adcock Ingram', price:3.40, old:4.20, cat:'Medicines', stock:'in',  best:true,  img:'1584308666744-24d5c474f2ae' },
+  { id:'p02', name:'Citro-Soda Urinary Alkaliniser 100g',  brand:'Aspen',         price:6.90, old:null, cat:'Medicines', stock:'in',  best:false, img:'1471864190281-a93a3070b6de' },
+  { id:'p03', name:'Benylin Dry Cough Syrup 100ml',        brand:'Kenvue',        price:8.50, old:10.20,cat:'Medicines', stock:'in',  best:true,  img:'1587854692152-cbe660dbde88' },
+  { id:'p04', name:'Allergex Antihistamine 4mg, 30 tabs',  brand:'Aspen',         price:4.10, old:null, cat:'Medicines', stock:'low', best:false, img:'1585435557343-3b092031a831' },
+  { id:'p05', name:'Ranferon-12 Haematinic Elixir 200ml',  brand:'Ranbaxy',       price:12.40,old:null, cat:'Vitamins',  stock:'in',  best:false, img:'1556228720-195a672e8a03' },
+  { id:'p06', name:'Seven Seas Cod Liver Oil, 120 caps',   brand:'Seven Seas',    price:14.90,old:18.60,cat:'Vitamins',  stock:'in',  best:true,  img:'1512069772995-ec65ed45afd6' },
+  { id:'p07', name:'Redoxon Vitamin C 1000mg, 20 effervescent', brand:'Bayer',    price:7.60, old:null, cat:'Vitamins',  stock:'in',  best:false, img:'1607619056574-7b8d3ee536b2' },
+  { id:'p08', name:'Bio-Oil Skincare Oil 125ml',           brand:'Bio-Oil',       price:21.50,old:26.00,cat:'Skin Care', stock:'in',  best:true,  img:'1620916566398-39f1143ab7be' },
+  { id:'p09', name:'Cetaphil Gentle Skin Cleanser 250ml',  brand:'Galderma',      price:18.75,old:null, cat:'Skin Care', stock:'in',  best:false, img:'1596462502278-27bfdc4038e8' },
+  { id:'p10', name:'Gentle Magic Skin Lotion 100ml',       brand:'Gentle Magic',  price:5.20, old:null, cat:'Skin Care', stock:'in',  best:false, img:'1608248543803-ba4f8c70ae0b' },
+  { id:'p11', name:"Johnson's Baby Oil 300ml",             brand:'Johnson &amp; Johnson', price:7.90, old:9.40, cat:'Baby & Child', stock:'in',  best:false, img:'1519689680058-324335c77eba' },
+  { id:'p12', name:'NAN Optipro 1 Infant Formula 400g',    brand:'Nestlé',        price:19.80,old:null, cat:'Baby & Child', stock:'out', best:false, img:'1563213126-a4273aed2016' },
+  { id:'p13', name:'Gold Standard 100% Whey 2lb, Vanilla', brand:'Optimum Nutrition', price:46.00, old:54.00, cat:'Sports Nutrition', stock:'in', best:true, img:'1593095948071-474c5cc2989d' },
+  { id:'p14', name:'Micronised Creatine Monohydrate 300g', brand:'USN',           price:24.50,old:null, cat:'Sports Nutrition', stock:'low', best:false, img:'1579722821273-0f6c1b5d0b47' },
+  { id:'p15', name:'Head &amp; Shoulders Anti-Dandruff 400ml', brand:'P&amp;G',   price:9.30, old:11.10,cat:'Hair & Personal', stock:'in', best:false, img:'1584362917165-526a968579e8' },
+  { id:'p16', name:'Omron M2 Blood Pressure Monitor',      brand:'Omron',         price:58.00,old:69.00,cat:'Home Health', stock:'in',  best:true,  img:'1576091160550-2173dba999ef' }
+];
+
+var IG = ['1512069772995-ec65ed45afd6','1585435557343-3b092031a831','1607619056574-7b8d3ee536b2',
+          '1556228720-195a672e8a03','1519689680058-324335c77eba','1620916566398-39f1143ab7be'];
+
+var money = function(n){ return '$' + n.toFixed(2); };
+/* names carry a literal ampersand; escape on the way into markup, and the
+   dataset decodes it straight back on the way out */
+var esc = function(s){ return String(s).replace(/&(?!amp;)/g, '&amp;'); };
+var plain = function(s){ return String(s).replace(/&amp;/g, '&'); };
+
+/* ════════════════════════════════════════════════════════════════════════
+   2 · rendering
+   ════════════════════════════════════════════════════════════════════════ */
+var FLAGS = {
+  low:'<span class="flag flag--low">Low stock</span>',
+  out:'<span class="flag flag--out">Out of stock</span>'
+};
+
+function cardHTML(p){
+  var out = p.stock === 'out';
+  var off = p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+  var flags = '';
+  if (off)      flags += '<span class="flag flag--sale">-' + off + '%</span>';
+  if (p.best)   flags += '<span class="flag flag--best">Bestseller</span>';
+  if (FLAGS[p.stock]) flags += FLAGS[p.stock];
+
+  return '<article class="card' + (out ? ' is-out' : '') + '" data-card data-id="' + p.id + '">' +
+    '<div class="frame" data-frame>' +
+      '<!-- PLACEHOLDER: swap for Higgsfield-generated asset -->' +
+      '<img src="' + U(p.img, 520, 520) + '" alt="' + p.name + '" loading="lazy" width="520" height="520">' +
+      '<div class="flags">' + flags + '</div>' +
+      '<button class="wish" type="button" aria-pressed="false" aria-label="Save ' + p.name + '">' +
+        '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.6 12 20 12 20Z"/></svg>' +
+      '</button>' +
+    '</div>' +
+    '<div class="meta">' +
+      '<p class="brand">' + p.brand + '</p>' +
+      '<h3>' + p.name + '</h3>' +
+      '<div class="price"><b class="tnum">' + money(p.price) + '</b>' +
+        (p.old ? '<s class="tnum">' + money(p.old) + '</s><span class="off">Save ' + money(p.old - p.price) + '</span>' : '') +
+      '</div>' +
+      '<button class="add" type="button" data-add="' + p.id + '"' + (out ? ' disabled' : '') + '>' +
+        (out ? 'Notify me' :
+         '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Add to basket') +
+      '</button>' +
+    '</div>' +
+  '</article>';
+}
+
+var grid = $('#grid'), bestGrid = $('#bestGrid'), catsEl = $('#cats'), igEl = $('#ig');
+var filter = 'All';
+
+function renderGrid(animate){
+  var list = filter === 'All' ? PRODUCTS : PRODUCTS.filter(function(p){ return p.cat === filter; });
+  grid.innerHTML = list.length ? list.map(cardHTML).join('')
+    : '<p class="empty-note">Nothing in this department online yet. Ask at the counter — we hold more than we list.</p>';
+  $('#shopCount').textContent = 'Showing ' + list.length + ' product' + (list.length === 1 ? '' : 's');
+  if (animate && hasGSAP && !reduced){
+    gsap.fromTo($$('[data-card]', grid),
+      { y: 26, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: .62, ease: 'power3.out', stagger: .045, overwrite: true });
+  }
+  syncWish();
+}
+
+function renderStatic(){
+  catsEl.innerHTML = '<button class="cat" type="button" data-cat="All" aria-pressed="true" data-fade>' +
+      '<span class="frame" data-frame style="display:grid;place-items:center;background:var(--mint-200)">' +
+        '<span style="font-family:var(--ui);font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pine)">All</span>' +
+      '</span><p>Everything</p></button>' +
+    CATS.map(function(c){
+      return '<button class="cat" type="button" data-cat="' + esc(c.name) + '" aria-pressed="false" data-fade>' +
+        '<span class="frame" data-frame>' +
+          '<!-- PLACEHOLDER: swap for Higgsfield-generated asset -->' +
+          '<img src="' + U(c.img, 340, 340) + '" alt="' + esc(c.name) + '" loading="lazy" width="340" height="340">' +
+        '</span><p>' + esc(c.name) + '</p></button>';
+    }).join('');
+
+  bestGrid.innerHTML = PRODUCTS.filter(function(p){ return p.best; }).slice(0, 4).map(cardHTML).join('');
+
+  igEl.innerHTML = IG.map(function(id){
+    return '<li data-fade><!-- PLACEHOLDER: swap for Higgsfield-generated asset -->' +
+      '<img src="' + U(id, 360, 360) + '" alt="From the Long Range Pharmacies Instagram feed" loading="lazy" width="360" height="360"></li>';
+  }).join('');
+}
+
+var cart = {}, wish = {};
+var cartCount = $('#cartCount'), wishCount = $('#wishCount');
+
+renderStatic();
+renderGrid(false);
+
+/* category strip drives the grid — client side, no reload */
+function setFilter(name, scroll){
+  filter = name;
+  $$('[data-cat]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.cat === name)); });
+  renderGrid(true);
+  if (scroll){
+    var y = $('#shop').getBoundingClientRect().top + window.pageYOffset - 96;
+    if (window.__lenis) window.__lenis.scrollTo(y, { duration: 1 });
+    else window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
+  }
+}
+document.addEventListener('click', function(e){
+  var c = e.target.closest('[data-cat]');
+  if (c){ setFilter(c.dataset.cat, false); return; }
+  var j = e.target.closest('[data-jump]');
+  if (j){ e.preventDefault(); setFilter(j.dataset.jump.replace('&amp;','&'), true); }
+});
+
+/* search box filters the same grid */
+$('#q').addEventListener('input', function(e){
+  var v = e.target.value.trim().toLowerCase();
+  if (!v){ setFilter(filter, false); return; }
+  var list = PRODUCTS.filter(function(p){
+    return plain(p.name + ' ' + p.brand + ' ' + p.cat).toLowerCase().indexOf(v) > -1;
+  });
+  grid.innerHTML = list.length ? list.map(cardHTML).join('')
+    : '<p class="empty-note">No match for “' + v + '”. Try a brand, or ask a pharmacist.</p>';
+  $('#shopCount').textContent = 'Showing ' + list.length + ' product' + (list.length === 1 ? '' : 's');
+  syncWish();
+});
+
+/* ════════════════════════════════════════════════════════════════════════
+   3 · basket — count bumps in the header, coral badge pops
+   ════════════════════════════════════════════════════════════════════════ */
+/* cart and wish are initialised above, before the first renderGrid() call:
+   renderGrid() calls syncWish(), which reads both. */
+
+function totals(){
+  var n = 0, sum = 0;
+  for (var id in cart){ n += cart[id]; sum += cart[id] * find(id).price; }
+  return { n: n, sum: sum };
+}
+function find(id){ for (var i = 0; i < PRODUCTS.length; i++) if (PRODUCTS[i].id === id) return PRODUCTS[i]; }
+
+function popBadge(el){
+  if (hasGSAP && !reduced){
+    gsap.fromTo(el, { scale: .35, rotate: -12 },
+      { scale: 1, rotate: 0, duration: .55, ease: 'back.out(3.2)', overwrite: true });
+  }
+}
+
+function paintCart(){
+  var t = totals();
+  cartCount.textContent = t.n;
+  cartCount.setAttribute('data-empty', t.n ? '0' : '1');
+  $('#subtotal').textContent = money(t.sum);
+  var left = 50 - t.sum;
+  $('#shipNote').textContent = left > 0
+    ? 'Add ' + money(left) + ' more for free Harare delivery.'
+    : 'Free Harare delivery unlocked.';
+
+  var ids = Object.keys(cart);
+  $('#cartList').innerHTML = ids.length ? ids.map(function(id){
+    var p = find(id);
+    return '<li data-line="' + id + '">' +
+      '<span class="th" data-frame><img src="' + U(p.img, 140, 140) + '" alt=""></span>' +
+      '<div><h5>' + p.name + '</h5>' +
+        '<div class="qty"><button type="button" data-q="-1" data-id="' + id + '" aria-label="One fewer">−</button>' +
+        '<b class="tnum">' + cart[id] + '</b>' +
+        '<button type="button" data-q="1" data-id="' + id + '" aria-label="One more">+</button></div></div>' +
+      '<span class="ln-price tnum">' + money(p.price * cart[id]) + '</span></li>';
+  }).join('') : '<li class="dempty">Your basket is empty. Everything on this page is in stock in Harare.</li>';
+}
+
+function flyToBasket(card){
+  if (!hasGSAP || reduced || !desktop) return;
+  var img = card.querySelector('img'); if (!img) return;
+  var a = img.getBoundingClientRect(), b = $('#cartBtn').getBoundingClientRect();
+  var chip = document.createElement('div');
+  chip.className = 'fly';
+  chip.innerHTML = '<img src="' + img.getAttribute('src') + '" alt="">';
+  chip.style.left = a.left + a.width / 2 - 26 + 'px';
+  chip.style.top  = a.top + a.height / 2 - 26 + 'px';
+  document.body.appendChild(chip);
+  var tl = gsap.timeline({ onComplete: function(){ chip.remove(); } });
+  tl.to(chip, { x: b.left + b.width / 2 - (a.left + a.width / 2), duration: .72, ease: 'power2.in' }, 0)
+    .to(chip, { y: b.top + b.height / 2 - (a.top + a.height / 2), duration: .72, ease: 'power4.in' }, 0)
+    .to(chip, { scale: .28, opacity: .2, duration: .72, ease: 'power2.in' }, 0);
+}
+
+var toastT;
+function toast(msg){
+  var el = $('#toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(function(){ el.classList.remove('show'); }, 2200);
+}
+
+document.addEventListener('click', function(e){
+  var add = e.target.closest('[data-add]');
+  if (add && !add.disabled){
+    var id = add.dataset.add, p = find(id);
+    cart[id] = (cart[id] || 0) + 1;
+    paintCart(); popBadge(cartCount);
+    flyToBasket(add.closest('[data-card]'));
+    add.classList.add('added');
+    var html = add.innerHTML;
+    add.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>In your basket';
+    setTimeout(function(){ add.classList.remove('added'); add.innerHTML = html; }, 1400);
+    toast(plain(p.name) + ' added to your basket');
+    return;
+  }
+
+  var q = e.target.closest('[data-q]');
+  if (q){
+    var qid = q.dataset.id;
+    cart[qid] += parseInt(q.dataset.q, 10);
+    if (cart[qid] <= 0) delete cart[qid];
+    paintCart(); popBadge(cartCount);
+    return;
+  }
+
+  var w = e.target.closest('.wish');
+  if (w){
+    var wid = w.closest('[data-card]').dataset.id;
+    if (wish[wid]) delete wish[wid]; else wish[wid] = 1;
+    syncWish(); popBadge(wishCount);
+  }
+});
+
+function syncWish(){
+  var n = Object.keys(wish).length;
+  wishCount.textContent = n;
+  wishCount.setAttribute('data-empty', n ? '0' : '1');
+  $$('[data-card]').forEach(function(c){
+    var b = c.querySelector('.wish');
+    if (b) b.setAttribute('aria-pressed', String(!!wish[c.dataset.id]));
+  });
+}
+paintCart();
+
+/* drawer */
+var drawer = $('#drawer'), scrim = $('#scrim'), lastFocus = null;
+function openCart(){
+  lastFocus = document.activeElement;
+  drawer.classList.add('open'); scrim.classList.add('open');
+  drawer.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('is-locked');
+  if (window.__lenis) window.__lenis.stop();
+  $('#closeCart').focus();
+}
+function closeCart(){
+  drawer.classList.remove('open'); scrim.classList.remove('open');
+  drawer.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('is-locked');
+  if (window.__lenis) window.__lenis.start();
+  if (lastFocus) lastFocus.focus();
+}
+$('#cartBtn').addEventListener('click', openCart);
+$('#closeCart').addEventListener('click', closeCart);
+scrim.addEventListener('click', closeCart);
+$('#checkout').addEventListener('click', function(){
+  toast(totals().n ? 'Checkout is a stub in this template — wire it to your gateway.' : 'Your basket is empty.');
+});
+$('#wishBtn').addEventListener('click', function(){
+  toast(Object.keys(wish).length ? Object.keys(wish).length + ' product(s) saved.' : 'Nothing saved yet — tap the heart on a product.');
+});
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape'){ if (drawer.classList.contains('open')) closeCart(); if (msheet.classList.contains('open')) closeSheet(); }
+});
+
+/* mobile sheet */
+var msheet = $('#msheet');
+function closeSheet(){ msheet.classList.remove('open'); $('#burger').setAttribute('aria-expanded','false'); document.body.classList.remove('is-locked'); }
+$('#burger').addEventListener('click', function(){
+  msheet.classList.add('open'); this.setAttribute('aria-expanded','true'); document.body.classList.add('is-locked');
+});
+$('#mclose').addEventListener('click', closeSheet);
+$$('#msheet nav a').forEach(function(a){ a.addEventListener('click', closeSheet); });
+
+/* ════════════════════════════════════════════════════════════════════════
+   4 · prescription upload — a real picker, a real drop target
+   ════════════════════════════════════════════════════════════════════════ */
+var drop = $('#drop'), fileInput = $('#rxfile'), rxlist = $('#rxlist'), picked = [];
+function kb(b){ return b < 1048576 ? Math.round(b / 1024) + ' KB' : (b / 1048576).toFixed(1) + ' MB'; }
+function paintFiles(){
+  rxlist.innerHTML = picked.map(function(f, i){
+    return '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 3v5h5"/><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/></svg>' +
+      '<span class="nm">' + f.name + '</span><span class="sz tnum">' + kb(f.size) + '</span>' +
+      '<button class="rm" type="button" data-rm="' + i + '" aria-label="Remove ' + f.name + '">' +
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></li>';
+  }).join('');
+  if (picked.length && hasGSAP && !reduced){
+    gsap.from(rxlist.lastElementChild, { y: 10, autoAlpha: 0, duration: .4, ease: 'power3.out' });
+  }
+}
+function accept(files){
+  Array.prototype.forEach.call(files, function(f){ if (picked.length < 6) picked.push(f); });
+  paintFiles();
+  if (files.length) toast(files.length + ' file' + (files.length > 1 ? 's' : '') + ' ready — a pharmacist checks it within 30 minutes.');
+}
+$('#pick').addEventListener('click', function(){ fileInput.click(); });
+fileInput.addEventListener('change', function(e){ accept(e.target.files); fileInput.value = ''; });
+rxlist.addEventListener('click', function(e){
+  var b = e.target.closest('[data-rm]');
+  if (b){ picked.splice(parseInt(b.dataset.rm, 10), 1); paintFiles(); }
+});
+['dragenter','dragover'].forEach(function(t){
+  drop.addEventListener(t, function(e){ e.preventDefault(); drop.classList.add('over'); });
+});
+['dragleave','drop'].forEach(function(t){
+  drop.addEventListener(t, function(e){ e.preventDefault(); drop.classList.remove('over'); });
+});
+drop.addEventListener('drop', function(e){ if (e.dataTransfer && e.dataTransfer.files) accept(e.dataTransfer.files); });
+
+/* contact form — demo only, validates then confirms */
+$('#contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var f = e.target, bad = null;
+  ['cf-name','cf-phone','cf-msg'].forEach(function(id){
+    var el = $('#' + id);
+    if (!el.value.trim()){ el.style.borderColor = '#F0644A'; if (!bad) bad = el; }
+    else el.style.borderColor = '';
+  });
+  if (bad){ bad.focus(); return; }
+  f.classList.add('sent');
+  f.querySelector('button[type=submit]').disabled = true;
+});
+
+/* ════════════════════════════════════════════════════════════════════════
+   5 · smooth scroll (Lenis) wired into ScrollTrigger
+   ════════════════════════════════════════════════════════════════════════ */
+if (typeof window.Lenis !== 'undefined' && hasGSAP && !reduced){
+  var lenis = new Lenis({ duration: 1.1, smoothWheel: true, wheelMultiplier: .95 });
+  window.__lenis = lenis;
+  if (hasST) lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
+  gsap.ticker.lagSmoothing(0);
+}
+
+/* header collapses its department bar once the page moves */
+var hdr = $('#hdr');
+window.addEventListener('scroll', function(){
+  hdr.classList.toggle('stuck', window.pageYOffset > 90);
+}, { passive: true });
+
+/* ════════════════════════════════════════════════════════════════════════
+   6 · page-load curtain
+   ════════════════════════════════════════════════════════════════════════ */
+var curtain = $('#curtain');
+function dropCurtain(){ if (curtain){ curtain.classList.add('done'); curtain = null; } }
+
+if (hasGSAP && !reduced){
+  var intro = gsap.timeline({ onComplete: dropCurtain });
+  intro.set('#curtain .cmark', { autoAlpha: 0, y: 14 })
+    .to('#curtain .cmark', { autoAlpha: 1, y: 0, duration: .55, ease: 'power3.out' })
+    .to('#curtain .crule i', { scaleX: 1, duration: .85, ease: 'power2.inOut' }, '-=.2')
+    .to('#curtain .cmark', { autoAlpha: 0, y: -12, duration: .4, ease: 'power2.in' }, '+=.05')
+    .to('#curtain .cpanel--t', { yPercent: -100, duration: 1, ease: 'power4.inOut' }, '-=.15')
+    .to('#curtain .cpanel--b', { yPercent: 100, duration: 1, ease: 'power4.inOut' }, '<')
+    .add(function(){ heroIn(); }, '-=.62');
+} else {
+  dropCurtain();
+}
+/* safety net: if a CDN never answers, the curtain still lifts */
+setTimeout(dropCurtain, 3200);
+
+/* ════════════════════════════════════════════════════════════════════════
+   7 · hero — split copy, mint studio, progress-bar carousel
+   ════════════════════════════════════════════════════════════════════════ */
+var SLIDES = [
+  { img:'1620916566398-39f1143ab7be', alt:'Bottles of facial serum and moisturiser on a mint studio floor', sale:'up to<em>25%</em>off', price:'from<em>$5</em>a pack' },
+  { img:'1593095948071-474c5cc2989d', alt:'A tub of whey protein standing on a mint studio floor',          sale:'save<em>40%</em>today', price:'from<em>$24</em>a tub' },
+  { img:'1585435557343-3b092031a831', alt:'Dispensing shelves inside a Long Range Pharmacies branch',        sale:'check is<em>free</em>always', price:'delivery<em>$3</em>flat' }
+];
+var DWELL = 6;
+var idx = 0, slideTween = null, paused = false;
+var slides = $$('.hero-slide'), bars = $$('.hero-nav .bar');
+var shot = $('#heroShot');
+
+function revealLines(scope, delay){
+  var lines = $$('.ln', scope);
+  if (!hasGSAP || reduced){ return; }
+  gsap.fromTo(lines, { yPercent: 112 }, {
+    yPercent: 0, duration: .95, ease: 'power4.out', stagger: .07, delay: delay || 0, overwrite: true
+  });
+}
+
+function paintFlash(i){
+  $('#flashSale').innerHTML = SLIDES[i].sale;
+  $('#flashPrice').innerHTML = SLIDES[i].price;
+}
+
+function go(n, manual){
+  idx = (n + SLIDES.length) % SLIDES.length;
+  slides.forEach(function(s, i){ s.classList.toggle('active', i === idx); });
+  bars.forEach(function(b, i){ b.setAttribute('aria-selected', String(i === idx)); });
+
+  var next = SLIDES[idx];
+  if (hasGSAP && !reduced){
+    gsap.to(shot, { autoAlpha: 0, scale: 1.05, duration: .35, ease: 'power2.in', onComplete: function(){
+      shot.src = U(next.img, 760, 950); shot.alt = next.alt;
+      gsap.fromTo(shot, { autoAlpha: 0, scale: 1.08 }, { autoAlpha: 1, scale: 1, duration: 1.05, ease: 'power3.out' });
+    }});
+    gsap.fromTo(['#flashSale', '#flashPrice'], { scale: .5, autoAlpha: 0 },
+      { scale: 1, autoAlpha: 1, duration: .5, ease: 'back.out(2.4)', stagger: .08, delay: .25 });
+    revealLines(slides[idx], .1);
+    gsap.fromTo($('.sub', slides[idx]), { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .7, ease: 'power3.out', delay: .28 });
+    gsap.fromTo($('.cta', slides[idx]), { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .7, ease: 'power3.out', delay: .38 });
+  } else {
+    shot.src = U(next.img, 760, 950); shot.alt = next.alt;
+  }
+  paintFlash(idx);
+  arm();
+}
+
+/* the active bar fills over the dwell, and its completion advances the hero:
+   one tween drives both the indicator and the timing */
+function arm(){
+  if (slideTween){ slideTween.kill(); slideTween = null; }
+  var fill = bars[idx].querySelector('i');
+  if (!hasGSAP || reduced) return;
+  gsap.set(bars.map(function(b){ return b.querySelector('i'); }), { scaleX: 0 });
+  slideTween = gsap.to(fill, { scaleX: 1, duration: DWELL, ease: 'none', onComplete: function(){ go(idx + 1); } });
+  if (paused) slideTween.pause();
+}
+
+function heroIn(){
+  if (!hasGSAP || reduced){ if (shot) shot.style.opacity = 1; arm(); return; }
+  var tl = gsap.timeline();
+  tl.fromTo('.studio .wall', { yPercent: -100 }, { yPercent: 0, duration: .9, ease: 'power4.out' }, 0)
+    .fromTo('.studio .floor', { yPercent: 100 }, { yPercent: 0, duration: .9, ease: 'power4.out' }, 0)
+    .fromTo('.podium', { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: .9, ease: 'power3.out' }, .18)
+    .fromTo('.hero-shot', { y: 46, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out' }, .3)
+    .fromTo(['#flashSale', '#flashPrice'], { scale: .4, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: .55, ease: 'back.out(2.6)', stagger: .1 }, .62)
+    .fromTo('.hero-nav', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: .6, ease: 'power2.out' }, .7)
+    .add(function(){ revealLines(slides[0]); }, .05)
+    .fromTo($('.sub', slides[0]), { y: 18, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .8, ease: 'power3.out' }, .35)
+    .fromTo($('.cta', slides[0]), { y: 18, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .8, ease: 'power3.out' }, .45);
+  arm();
+}
+
+$('#heroNext').addEventListener('click', function(){ go(idx + 1, true); });
+$('#heroPrev').addEventListener('click', function(){ go(idx - 1, true); });
+bars.forEach(function(b){ b.addEventListener('click', function(){ go(parseInt(b.dataset.go, 10), true); }); });
+
+var heroEl = $('#hero');
+['mouseenter','focusin'].forEach(function(t){
+  heroEl.addEventListener(t, function(){ paused = true; if (slideTween) slideTween.pause(); });
+});
+['mouseleave','focusout'].forEach(function(t){
+  heroEl.addEventListener(t, function(){ paused = false; if (slideTween) slideTween.resume(); });
+});
+paintFlash(0);
+if (!hasGSAP || reduced) { shot.style.opacity = 1; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   8 · scroll motion
+   ════════════════════════════════════════════════════════════════════════ */
+if (hasST && !reduced){
+
+  /* 8.1 hand-split line masks on every heading below the hero */
+  $$('h2, h3').forEach(function(h){
+    if (heroEl.contains(h) || h.closest('[data-promo]')) return;
+    var lines = $$('.ln', h);
+    if (!lines.length) return;
+    gsap.set(lines, { yPercent: 112 });
+    ScrollTrigger.create({
+      trigger: h, start: 'top 88%', once: true,
+      onEnter: function(){ gsap.to(lines, { yPercent: 0, duration: 1, ease: 'power4.out', stagger: .07 }); }
+    });
+  });
+
+  /* 8.2 staggered reveals — service bar, categories, stats, steps, tiles */
+  $$('[data-stagger]').forEach(function(group){
+    var kids = $$('[data-fade]', group);
+    if (!kids.length) return;
+    gsap.set(kids, { y: 28, autoAlpha: 0 });
+    ScrollTrigger.create({
+      trigger: group, start: 'top 86%', once: true,
+      onEnter: function(){ gsap.to(kids, { y: 0, autoAlpha: 1, duration: .8, ease: 'power3.out', stagger: .06 }); }
+    });
+  });
+
+  /* 8.3 staggered card reveals on the product rails */
+  function railReveal(container){
+    var cards = $$('[data-card]', container);
+    if (!cards.length) return;
+    gsap.set(cards, { y: 34, autoAlpha: 0 });
+    ScrollTrigger.create({
+      trigger: container, start: 'top 84%', once: true,
+      onEnter: function(){ gsap.to(cards, { y: 0, autoAlpha: 1, duration: .7, ease: 'power3.out', stagger: .05 }); }
+    });
+  }
+  railReveal(grid); railReveal(bestGrid);
+
+  /* 8.4 clip-path reveal + inner parallax on the split banner and portrait */
+  $$('[data-clip]').forEach(function(box){
+    var img = box.querySelector('img');
+    gsap.set(box, { clipPath: 'inset(0% 0% 100% 0%)' });
+    if (img) gsap.set(img, { scale: 1.18 });
+    ScrollTrigger.create({
+      trigger: box, start: 'top 82%', once: true,
+      onEnter: function(){
+        gsap.to(box, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.15, ease: 'power4.inOut' });
+        if (img) gsap.to(img, { scale: 1, duration: 1.4, ease: 'power3.out' });
+      }
+    });
+    if (img && desktop){
+      gsap.fromTo(img, { yPercent: -5 }, {
+        yPercent: 5, ease: 'none',
+        scrollTrigger: { trigger: box, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    }
+  });
+
+  /* 8.5 promo panels: the pair wipes open outward, artwork parallaxes,
+         a sheen sweeps on hover */
+  $$('[data-promo]').forEach(function(panel){
+    var fromLeft = panel.dataset.dir === 'left';
+    gsap.set(panel, { clipPath: fromLeft ? 'inset(0% 100% 0% 0%)' : 'inset(0% 0% 0% 100%)' });
+    var art = panel.querySelector('[data-parallax]');
+    var lines = $$('.ln', panel);
+    gsap.set(lines, { yPercent: 118 });
+    ScrollTrigger.create({
+      trigger: panel, start: 'top 84%', once: true,
+      onEnter: function(){
+        var tl = gsap.timeline();
+        tl.to(panel, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'power4.inOut' }, 0)
+          .from(art, { xPercent: 14, autoAlpha: 0, duration: 1.15, ease: 'power3.out' }, .16)
+          .to(lines, { yPercent: 0, duration: .9, ease: 'power4.out', stagger: .07 }, .3)
+          .from(panel.querySelector('.btn'), { y: 18, autoAlpha: 0, duration: .6, ease: 'power3.out' }, .58);
+        var r = panel.querySelector('.roundel');
+        if (r) tl.from(r, { scale: .35, autoAlpha: 0, duration: .6, ease: 'back.out(2.4)' }, .62);
+      }
+    });
+    if (art && desktop){
+      gsap.fromTo(art, { yPercent: -4 }, {
+        yPercent: 4, ease: 'none',
+        scrollTrigger: { trigger: panel, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    }
+    var sheen = panel.querySelector('.sheen'), sweep;
+    if (sheen && desktop){
+      panel.addEventListener('pointerenter', function(){
+        if (sweep && sweep.isActive()) return;
+        sweep = gsap.fromTo(sheen, { xPercent: 0, opacity: 0 },
+          { xPercent: 430, opacity: 1, duration: .95, ease: 'power2.inOut' });
+      });
+      panel.addEventListener('pointerleave', function(){
+        gsap.to(panel.querySelector('.art img'), { scale: 1, duration: .8, ease: 'power3.out' });
+      });
+      panel.addEventListener('pointerenter', function(){
+        gsap.to(panel.querySelector('.art img'), { scale: 1.05, duration: .8, ease: 'power3.out' });
+      });
+    }
+  });
+
+  /* 8.6 count-up on the real figures */
+  $$('[data-count]').forEach(function(el){
+    var target = parseFloat(el.dataset.count), group = el.dataset.group === '1';
+    var obj = { v: 0 };
+    ScrollTrigger.create({
+      trigger: el, start: 'top 90%', once: true,
+      onEnter: function(){
+        gsap.to(obj, {
+          v: target, duration: 2.1, ease: 'power2.out',
+          onUpdate: function(){
+            var n = Math.round(obj.v);
+            el.textContent = group ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : n;
+          }
+        });
+      }
+    });
+  });
+
+  /* 8.7 SVG path draw on the two hand-drawn marker circles */
+  $$('[data-scribble] path').forEach(function(p){
+    var len = p.getTotalLength();
+    gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+    ScrollTrigger.create({
+      trigger: p.closest('[data-scribble]'), start: 'top 85%', once: true,
+      onEnter: function(){ gsap.to(p, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut', delay: .25 }); }
+    });
+  });
+
+  ScrollTrigger.refresh();
+} else {
+  /* reduced motion / no GSAP: everything sits in its final state */
+  $$('[data-count]').forEach(function(el){
+    var n = parseFloat(el.dataset.count);
+    el.textContent = el.dataset.group === '1' ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : n;
+  });
+}
+
+/* supporting only: the coral promo strip marquee */
+(function(){
+  var track = $('#strip'); if (!track) return;
+  track.appendChild(track.firstElementChild.cloneNode(true));
+  if (!hasGSAP || reduced) return;
+  gsap.to(track, { xPercent: -50, duration: 34, ease: 'none', repeat: -1 });
+})();
+
+/* ════════════════════════════════════════════════════════════════════════
+   9 · SIGNATURE — three.js depth layer behind the hero
+   Floating two-tone capsules, tablets and molecule clusters. Slow and soft.
+   Guarded three ways: no three.js on the page, no WebGL context, or reduced
+   motion, and the canvas simply never fades in — the hero is already complete
+   without it.
+   ════════════════════════════════════════════════════════════════════════ */
+(function(){
+  var canvas = $('#scene');
+  if (!canvas || reduced) return;
+  if (window.matchMedia('(max-width:719px)').matches) return;   // phones: not worth the battery
+  if (typeof window.THREE === 'undefined') return;      // CDN blocked
+  var host = canvas.parentNode;
+
+  var renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+  } catch (err) { return; }                              // no WebGL on this device
+  if (!renderer || !renderer.getContext()) return;
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.8));
+  renderer.setClearColor(0x000000, 0);
+
+  var scene  = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.z = 7;
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.95));
+  var key = new THREE.DirectionalLight(0xffffff, 1.05); key.position.set(5, 5, 5); scene.add(key);
+  var fill = new THREE.DirectionalLight(0xBFE3DC, 0.5); fill.position.set(-5, -2, 2); scene.add(fill);
+
+  function mat(hex){ return new THREE.MeshStandardMaterial({ color: hex, roughness: 0.34, metalness: 0.05 }); }
+
+  /* a real two-tone capsule: r128 has no CapsuleGeometry, so each half is a
+     cylinder plus its own hemisphere cap, in its own colour */
+  function capsule(a, b, r, h){
+    var g = new THREE.Group(), mA = mat(a), mB = mat(b);
+    var topCyl = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h / 2, 26), mA); topCyl.position.y = h / 4;
+    var topCap = new THREE.Mesh(new THREE.SphereGeometry(r, 26, 14, 0, Math.PI * 2, 0, Math.PI / 2), mA); topCap.position.y = h / 2;
+    var botCyl = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h / 2, 26), mB); botCyl.position.y = -h / 4;
+    var botCap = new THREE.Mesh(new THREE.SphereGeometry(r, 26, 14, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), mB); botCap.position.y = -h / 2;
+    g.add(topCyl, topCap, botCyl, botCap);
+    return g;
+  }
+  function tablet(hex, r){
+    var g = new THREE.Group();
+    var d = new THREE.Mesh(new THREE.CylinderGeometry(r, r, r * 0.32, 34), mat(hex));
+    d.rotation.x = Math.PI / 2.1;
+    g.add(d);
+    return g;
+  }
+  function molecule(hex, r){
+    var g = new THREE.Group(), m = mat(hex);
+    g.add(new THREE.Mesh(new THREE.SphereGeometry(r, 26, 20), m));
+    [[r * 1.5, r * 0.9, 0], [-r * 1.4, -r, r * 0.5], [r * 0.3, -r * 1.6, -r * 0.4]].forEach(function(p){
+      var s = new THREE.Mesh(new THREE.SphereGeometry(r * 0.46, 20, 16), m);
+      s.position.set(p[0], p[1], p[2]); g.add(s);
+    });
+    return g;
+  }
+
+  /* positioned out at the edges and behind, so they add depth without ever
+     sitting over the headline */
+  var SPEC = [
+    { o: capsule('#FFFFFF', '#12A85A', .30, .62), p: [ 2.5,  1.5, -1.0], s: 1.00 },
+    { o: capsule('#4CC787', '#FFFFFF', .26, .54), p: [-2.4,  0.9, -1.6], s: 0.95 },
+    { o: capsule('#F7D51D', '#FFFFFF', .22, .48), p: [ 2.9, -1.4, -2.2], s: 0.90 },
+    { o: capsule('#FFFFFF', '#8DC5BE', .24, .50), p: [-2.7, -1.6, -1.4], s: 0.85 },
+    { o: tablet ('#BFE3DC', .40),                 p: [ 1.6,  2.2, -1.8], s: 1.00 },
+    { o: tablet ('#FFFFFF', .34),                 p: [-1.9,  2.1, -2.4], s: 1.00 },
+    { o: tablet ('#A6D7CF', .30),                 p: [ 3.1,  0.3, -2.8], s: 1.00 },
+    { o: molecule('#12A85A', .26),                p: [ 2.1, -2.2, -1.6], s: 1.00 },
+    { o: molecule('#8DC5BE', .22),                p: [-3.0,  1.9, -2.6], s: 1.00 },
+    { o: molecule('#4CC787', .19),                p: [-1.4, -2.3, -2.2], s: 1.00 }
+  ];
+
+  var items = SPEC.map(function(sp, i){
+    sp.o.position.set(sp.p[0], sp.p[1], sp.p[2]);
+    sp.o.scale.setScalar(sp.s);
+    sp.o.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * 0.9 - 0.45);
+    scene.add(sp.o);
+    return {
+      m: sp.o, y0: sp.p[1],
+      amp: 0.18 + (i % 4) * 0.06,
+      spd: 0.24 + (i % 5) * 0.05,
+      ph:  i * 1.31,
+      rz:  (i % 2 ? 1 : -1) * 0.055,
+      ry:  (i % 3 ? 1 : -1) * 0.038
+    };
+  });
+
+  function resize(){
+    var r = host.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    camera.aspect = r.width / r.height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(r.width, r.height, false);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* pointer adds a whisper of parallax, lerped — never assigned raw */
+  var px = 0, py = 0, tx = 0, ty = 0;
+  if (desktop){
+    host.addEventListener('pointermove', function(e){
+      var r = host.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - .5) * 0.5;
+      ty = ((e.clientY - r.top) / r.height - .5) * 0.35;
+    });
+  }
+
+  /* the loop stops the moment the hero leaves the viewport, so it costs
+     nothing below the fold, and again whenever the tab is hidden */
+  var running = false, raf = null, t0 = performance.now();
+  function frame(now){
+    if (!running) return;
+    var t = (now - t0) / 1000;
+    px += (tx - px) * 0.045;
+    py += (ty - py) * 0.045;
+    camera.position.x = px;
+    camera.position.y = -py;
+    camera.lookAt(0, 0, 0);
+    for (var i = 0; i < items.length; i++){
+      var it = items[i];
+      it.m.position.y = it.y0 + Math.sin(t * it.spd * 1.6 + it.ph) * it.amp * 2.2;
+      it.m.rotation.z += it.rz * 0.016;
+      it.m.rotation.y += it.ry * 0.016;
+    }
+    renderer.render(scene, camera);
+    raf = requestAnimationFrame(frame);
+  }
+  function start(){ if (running) return; running = true; t0 = performance.now() - 1000; raf = requestAnimationFrame(frame); }
+  function stop(){ running = false; if (raf) cancelAnimationFrame(raf); raf = null; }
+
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ en.isIntersecting && !document.hidden ? start() : stop(); });
+    }, { threshold: 0.02 }).observe(host);
+  } else { start(); }
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) stop();
+    else if (host.getBoundingClientRect().bottom > 0) start();
+  });
+
+  /* only now does the layer become visible — a failed init above leaves the
+     canvas at opacity 0 and the hero looking finished */
+  if (hasGSAP) gsap.to(canvas, { opacity: 1, duration: 1.6, ease: 'power2.out', delay: .5 });
+  else canvas.style.opacity = 1;
+})();
+
+})();
+</script>
+</body>
+</html>
