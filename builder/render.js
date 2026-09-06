@@ -29,6 +29,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const { SCHEMES } = require('./schemes.js');
+
 const LIBRARY = path.resolve(__dirname, '..');
 const LENGTH_TOLERANCE = 1.2;                 // 20% longer than the default is a warning
 const CREDIT_URL = 'https://rylolabz.com';
@@ -132,14 +134,64 @@ function applyOnce(source, rules) {
    Four sets per template, hand-picked and checked. Not a colour picker: a
    free choice of colour is a good way to wreck a good design. */
 
+/* A template wears two kinds of theme.
+
+   Its own palettes are hand-picked for that one design and stay exactly as
+   they were. On top of them sit the shared schemes in schemes.js, which
+   name roles rather than variables — so one scheme dresses every template,
+   and a template joins in by adding a small `roleMap` to its swap.json.
+
+   Own palettes come first in the list, because they were drawn for the
+   page and the shared ones were not. */
+
+function schemeNames(card) {
+  if (!card.roleMap) return [];
+  return (card.schemes || Object.keys(SCHEMES)).filter(function (n) { return !!SCHEMES[n]; });
+}
+
 function paletteNames(card) {
-  const names = Object.keys(card.palettes || {});
-  if (names.length) return names;
+  const own = Object.keys(card.palettes || {});
+  const shared = schemeNames(card).filter(function (n) { return own.indexOf(n) === -1; });
+  const all = own.concat(shared);
+  if (all.length) return all;
   return Array.isArray(card.themes) && card.themes.length ? card.themes : ['default'];
 }
 
+/* A palette may be a flat set of variables (the original shape) or
+   { vars, css } where css is extra rules that theme wants. */
+function paletteBody(card, name) {
+  const own = (card.palettes || {})[name];
+  if (own) return own.vars ? own : { vars: own, css: own.css || '' };
+
+  const scheme = SCHEMES[name];
+  if (!scheme || !card.roleMap) return { vars: {}, css: '' };
+
+  const vars = {};
+  for (const role of Object.keys(card.roleMap)) {
+    const value = scheme[role];
+    if (!value) continue;
+    const names = [].concat(card.roleMap[role]);
+    for (const varName of names) vars[varName] = value;
+  }
+  return { vars: vars, css: (card.schemeCss && card.schemeCss[scheme.mood]) || '' };
+}
+
 function paletteVars(card, name) {
-  return (card.palettes || {})[name] || {};
+  return paletteBody(card, name).vars;
+}
+
+/* Whether a theme turns the page ground dark. The app shows it, and a few
+   templates carry an extra rule for it. */
+function paletteMood(card, name) {
+  if ((card.palettes || {})[name]) return (card.palettes[name].mood) || 'light';
+  return (SCHEMES[name] && SCHEMES[name].mood) || 'light';
+}
+
+function paletteLabel(card, name) {
+  const own = (card.palettes || {})[name];
+  if (own && own.label) return own.label;
+  if (SCHEMES[name]) return SCHEMES[name].label;
+  return String(name).replace(/-/g, ' ');
 }
 
 /* Set data-theme too: templates written before palettes existed carry their
@@ -192,25 +244,73 @@ function scaleType(html, displayK, bodyK) {
    --mono, so two lines change the whole page. */
 
 const FONTS = {
-  'Inter':            { css: 'Inter:wght@400;500;600;700;800;900', stack: '"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif' },
-  'Archivo':          { css: 'Archivo:wght@400;500;600;700;800;900', stack: '"Archivo",Helvetica,Arial,sans-serif' },
-  'Manrope':          { css: 'Manrope:wght@400;500;600;700;800', stack: '"Manrope",Helvetica,Arial,sans-serif' },
-  'Space Grotesk':    { css: 'Space+Grotesk:wght@400;500;600;700', stack: '"Space Grotesk",Helvetica,Arial,sans-serif' },
-  'Sora':             { css: 'Sora:wght@400;500;600;700;800', stack: '"Sora",Helvetica,Arial,sans-serif' },
-  'IBM Plex Sans':    { css: 'IBM+Plex+Sans:wght@400;500;600;700', stack: '"IBM Plex Sans",Helvetica,Arial,sans-serif' },
-  'Figtree':          { css: 'Figtree:wght@400;500;600;700;800;900', stack: '"Figtree",Helvetica,Arial,sans-serif' },
-  'Playfair Display': { css: 'Playfair+Display:wght@400;500;600;700;800;900', stack: '"Playfair Display",Georgia,serif' },
-  'Fraunces':         { css: 'Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900', stack: '"Fraunces",Georgia,serif' },
-  'Instrument Serif': { css: 'Instrument+Serif:ital@0;1', stack: '"Instrument Serif",Georgia,serif' },
-  'JetBrains Mono':   { css: 'JetBrains+Mono:wght@400;500;700', stack: '"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' },
-  'IBM Plex Mono':    { css: 'IBM+Plex+Mono:wght@400;500;700', stack: '"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' },
-  'Space Mono':       { css: 'Space+Mono:wght@400;700', stack: '"Space Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' }
+  /* ---- sans: the workhorses ------------------------------------------- */
+  'Inter':            { kind: 'sans', css: 'Inter:wght@400;500;600;700;800;900', stack: '"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif' },
+  'Archivo':          { kind: 'sans', css: 'Archivo:wght@400;500;600;700;800;900', stack: '"Archivo",Helvetica,Arial,sans-serif' },
+  'Manrope':          { kind: 'sans', css: 'Manrope:wght@400;500;600;700;800', stack: '"Manrope",Helvetica,Arial,sans-serif' },
+  'Space Grotesk':    { kind: 'sans', css: 'Space+Grotesk:wght@400;500;600;700', stack: '"Space Grotesk",Helvetica,Arial,sans-serif' },
+  'Sora':             { kind: 'sans', css: 'Sora:wght@400;500;600;700;800', stack: '"Sora",Helvetica,Arial,sans-serif' },
+  'IBM Plex Sans':    { kind: 'sans', css: 'IBM+Plex+Sans:wght@400;500;600;700', stack: '"IBM Plex Sans",Helvetica,Arial,sans-serif' },
+  'Figtree':          { kind: 'sans', css: 'Figtree:wght@400;500;600;700;800;900', stack: '"Figtree",Helvetica,Arial,sans-serif' },
+  'DM Sans':          { kind: 'sans', css: 'DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700', stack: '"DM Sans",Helvetica,Arial,sans-serif' },
+  'Outfit':           { kind: 'sans', css: 'Outfit:wght@400;500;600;700;800;900', stack: '"Outfit",Helvetica,Arial,sans-serif' },
+  'Jost':             { kind: 'sans', css: 'Jost:wght@400;500;600;700', stack: '"Jost",Helvetica,Arial,sans-serif' },
+  'Work Sans':        { kind: 'sans', css: 'Work+Sans:wght@400;500;600;700;800', stack: '"Work Sans",Helvetica,Arial,sans-serif' },
+  'Schibsted Grotesk':{ kind: 'sans', css: 'Schibsted+Grotesk:wght@400;500;600;700;800', stack: '"Schibsted Grotesk",Helvetica,Arial,sans-serif' },
+  'Source Sans 3':    { kind: 'sans', css: 'Source+Sans+3:wght@400;500;600;700;800', stack: '"Source Sans 3",Helvetica,Arial,sans-serif' },
+  'Plus Jakarta Sans':{ kind: 'sans', css: 'Plus+Jakarta+Sans:wght@400;500;600;700;800', stack: '"Plus Jakarta Sans",Helvetica,Arial,sans-serif' },
+
+  /* ---- serif: for a heading that has to feel older than the business --- */
+  'Playfair Display': { kind: 'serif', css: 'Playfair+Display:wght@400;500;600;700;800;900', stack: '"Playfair Display",Georgia,serif' },
+  'Fraunces':         { kind: 'serif', css: 'Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900', stack: '"Fraunces",Georgia,serif' },
+  'Instrument Serif': { kind: 'serif', css: 'Instrument+Serif:ital@0;1', stack: '"Instrument Serif",Georgia,serif' },
+  'Newsreader':       { kind: 'serif', css: 'Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700', stack: '"Newsreader",Georgia,"Times New Roman",serif' },
+  'Cormorant Garamond': { kind: 'serif', css: 'Cormorant+Garamond:wght@400;500;600;700', stack: '"Cormorant Garamond",Georgia,"Times New Roman",serif' },
+  'Libre Baskerville':{ kind: 'serif', css: 'Libre+Baskerville:wght@400;700', stack: '"Libre Baskerville",Georgia,serif' },
+  'Lora':             { kind: 'serif', css: 'Lora:wght@400;500;600;700', stack: '"Lora",Georgia,serif' },
+  'Bodoni Moda':      { kind: 'serif', css: 'Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700;6..96,900', stack: '"Bodoni Moda",Didot,Georgia,serif' },
+  'Spectral':         { kind: 'serif', css: 'Spectral:wght@400;500;600;700;800', stack: '"Spectral",Georgia,serif' },
+
+  /* ---- display: headline only, never body ----------------------------- */
+  'Anton':            { kind: 'display', css: 'Anton', stack: '"Anton",Impact,"Arial Narrow Bold",sans-serif' },
+  'Bebas Neue':       { kind: 'display', css: 'Bebas+Neue', stack: '"Bebas Neue",Impact,"Arial Narrow",sans-serif' },
+  'Oswald':           { kind: 'display', css: 'Oswald:wght@400;500;600;700', stack: '"Oswald","Arial Narrow",sans-serif' },
+  'Archivo Black':    { kind: 'display', css: 'Archivo+Black', stack: '"Archivo Black",Helvetica,Arial,sans-serif' },
+  'Syne':             { kind: 'display', css: 'Syne:wght@400;600;700;800', stack: '"Syne",Helvetica,Arial,sans-serif' },
+
+  /* ---- mono: labels, figures, the small caps line --------------------- */
+  'JetBrains Mono':   { kind: 'mono', css: 'JetBrains+Mono:wght@400;500;700', stack: '"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' },
+  'IBM Plex Mono':    { kind: 'mono', css: 'IBM+Plex+Mono:wght@400;500;700', stack: '"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' },
+  'Space Mono':       { kind: 'mono', css: 'Space+Mono:wght@400;700', stack: '"Space Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' },
+  'DM Mono':          { kind: 'mono', css: 'DM+Mono:wght@400;500', stack: '"DM Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' },
+  'Roboto Mono':      { kind: 'mono', css: 'Roboto+Mono:wght@400;500;700', stack: '"Roboto Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' }
 };
+
+/* Which of a template's own variables carry each typeface. Every design in
+   the library named these differently, which is exactly why changing the
+   font used to do nothing: the builder was setting --sans on a page that
+   had never heard of it. A template says its own names in swap.json; this
+   is the fallback for one that has not said yet. */
+const DEFAULT_FONT_VARS = {
+  heading: ['f-serif', 'f-d', 'display', 'disp', 'serif', 'heading'],
+  body:    ['f-sans', 'f-u', 'sans', 'body', 'ui', 'text'],
+  mono:    ['mono', 'f-mono', 'marker']
+};
+
+const FONT_ROLES = ['heading', 'body', 'mono'];
+
+function fontVarsFor(card, role) {
+  const declared = (card.fontVars || {})[role];
+  if (declared) return [].concat(declared);
+  return DEFAULT_FONT_VARS[role] || [];
+}
 
 const COLOUR_KEYS = ['brand', 'accent', 'ink', 'paper', 'paper-2', 'rule'];
 
 function fontList() {
-  return Object.keys(FONTS).map(function (name) { return { name: name, mono: /Mono/.test(name) }; });
+  return Object.keys(FONTS).map(function (name) {
+    return { name: name, kind: FONTS[name].kind, mono: FONTS[name].kind === 'mono' };
+  });
 }
 
 function clampNum(v, lo, hi) { return Math.min(hi, Math.max(lo, Number(v) || 1)); }
@@ -221,10 +321,13 @@ function headBlock(card, themeName, style, hidden) {
   style = style || {};
   const vars = [];
   const families = [];
+  const extra = [];
 
   /* 1. the theme */
-  const palette = paletteVars(card, themeName);
+  const body = paletteBody(card, themeName);
+  const palette = body.vars;
   for (const name of Object.keys(palette)) vars.push('  --' + name + ':' + palette[name] + ';');
+  if (body.css) extra.push(body.css);
 
   /* 2. colours set by hand. A template says which of its own variables are
         safe to touch, and what else has to move with them. */
@@ -245,17 +348,68 @@ function headBlock(card, themeName, style, hidden) {
     if (v && /^#[0-9A-Fa-f]{3,8}$/.test(v) && !adjust[key]) vars.push('  --' + key + ':' + v + ';');
   }
 
-  /* 3. typefaces */
-  const display = FONTS[style.fontDisplay];
-  const mono = FONTS[style.fontMono];
-  if (display) { vars.push('  --sans:' + display.stack + ';'); families.push(display.css); }
-  if (mono) { vars.push('  --mono:' + mono.stack + ';'); families.push(mono.css); }
+  /* 3. typefaces. Three roles, and each template says which of its own
+        variables carry them. Setting --sans on a design that calls it
+        --f-serif is why this used to look broken. */
+  const picked = {
+    heading: style.fontHeading || style.fontDisplay,
+    body: style.fontBody,
+    mono: style.fontMono
+  };
+  for (const role of FONT_ROLES) {
+    const font = FONTS[picked[role]];
+    if (!font) continue;
+    const names = fontVarsFor(card, role);
+    for (const varName of names) vars.push('  --' + varName + ':' + font.stack + ';');
+    families.push(font.css);
+    /* A design with no variable for that role still has to answer, or the
+       control is a lie. Fall back to the elements themselves. */
+    if (!names.length) {
+      if (role === 'heading') extra.push('h1,h2,h3,h4{font-family:' + font.stack + '!important}');
+      if (role === 'body') extra.push('body,p,li,td,input,textarea,select,button{font-family:' + font.stack + '!important}');
+      if (role === 'mono') extra.push('[class*="eyebrow"],[class*="lbl"],[class*="label"],[class*="kicker"],'
+        + '[class*="mono"],[class*="num"],[class*="meta"],[class*="tag"]{font-family:' + font.stack + '!important}');
+    }
+  }
 
   /* Templates written before the scale was arithmetic still read these. */
   if (style.typeDisplay && Number(style.typeDisplay) !== 1) vars.push('  --type-display:' + clampNum(style.typeDisplay, 0.7, 1.5) + ';');
   if (style.typeBody && Number(style.typeBody) !== 1) vars.push('  --type-body:' + clampNum(style.typeBody, 0.8, 1.4) + ';');
 
-  const rules = [];
+  const rules = extra.slice();
+
+  /* 4. style levers. A theme changes the colours; these change the manner.
+        They are written against things every design in the library has —
+        headings, images, buttons — so they work without the template
+        knowing about them. */
+
+  if (style.corners === 'sharp') {
+    rules.push('img,figure,picture,video,button,.btn,a.btn,input,select,textarea,'
+      + '[class*="card"],[class*="Card"],[class*="tile"],[class*="pill"],[class*="chip"]'
+      + '{border-radius:0!important}');
+  } else if (style.corners === 'soft') {
+    rules.push('img,figure,picture,video,[class*="card"],[class*="Card"],[class*="tile"]{border-radius:16px!important}');
+    rules.push('button,.btn,a.btn,input,select,textarea,[class*="pill"],[class*="chip"]{border-radius:999px!important}');
+  }
+
+  if (style.headingCase === 'upper') {
+    rules.push('h1,h2,h3{text-transform:uppercase!important;letter-spacing:.015em!important}');
+  } else if (style.headingCase === 'normal') {
+    rules.push('h1,h2,h3{text-transform:none!important}');
+  }
+
+  if (style.headingWeight) {
+    const w = Math.min(900, Math.max(200, Math.round(Number(style.headingWeight) / 100) * 100));
+    rules.push('h1,h2,h3{font-weight:' + w + '!important}');
+  }
+
+  /* Wider or tighter letter-spacing on the small mono labels these designs
+     all use. A small thing that changes the whole feel of a page. */
+  if (style.tracking) {
+    const t = clampNum(style.tracking, 0, 0.4);
+    rules.push('[class*="eyebrow"],[class*="lbl"],[class*="label"],[class*="kicker"],[class*="tag"]'
+      + '{letter-spacing:' + t + 'em!important}');
+  }
 
   /* A wordmark logo already says the name, so the text one beside it is a
      duplicate. A mark-only logo still needs it, which is why this is a
@@ -522,6 +676,19 @@ function deriveSwaps(template, given) {
     /* A template with an assistant on the page names it after the firm.
        Left alone it would still be called after the template. */
     set('ASSISTANT_NAME', firstWord(name) + ' AI');
+
+    /* Some wordmarks are set in two colours — "long" dark, "range" in the
+       accent. Two words split at the space. One word splits in the middle,
+       which is what a designer does with a single-word mark anyway. */
+    const words = name.split(/\s+/);
+    if (words.length > 1) {
+      set('BRAND_A', words[0]);
+      set('BRAND_B', words.slice(1).join(' '));
+    } else {
+      const cut = Math.max(2, Math.round(name.length * 0.55));
+      set('BRAND_A', name.slice(0, cut));
+      set('BRAND_B', name.slice(cut) || name.slice(-1));
+    }
   }
 
   const does = String(out.WHAT_THEY_DO || '').trim();
@@ -531,7 +698,17 @@ function deriveSwaps(template, given) {
     set('CATEGORY', shorten(does, 3));
   }
 
+  /* Two designs name something that is not the business: a housing
+     development, and a fashion collection. Left empty they would print the
+     template's own, which is the one mistake this system must never make. */
+  if (name) {
+    set('PROJECT_NAME', name);
+    set('COLLECTION', 'The Collection');
+    set('COLLECTION_CAPS', 'THE COLLECTION');
+  }
+
   const city = String(out.CITY || '').trim();
+  if (city) set('PLACE_NAME', city);
   if (city && name) set('PLACE_LINE', name + ' — ' + city);
 
   /* A tel: link is the phone number with everything but the digits taken
@@ -571,6 +748,14 @@ function listTemplates() {
         /* three colours per theme, so the app can draw a swatch without
            loading and measuring the page */
         swatches: names.map(function (n) {
+          /* A shared scheme already knows its own three, and knowing them
+             beats guessing at variable names. */
+          if (SCHEMES[n] && !(card.palettes || {})[n]) {
+            return {
+              name: n, label: SCHEMES[n].label, mood: SCHEMES[n].mood, own: false,
+              accent: SCHEMES[n].accent, ink: SCHEMES[n].ink, paper: SCHEMES[n].paper
+            };
+          }
           const v = paletteVars(card, n);
           function pick(list) {
             for (const k of list) if (v[k] && /^#/.test(v[k])) return v[k];
@@ -578,6 +763,9 @@ function listTemplates() {
           }
           return {
             name: n,
+            label: paletteLabel(card, n),
+            mood: paletteMood(card, n),
+            own: true,
             accent: pick(sk.accent ? [sk.accent].concat(SWATCH_ACCENT) : SWATCH_ACCENT),
             ink: pick(sk.ink ? [sk.ink].concat(SWATCH_INK) : SWATCH_INK),
             paper: pick(sk.paper ? [sk.paper].concat(SWATCH_PAPER) : SWATCH_PAPER)
@@ -591,6 +779,8 @@ module.exports = {
   render: render, deriveSwaps: deriveSwaps, listTemplates: listTemplates, loadTemplate: loadTemplate,
   escapeHtml: escapeHtml, visibleLength: visibleLength, fontList: fontList,
   paletteNames: paletteNames, paletteVars: paletteVars,
+  paletteLabel: paletteLabel, paletteMood: paletteMood,
+  headBlock: headBlock,
   FONTS: FONTS, COLOUR_KEYS: COLOUR_KEYS, HIDE: HIDE
 };
 

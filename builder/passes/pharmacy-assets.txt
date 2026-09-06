@@ -1,0 +1,15 @@
+assets/bento/optimum-nutrition-whey-protein.webp
+assets/bento/plum-peptides-coconut-shampoo-250ml.jpg
+assets/favicon.png
+assets/hero/beauty.webp
+assets/hero/sports-nutrition.webp
+assets/hero/vitamins.webp
+assets/img/pharmacist-woman.jpg
+assets/products/alucia-organics-castor-oil-100ml.jpg
+assets/products/bio-oil-skincare-oil-60ml.jpg
+assets/products/citrosoda-effervescent-granules.jpg
+assets/products/ctr-s-coal-tar-shampoo-100ml.jpg
+assets/products/seven-seas-cod-liver-oil-100ml.jpg
+assets/promo/perfume.webp
+assets/promo/pharmacist.webp
+assets/promo/protein-pack.webp

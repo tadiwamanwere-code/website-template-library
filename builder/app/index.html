@@ -138,18 +138,30 @@ a{color:inherit;}
 
 /* ---- preview ------------------------------------------------------------- */
 #preview.screen{display:none;}
-#preview.is-on{display:grid;grid-template-columns:216px 1fr 236px;overflow:hidden;}
+#preview.is-on{display:grid;grid-template-columns:244px 1fr 236px;overflow:hidden;}
 .rail{background:var(--bg-2);border-right:1px solid var(--line);overflow:auto;padding:18px 0;}
 .rail.right{border-right:0;border-left:1px solid var(--line);}
 .rail h4{margin:0 16px 10px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);}
 .rail .grp{padding-bottom:20px;margin-bottom:18px;border-bottom:1px solid var(--line);}
 .rail .grp:last-child{border-bottom:0;margin-bottom:0;}
-.theme{display:flex;align-items:center;gap:11px;width:100%;padding:9px 16px;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink-2);}
+.theme{display:flex;align-items:center;gap:11px;width:100%;padding:8px 16px;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink-2);}
 .theme:hover{background:var(--bg-3);color:var(--ink);}
-.theme.is-on{color:var(--ink);background:var(--bg-3);}
+.theme.is-on{color:var(--ink);background:var(--bg-3);box-shadow:inset 2px 0 0 var(--accent);}
 .theme .chips{display:flex;flex:none;border:1px solid var(--line-2);}
 .theme .chips i{display:block;width:13px;height:13px;}
-.theme span{font-family:var(--mono);font-size:11px;letter-spacing:.04em;}
+.theme span{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;}
+.theme .moon{margin-left:auto;font-size:10px;opacity:.5;flex:none;}
+.subhead{
+  margin:14px 16px 6px;font-family:var(--mono);font-size:9px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);opacity:.7;
+}
+.subhead:first-child{margin-top:0;}
+.seg{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:5px;}
+.seg button{
+  flex:1;background:var(--bg-3);border:0;cursor:pointer;padding:7px 4px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
+}
+.seg button.is-on{background:var(--bg);color:var(--ink);}
 .sect{display:flex;align-items:center;gap:8px;width:100%;padding:8px 16px;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink-2);font-family:var(--mono);font-size:11px;letter-spacing:.05em;}
 .sect:hover{background:var(--bg-3);color:var(--ink);}
 .sect .eye{margin-left:auto;opacity:.45;font-size:14px;line-height:1;}
@@ -333,8 +345,10 @@ a{color:inherit;}
       <div class="grp">
         <h4>Type</h4>
         <div class="pane">
-          <label class="sub">Headings and body</label>
-          <select id="fontDisplay" class="sel"></select>
+          <label class="sub">Headings</label>
+          <select id="fontHeading" class="sel"></select>
+          <label class="sub">Body text</label>
+          <select id="fontBody" class="sel"></select>
           <label class="sub">Labels and figures</label>
           <select id="fontMono" class="sel"></select>
 
@@ -342,6 +356,26 @@ a{color:inherit;}
           <input type="range" id="typeDisplay" min="70" max="150" step="5" value="100">
           <label class="sub">Body size <b id="tbVal">100%</b></label>
           <input type="range" id="typeBody" min="80" max="140" step="5" value="100">
+        </div>
+      </div>
+
+      <div class="grp">
+        <h4>Style</h4>
+        <div class="pane">
+          <label class="sub">Corners</label>
+          <div class="seg" data-seg="corners">
+            <button data-v="">As drawn</button><button data-v="sharp">Sharp</button><button data-v="soft">Soft</button>
+          </div>
+          <label class="sub">Headings</label>
+          <div class="seg" data-seg="headingCase">
+            <button data-v="">As drawn</button><button data-v="normal">Sentence</button><button data-v="upper">Capitals</button>
+          </div>
+          <label class="sub">Heading weight</label>
+          <div class="seg" data-seg="headingWeight">
+            <button data-v="">As drawn</button><button data-v="300">Light</button><button data-v="600">Medium</button><button data-v="900">Heavy</button>
+          </div>
+          <label class="sub">Label spacing <b id="trVal">as drawn</b></label>
+          <input type="range" id="tracking" min="0" max="40" step="2" value="0">
         </div>
       </div>
 
@@ -411,6 +445,10 @@ a{color:inherit;}
       <div class="grp">
         <h4>Sections</h4>
         <div id="sectionList"></div>
+      </div>
+      <div class="grp" id="pictureGrp">
+        <h4>Pictures</h4>
+        <div id="pictureList"></div>
       </div>
       <div class="grp" id="warnGrp" style="display:none">
         <h4>Warnings</h4>
@@ -547,7 +585,16 @@ a{color:inherit;}
     clearTimeout(saveTimer);
     setSaveState('saving…');
     var run = function(){
-      return api('/sites', { method:'POST', body: JSON.stringify(state) })
+      var payload = JSON.stringify(state);
+      /* Uploaded pictures travel inside the record. Vercel will not take a
+         request much past four and a half megabytes, so say so before the
+         save fails rather than after. */
+      if(payload.length > 3.8e6){
+        toast('Too many uploaded pictures to save. Remove one, or use Find a photo.');
+        setSaveState('not saved');
+        return Promise.resolve({ warnings: [] });
+      }
+      return api('/sites', { method:'POST', body: payload })
         .then(function(res){
           if(res.error){ toast(res.error); setSaveState('not saved'); return res; }
           state.slug = res.slug || state.slug;
@@ -772,25 +819,94 @@ a{color:inherit;}
     reloadStage(true);
   }
 
-  /* Anything that changes the markup — a logo, a picture, a hidden section —
-     is saved and then re-rendered, so what is on screen is what is published.
-     Themes and type sizes are variables, so those change live. */
+  /* Two ways to change what is on screen.
+
+     Most of what the rails do — the theme, a colour, a typeface, a hidden
+     section, the style levers — is one block of CSS at the end of <head>.
+     applyLook() asks the server for exactly that block and swaps it in, so
+     the change is instant and the page does not jump back to the top. It is
+     the same headBlock() the published page uses, so the preview cannot
+     drift from what gets sent.
+
+     Only a change to the markup itself — a logo, a re-worded line, new
+     details — needs the page rebuilt. reloadStage() does that and puts the
+     scroll position back afterwards. */
+
+  var styleSeq = 0;
+  function applyLook(){
+    if(!state.template) return Promise.resolve();
+    var mine = ++styleSeq;
+    return api('/style', { method:'POST', body: JSON.stringify({
+      template: state.template, theme: state.theme,
+      style: state.style, swaps: state.swaps
+    })}).then(function(res){
+      if(mine !== styleSeq) return;             /* a later click already won */
+      var doc = frameDoc();
+      if(!doc || !doc.head || res.error) return;
+      var holder = doc.createElement('div');
+      holder.innerHTML = res.head || '';
+      var old = doc.getElementById('site-style');
+      if(old) old.remove();
+      $$('link[data-look]', doc).forEach(function(l){ l.remove(); });
+      Array.prototype.slice.call(holder.childNodes).forEach(function(n){
+        if(n.nodeType !== 1) return;
+        if(n.tagName === 'LINK') n.setAttribute('data-look', '');
+        doc.head.appendChild(n);
+      });
+    }).catch(function(){});
+  }
+
+  /* A look change: on screen at once, on the record a moment later. */
+  function touch(){
+    applyLook();
+    save();
+  }
+
+  function scrollOf(){
+    try { return $('#stage').contentDocument.defaultView.scrollY || 0; } catch(e){ return 0; }
+  }
+
+  /* These pages animate themselves in, and several drive their own smooth
+     scrolling, so one scrollTo lands in the wrong place. Keep nudging for a
+     couple of seconds until the page has settled where it was. */
+  function restoreScroll(y){
+    if(!y) return;
+    var tries = 0;
+    var tick = function(){
+      var doc = frameDoc();
+      if(doc){
+        try {
+          if(doc.defaultView.lenis) doc.defaultView.lenis.scrollTo(y, { immediate:true });
+          else doc.defaultView.scrollTo(0, y);
+        } catch(e){}
+      }
+      if(++tries < 14) setTimeout(tick, 110);
+    };
+    setTimeout(tick, 160);
+  }
+
   function reloadStage(skipSave){
     var frame = $('#stage');
+    var keep = scrollOf();
     var draw = function(){
       if(!stageUrl) return;
       frame.src = stageUrl + (stageUrl.indexOf('?') === -1 ? '?' : '&') + 't=' + Date.now();
-      frame.onload = wireEditing;
+      frame.onload = function(){ wireEditing(!keep); restoreScroll(keep); };
     };
     if(skipSave && stageUrl) return draw();
     save(true).then(draw);
   }
 
+  /* Two lists. The design's own themes were drawn for this page by the
+     person who made it, so they come first and are named as such. The shared
+     schemes below them are the same set every template can wear, dark ones
+     included. */
   function buildThemeList(){
     if(!current) return;
     var sw = {};
     (current.swatches || []).forEach(function(s){ sw[s.name] = s; });
-    $('#themeList').innerHTML = current.themes.map(function(name){
+
+    var one = function(name){
       var s = sw[name] || {};
       return '<button class="theme' + (name === state.theme ? ' is-on' : '') + '" data-theme="' + esc(name) + '">'
         + '<span class="chips">'
@@ -798,20 +914,31 @@ a{color:inherit;}
         +   '<i style="background:' + esc(s.paper || '#eee') + '"></i>'
         +   '<i style="background:' + esc(s.accent || '#888') + '"></i>'
         + '</span>'
-        + '<span>' + esc(name.replace(/-/g, ' ')) + '</span></button>';
-    }).join('');
+        + '<span>' + esc(s.label || name.replace(/-/g, ' ')) + '</span>'
+        + (s.mood === 'dark' ? '<span class="moon" title="dark page">&#9679;</span>' : '')
+        + '</button>';
+    };
+
+    var own = current.themes.filter(function(n){ return !sw[n] || sw[n].own !== false; });
+    var shared = current.themes.filter(function(n){ return sw[n] && sw[n].own === false; });
+
+    var html = '';
+    if(own.length) html += '<p class="subhead">Made for this design</p>' + own.map(one).join('');
+    if(shared.length) html += '<p class="subhead">' + shared.length + ' more schemes</p>' + shared.map(one).join('');
+    $('#themeList').innerHTML = html;
+
     $$('#themeList .theme').forEach(function(b){
       b.addEventListener('click', function(){ setTheme(b.getAttribute('data-theme')); });
     });
   }
 
-  /* A theme is a set of CSS variables written into the page at render time,
-     so switching one is a re-render. It is fast, and it cannot drift from
-     what gets published. */
+  /* A theme is a set of CSS variables, so it lands in the page immediately.
+     The record catches up in the background. */
   function setTheme(name){
     state.theme = name;
     $$('#themeList .theme').forEach(function(b){ b.classList.toggle('is-on', b.getAttribute('data-theme') === name); });
-    reloadStage();
+    touch();
+    setTimeout(syncColourInputs, 260);
   }
 
   function frameDoc(){
@@ -819,11 +946,12 @@ a{color:inherit;}
   }
 
   /* ---- click the page, not a form ---------------------------------------- */
-  function wireEditing(){
+  function wireEditing(toTop){
     var doc = frameDoc();
     if(!doc) return;
-    try { doc.defaultView.scrollTo(0, 0); } catch(e){}
+    if(toTop !== false){ try { doc.defaultView.scrollTo(0, 0); } catch(e){} }
     buildSectionList(doc);
+    buildPictureList();
     syncColourInputs();
 
     var style = doc.createElement('style');
@@ -963,12 +1091,23 @@ a{color:inherit;}
 
   function isHidden(id){ return (state.style.hideSections || []).indexOf(id) !== -1; }
 
+  /* Hiding a section is one CSS rule, so putting it back is the same rule
+     taken away. It never leaves the page, which is why it can always come
+     back — the earlier version rebuilt the whole page for this and the
+     button could get out of step with what was on screen. */
   function toggleSection(id){
-    var list = state.style.hideSections || [];
-    if(isHidden(id)) list = list.filter(function(x){ return x !== id; });
-    else list = list.concat([id]);
+    var list = (state.style.hideSections || []).slice();
+    var at = list.indexOf(id);
+    if(at !== -1) list.splice(at, 1); else list.push(id);
     state.style.hideSections = list.length ? list : undefined;
-    reloadStage();
+
+    var btn = $('#sectionList .sect[data-sec="' + id.replace(/"/g, '') + '"]');
+    if(btn){
+      var off = isHidden(id);
+      btn.classList.toggle('is-hidden', off);
+      btn.querySelector('.eye').textContent = off ? '+' : '−';
+    }
+    touch();
   }
 
   function scrollToSection(id){
@@ -984,14 +1123,56 @@ a{color:inherit;}
   /* ======================================================= LOGO, TYPE, COLOUR */
 
   /* Files become data URIs, so a finished site stays one self-contained file
-     with nothing to host alongside it. */
-  function readFile(file, maxKB){
+     with nothing to host alongside it.
+
+     A logo comes off a designer's machine at 4000 pixels and a photo comes
+     off a phone at eight megapixels. Neither is any use on a web page, and
+     asking a person to shrink one first is asking them to do the computer's
+     job — which is what the old 220KB limit did. So take whatever they have
+     and redraw it at the size the page can actually use.
+
+     PNG for a logo, because it has to keep its transparent background.
+     JPEG for a photograph, because it is a quarter of the size. */
+  function readImage(file, maxPx, opts){
+    opts = opts || {};
     return new Promise(function(resolve, reject){
-      if(!file) return reject(new Error('no file'));
-      if(file.size > maxKB * 1024) return reject(new Error('That file is ' + Math.round(file.size/1024) + 'KB. Keep it under ' + maxKB + 'KB.'));
+      if(!file) return reject(new Error('No file'));
+      if(!/^image\//.test(file.type || '')) return reject(new Error('That is not a picture file'));
+      if(file.size > 30 * 1024 * 1024) return reject(new Error('That file is over 30MB — too big even for a hero photo.'));
+
       var fr = new FileReader();
-      fr.onload = function(){ resolve(fr.result); };
       fr.onerror = function(){ reject(new Error('Could not read that file')); };
+      fr.onload = function(){
+        var uri = String(fr.result);
+
+        /* An SVG is already tiny and drawing it into a canvas would throw
+           away the one thing it is good at. */
+        if(/^data:image\/svg\+xml/i.test(uri)) return resolve(uri);
+
+        var img = new Image();
+        img.onerror = function(){ reject(new Error('This browser cannot open that picture')); };
+        img.onload = function(){
+          var w = img.naturalWidth, h = img.naturalHeight;
+          if(!w || !h) return reject(new Error('That picture has no size'));
+
+          var k = Math.min(1, maxPx / Math.max(w, h));
+          /* Already small enough, and small enough to send as it is. */
+          if(k === 1 && uri.length < 500000) return resolve(uri);
+
+          var c = document.createElement('canvas');
+          c.width = Math.max(1, Math.round(w * k));
+          c.height = Math.max(1, Math.round(h * k));
+          var ctx = c.getContext('2d');
+          if(!opts.alpha){ ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, c.width, c.height); }
+          ctx.drawImage(img, 0, 0, c.width, c.height);
+
+          var out = opts.alpha ? c.toDataURL('image/png') : c.toDataURL('image/jpeg', opts.quality || 0.82);
+          /* A photograph saved as PNG can come out larger than the original.
+             If it did, keep whichever is smaller. */
+          resolve(out.length < uri.length || k < 1 ? out : uri);
+        };
+        img.src = uri;
+      };
       fr.readAsDataURL(file);
     });
   }
@@ -1016,16 +1197,19 @@ a{color:inherit;}
   }
   $('#logoFile').addEventListener('change', function(){
     var f = this.files[0]; this.value = '';
-    readFile(f, 220).then(function(uri){
+    if(!f) return;
+    toast('Reading the logo…');
+    /* 900px across is more than any header needs on a 2x screen. */
+    readImage(f, 900, { alpha: true }).then(function(uri){
       state.swaps.LOGO = uri;
       paintLogo();
-      reloadStage();
+      reloadStage();                      /* the logo replaces markup, not a colour */
       toast('Logo added');
     }).catch(function(e){ toast(e.message); });
   });
   $('#logoHasName').addEventListener('change', function(){
     state.style.hideBrandText = this.checked || undefined;
-    reloadStage();
+    touch();
   });
   $('#logoClear').addEventListener('click', function(){
     delete state.swaps.LOGO;
@@ -1033,21 +1217,83 @@ a{color:inherit;}
     reloadStage();
   });
 
-  /* ---- type -------------------------------------------------------------- */
+  /* ---- type --------------------------------------------------------------
+     Three roles, not two. Each template says which of its own variables
+     carry them, which is the whole reason this control now does something:
+     the builder used to set --sans on designs that had never heard of it. */
+  var KINDS = { sans:'Sans', serif:'Serif', display:'Display', mono:'Typewriter' };
+
+  function fontOptions(list, selected){
+    var out = '<option value="">Template default</option>';
+    ['serif','display','sans','mono'].forEach(function(kind){
+      var rows = list.filter(function(f){ return f.kind === kind; });
+      if(!rows.length) return;
+      out += '<optgroup label="' + KINDS[kind] + '">'
+        + rows.map(function(f){
+            return '<option' + (f.name === selected ? ' selected' : '') + '>' + esc(f.name) + '</option>';
+          }).join('')
+        + '</optgroup>';
+    });
+    return out;
+  }
+
   function buildTypeControls(){
-    var body = fonts.filter(function(f){ return !f.mono; });
-    var mono = fonts.filter(function(f){ return f.mono; });
-    var opt = function(f, sel){ return '<option' + (f.name === sel ? ' selected' : '') + '>' + esc(f.name) + '</option>'; };
-    $('#fontDisplay').innerHTML = '<option value="">Template default</option>' + body.map(function(f){ return opt(f, state.style.fontDisplay); }).join('');
-    $('#fontMono').innerHTML   = '<option value="">Template default</option>' + mono.map(function(f){ return opt(f, state.style.fontMono); }).join('');
+    var text = fonts.filter(function(f){ return f.kind !== 'mono'; });
+    var mono = fonts.filter(function(f){ return f.kind === 'mono'; });
+    var body = fonts.filter(function(f){ return f.kind === 'sans' || f.kind === 'serif'; });
+
+    $('#fontHeading').innerHTML = fontOptions(text, state.style.fontHeading || state.style.fontDisplay);
+    $('#fontBody').innerHTML    = fontOptions(body, state.style.fontBody);
+    $('#fontMono').innerHTML    = fontOptions(mono.concat(body), state.style.fontMono);
+
     $('#typeDisplay').value = Math.round((state.style.typeDisplay || 1) * 100);
     $('#typeBody').value    = Math.round((state.style.typeBody || 1) * 100);
     $('#tdVal').textContent = $('#typeDisplay').value + '%';
     $('#tbVal').textContent = $('#typeBody').value + '%';
+
+    $('#tracking').value = Math.round((state.style.tracking || 0) * 100);
+    $('#trVal').textContent = state.style.tracking ? state.style.tracking.toFixed(2) + 'em' : 'as drawn';
+
+    $$('.seg').forEach(function(seg){
+      var key = seg.getAttribute('data-seg');
+      $$('button', seg).forEach(function(b){
+        b.classList.toggle('is-on', (state.style[key] || '') === b.getAttribute('data-v'));
+      });
+    });
   }
 
-  $('#fontDisplay').addEventListener('change', function(){ state.style.fontDisplay = this.value || undefined; reloadStage(); });
-  $('#fontMono').addEventListener('change', function(){ state.style.fontMono = this.value || undefined; reloadStage(); });
+  $('#fontHeading').addEventListener('change', function(){
+    state.style.fontHeading = this.value || undefined;
+    delete state.style.fontDisplay;                 /* the old single control */
+    touch();
+  });
+  $('#fontBody').addEventListener('change', function(){ state.style.fontBody = this.value || undefined; touch(); });
+  $('#fontMono').addEventListener('change', function(){ state.style.fontMono = this.value || undefined; touch(); });
+
+  /* ---- style levers ------------------------------------------------------
+     A theme changes the colours. These change the manner: square corners or
+     round, headings in capitals or not, heavy or light. They are written
+     against headings, images and buttons, so they work on any template. */
+  $$('.seg').forEach(function(seg){
+    var key = seg.getAttribute('data-seg');
+    $$('button', seg).forEach(function(b){
+      b.addEventListener('click', function(){
+        var v = b.getAttribute('data-v');
+        state.style[key] = v || undefined;
+        $$('button', seg).forEach(function(x){ x.classList.toggle('is-on', x === b); });
+        touch();
+      });
+    });
+  });
+
+  var trackTimer;
+  $('#tracking').addEventListener('input', function(){
+    var v = Number(this.value) / 100;
+    state.style.tracking = v || undefined;
+    $('#trVal').textContent = v ? v.toFixed(2) + 'em' : 'as drawn';
+    clearTimeout(trackTimer);
+    trackTimer = setTimeout(touch, 160);
+  });
 
   /* Size is arithmetic on the stylesheet, so it takes a re-render. Waiting
      until the slider is let go keeps that to one. */
@@ -1078,10 +1324,20 @@ a{color:inherit;}
         + '<span>' + esc(c.label) + '</span><code data-hex="' + esc(c.key) + '"></code></div>';
     }).join('');
     $$('#colourPane input[type=color]').forEach(function(inp){
+      /* input fires while the picker is open, so the page follows the
+         swatch as it moves. change fires once at the end; that is the one
+         worth writing down. */
+      var live;
+      inp.addEventListener('input', function(){
+        state.style[inp.getAttribute('data-col')] = inp.value;
+        $('[data-hex="' + inp.getAttribute('data-col') + '"]').textContent = inp.value;
+        clearTimeout(live);
+        live = setTimeout(applyLook, 90);
+      });
       inp.addEventListener('change', function(){
         state.style[inp.getAttribute('data-col')] = inp.value;
         $('[data-hex="' + inp.getAttribute('data-col') + '"]').textContent = inp.value;
-        reloadStage();
+        touch();
       });
     });
     syncColourInputs();
@@ -1113,24 +1369,69 @@ a{color:inherit;}
 
   $('#colourReset').addEventListener('click', function(){
     colourRoles().forEach(function(c){ delete state.style[c.key]; });
-    reloadStage();
+    $$('#colourPane code').forEach(function(c){ c.textContent = ''; });
+    applyLook().then(function(){ syncColourInputs(); });
+    save();
     toast('Colours back to the theme');
   });
 
   /* ---- pictures ----------------------------------------------------------- */
   var imgTarget = null;
 
+  /* Every picture the template has, listed. Clicking a name opens the same
+     panel as clicking the picture — which matters because a picture you have
+     removed is not on the page any more, and until this list existed there
+     was no way to put it back. */
+  function buildPictureList(){
+    var rows = ((current && current.images) || []).filter(function(i){ return i.key !== 'LOGO'; });
+    $('#pictureGrp').style.display = rows.length ? '' : 'none';
+    if(!rows.length) return;
+    $('#pictureList').innerHTML = rows.map(function(i){
+      var off = state.swaps[i.key] === HIDE;
+      var changed = state.swaps[i.key] && !off;
+      return '<button class="sect' + (off ? ' is-hidden' : '') + '" data-img="' + esc(i.key) + '">'
+        + esc(i.label || i.key.replace(/_/g, ' '))
+        + '<span class="eye">' + (off ? '+' : (changed ? '●' : '…')) + '</span></button>';
+    }).join('');
+    $$('#pictureList .sect').forEach(function(b){
+      b.addEventListener('click', function(){
+        var key = b.getAttribute('data-img');
+        if(state.swaps[key] === HIDE){ imgTarget = key; setImage(null); toast('Picture back'); return; }
+        openImageFor(key, null);
+      });
+    });
+  }
+
   function openImagePanel(img){
-    var key = imageKeyFor(img);
+    openImageFor(imageKeyFor(img), img);
+  }
+
+  function openImageFor(key, img){
     if(!key) return;
     imgTarget = key;
     var slot = ((current && current.images) || []).find(function(i){ return i.key === key; }) || {};
 
     var panel = $('#imgPanel');
     var box = $('#stage').getBoundingClientRect();
-    var r = img.getBoundingClientRect();
+    var r = img ? img.getBoundingClientRect() : { left: box.width / 2 - 170, top: 70 };
     panel.style.left = Math.min(box.width - 346, Math.max(10, r.left + 10)) + 'px';
     panel.style.top  = Math.min(Math.max(10, box.height - 380), Math.max(10, r.top + 10)) + 'px';
+
+    /* Opened from the list, so bring the picture into view: changing one you
+       cannot see is guesswork. */
+    if(!img){
+      var doc = frameDoc();
+      if(doc){
+        var found = $$('img', doc).find(function(el){ return imageKeyFor(el) === key; });
+        if(found){
+          var y = found.getBoundingClientRect().top + (doc.defaultView.scrollY || 0) - 120;
+          try {
+            if(doc.defaultView.lenis) doc.defaultView.lenis.scrollTo(Math.max(0, y));
+            else doc.defaultView.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+          } catch(e){}
+        }
+      }
+    }
 
     $('#imgKey').textContent = slot.label || key.replace(/_/g, ' ');
     $('#imgUrl').value = state.swaps[key] && !/^data:/.test(state.swaps[key]) && state.swaps[key] !== HIDE ? state.swaps[key] : '';
@@ -1169,20 +1470,47 @@ a{color:inherit;}
     return null;
   }
 
+  /* A picture is an attribute, so it can be changed where it stands. The
+     page does not reload, nothing jumps, and the record catches up after.
+     Removing one is the same move with a marker the injected CSS knows to
+     hide, which also closes up the box it sat in. */
   function setImage(value){
     if(!imgTarget) return;
-    if(value) state.swaps[imgTarget] = value; else delete state.swaps[imgTarget];
+    var key = imgTarget;
+    var slot = ((current && current.images) || []).find(function(i){ return i.key === key; }) || {};
+    var was = state.swaps[key] || slot.value || '';
+
+    if(value) state.swaps[key] = value; else delete state.swaps[key];
     $('#imgPanel').classList.remove('is-on');
-    if(imgTarget === 'LOGO') paintLogo();
-    reloadStage();
+
+    /* The logo is markup, not an attribute — it swaps a drawn mark for an
+       image tag — so that one still takes a rebuild. */
+    if(key === 'LOGO'){ paintLogo(); return reloadStage(); }
+
+    buildPictureList();
+
+    var doc = frameDoc();
+    if(doc){
+      var next = value === HIDE ? '#no-' + key : (value || slot.value || '');
+      $$('img', doc).forEach(function(img){
+        var src = img.getAttribute('src') || '';
+        if(src === was || src === slot.value || src === '#no-' + key) img.setAttribute('src', next);
+      });
+    }
+    touch();                       /* picks up the hide-and-close-up rules */
   }
+
   $('#imgApply').addEventListener('click', function(){ setImage($('#imgUrl').value.trim()); });
   $('#imgReset').addEventListener('click', function(){ setImage(null); });
   $('#imgHide').addEventListener('click', function(){ setImage(HIDE); toast('Picture removed'); });
   $('#imgClose').addEventListener('click', function(){ $('#imgPanel').classList.remove('is-on'); });
   $('#imgFile').addEventListener('change', function(){
     var f = this.files[0]; this.value = '';
-    readFile(f, 900).then(function(uri){ setImage(uri); })
+    if(!f) return;
+    toast('Reading the picture…');
+    /* 1800px is a full-width hero on a 2x screen and nothing more. */
+    readImage(f, 1800, { quality: 0.82 })
+      .then(function(uri){ setImage(uri); toast('Picture changed'); })
       .catch(function(e){ toast(e.message); });
   });
 

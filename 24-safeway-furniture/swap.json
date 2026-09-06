@@ -73,7 +73,25 @@
       "label": "Accent",
       "var": "accent",
       "also": {
-        "accent-deep": "color-mix(in srgb, {} 72%, #000)"
+        "accent-deep": "color-mix(in srgb, {} 76%, #000)"
+      }
+    },
+    "navy-900": {
+      "label": "Page background",
+      "var": "navy-900",
+      "also": {
+        "navy-950": "color-mix(in srgb, {} 80%, #000)",
+        "navy-860": "color-mix(in srgb, {} 96%, #fff)",
+        "navy-820": "color-mix(in srgb, {} 90%, #fff)",
+        "navy-780": "color-mix(in srgb, {} 84%, #fff)"
+      }
+    },
+    "paper": {
+      "label": "Text",
+      "var": "paper",
+      "also": {
+        "mute": "color-mix(in srgb, {} 64%, #000)",
+        "mute-2": "color-mix(in srgb, {} 46%, #000)"
       }
     }
   },
@@ -399,5 +417,65 @@
       "ratio": "3/2",
       "search": "pharmacy shelving"
     }
+  ],
+  "fontVars": {
+    "heading": [],
+    "body": [
+      "display"
+    ],
+    "mono": [
+      "mono"
+    ]
+  },
+  "roleMap": {
+    "dark": [
+      "navy-950",
+      "ink"
+    ],
+    "dark2": [
+      "navy-900",
+      "navy-860"
+    ],
+    "dark3": [
+      "navy-820",
+      "navy-780",
+      "navy-720"
+    ],
+    "onDark": [
+      "paper"
+    ],
+    "onDark2": [
+      "mute"
+    ],
+    "onDarkSoft": [
+      "mute-2"
+    ],
+    "lineDark": [
+      "line"
+    ],
+    "lineDark2": [
+      "line-2"
+    ],
+    "accent": [
+      "accent"
+    ],
+    "accentDeep": [
+      "accent-deep"
+    ]
+  },
+  "schemes": [
+    "charcoal-amber",
+    "midnight-ice",
+    "noir-red",
+    "ink-emerald",
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
   ]
 }

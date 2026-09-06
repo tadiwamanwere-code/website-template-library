@@ -92,6 +92,30 @@
         "gold-lt": "color-mix(in srgb, {} 70%, #fff)",
         "gold-dk": "color-mix(in srgb, {} 78%, #000)"
       }
+    },
+    "ink": {
+      "label": "Text",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 82%, #fff)"
+      }
+    },
+    "paper": {
+      "label": "Page background",
+      "var": "paper",
+      "also": {
+        "paper-2": "color-mix(in srgb, {} 95%, #000)",
+        "paper-3": "color-mix(in srgb, {} 89%, #000)"
+      }
+    },
+    "olive": {
+      "label": "Dark blocks",
+      "var": "olive-900",
+      "also": {
+        "olive-850": "color-mix(in srgb, {} 92%, #fff)",
+        "olive-800": "color-mix(in srgb, {} 86%, #fff)",
+        "olive-700": "color-mix(in srgb, {} 78%, #fff)"
+      }
     }
   },
   "_brandTokens": "Words belonging to this template, not to a client.",
@@ -386,5 +410,94 @@
       "ratio": "16/9",
       "search": "open day students"
     }
+  ],
+  "fontVars": {
+    "heading": [
+      "f-d"
+    ],
+    "body": [
+      "f-u"
+    ],
+    "mono": []
+  },
+  "roleMap": {
+    "paper": [
+      "paper"
+    ],
+    "paper2": [
+      "paper-2"
+    ],
+    "paper3": [
+      "paper-3"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "ink2": [
+      "ink-2"
+    ],
+    "inkSoft": [
+      "ink-so"
+    ],
+    "inkFaint": [
+      "ink-fa"
+    ],
+    "dark": [
+      "olive-900"
+    ],
+    "dark2": [
+      "olive-850",
+      "olive-800"
+    ],
+    "dark3": [
+      "olive-700",
+      "olive-600",
+      "olive-500"
+    ],
+    "onDark": [
+      "cream"
+    ],
+    "onDark2": [
+      "cream-2"
+    ],
+    "onDarkSoft": [
+      "cream-so"
+    ],
+    "lineDark": [
+      "line-d"
+    ],
+    "lineDark2": [
+      "line-d2"
+    ],
+    "line": [
+      "line-l"
+    ],
+    "line2": [
+      "line-l2"
+    ],
+    "accent": [
+      "gold"
+    ],
+    "accentSoft": [
+      "gold-lt"
+    ],
+    "accentDeep": [
+      "gold-dk"
+    ]
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime",
+    "charcoal-amber",
+    "midnight-ice",
+    "noir-red",
+    "ink-emerald"
   ]
 }

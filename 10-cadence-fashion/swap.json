@@ -34,8 +34,16 @@
   },
   "adjust": {
     "accent": {
-      "label": "Signal colour",
+      "label": "Accent",
       "var": "red"
+    },
+    "ink": {
+      "label": "Text and dark blocks",
+      "var": "blk"
+    },
+    "paper": {
+      "label": "Page background",
+      "var": "wht"
     }
   },
   "_brandTokens": "Words belonging to this template, not to a client.",
@@ -280,5 +288,40 @@
       "ratio": "1/1",
       "search": "leather hide texture"
     }
+  ],
+  "fontVars": {
+    "heading": [
+      "f-display"
+    ],
+    "body": [
+      "f-body"
+    ],
+    "mono": []
+  },
+  "roleMap": {
+    "paper": [
+      "wht"
+    ],
+    "ink": [
+      "blk"
+    ],
+    "accent": [
+      "red"
+    ]
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime",
+    "charcoal-amber",
+    "midnight-ice",
+    "noir-red",
+    "ink-emerald"
   ]
 }

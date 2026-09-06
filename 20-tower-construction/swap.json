@@ -240,29 +240,73 @@
     "paper": "paper-2"
   },
   "adjust": {
-    "brand": {
-      "label": "Brand",
-      "var": "brand"
-    },
     "accent": {
       "label": "Accent",
       "var": "accent"
+    },
+    "brand": {
+      "label": "Dark blocks",
+      "var": "brand"
     },
     "ink": {
       "label": "Text",
       "var": "ink"
     },
     "paper": {
-      "label": "Page",
+      "label": "Page background",
       "var": "paper"
     },
     "paper-2": {
-      "label": "Bands",
+      "label": "Section bands",
       "var": "paper-2"
     },
     "rule": {
       "label": "Lines",
       "var": "rule"
     }
-  }
+  },
+  "fontVars": {
+    "heading": [],
+    "body": [
+      "sans"
+    ],
+    "mono": [
+      "mono"
+    ]
+  },
+  "roleMap": {
+    "paper": [
+      "paper"
+    ],
+    "paper2": [
+      "paper-2"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "line": [
+      "rule"
+    ],
+    "dark": [
+      "brand"
+    ],
+    "accent": [
+      "accent"
+    ]
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime",
+    "charcoal-amber",
+    "midnight-ice",
+    "noir-red",
+    "ink-emerald"
+  ]
 }

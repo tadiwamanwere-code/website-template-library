@@ -4,75 +4,414 @@
   "industry": "Stays and hospitality",
   "covers": "Resorts, lodges, private islands, boutique hotels, safari camps, retreats",
   "_note": "find is the exact literal that sits in index.html today. Whole strings only, longest find first.",
-
   "_palettes": "Four approved sets of this template's own CSS variables. The deep ink is the design; the sand family and the accent move together.",
   "palettes": {
     "bone-ocean": {
-      "bone": "#F4EDE2", "bone-2": "#EADFCC", "sand": "#D8C4A6", "sand-2": "#BFA47F",
-      "ink": "#0B1A21", "ink-2": "#12262E", "ink-3": "#354B53", "accent": "#B8763F"
+      "bone": "#F4EDE2",
+      "bone-2": "#EADFCC",
+      "sand": "#D8C4A6",
+      "sand-2": "#BFA47F",
+      "ink": "#0B1A21",
+      "ink-2": "#12262E",
+      "ink-3": "#354B53",
+      "accent": "#B8763F"
     },
     "linen-jade": {
-      "bone": "#F1F1E9", "bone-2": "#E4E6DB", "sand": "#CBD2C2", "sand-2": "#AAB39E",
-      "ink": "#0A1D18", "ink-2": "#122A23", "ink-3": "#33504A", "accent": "#3F8B72"
+      "bone": "#F1F1E9",
+      "bone-2": "#E4E6DB",
+      "sand": "#CBD2C2",
+      "sand-2": "#AAB39E",
+      "ink": "#0A1D18",
+      "ink-2": "#122A23",
+      "ink-3": "#33504A",
+      "accent": "#3F8B72"
     },
     "shell-coral": {
-      "bone": "#F6EEE9", "bone-2": "#ECDFD7", "sand": "#DDC3B4", "sand-2": "#C4A492",
-      "ink": "#1B120F", "ink-2": "#291D18", "ink-3": "#4E3A32", "accent": "#C0603F"
+      "bone": "#F6EEE9",
+      "bone-2": "#ECDFD7",
+      "sand": "#DDC3B4",
+      "sand-2": "#C4A492",
+      "ink": "#1B120F",
+      "ink-2": "#291D18",
+      "ink-3": "#4E3A32",
+      "accent": "#C0603F"
     },
     "ash-indigo": {
-      "bone": "#EFEFF2", "bone-2": "#E1E2E8", "sand": "#C7C9D4", "sand-2": "#A5A8B8",
-      "ink": "#0C1020", "ink-2": "#141A2E", "ink-3": "#333B55", "accent": "#5A6BB0"
+      "bone": "#EFEFF2",
+      "bone-2": "#E1E2E8",
+      "sand": "#C7C9D4",
+      "sand-2": "#A5A8B8",
+      "ink": "#0C1020",
+      "ink-2": "#141A2E",
+      "ink-3": "#333B55",
+      "accent": "#5A6BB0"
     }
   },
-  "swatchKeys": { "accent": "accent", "ink": "ink", "paper": "bone" },
-
-  "adjust": { "accent": { "label": "Accent", "var": "accent" } },
-
+  "swatchKeys": {
+    "accent": "accent",
+    "ink": "ink",
+    "paper": "bone"
+  },
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "accent"
+    },
+    "ink": {
+      "label": "Text and dark blocks",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 88%, #fff)",
+        "ink-3": "color-mix(in srgb, {} 66%, #fff)"
+      }
+    },
+    "paper": {
+      "label": "Page background",
+      "var": "bone",
+      "also": {
+        "bone-2": "color-mix(in srgb, {} 93%, #000)"
+      }
+    },
+    "sand": {
+      "label": "Warm blocks",
+      "var": "sand",
+      "also": {
+        "sand-2": "color-mix(in srgb, {} 80%, #000)"
+      }
+    }
+  },
   "_brandTokens": "Words belonging to this template, not to a client.",
-  "brandTokens": ["Solstice", "SOLSTICE", "Alaló", "Vaïtoa", "Ravenala", "solstice-alalo"],
-
-  "swaps": [
-    { "key": "NAME_CAPS", "find": "SOLSTICE", "label": "Name in capitals (the wordmark)", "maxChars": 16, "required": true, "hint": "The design sets this in capitals throughout." },
-    { "key": "BUSINESS_NAME", "find": "Solstice", "label": "Resort name", "maxChars": 20, "required": true },
-    { "key": "WHAT_THEY_DO", "find": "A private island", "label": "What it is", "maxChars": 30 },
-    { "key": "HERO_LINE", "find": "Where the sea keeps the time", "label": "Hero line", "maxChars": 34 },
-    { "key": "PHONE", "find": "+679 220 4118", "label": "Phone", "maxChars": 20 },
-    { "key": "PHONE_LINK", "find": "tel:+6792204118", "format": "tel:{}", "label": "Phone, dialling form", "maxChars": 20, "optional": true, "hint": "Worked out from the phone number if you leave it blank." },
-    { "key": "EMAIL", "find": "stay@solstice-alalo.com", "label": "Email", "maxChars": 40 },
-
-    { "key": "ROOM_1_NAME", "find": "Loka Beach Villa", "label": "Villa 1 name", "maxChars": 26, "group": "details" },
-    { "key": "ROOM_2_NAME", "find": "Vaka Overwater Villa", "label": "Villa 2 name", "maxChars": 26, "group": "details" },
-    { "key": "ROOM_3_NAME", "find": "Point Ualu Residence", "label": "Villa 3 name", "maxChars": 26, "group": "details" },
-    { "key": "ROOM_4_NAME", "find": "Solstice House", "label": "Villa 4 name", "maxChars": 26, "group": "details" },
-    { "key": "RATE_1", "find": "$2,850", "label": "Villa 1 rate a night", "maxChars": 12, "group": "details", "hint": "The design ships with sample figures. Change them before you send the link." },
-    { "key": "RATE_2", "find": "$4,200", "label": "Villa 2 rate a night", "maxChars": 12, "group": "details" },
-    { "key": "RATE_3", "find": "$9,600", "label": "Villa 3 rate a night", "maxChars": 12, "group": "details" },
-    { "key": "RATE_4", "find": "$14,600", "label": "Villa 4 rate a night", "maxChars": 12, "group": "details" },
-
-    { "key": "STAT_1_VALUE", "find": "data-count=\"22\"", "format": "data-count=\"{}\"", "label": "Villas", "type": "number", "maxChars": 8 },
-    { "key": "STAT_2_VALUE", "find": "data-count=\"148\"", "format": "data-count=\"{}\"", "label": "Hectares", "type": "number", "maxChars": 8 },
-    { "key": "STAT_3_VALUE", "find": "data-count=\"35\"", "format": "data-count=\"{}\"", "label": "Minutes by seaplane", "type": "number", "maxChars": 8 },
-    { "key": "STAT_4_VALUE", "find": "data-count=\"6400\"", "format": "data-count=\"{}\"", "label": "Coral fragments in the nursery", "type": "number", "maxChars": 8 }
+  "brandTokens": [
+    "Solstice",
+    "SOLSTICE",
+    "Alaló",
+    "Vaïtoa",
+    "Ravenala",
+    "solstice-alalo"
   ],
-
+  "swaps": [
+    {
+      "key": "NAME_CAPS",
+      "find": "SOLSTICE",
+      "label": "Name in capitals (the wordmark)",
+      "maxChars": 16,
+      "required": true,
+      "hint": "The design sets this in capitals throughout."
+    },
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Solstice",
+      "label": "Resort name",
+      "maxChars": 20,
+      "required": true
+    },
+    {
+      "key": "WHAT_THEY_DO",
+      "find": "A private island",
+      "label": "What it is",
+      "maxChars": 30
+    },
+    {
+      "key": "HERO_LINE",
+      "find": "Where the sea keeps the time",
+      "label": "Hero line",
+      "maxChars": 34
+    },
+    {
+      "key": "PHONE",
+      "find": "+679 220 4118",
+      "label": "Phone",
+      "maxChars": 20
+    },
+    {
+      "key": "PHONE_LINK",
+      "find": "tel:+6792204118",
+      "format": "tel:{}",
+      "label": "Phone, dialling form",
+      "maxChars": 20,
+      "optional": true,
+      "hint": "Worked out from the phone number if you leave it blank."
+    },
+    {
+      "key": "EMAIL",
+      "find": "stay@solstice-alalo.com",
+      "label": "Email",
+      "maxChars": 40
+    },
+    {
+      "key": "ROOM_1_NAME",
+      "find": "Loka Beach Villa",
+      "label": "Villa 1 name",
+      "maxChars": 26,
+      "group": "details"
+    },
+    {
+      "key": "ROOM_2_NAME",
+      "find": "Vaka Overwater Villa",
+      "label": "Villa 2 name",
+      "maxChars": 26,
+      "group": "details"
+    },
+    {
+      "key": "ROOM_3_NAME",
+      "find": "Point Ualu Residence",
+      "label": "Villa 3 name",
+      "maxChars": 26,
+      "group": "details"
+    },
+    {
+      "key": "ROOM_4_NAME",
+      "find": "Solstice House",
+      "label": "Villa 4 name",
+      "maxChars": 26,
+      "group": "details"
+    },
+    {
+      "key": "RATE_1",
+      "find": "$2,850",
+      "label": "Villa 1 rate a night",
+      "maxChars": 12,
+      "group": "details",
+      "hint": "The design ships with sample figures. Change them before you send the link."
+    },
+    {
+      "key": "RATE_2",
+      "find": "$4,200",
+      "label": "Villa 2 rate a night",
+      "maxChars": 12,
+      "group": "details"
+    },
+    {
+      "key": "RATE_3",
+      "find": "$9,600",
+      "label": "Villa 3 rate a night",
+      "maxChars": 12,
+      "group": "details"
+    },
+    {
+      "key": "RATE_4",
+      "find": "$14,600",
+      "label": "Villa 4 rate a night",
+      "maxChars": 12,
+      "group": "details"
+    },
+    {
+      "key": "STAT_1_VALUE",
+      "find": "data-count=\"22\"",
+      "format": "data-count=\"{}\"",
+      "label": "Villas",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_2_VALUE",
+      "find": "data-count=\"148\"",
+      "format": "data-count=\"{}\"",
+      "label": "Hectares",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_3_VALUE",
+      "find": "data-count=\"35\"",
+      "format": "data-count=\"{}\"",
+      "label": "Minutes by seaplane",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_4_VALUE",
+      "find": "data-count=\"6400\"",
+      "format": "data-count=\"{}\"",
+      "label": "Coral fragments in the nursery",
+      "type": "number",
+      "maxChars": 8
+    }
+  ],
   "images": [
-    { "key": "HERO", "find": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=2400&q=80", "label": "Hero photo", "ratio": "16/9", "search": "tropical island aerial" },
-    { "key": "CHAPTER_1", "find": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80", "label": "Chapter 1, arrival", "ratio": "16/9", "search": "seaplane lagoon jetty" },
-    { "key": "CHAPTER_1_ALT", "find": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80", "label": "Chapter 1, inset", "ratio": "4/3", "search": "beach arrival" },
-    { "key": "CHAPTER_2", "find": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=2400&q=80", "label": "Chapter 2, the villas", "ratio": "16/9", "search": "overwater villa" },
-    { "key": "CHAPTER_2_ALT", "find": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80", "label": "Chapter 2, inset", "ratio": "4/3", "search": "resort villa interior" },
-    { "key": "CHAPTER_3", "find": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=2400&q=80", "label": "Chapter 3, the reef", "ratio": "16/9", "search": "coral reef underwater" },
-    { "key": "CHAPTER_3_ALT", "find": "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1200&q=80", "label": "Chapter 3, inset", "ratio": "4/3", "search": "manta ray" },
-    { "key": "CHAPTER_4", "find": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=80", "label": "Chapter 4, the table", "ratio": "16/9", "search": "beach dining table" },
-    { "key": "CHAPTER_4_ALT", "find": "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1200&q=80", "label": "Chapter 4, inset", "ratio": "4/3", "search": "open fire cooking" },
-    { "key": "ISLAND", "find": "https://images.unsplash.com/photo-1502472584811-0a2f2feb8968?auto=format&fit=crop&w=2400&q=80", "label": "The island", "ratio": "16/9", "search": "island sandbank" },
-    { "key": "SPA", "find": "https://images.unsplash.com/photo-1471922694854-ff1b63b20054?auto=format&fit=crop&w=1400&q=80", "label": "The spa", "ratio": "3/2", "search": "spa pavilion over water" },
-    { "key": "REEF_PROJECT", "find": "https://images.unsplash.com/photo-1520454974749-611b7248ffdb?auto=format&fit=crop&w=1800&q=80", "label": "The reef project", "ratio": "16/9", "search": "coral nursery diver" },
-    { "key": "CELLAR", "find": "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1800&q=80", "label": "The cellar", "ratio": "16/9", "search": "wine cellar rock" },
-    { "key": "ROOM_1", "find": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2400&q=80", "label": "Villa 1 photo", "ratio": "16/9", "search": "beach villa dusk" },
-    { "key": "ROOM_2", "find": "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=2400&q=80", "label": "Villa 2 photo", "ratio": "16/9", "search": "overwater bungalow deck" },
-    { "key": "ROOM_3", "find": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=2400&q=80", "label": "Villa 3 photo", "ratio": "16/9", "search": "infinity pool villa" },
-    { "key": "ROOM_4", "find": "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=2400&q=80", "label": "Villa 4 photo", "ratio": "16/9", "search": "luxury headland house" },
-    { "key": "CLOSING", "find": "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=2400&q=80", "label": "Closing photo", "ratio": "16/9", "search": "sunset ocean horizon" }
+    {
+      "key": "HERO",
+      "find": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=2400&q=80",
+      "label": "Hero photo",
+      "ratio": "16/9",
+      "search": "tropical island aerial"
+    },
+    {
+      "key": "CHAPTER_1",
+      "find": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80",
+      "label": "Chapter 1, arrival",
+      "ratio": "16/9",
+      "search": "seaplane lagoon jetty"
+    },
+    {
+      "key": "CHAPTER_1_ALT",
+      "find": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80",
+      "label": "Chapter 1, inset",
+      "ratio": "4/3",
+      "search": "beach arrival"
+    },
+    {
+      "key": "CHAPTER_2",
+      "find": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=2400&q=80",
+      "label": "Chapter 2, the villas",
+      "ratio": "16/9",
+      "search": "overwater villa"
+    },
+    {
+      "key": "CHAPTER_2_ALT",
+      "find": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80",
+      "label": "Chapter 2, inset",
+      "ratio": "4/3",
+      "search": "resort villa interior"
+    },
+    {
+      "key": "CHAPTER_3",
+      "find": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=2400&q=80",
+      "label": "Chapter 3, the reef",
+      "ratio": "16/9",
+      "search": "coral reef underwater"
+    },
+    {
+      "key": "CHAPTER_3_ALT",
+      "find": "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1200&q=80",
+      "label": "Chapter 3, inset",
+      "ratio": "4/3",
+      "search": "manta ray"
+    },
+    {
+      "key": "CHAPTER_4",
+      "find": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=80",
+      "label": "Chapter 4, the table",
+      "ratio": "16/9",
+      "search": "beach dining table"
+    },
+    {
+      "key": "CHAPTER_4_ALT",
+      "find": "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1200&q=80",
+      "label": "Chapter 4, inset",
+      "ratio": "4/3",
+      "search": "open fire cooking"
+    },
+    {
+      "key": "ISLAND",
+      "find": "https://images.unsplash.com/photo-1502472584811-0a2f2feb8968?auto=format&fit=crop&w=2400&q=80",
+      "label": "The island",
+      "ratio": "16/9",
+      "search": "island sandbank"
+    },
+    {
+      "key": "SPA",
+      "find": "https://images.unsplash.com/photo-1471922694854-ff1b63b20054?auto=format&fit=crop&w=1400&q=80",
+      "label": "The spa",
+      "ratio": "3/2",
+      "search": "spa pavilion over water"
+    },
+    {
+      "key": "REEF_PROJECT",
+      "find": "https://images.unsplash.com/photo-1520454974749-611b7248ffdb?auto=format&fit=crop&w=1800&q=80",
+      "label": "The reef project",
+      "ratio": "16/9",
+      "search": "coral nursery diver"
+    },
+    {
+      "key": "CELLAR",
+      "find": "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1800&q=80",
+      "label": "The cellar",
+      "ratio": "16/9",
+      "search": "wine cellar rock"
+    },
+    {
+      "key": "ROOM_1",
+      "find": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2400&q=80",
+      "label": "Villa 1 photo",
+      "ratio": "16/9",
+      "search": "beach villa dusk"
+    },
+    {
+      "key": "ROOM_2",
+      "find": "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=2400&q=80",
+      "label": "Villa 2 photo",
+      "ratio": "16/9",
+      "search": "overwater bungalow deck"
+    },
+    {
+      "key": "ROOM_3",
+      "find": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=2400&q=80",
+      "label": "Villa 3 photo",
+      "ratio": "16/9",
+      "search": "infinity pool villa"
+    },
+    {
+      "key": "ROOM_4",
+      "find": "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=2400&q=80",
+      "label": "Villa 4 photo",
+      "ratio": "16/9",
+      "search": "luxury headland house"
+    },
+    {
+      "key": "CLOSING",
+      "find": "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=2400&q=80",
+      "label": "Closing photo",
+      "ratio": "16/9",
+      "search": "sunset ocean horizon"
+    }
+  ],
+  "fontVars": {
+    "heading": [
+      "f-d"
+    ],
+    "body": [
+      "f-u"
+    ],
+    "mono": []
+  },
+  "roleMap": {
+    "paper": [
+      "bone"
+    ],
+    "paper2": [
+      "bone-2"
+    ],
+    "paper3": [
+      "sand"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "ink2": [
+      "ink-2"
+    ],
+    "ink3": [
+      "ink-3"
+    ],
+    "inkSoft": [
+      "ink-soft"
+    ],
+    "onDarkSoft": [
+      "bone-soft"
+    ],
+    "line": [
+      "line-l"
+    ],
+    "lineDark": [
+      "line-d"
+    ],
+    "accent": [
+      "accent"
+    ],
+    "accentSoft": [
+      "sand-2"
+    ]
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
   ]
 }

@@ -77,8 +77,32 @@
       "label": "Accent",
       "var": "acc",
       "also": {
-        "acc-hi": "color-mix(in srgb, {} 74%, #fff)",
-        "acc-lo": "color-mix(in srgb, {} 76%, #000)"
+        "acc-hi": "color-mix(in srgb, {} 66%, #fff)",
+        "acc-lo": "color-mix(in srgb, {} 74%, #000)"
+      }
+    },
+    "fg": {
+      "label": "Text",
+      "var": "fg",
+      "also": {
+        "mut": "color-mix(in srgb, {} 56%, #fff)"
+      }
+    },
+    "paper": {
+      "label": "Page background",
+      "var": "paper",
+      "also": {
+        "paper-2": "color-mix(in srgb, {} 96%, #000)",
+        "paper-3": "color-mix(in srgb, {} 90%, #000)"
+      }
+    },
+    "ink": {
+      "label": "Dark blocks",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 94%, #fff)",
+        "ink-3": "color-mix(in srgb, {} 88%, #fff)",
+        "ink-4": "color-mix(in srgb, {} 80%, #fff)"
       }
     }
   },
@@ -342,5 +366,83 @@
       "ratio": "3/2",
       "search": "team meeting accounts"
     }
+  ],
+  "fontVars": {
+    "heading": [
+      "disp"
+    ],
+    "body": [
+      "body"
+    ],
+    "mono": []
+  },
+  "roleMap": {
+    "paper": [
+      "paper"
+    ],
+    "paper2": [
+      "paper-2"
+    ],
+    "paper3": [
+      "paper-3"
+    ],
+    "ink": [
+      "fg"
+    ],
+    "ink3": [
+      "mut"
+    ],
+    "inkFaint": [
+      "dim"
+    ],
+    "dark": [
+      "ink"
+    ],
+    "dark2": [
+      "ink-2",
+      "ink-3"
+    ],
+    "dark3": [
+      "ink-4"
+    ],
+    "onDark": [
+      "fg-inv"
+    ],
+    "onDark2": [
+      "mut-inv"
+    ],
+    "line": [
+      "line-d"
+    ],
+    "lineDark": [
+      "line-i"
+    ],
+    "lineDark2": [
+      "line-i2"
+    ],
+    "accent": [
+      "acc"
+    ],
+    "accentSoft": [
+      "acc-hi"
+    ],
+    "accentDeep": [
+      "acc-lo"
+    ]
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime",
+    "charcoal-amber",
+    "midnight-ice",
+    "noir-red",
+    "ink-emerald"
   ]
 }

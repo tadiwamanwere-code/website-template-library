@@ -2,9 +2,8 @@
   "template": "19-longrange-pharmacy",
   "title": "Long Range Pharmacy",
   "industry": "Shops and retail",
-  "covers": "Pharmacies, health shops, opticians, veterinary, garden centres, any shop with a catalogue",
-  "_note": "find is the exact literal that sits in index.html today. Whole strings only, longest find first.",
-  "_palettes": "Four approved sets of this template's own CSS variables. The green family is the brand colour; the coral is kept for offers only.",
+  "covers": "Pharmacies, health shops, opticians, vets, garden centres, any shop with a catalogue and branches",
+  "_note": "The client's own storefront, kept as it stands. Colours come from variables so it can be themed; see builder/passes/build-pharmacy.js.",
   "palettes": {
     "pharmacy-green": {
       "green": "#12A85A",
@@ -16,9 +15,21 @@
       "ink": "#24272A",
       "muted": "#58615C",
       "ground": "#F4F7F5",
+      "ground-2": "#F6F8F7",
+      "mint-50": "#F3FAF8",
+      "mint-100": "#E6F4F0",
+      "mint-200": "#D4ECE7",
+      "mint-300": "#BFE3DC",
+      "mint-400": "#A6D7CF",
+      "mint-500": "#8DC5BE",
+      "mint-600": "#70A9A2",
       "coral": "#F0644A",
       "coral-d": "#D9503A",
-      "coral-soft": "#FCEDE8"
+      "coral-soft": "#FCEDE8",
+      "cream": "#FBF3EE",
+      "blush": "#FBE4EC",
+      "blush-deep": "#F3D0DE",
+      "blush-ink": "#9D2B54"
     },
     "clinic-blue": {
       "green": "#1273C4",
@@ -30,9 +41,21 @@
       "ink": "#24272A",
       "muted": "#586067",
       "ground": "#F4F6F8",
+      "ground-2": "#F5F7FA",
+      "mint-50": "#F2F8FC",
+      "mint-100": "#E4F0F8",
+      "mint-200": "#D0E4F2",
+      "mint-300": "#B7D6EC",
+      "mint-400": "#9CC6E4",
+      "mint-500": "#82B3D8",
+      "mint-600": "#6795BC",
       "coral": "#F0644A",
       "coral-d": "#D9503A",
-      "coral-soft": "#FCEDE8"
+      "coral-soft": "#FCEDE8",
+      "cream": "#F7F1EC",
+      "blush": "#E9EEF8",
+      "blush-deep": "#D3DEF0",
+      "blush-ink": "#2B4E9D"
     },
     "herbal-olive": {
       "green": "#6E8C29",
@@ -44,9 +67,21 @@
       "ink": "#26281F",
       "muted": "#5D6252",
       "ground": "#F6F7F1",
+      "ground-2": "#F7F8F2",
+      "mint-50": "#F7F9EF",
+      "mint-100": "#EDF2DF",
+      "mint-200": "#E0E9CB",
+      "mint-300": "#D0DDB2",
+      "mint-400": "#BDCE96",
+      "mint-500": "#A6BB7B",
+      "mint-600": "#89A05E",
       "coral": "#D9702F",
       "coral-d": "#B85A22",
-      "coral-soft": "#FBEFE6"
+      "coral-soft": "#FBEFE6",
+      "cream": "#F8F4E9",
+      "blush": "#F3EEDC",
+      "blush-deep": "#E5DCC1",
+      "blush-ink": "#7A5B1F"
     },
     "warm-rose": {
       "green": "#B93C63",
@@ -58,9 +93,21 @@
       "ink": "#2A2226",
       "muted": "#645159",
       "ground": "#F9F4F6",
+      "ground-2": "#FAF6F7",
+      "mint-50": "#FBF4F7",
+      "mint-100": "#F6E8EE",
+      "mint-200": "#EFD8E2",
+      "mint-300": "#E6C5D3",
+      "mint-400": "#DBAFC2",
+      "mint-500": "#CE97AE",
+      "mint-600": "#B27A92",
       "coral": "#D95F35",
       "coral-d": "#B84A26",
-      "coral-soft": "#FBEDE6"
+      "coral-soft": "#FBEDE6",
+      "cream": "#FAF2EE",
+      "blush": "#FBE4EC",
+      "blush-deep": "#F3D0DE",
+      "blush-ink": "#9D2B54"
     }
   },
   "swatchKeys": {
@@ -68,265 +115,439 @@
     "ink": "pine",
     "paper": "ground"
   },
+  "fontVars": {
+    "heading": [
+      "display"
+    ],
+    "body": [
+      "body"
+    ],
+    "mono": [
+      "ui"
+    ]
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
+  ],
+  "roleMap": {
+    "sheet": [
+      "sheet"
+    ],
+    "paper": [
+      "ground",
+      "ground-2"
+    ],
+    "paper2": [
+      "paper-2",
+      "mint-100"
+    ],
+    "paper3": [
+      "mint-200"
+    ],
+    "ink": [
+      "pine",
+      "ink"
+    ],
+    "ink2": [
+      "pine-7"
+    ],
+    "ink3": [
+      "muted",
+      "grey"
+    ],
+    "line": [
+      "line"
+    ],
+    "line2": [
+      "line-2"
+    ],
+    "dark": [
+      "pine-9"
+    ],
+    "accent": [
+      "green"
+    ],
+    "accentDeep": [
+      "green-d",
+      "navy-900"
+    ],
+    "accentSoft": [
+      "green-l"
+    ],
+    "accentTint": [
+      "mint-50"
+    ],
+    "inkFaint": [
+      "grey-2"
+    ]
+  },
   "adjust": {
     "accent": {
-      "label": "Brand colour",
+      "label": "Accent",
       "var": "green",
       "also": {
-        "green-d": "color-mix(in srgb, {} 72%, #000)",
-        "green-l": "color-mix(in srgb, {} 66%, #fff)"
+        "green-d": "color-mix(in srgb, {} 74%, #000)",
+        "green-l": "color-mix(in srgb, {} 62%, #fff)",
+        "navy-900": "color-mix(in srgb, {} 66%, #000)"
+      }
+    },
+    "pine": {
+      "label": "Headings",
+      "var": "pine",
+      "also": {
+        "pine-7": "color-mix(in srgb, {} 84%, #fff)",
+        "pine-9": "color-mix(in srgb, {} 76%, #000)"
+      }
+    },
+    "ink": {
+      "label": "Body text",
+      "var": "ink",
+      "also": {
+        "muted": "color-mix(in srgb, {} 64%, #fff)"
+      }
+    },
+    "sheet": {
+      "label": "Page background",
+      "var": "sheet"
+    },
+    "ground": {
+      "label": "Section bands",
+      "var": "ground",
+      "also": {
+        "ground-2": "color-mix(in srgb, {} 99%, #000)",
+        "paper-2": "color-mix(in srgb, {} 97%, #000)"
+      }
+    },
+    "coral": {
+      "label": "Sale flashes",
+      "var": "coral",
+      "also": {
+        "coral-d": "color-mix(in srgb, {} 86%, #000)",
+        "coral-soft": "color-mix(in srgb, {} 14%, #fff)"
+      }
+    },
+    "line": {
+      "label": "Lines",
+      "var": "line",
+      "also": {
+        "line-2": "color-mix(in srgb, {} 88%, #000)"
       }
     }
   },
   "_brandTokens": "Words belonging to this template, not to a client.",
   "brandTokens": [
-    "Long Range Pharmacies",
-    "Long Range Pharmacy",
-    "longrange",
-    "Harare",
-    "Graniteside"
+    "Long Range",
+    "Long&nbsp;Range",
+    "longrangepharmacies",
+    "Bright Health",
+    "Graniteside",
+    "Shawasha"
   ],
   "swaps": [
     {
-      "key": "BUSINESS_NAME_PLURAL",
-      "find": "Long Range Pharmacies",
-      "label": "Name in the footer line",
-      "maxChars": 28,
-      "optional": true
+      "key": "BRAND_A",
+      "find": "text-[25px] sm:text-[28px] text-ink\">long",
+      "format": "text-[25px] sm:text-[28px] text-ink\">{}",
+      "label": "Wordmark, first part",
+      "maxChars": 12,
+      "required": true,
+      "hint": "The design sets the wordmark in two colours. This half is dark."
     },
     {
-      "key": "BUSINESS_NAME",
-      "find": "Long Range Pharmacy",
-      "label": "Shop name",
-      "maxChars": 26,
-      "required": true
+      "key": "BRAND_B",
+      "find": "<span class=\"text-primary\">range</span>",
+      "format": "<span class=\"text-primary\">{}</span>",
+      "label": "Wordmark, second part",
+      "maxChars": 12,
+      "hint": "This half is in the accent colour."
     },
     {
-      "key": "BRAND_SHORT",
-      "find": "long<i>range</i>",
-      "format": "{}",
-      "label": "Wordmark",
-      "maxChars": 16,
-      "hint": "Set lower case in the design."
-    },
-    {
-      "key": "TAGLINE",
-      "find": "<span class=\"sub\">Pharmacy</span>",
-      "format": "<span class=\"sub\">{}</span>",
-      "label": "Word under the wordmark",
+      "key": "SHORT_TRADE",
+      "find": ">Pharmacy</span>",
+      "format": ">{}</span>",
+      "label": "The word under the wordmark",
       "maxChars": 16
     },
     {
-      "key": "WHAT_THEY_DO",
-      "find": "health shop &amp; dispensary",
-      "label": "What they are",
+      "key": "BUSINESS_NAME",
+      "find": "Long&nbsp;Range <span class=\"text-primary\">Pharmacies</span>",
+      "format": "{}",
+      "label": "Business name",
+      "maxChars": 30,
+      "required": true
+    },
+    {
+      "key": "BUSINESS_NAME_PLURAL",
+      "find": "Long Range Pharmacies",
+      "label": "Business name in the small print",
       "maxChars": 34
+    },
+    {
+      "key": "ABOUT",
+      "find": "Skin care, baby and child care, sports nutrition, vitamins and everyday personal care. Genuine stock, priced fairly, and checked over the counter by a qualified pharmacist.",
+      "label": "The line in the footer",
+      "maxChars": 200
     },
     {
       "key": "PHONE",
       "find": "+263 77 160 0539",
       "label": "Phone",
-      "maxChars": 20
+      "maxChars": 22
     },
     {
       "key": "PHONE_LINK",
       "find": "tel:+263771600539",
       "format": "tel:{}",
-      "label": "Phone, dialling form",
-      "maxChars": 20,
-      "optional": true,
-      "hint": "Worked out from the phone number if you leave it blank."
+      "label": "Phone, digits only",
+      "maxChars": 20
     },
     {
       "key": "PHONE_2",
       "find": "+263 77 442 6597",
-      "label": "Main branch, second line",
-      "maxChars": 20,
-      "optional": true
-    },
-    {
-      "key": "PHONE_2_LINK",
-      "find": "tel:+263774426597",
-      "format": "tel:{}",
-      "label": "Second line, dialling form",
-      "maxChars": 20,
+      "label": "Second phone",
+      "maxChars": 22,
       "optional": true
     },
     {
       "key": "WHATSAPP",
       "find": "+263 77 344 0533",
       "label": "WhatsApp number",
-      "maxChars": 20,
-      "optional": true
-    },
-    {
-      "key": "WHATSAPP_LINK",
-      "find": "wa.me/263773440533",
-      "format": "wa.me/{}",
-      "label": "WhatsApp, dialling form",
-      "maxChars": 20,
-      "optional": true
-    },
-    {
-      "key": "BRANCH_1",
-      "find": "Main branch",
-      "label": "Branch 1 name",
       "maxChars": 22
-    },
-    {
-      "key": "BRANCH_2",
-      "find": "Second branch",
-      "label": "Branch 2 name",
-      "maxChars": 22
-    },
-    {
-      "key": "BRANCH_3",
-      "find": "Third branch",
-      "label": "Branch 3 name",
-      "maxChars": 22
-    },
-    {
-      "key": "ADDRESS",
-      "find": "Shop 3, Kelvin Corner",
-      "label": "Branch 1 address",
-      "maxChars": 40
-    },
-    {
-      "key": "ADDRESS_2",
-      "find": "10 Highfield Junction",
-      "label": "Branch 2 address",
-      "maxChars": 40,
-      "optional": true
-    },
-    {
-      "key": "ADDRESS_3",
-      "find": "Shop 5, Northside Mall",
-      "label": "Branch 3 address",
-      "maxChars": 40,
-      "optional": true
     },
     {
       "key": "HOURS",
-      "find": "07:30–18:30",
+      "find": "Open Daily 07:30 – 18:30",
       "label": "Opening hours",
-      "maxChars": 18
+      "maxChars": 34
+    },
+    {
+      "key": "DAYS",
+      "find": "Monday – Sunday",
+      "label": "Days open",
+      "maxChars": 24
+    },
+    {
+      "key": "HOURS_2",
+      "find": "07:30 – 18:30",
+      "label": "Hours in the contact block",
+      "maxChars": 22
     },
     {
       "key": "SOCIAL",
       "find": "@yourpharmacy",
       "label": "Instagram handle",
+      "maxChars": 26
+    },
+    {
+      "key": "BRANCH_1",
+      "find": "Main branch",
+      "label": "First branch name",
       "maxChars": 26,
+      "group": "details"
+    },
+    {
+      "key": "ADDRESS",
+      "find": "Your first branch address",
+      "label": "First branch address",
+      "maxChars": 52,
+      "group": "details"
+    },
+    {
+      "key": "BRANCH_2",
+      "find": "Second branch",
+      "label": "Second branch name",
+      "maxChars": 26,
+      "group": "details",
       "optional": true
     },
     {
-      "key": "DELIVERY_FEE",
-      "find": "Delivery $3 flat.",
-      "format": "Delivery {} flat.",
-      "label": "Delivery charge",
-      "maxChars": 12,
+      "key": "ADDRESS_2",
+      "find": "Your second branch address",
+      "label": "Second branch address",
+      "maxChars": 52,
+      "group": "details",
+      "optional": true
+    },
+    {
+      "key": "BRANCH_3",
+      "find": "Third branch",
+      "label": "Third branch name",
+      "maxChars": 26,
+      "group": "details",
+      "optional": true
+    },
+    {
+      "key": "ADDRESS_3",
+      "find": "Your third branch address",
+      "label": "Third branch address",
+      "maxChars": 52,
+      "group": "details",
+      "optional": true
+    },
+    {
+      "key": "FREE_OVER",
+      "find": "On orders over $50",
+      "format": "On orders over {}",
+      "label": "Free delivery over",
+      "maxChars": 14,
       "group": "details",
       "hint": "The design ships with a sample figure. Change it before you send the link."
     },
     {
-      "key": "STAT_1_VALUE",
-      "find": "data-count=\"1180400\"",
-      "format": "data-count=\"{}\"",
-      "label": "Scripts dispensed",
-      "type": "number",
-      "maxChars": 10
+      "key": "RETURNS",
+      "find": "30-day returns",
+      "label": "Returns policy",
+      "maxChars": 20,
+      "group": "details"
     },
     {
-      "key": "STAT_2_VALUE",
-      "find": "data-count=\"22\"",
-      "format": "data-count=\"{}\"",
-      "label": "Years trading",
-      "type": "number",
-      "maxChars": 8
+      "key": "HERO_EYEBROW",
+      "find": "Skin care",
+      "label": "Line above the hero",
+      "maxChars": 26
     },
     {
-      "key": "STAT_3_VALUE",
-      "find": "data-count=\"3\"",
-      "format": "data-count=\"{}\"",
-      "label": "Branches",
-      "type": "number",
-      "maxChars": 8
+      "key": "HERO_LINE_1",
+      "find": "<span class=\"block\">Be ready</span>",
+      "format": "<span class=\"block\">{}</span>",
+      "label": "Hero line 1",
+      "maxChars": 18
     },
     {
-      "key": "STAT_4_VALUE",
-      "find": "data-count=\"14\"",
-      "format": "data-count=\"{}\"",
-      "label": "Pharmacists on the floor",
-      "type": "number",
-      "maxChars": 8
+      "key": "HERO_LINE_2",
+      "find": "<span class=\"block\">for radiant</span>",
+      "format": "<span class=\"block\">{}</span>",
+      "label": "Hero line 2",
+      "maxChars": 18
+    },
+    {
+      "key": "HERO_LINE_3",
+      "find": "<span class=\"block\">skin every day</span>",
+      "format": "<span class=\"block\">{}</span>",
+      "label": "Hero line 3",
+      "maxChars": 18
+    },
+    {
+      "key": "HERO_SUB",
+      "find": "Dermatologist-picked cleansers, serums and moisturisers.",
+      "label": "Hero sentence",
+      "maxChars": 70
     }
   ],
   "images": [
     {
       "key": "LOGO",
-      "find": [
-        "<span class=\"logo\"><span class=\"word\">long<i>range</i><i>.</i></span><span class=\"sub\">Pharmacy</span></span>",
-        "<span class=\"logo\"><span class=\"word\">long<i>range</i><i>.</i></span><span class=\"sub\">Pharmacy</span></span>"
-      ],
+      "find": "<span class=\"font-brand font-extrabold lowercase tracking-[-0.055em] text-[25px] sm:text-[28px] text-ink\">",
+      "format": "<img class=\"brand-logo\" src=\"{}\" alt=\"\" style=\"height:34px;width:auto;display:block\"><span hidden class=\"",
       "label": "Logo",
       "kind": "logo",
-      "hint": "Replaces the wordmark in the header and the footer.",
-      "format": "<img class=\"brand-logo\" src=\"{}\" alt=\"\">"
+      "hint": "Replaces the wordmark in the header."
     },
     {
       "key": "HERO_1",
-      "find": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=760&h=950&q=70",
-      "label": "Hero, skin care",
-      "ratio": "4/5",
-      "search": "skincare serum bottle"
+      "find": "/19-longrange-pharmacy/assets/hero/beauty.webp",
+      "label": "Hero picture 1",
+      "ratio": "4/3",
+      "search": "woman holding face cream"
     },
     {
       "key": "HERO_2",
-      "find": "https://images.unsplash.com/photo-1596462502278-27bfdc4038e8?auto=format&fit=crop&w=900&h=760&q=70",
-      "label": "Hero, supplements",
-      "ratio": "6/5",
-      "search": "protein supplement tub"
+      "find": "/19-longrange-pharmacy/assets/hero/sports-nutrition.webp",
+      "label": "Hero picture 2",
+      "ratio": "4/3",
+      "search": "protein powder tubs"
     },
     {
       "key": "HERO_3",
-      "find": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=900&h=760&q=70",
-      "label": "Hero, prescriptions",
-      "ratio": "6/5",
-      "search": "pharmacist dispensing"
+      "find": "/19-longrange-pharmacy/assets/hero/vitamins.webp",
+      "label": "Hero picture 3",
+      "ratio": "4/3",
+      "search": "vitamin supplement jars"
     },
     {
       "key": "PROMO_1",
-      "find": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?auto=format&fit=crop&w=1100&h=850&q=70",
-      "label": "Promo, large",
-      "ratio": "4/3",
-      "search": "perfume and skincare flatlay"
+      "find": "/19-longrange-pharmacy/assets/promo/perfume.webp",
+      "label": "Promo picture 1",
+      "ratio": "3/2",
+      "search": "perfume bottle still life"
     },
     {
       "key": "PROMO_2",
-      "find": "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?auto=format&fit=crop&w=760&h=570&q=70",
-      "label": "Promo, small",
-      "ratio": "4/3",
-      "search": "natural protein powder"
+      "find": "/19-longrange-pharmacy/assets/promo/protein-pack.webp",
+      "label": "Promo picture 2",
+      "ratio": "3/2",
+      "search": "protein pouch product"
     },
     {
-      "key": "OFFER_1",
-      "find": "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=760&h=570&q=70",
-      "label": "Offer 1",
-      "ratio": "4/3",
-      "search": "face serum evening routine"
+      "key": "PHARMACIST",
+      "find": "/19-longrange-pharmacy/assets/promo/pharmacist.webp",
+      "label": "Pharmacist photo",
+      "ratio": "4/5",
+      "search": "pharmacist in a white coat"
     },
     {
-      "key": "OFFER_2",
-      "find": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=760&h=570&q=70",
-      "label": "Offer 2",
+      "key": "COUNTER",
+      "find": "/19-longrange-pharmacy/assets/img/pharmacist-woman.jpg",
+      "label": "Contact photo",
       "ratio": "4/3",
-      "search": "baby bath products"
+      "search": "pharmacy counter shelves"
     },
     {
-      "key": "ABOUT",
-      "find": "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&w=1000&h=760&q=70",
-      "label": "The dispensary",
-      "ratio": "4/3",
-      "search": "pharmacy interior counter"
+      "key": "BENTO_1",
+      "find": "/19-longrange-pharmacy/assets/bento/plum-peptides-coconut-shampoo-250ml.jpg",
+      "label": "Prescription tile 1",
+      "ratio": "1/1",
+      "search": "shampoo bottle product"
+    },
+    {
+      "key": "BENTO_2",
+      "find": "/19-longrange-pharmacy/assets/bento/optimum-nutrition-whey-protein.webp",
+      "label": "Prescription tile 2",
+      "ratio": "1/1",
+      "search": "whey protein tub"
+    },
+    {
+      "key": "PRODUCT_1",
+      "find": "/19-longrange-pharmacy/assets/products/bio-oil-skincare-oil-60ml.jpg",
+      "label": "Product 1",
+      "ratio": "1/1",
+      "search": "skincare oil bottle white background"
+    },
+    {
+      "key": "PRODUCT_2",
+      "find": "/19-longrange-pharmacy/assets/products/citrosoda-effervescent-granules.jpg",
+      "label": "Product 2",
+      "ratio": "1/1",
+      "search": "medicine box white background"
+    },
+    {
+      "key": "PRODUCT_3",
+      "find": "/19-longrange-pharmacy/assets/products/alucia-organics-castor-oil-100ml.jpg",
+      "label": "Product 3",
+      "ratio": "1/1",
+      "search": "castor oil bottle"
+    },
+    {
+      "key": "PRODUCT_4",
+      "find": "/19-longrange-pharmacy/assets/products/ctr-s-coal-tar-shampoo-100ml.jpg",
+      "label": "Product 4",
+      "ratio": "1/1",
+      "search": "medicated shampoo bottle"
+    },
+    {
+      "key": "PRODUCT_5",
+      "find": "/19-longrange-pharmacy/assets/products/seven-seas-cod-liver-oil-100ml.jpg",
+      "label": "Product 5",
+      "ratio": "1/1",
+      "search": "cod liver oil supplement"
     }
   ]
 }

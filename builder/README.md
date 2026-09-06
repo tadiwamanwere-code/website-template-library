@@ -25,6 +25,7 @@ node builder/server.js      then open http://localhost:4180/build
 | File | What it is |
 |---|---|
 | `render.js` | Fills a template. Find and replace, nothing else. Also a CLI. |
+| `schemes.js` | The colour schemes every template can wear. |
 | `routes.js` | Everything the app answers. Shared by both ways of running it. |
 | `store.js` | Saved sites: on disk here, in Vercel Blob when deployed. |
 | `portable.js` | The link that carries the whole site inside it. |
@@ -69,25 +70,55 @@ storage exists. It is the safety net, not the main road.
 like a swap: the text that was there and the text that replaced it. That is
 why it survives a re-render.
 
-**Pictures** — click any picture. Search Unsplash and Pexels together, paste
-a link, upload a file, or remove the picture altogether. Uploads become data
-URIs so the finished site stays one self-contained file.
+**Pictures** — click any picture, or pick it from the list on the right.
+Search Unsplash and Pexels together, paste a link, upload a file, or remove
+the picture altogether. An upload is redrawn at the size the page can use —
+1800px for a photograph, 900px for a logo — so a photo straight off a phone
+is fine and file size is not something you have to think about. They become
+data URIs, so the finished site stays one self-contained file.
 
 **Logo** — upload one in the left rail. It replaces the template's mark and
 wordmark in both the header and the footer. Tick *the logo already has the
 name in it* to hide the text wordmark beside it.
 
-**Theme** — four approved sets of colours per template, hand-picked.
+**Theme** — thirteen to seventeen per template, in two lists. The top few were
+drawn for that page by the person who made it. The rest are shared schemes
+from `schemes.js`, which fill *roles* rather than naming variables, so one
+scheme dresses every design. Four of them turn the page dark.
 
-**Colours** — each template says which of its own colours are safe to move by
-hand, and what else has to move with them. The four themes are still the safe
-answer: they were checked, a hand-picked colour has not been.
+**Colours** — four to seven per template: the accent, the text, the page
+background, the section bands, the lines, and whatever else that design lets
+you move. Each one carries the tones that have to move with it, so changing
+the text colour also moves the quiet grey under it.
 
-**Type** — the typeface for headings and body, the typeface for labels and
-figures, and a size for each. Size is arithmetic on the stylesheet, so it
-works on any template without that template knowing about it.
+**Type** — three typefaces, for headings, body, and the small labels and
+figures. Each template says which of its own variables carry them, which is
+why this works at all: every design in the library named them differently.
+Sizes are arithmetic on the stylesheet.
 
-**Sections** — hide any section from the right rail, or click one to jump to it.
+**Style** — square corners or round, headings in capitals or sentence case,
+heavy or light, and how far the small labels are spaced. A theme changes the
+colours; these change the manner.
+
+**Sections** — hide any section from the right rail, or click one to jump to
+it. Hiding is one CSS rule, so putting it back is that rule taken away.
+
+**Pictures list** — every picture the template has, on the right. Click one to
+find it on the page and change it. A picture you removed is not on the page
+any more, so this is how it comes back.
+
+## How a change reaches the screen
+
+Two ways, and the difference matters.
+
+A theme, a colour, a typeface, a hidden section and the style levers are all
+one block of CSS at the end of `<head>`. The app asks the server for that
+block on its own and swaps it in, so the change is instant and the page does
+not jump back to the top. It is the same `headBlock()` the published page
+uses, so the preview cannot drift from what gets sent.
+
+Only a change to the markup — a logo, a re-worded line, new details — rebuilds
+the page, and the scroll position is put back afterwards.
 
 ## Warnings it gives you
 
@@ -104,10 +135,24 @@ has to change unless it carries a claim that would be false for the next
 business — that is the copy pass, and `builder/passes/` shows how each of the
 eleven was done. A template with a swap card appears in the picker on its own.
 
-A card needs: `palettes` (four named sets of that template's own CSS
-variables), `swaps` (exact strings to replace), `images`, `brandTokens` (the
-words that must not survive) and optionally `adjust` (which colours can be
-moved by hand). See `20-tower-construction/swap.json` for the shape.
+A card needs six things. See `20-tower-construction/swap.json` for the shape.
+
+| Field | What it is |
+|---|---|
+| `swaps` | the exact strings to replace |
+| `images` | the pictures that can be changed or removed |
+| `brandTokens` | the words that must not survive a render |
+| `fontVars` | which of the template's own variables carry the headings, the body and the labels |
+| `roleMap` | which of its variables play which role in a shared scheme |
+| `adjust` | which colours a person may move by hand, and what moves with them |
+
+`palettes` is optional and holds themes drawn for that one design.
+`roleMap` is what earns it the twelve shared ones, so it is worth ten
+minutes: open the template, read its `:root`, and say which variable is the
+page, which is the text, which is the accent.
+
+`schemes.js` lists every role. A scheme that leaves one empty throws on
+load rather than leaving a hole in somebody's page.
 
 ## Keys
 

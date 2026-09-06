@@ -4,74 +4,330 @@
   "industry": "Shops and retail",
   "covers": "Homeware, furniture, ceramics, food and drink, clothing, any shop selling its own range",
   "_note": "find is the exact literal that sits in index.html today. Whole strings only, longest find first.",
-
   "_palettes": "Four approved sets of this template's own CSS variables. The porcelain ground is the design; the accent is the one saturated colour.",
   "palettes": {
     "porcelain-teal": {
-      "porcelain": "#F1F2EE", "porcelain-2": "#E9EBE5", "porcelain-3": "#DFE2DA", "white": "#FBFCFA",
-      "ink": "#131614", "ink-2": "#2B302C", "muted": "#6C7470", "muted-2": "#9AA29C",
-      "rule": "#D6DAD1", "rule-2": "#C2C8BC",
-      "accent": "#0F6157", "accent-deep": "#0A463F", "accent-ink": "#F3F6F3"
+      "porcelain": "#F1F2EE",
+      "porcelain-2": "#E9EBE5",
+      "porcelain-3": "#DFE2DA",
+      "white": "#FBFCFA",
+      "ink": "#131614",
+      "ink-2": "#2B302C",
+      "muted": "#6C7470",
+      "muted-2": "#9AA29C",
+      "rule": "#D6DAD1",
+      "rule-2": "#C2C8BC",
+      "accent": "#0F6157",
+      "accent-deep": "#0A463F",
+      "accent-ink": "#F3F6F3"
     },
     "porcelain-rust": {
-      "porcelain": "#F3F1EE", "porcelain-2": "#EBE8E3", "porcelain-3": "#E1DDD6", "white": "#FCFBF9",
-      "ink": "#171412", "ink-2": "#302B27", "muted": "#736C66", "muted-2": "#A19A93",
-      "rule": "#DAD5CD", "rule-2": "#C7C1B8",
-      "accent": "#9B4423", "accent-deep": "#732E14", "accent-ink": "#F6F3F1"
+      "porcelain": "#F3F1EE",
+      "porcelain-2": "#EBE8E3",
+      "porcelain-3": "#E1DDD6",
+      "white": "#FCFBF9",
+      "ink": "#171412",
+      "ink-2": "#302B27",
+      "muted": "#736C66",
+      "muted-2": "#A19A93",
+      "rule": "#DAD5CD",
+      "rule-2": "#C7C1B8",
+      "accent": "#9B4423",
+      "accent-deep": "#732E14",
+      "accent-ink": "#F6F3F1"
     },
     "porcelain-navy": {
-      "porcelain": "#EEF0F3", "porcelain-2": "#E5E8EC", "porcelain-3": "#DADEE4", "white": "#FAFBFC",
-      "ink": "#121519", "ink-2": "#282E36", "muted": "#68707A", "muted-2": "#969DA6",
-      "rule": "#D2D7DE", "rule-2": "#BEC5CE",
-      "accent": "#1F3F7A", "accent-deep": "#142B57", "accent-ink": "#F2F4F7"
+      "porcelain": "#EEF0F3",
+      "porcelain-2": "#E5E8EC",
+      "porcelain-3": "#DADEE4",
+      "white": "#FAFBFC",
+      "ink": "#121519",
+      "ink-2": "#282E36",
+      "muted": "#68707A",
+      "muted-2": "#969DA6",
+      "rule": "#D2D7DE",
+      "rule-2": "#BEC5CE",
+      "accent": "#1F3F7A",
+      "accent-deep": "#142B57",
+      "accent-ink": "#F2F4F7"
     },
     "porcelain-plum": {
-      "porcelain": "#F2EFF1", "porcelain-2": "#EAE5E8", "porcelain-3": "#E0D9DD", "white": "#FCFAFB",
-      "ink": "#171317", "ink-2": "#302930", "muted": "#736A70", "muted-2": "#A0969C",
-      "rule": "#D9D2D6", "rule-2": "#C6BDC2",
-      "accent": "#6B2547", "accent-deep": "#4C1631", "accent-ink": "#F5F2F3"
+      "porcelain": "#F2EFF1",
+      "porcelain-2": "#EAE5E8",
+      "porcelain-3": "#E0D9DD",
+      "white": "#FCFAFB",
+      "ink": "#171317",
+      "ink-2": "#302930",
+      "muted": "#736A70",
+      "muted-2": "#A0969C",
+      "rule": "#D9D2D6",
+      "rule-2": "#C6BDC2",
+      "accent": "#6B2547",
+      "accent-deep": "#4C1631",
+      "accent-ink": "#F5F2F3"
     }
   },
-  "swatchKeys": { "accent": "accent", "ink": "ink", "paper": "porcelain" },
-
+  "swatchKeys": {
+    "accent": "accent",
+    "ink": "ink",
+    "paper": "porcelain"
+  },
   "adjust": {
     "accent": {
       "label": "Accent",
       "var": "accent",
-      "also": { "accent-deep": "color-mix(in srgb, {} 72%, #000)" }
+      "also": {
+        "accent-deep": "color-mix(in srgb, {} 72%, #000)"
+      }
+    },
+    "ink": {
+      "label": "Text",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 84%, #fff)",
+        "muted": "color-mix(in srgb, {} 58%, #fff)"
+      }
+    },
+    "paper": {
+      "label": "Page background",
+      "var": "porcelain",
+      "also": {
+        "porcelain-2": "color-mix(in srgb, {} 95%, #000)",
+        "porcelain-3": "color-mix(in srgb, {} 89%, #000)"
+      }
+    },
+    "rule": {
+      "label": "Lines",
+      "var": "rule",
+      "also": {
+        "rule-2": "color-mix(in srgb, {} 88%, #000)"
+      }
     }
   },
-
   "_brandTokens": "Words belonging to this template, not to a client.",
-  "brandTokens": ["HALDEN", "Halden", "halden.example", "Gothersgade"],
-
-  "swaps": [
-    { "key": "NAME_CAPS", "find": "HALDEN", "label": "Name in capitals (the wordmark)", "maxChars": 14, "required": true, "hint": "The design sets this in capitals throughout." },
-    { "key": "BUSINESS_NAME", "find": "Halden", "label": "Shop name", "maxChars": 20, "required": true },
-    { "key": "WHAT_THEY_DO", "find": "Objects for the everyday table", "label": "What they sell", "maxChars": 40 },
-    { "key": "HERO_LINE", "find": "A table set for<br>the ninth of<br>a <em>Tuesday</em>.", "label": "Hero line (the br marks the line breaks)", "maxChars": 52 },
-    { "key": "EYEBROW", "find": "Autumn range &mdash; no. 14", "label": "Line above the hero", "maxChars": 28, "optional": true },
-    { "key": "EMAIL", "find": "hello@halden.example", "label": "Email", "maxChars": 40 },
-    { "key": "PHONE", "find": "+45 33 12 04 77", "label": "Phone", "maxChars": 20 },
-    { "key": "ADDRESS", "find": "Gothersgade 41", "label": "Shop address", "maxChars": 40 },
-    { "key": "HOURS", "find": "Mon&ndash;Sat, 10:00&ndash;18:00", "label": "Opening hours", "maxChars": 30 },
-
-    { "key": "FREE_OVER", "find": "&pound;120", "label": "Free delivery over", "maxChars": 10, "group": "details", "hint": "The design ships with sample figures. Change them before you send the link." },
-    { "key": "BOX_PRICE", "find": "&pound;268", "label": "Starter box price", "maxChars": 10, "group": "details" },
-    { "key": "BOX_SAVING", "find": "&pound;61", "label": "Starter box saving", "maxChars": 10, "group": "details" },
-
-    { "key": "STAT_1_VALUE", "find": "data-count=\"1998\"", "format": "data-count=\"{}\"", "label": "Workshop opened", "type": "number", "maxChars": 8 },
-    { "key": "STAT_2_VALUE", "find": "data-count=\"6\"", "format": "data-count=\"{}\"", "label": "Makers", "type": "number", "maxChars": 8 },
-    { "key": "STAT_3_VALUE", "find": "data-count=\"92\"", "format": "data-count=\"{}\"", "label": "Range repairable (%)", "type": "number", "maxChars": 8 },
-    { "key": "STAT_4_VALUE", "find": "data-count=\"30\"", "format": "data-count=\"{}\"", "label": "Days to change your mind", "type": "number", "maxChars": 8 }
+  "brandTokens": [
+    "HALDEN",
+    "Halden",
+    "halden.example",
+    "Gothersgade"
   ],
-
+  "swaps": [
+    {
+      "key": "NAME_CAPS",
+      "find": "HALDEN",
+      "label": "Name in capitals (the wordmark)",
+      "maxChars": 14,
+      "required": true,
+      "hint": "The design sets this in capitals throughout."
+    },
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Halden",
+      "label": "Shop name",
+      "maxChars": 20,
+      "required": true
+    },
+    {
+      "key": "WHAT_THEY_DO",
+      "find": "Objects for the everyday table",
+      "label": "What they sell",
+      "maxChars": 40
+    },
+    {
+      "key": "HERO_LINE",
+      "find": "A table set for<br>the ninth of<br>a <em>Tuesday</em>.",
+      "label": "Hero line (the br marks the line breaks)",
+      "maxChars": 52
+    },
+    {
+      "key": "EYEBROW",
+      "find": "Autumn range &mdash; no. 14",
+      "label": "Line above the hero",
+      "maxChars": 28,
+      "optional": true
+    },
+    {
+      "key": "EMAIL",
+      "find": "hello@halden.example",
+      "label": "Email",
+      "maxChars": 40
+    },
+    {
+      "key": "PHONE",
+      "find": "+45 33 12 04 77",
+      "label": "Phone",
+      "maxChars": 20
+    },
+    {
+      "key": "ADDRESS",
+      "find": "Gothersgade 41",
+      "label": "Shop address",
+      "maxChars": 40
+    },
+    {
+      "key": "HOURS",
+      "find": "Mon&ndash;Sat, 10:00&ndash;18:00",
+      "label": "Opening hours",
+      "maxChars": 30
+    },
+    {
+      "key": "FREE_OVER",
+      "find": "&pound;120",
+      "label": "Free delivery over",
+      "maxChars": 10,
+      "group": "details",
+      "hint": "The design ships with sample figures. Change them before you send the link."
+    },
+    {
+      "key": "BOX_PRICE",
+      "find": "&pound;268",
+      "label": "Starter box price",
+      "maxChars": 10,
+      "group": "details"
+    },
+    {
+      "key": "BOX_SAVING",
+      "find": "&pound;61",
+      "label": "Starter box saving",
+      "maxChars": 10,
+      "group": "details"
+    },
+    {
+      "key": "STAT_1_VALUE",
+      "find": "data-count=\"1998\"",
+      "format": "data-count=\"{}\"",
+      "label": "Workshop opened",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_2_VALUE",
+      "find": "data-count=\"6\"",
+      "format": "data-count=\"{}\"",
+      "label": "Makers",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_3_VALUE",
+      "find": "data-count=\"92\"",
+      "format": "data-count=\"{}\"",
+      "label": "Range repairable (%)",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_4_VALUE",
+      "find": "data-count=\"30\"",
+      "format": "data-count=\"{}\"",
+      "label": "Days to change your mind",
+      "type": "number",
+      "maxChars": 8
+    }
+  ],
   "images": [
-    { "key": "HERO", "find": "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=1600&q=80&auto=format&fit=crop", "label": "Hero photo", "ratio": "4/3", "search": "table set stoneware" },
-    { "key": "FEATURE", "find": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80&auto=format&fit=crop", "label": "Feature photo", "ratio": "3/2", "search": "ceramic dinner service" },
-    { "key": "WORKSHOP_1", "find": "https://images.unsplash.com/photo-1503602642458-232111445657?w=1200&q=80&auto=format&fit=crop", "label": "Workshop 1", "ratio": "4/3", "search": "pottery clay wedging" },
-    { "key": "WORKSHOP_2", "find": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1200&q=80&auto=format&fit=crop", "label": "Workshop 2", "ratio": "4/3", "search": "potter at the wheel" },
-    { "key": "WORKSHOP_3", "find": "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=1200&q=80&auto=format&fit=crop", "label": "Workshop 3", "ratio": "4/3", "search": "kiln firing pottery" },
-    { "key": "MATERIALS", "find": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=1200&q=80&auto=format&fit=crop", "label": "Materials photo", "ratio": "4/3", "search": "linen fabric folded" }
+    {
+      "key": "HERO",
+      "find": "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=1600&q=80&auto=format&fit=crop",
+      "label": "Hero photo",
+      "ratio": "4/3",
+      "search": "table set stoneware"
+    },
+    {
+      "key": "FEATURE",
+      "find": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80&auto=format&fit=crop",
+      "label": "Feature photo",
+      "ratio": "3/2",
+      "search": "ceramic dinner service"
+    },
+    {
+      "key": "WORKSHOP_1",
+      "find": "https://images.unsplash.com/photo-1503602642458-232111445657?w=1200&q=80&auto=format&fit=crop",
+      "label": "Workshop 1",
+      "ratio": "4/3",
+      "search": "pottery clay wedging"
+    },
+    {
+      "key": "WORKSHOP_2",
+      "find": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1200&q=80&auto=format&fit=crop",
+      "label": "Workshop 2",
+      "ratio": "4/3",
+      "search": "potter at the wheel"
+    },
+    {
+      "key": "WORKSHOP_3",
+      "find": "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=1200&q=80&auto=format&fit=crop",
+      "label": "Workshop 3",
+      "ratio": "4/3",
+      "search": "kiln firing pottery"
+    },
+    {
+      "key": "MATERIALS",
+      "find": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=1200&q=80&auto=format&fit=crop",
+      "label": "Materials photo",
+      "ratio": "4/3",
+      "search": "linen fabric folded"
+    }
+  ],
+  "fontVars": {
+    "heading": [
+      "display"
+    ],
+    "body": [
+      "sans"
+    ],
+    "mono": []
+  },
+  "roleMap": {
+    "paper": [
+      "porcelain"
+    ],
+    "paper2": [
+      "porcelain-2"
+    ],
+    "paper3": [
+      "porcelain-3"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "ink2": [
+      "ink-2"
+    ],
+    "ink3": [
+      "muted"
+    ],
+    "inkFaint": [
+      "muted-2"
+    ],
+    "line": [
+      "rule"
+    ],
+    "line2": [
+      "rule-2"
+    ],
+    "accent": [
+      "accent"
+    ],
+    "accentDeep": [
+      "accent-deep"
+    ],
+    "accentInk": [
+      "accent-ink"
+    ],
+    "sheet": [
+      "white"
+    ]
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
   ]
 }

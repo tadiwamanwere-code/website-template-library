@@ -1,0 +1,237 @@
+/* =========================================================================
+   pass19-pharmacy.js — the copy pass and swap card for the pharmacy shop.
+
+   The page is the client's own storefront, kept exactly as it stands. What
+   comes out of it is everything that would be a lie for the next pharmacy:
+   the parent company, three named branches with their streets and phone
+   numbers, the city, the year they were licensed, and the Instagram handle.
+
+   Nothing about the design changes. Only claims.
+
+   Run after build-pharmacy.js:
+     node builder/passes/pass19-pharmacy.js
+   ========================================================================= */
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const DIR = path.resolve(__dirname, '..', '..', '19-longrange-pharmacy');
+const FILE = path.join(DIR, 'index.html');
+
+let html = fs.readFileSync(FILE, 'utf8');
+
+/* --------------------------------------------------------------- section ids
+   The builder's Sections rail finds a section by its id, and most of these
+   have none — the app only named the three it linked to. These are the nine
+   that were left, in the order they appear. */
+
+const IDS = ['hero', 'service', 'promos', 'categories', 'latest', 'natural',
+  'bestsellers', 'offers', 'instagram'];
+
+let at = 0;
+html = html.replace(/<section(?![^>]*\sid=)/g, function (whole) {
+  const id = IDS[at++];
+  return id ? '<section id="' + id + '"' : whole;
+});
+console.log('  ' + Math.min(at, IDS.length) + ' sections given an id');
+
+/* ------------------------------------------------------------- the copy pass
+   Each of these is a claim the next pharmacy cannot make. */
+
+const misses = [];
+function go(find, replace, note) {
+  const before = html;
+  html = html.split(find).join(replace);
+  if (html === before) misses.push(note || find.slice(0, 60));
+}
+
+/* 1. the parent company */
+go('Long Range Pharmacies (Bright Health Group)', 'Long Range Pharmacies', 'parent company in the copyright line');
+
+/* 2. the year they were licensed */
+go('checked over the counter by a licensed pharmacist since 2004.',
+   'checked over the counter by a qualified pharmacist.', 'licensed since 2004');
+
+/* 3. the city */
+go('in stock at our Harare branches.', 'in stock at our branches.', 'Harare in the product rail');
+
+/* 4. the three branches. The layout stays: three cards, because that is
+      what the design draws. The words in them become fields.
+
+      Addresses first. A suburb is in both the branch name and its street,
+      so renaming the branch first would leave the street half-changed. */
+go('Shop 3, Kelvin Corner, Graniteside, Harare', 'Your first branch address', 'branch 1 address');
+go('10 Highfield Junction, Southerton, Harare', 'Your second branch address', 'branch 2 address');
+go('Shop 5 Shawasha Hills Shopping Mall, Harare', 'Your third branch address', 'branch 3 address');
+go('Graniteside (HQ)', 'Main branch', 'branch 1 name');
+go('Southerton', 'Second branch', 'branch 2 name');
+go('Shawasha Hills', 'Third branch', 'branch 3 name');
+
+/* 5. the Instagram handle */
+go('@longrangepharmacies', '@yourpharmacy', 'instagram handle');
+
+/* 6. a photo caption that names them */
+go('alt="A Long Range pharmacist holding packs of medicine"', 'alt="A pharmacist holding packs of medicine"', 'pharmacist alt text');
+
+/* 7. the wordmark's own label, which the brand check would otherwise catch */
+go('aria-label="Long Range Pharmacy home"', 'aria-label="Home"', 'home link label');
+
+/* 7. a "24/7 Support" promise nobody has made yet */
+go('24/7 Support', 'Advice on hand', '24/7 support claim');
+go('We’re here to help', 'Ask a pharmacist', 'support strapline');
+
+if (misses.length) {
+  console.error('\n  These did not land, so the file was NOT written:\n');
+  for (const m of misses) console.error('    - ' + m);
+  process.exit(1);
+}
+
+fs.writeFileSync(FILE, html);
+console.log('  copy pass applied');
+
+/* ---------------------------------------------------------------- the card */
+
+const mix = (pct, to) => 'color-mix(in srgb, {} ' + pct + '%, ' + to + ')';
+
+/* The four palettes drawn for this design, extended so the mint hero floor
+   and the warm bands move with the accent instead of staying green. */
+const palettes = {
+  'pharmacy-green': {
+    green: '#12A85A', 'green-d': '#04783F', 'green-l': '#4CC787',
+    pine: '#0B322C', 'pine-7': '#12463E', 'pine-9': '#062420',
+    ink: '#24272A', muted: '#58615C', ground: '#F4F7F5', 'ground-2': '#F6F8F7',
+    'mint-50': '#F3FAF8', 'mint-100': '#E6F4F0', 'mint-200': '#D4ECE7',
+    'mint-300': '#BFE3DC', 'mint-400': '#A6D7CF', 'mint-500': '#8DC5BE', 'mint-600': '#70A9A2',
+    coral: '#F0644A', 'coral-d': '#D9503A', 'coral-soft': '#FCEDE8',
+    cream: '#FBF3EE', blush: '#FBE4EC', 'blush-deep': '#F3D0DE', 'blush-ink': '#9D2B54'
+  },
+  'clinic-blue': {
+    green: '#1273C4', 'green-d': '#0A5292', 'green-l': '#4CA1E0',
+    pine: '#0B2436', 'pine-7': '#123246', 'pine-9': '#061722',
+    ink: '#24272A', muted: '#586067', ground: '#F4F6F8', 'ground-2': '#F5F7FA',
+    'mint-50': '#F2F8FC', 'mint-100': '#E4F0F8', 'mint-200': '#D0E4F2',
+    'mint-300': '#B7D6EC', 'mint-400': '#9CC6E4', 'mint-500': '#82B3D8', 'mint-600': '#6795BC',
+    coral: '#F0644A', 'coral-d': '#D9503A', 'coral-soft': '#FCEDE8',
+    cream: '#F7F1EC', blush: '#E9EEF8', 'blush-deep': '#D3DEF0', 'blush-ink': '#2B4E9D'
+  },
+  'herbal-olive': {
+    green: '#6E8C29', 'green-d': '#4E6618', 'green-l': '#9BB955',
+    pine: '#222C12', 'pine-7': '#2F3B1B', 'pine-9': '#151B0A',
+    ink: '#26281F', muted: '#5D6252', ground: '#F6F7F1', 'ground-2': '#F7F8F2',
+    'mint-50': '#F7F9EF', 'mint-100': '#EDF2DF', 'mint-200': '#E0E9CB',
+    'mint-300': '#D0DDB2', 'mint-400': '#BDCE96', 'mint-500': '#A6BB7B', 'mint-600': '#89A05E',
+    coral: '#D9702F', 'coral-d': '#B85A22', 'coral-soft': '#FBEFE6',
+    cream: '#F8F4E9', blush: '#F3EEDC', 'blush-deep': '#E5DCC1', 'blush-ink': '#7A5B1F'
+  },
+  'warm-rose': {
+    green: '#B93C63', 'green-d': '#8E2445', 'green-l': '#D46E8E',
+    pine: '#331522', 'pine-7': '#421D2C', 'pine-9': '#200C14',
+    ink: '#2A2226', muted: '#645159', ground: '#F9F4F6', 'ground-2': '#FAF6F7',
+    'mint-50': '#FBF4F7', 'mint-100': '#F6E8EE', 'mint-200': '#EFD8E2',
+    'mint-300': '#E6C5D3', 'mint-400': '#DBAFC2', 'mint-500': '#CE97AE', 'mint-600': '#B27A92',
+    coral: '#D95F35', 'coral-d': '#B84A26', 'coral-soft': '#FBEDE6',
+    cream: '#FAF2EE', blush: '#FBE4EC', 'blush-deep': '#F3D0DE', 'blush-ink': '#9D2B54'
+  }
+};
+
+const card = {
+  template: '19-longrange-pharmacy',
+  title: 'Long Range Pharmacy',
+  industry: 'Shops and retail',
+  covers: 'Pharmacies, health shops, opticians, vets, garden centres, any shop with a catalogue and branches',
+  _note: 'The client\'s own storefront, kept as it stands. Colours come from variables so it can be themed; see builder/passes/build-pharmacy.js.',
+
+  palettes: palettes,
+  swatchKeys: { accent: 'green', ink: 'pine', paper: 'ground' },
+
+  fontVars: { heading: ['display'], body: ['body'], mono: ['ui'] },
+
+  schemes: ['ivory-forest', 'bone-terracotta', 'porcelain-ink', 'mist-cobalt',
+    'sand-plum', 'linen-rust', 'sage-gold', 'cream-cocoa', 'slate-lime'],
+
+  roleMap: {
+    sheet: ['sheet'],
+    paper: ['ground', 'ground-2'], paper2: ['paper-2', 'mint-100'], paper3: ['mint-200'],
+    ink: ['pine', 'ink'], ink2: ['pine-7'], ink3: ['muted', 'grey'],
+    line: ['line'], line2: ['line-2'],
+    dark: ['pine-9'],
+    accent: ['green'], accentDeep: ['green-d', 'navy-900'], accentSoft: ['green-l'],
+    accentTint: ['mint-50'],
+    /* the warm bands the design uses to separate one section from the next */
+    inkFaint: ['grey-2']
+  },
+
+  adjust: {
+    accent: {
+      label: 'Accent', var: 'green',
+      also: { 'green-d': mix(74, '#000'), 'green-l': mix(62, '#fff'), 'navy-900': mix(66, '#000') }
+    },
+    pine: { label: 'Headings', var: 'pine', also: { 'pine-7': mix(84, '#fff'), 'pine-9': mix(76, '#000') } },
+    ink: { label: 'Body text', var: 'ink', also: { muted: mix(64, '#fff') } },
+    sheet: { label: 'Page background', var: 'sheet' },
+    ground: { label: 'Section bands', var: 'ground', also: { 'ground-2': mix(99, '#000'), 'paper-2': mix(97, '#000') } },
+    coral: { label: 'Sale flashes', var: 'coral', also: { 'coral-d': mix(86, '#000'), 'coral-soft': mix(14, '#fff') } },
+    line: { label: 'Lines', var: 'line', also: { 'line-2': mix(88, '#000') } }
+  },
+
+  _brandTokens: 'Words belonging to this template, not to a client.',
+  brandTokens: ['Long Range', 'Long&nbsp;Range', 'longrangepharmacies', 'Bright Health', 'Graniteside', 'Shawasha'],
+
+  swaps: [
+    { key: 'BRAND_A', find: 'text-[25px] sm:text-[28px] text-ink">long', format: 'text-[25px] sm:text-[28px] text-ink">{}', label: 'Wordmark, first part', maxChars: 12, required: true, hint: 'The design sets the wordmark in two colours. This half is dark.' },
+    { key: 'BRAND_B', find: '<span class="text-primary">range</span>', format: '<span class="text-primary">{}</span>', label: 'Wordmark, second part', maxChars: 12, hint: 'This half is in the accent colour.' },
+    { key: 'SHORT_TRADE', find: '>Pharmacy</span>', format: '>{}</span>', label: 'The word under the wordmark', maxChars: 16 },
+
+    { key: 'BUSINESS_NAME', find: 'Long&nbsp;Range <span class="text-primary">Pharmacies</span>', format: '{}', label: 'Business name', maxChars: 30, required: true },
+    { key: 'BUSINESS_NAME_PLURAL', find: 'Long Range Pharmacies', label: 'Business name in the small print', maxChars: 34 },
+
+    { key: 'ABOUT', find: 'Skin care, baby and child care, sports nutrition, vitamins and everyday personal care. Genuine stock, priced fairly, and checked over the counter by a qualified pharmacist.', label: 'The line in the footer', maxChars: 200 },
+
+    { key: 'PHONE', find: '+263 77 160 0539', label: 'Phone', maxChars: 22 },
+    { key: 'PHONE_LINK', find: 'tel:+263771600539', format: 'tel:{}', label: 'Phone, digits only', maxChars: 20 },
+    { key: 'PHONE_2', find: '+263 77 442 6597', label: 'Second phone', maxChars: 22, optional: true },
+    { key: 'WHATSAPP', find: '+263 77 344 0533', label: 'WhatsApp number', maxChars: 22 },
+    { key: 'HOURS', find: 'Open Daily 07:30 – 18:30', label: 'Opening hours', maxChars: 34 },
+    { key: 'DAYS', find: 'Monday – Sunday', label: 'Days open', maxChars: 24 },
+    { key: 'HOURS_2', find: '07:30 – 18:30', label: 'Hours in the contact block', maxChars: 22 },
+    { key: 'SOCIAL', find: '@yourpharmacy', label: 'Instagram handle', maxChars: 26 },
+
+    { key: 'BRANCH_1', find: 'Main branch', label: 'First branch name', maxChars: 26, group: 'details' },
+    { key: 'ADDRESS', find: 'Your first branch address', label: 'First branch address', maxChars: 52, group: 'details' },
+    { key: 'BRANCH_2', find: 'Second branch', label: 'Second branch name', maxChars: 26, group: 'details', optional: true },
+    { key: 'ADDRESS_2', find: 'Your second branch address', label: 'Second branch address', maxChars: 52, group: 'details', optional: true },
+    { key: 'BRANCH_3', find: 'Third branch', label: 'Third branch name', maxChars: 26, group: 'details', optional: true },
+    { key: 'ADDRESS_3', find: 'Your third branch address', label: 'Third branch address', maxChars: 52, group: 'details', optional: true },
+
+    { key: 'FREE_OVER', find: 'On orders over $50', format: 'On orders over {}', label: 'Free delivery over', maxChars: 14, group: 'details', hint: 'The design ships with a sample figure. Change it before you send the link.' },
+    { key: 'RETURNS', find: '30-day returns', label: 'Returns policy', maxChars: 20, group: 'details' },
+
+    { key: 'HERO_EYEBROW', find: 'Skin care', label: 'Line above the hero', maxChars: 26 },
+    { key: 'HERO_LINE_1', find: '<span class="block">Be ready</span>', format: '<span class="block">{}</span>', label: 'Hero line 1', maxChars: 18 },
+    { key: 'HERO_LINE_2', find: '<span class="block">for radiant</span>', format: '<span class="block">{}</span>', label: 'Hero line 2', maxChars: 18 },
+    { key: 'HERO_LINE_3', find: '<span class="block">skin every day</span>', format: '<span class="block">{}</span>', label: 'Hero line 3', maxChars: 18 },
+    { key: 'HERO_SUB', find: 'Dermatologist-picked cleansers, serums and moisturisers.', label: 'Hero sentence', maxChars: 70 }
+  ],
+
+  images: [
+    { key: 'LOGO', find: '<span class="font-brand font-extrabold lowercase tracking-[-0.055em] text-[25px] sm:text-[28px] text-ink">', format: '<img class="brand-logo" src="{}" alt="" style="height:34px;width:auto;display:block"><span hidden class="', label: 'Logo', kind: 'logo', hint: 'Replaces the wordmark in the header.' },
+    { key: 'HERO_1', find: '/19-longrange-pharmacy/assets/hero/beauty.webp', label: 'Hero picture 1', ratio: '4/3', search: 'woman holding face cream' },
+    { key: 'HERO_2', find: '/19-longrange-pharmacy/assets/hero/sports-nutrition.webp', label: 'Hero picture 2', ratio: '4/3', search: 'protein powder tubs' },
+    { key: 'HERO_3', find: '/19-longrange-pharmacy/assets/hero/vitamins.webp', label: 'Hero picture 3', ratio: '4/3', search: 'vitamin supplement jars' },
+    { key: 'PROMO_1', find: '/19-longrange-pharmacy/assets/promo/perfume.webp', label: 'Promo picture 1', ratio: '3/2', search: 'perfume bottle still life' },
+    { key: 'PROMO_2', find: '/19-longrange-pharmacy/assets/promo/protein-pack.webp', label: 'Promo picture 2', ratio: '3/2', search: 'protein pouch product' },
+    { key: 'PHARMACIST', find: '/19-longrange-pharmacy/assets/promo/pharmacist.webp', label: 'Pharmacist photo', ratio: '4/5', search: 'pharmacist in a white coat' },
+    { key: 'COUNTER', find: '/19-longrange-pharmacy/assets/img/pharmacist-woman.jpg', label: 'Contact photo', ratio: '4/3', search: 'pharmacy counter shelves' },
+    { key: 'BENTO_1', find: '/19-longrange-pharmacy/assets/bento/plum-peptides-coconut-shampoo-250ml.jpg', label: 'Prescription tile 1', ratio: '1/1', search: 'shampoo bottle product' },
+    { key: 'BENTO_2', find: '/19-longrange-pharmacy/assets/bento/optimum-nutrition-whey-protein.webp', label: 'Prescription tile 2', ratio: '1/1', search: 'whey protein tub' },
+    { key: 'PRODUCT_1', find: '/19-longrange-pharmacy/assets/products/bio-oil-skincare-oil-60ml.jpg', label: 'Product 1', ratio: '1/1', search: 'skincare oil bottle white background' },
+    { key: 'PRODUCT_2', find: '/19-longrange-pharmacy/assets/products/citrosoda-effervescent-granules.jpg', label: 'Product 2', ratio: '1/1', search: 'medicine box white background' },
+    { key: 'PRODUCT_3', find: '/19-longrange-pharmacy/assets/products/alucia-organics-castor-oil-100ml.jpg', label: 'Product 3', ratio: '1/1', search: 'castor oil bottle' },
+    { key: 'PRODUCT_4', find: '/19-longrange-pharmacy/assets/products/ctr-s-coal-tar-shampoo-100ml.jpg', label: 'Product 4', ratio: '1/1', search: 'medicated shampoo bottle' },
+    { key: 'PRODUCT_5', find: '/19-longrange-pharmacy/assets/products/seven-seas-cod-liver-oil-100ml.jpg', label: 'Product 5', ratio: '1/1', search: 'cod liver oil supplement' }
+  ]
+};
+
+fs.writeFileSync(path.join(DIR, 'swap.json'), JSON.stringify(card, null, 2) + '\n');
+console.log('  swap.json written: ' + card.swaps.length + ' fields, ' + card.images.length + ' pictures');

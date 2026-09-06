@@ -22,7 +22,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { render, deriveSwaps, listTemplates, loadTemplate, fontList } = require('./render.js');
+const { render, deriveSwaps, listTemplates, loadTemplate, fontList, headBlock, HIDE } = require('./render.js');
 const store = require('./store.js');
 const portable = require('./portable.js');
 
@@ -202,6 +202,25 @@ async function handle(req, res) {
   }
 
   if (route === '/bapi/fonts') return json(res, 200, fontList());
+
+  /* ---- the look, on its own -------------------------------------------
+     A theme, a colour, a typeface and a hidden section are all one block of
+     CSS at the end of <head>. Asking for just that block lets the preview
+     change instantly instead of reloading the whole page, and because it is
+     the same headBlock() the published page uses, the two cannot drift. */
+  if (route === '/bapi/style' && method === 'POST') {
+    const b = await readBody(req);
+    let card;
+    try { card = loadTemplate(b.template).card; }
+    catch (e) { return json(res, 400, { error: String(e.message || e) }); }
+
+    const swaps = b.swaps || {};
+    const slots = new Set((card.images || []).map(function (i) { return i.key; }));
+    const hidden = Object.keys(swaps).filter(function (k) {
+      return slots.has(k) && String(swaps[k]).trim() === HIDE;
+    });
+    return json(res, 200, { head: headBlock(card, b.theme, b.style || {}, hidden) });
+  }
 
   /* ---- what this deployment can do, so the app can be honest about it ---- */
   if (route === '/bapi/env') {
