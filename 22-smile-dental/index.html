@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Linden Dental Studio — Gentle dental care, Harare</title>
-<meta name="description" content="Preventive, restorative and cosmetic dentistry in one calm surgery on Fife Avenue, Harare. Unhurried appointments, prices agreed before we start, sedation whenever you want it.">
+<meta name="description" content="Preventive, restorative and cosmetic dentistry in one calm surgery. Unhurried appointments, prices agreed before we start, sedation whenever you want it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..600&display=swap" rel="stylesheet">
@@ -135,6 +135,9 @@ html:not(.js) .curtain{display:none}
 }
 .hdr__tel svg{width:13px;height:13px;color:var(--teal-deep)}
 .hdr .btn{padding:.95em 1.35em}
+/* an uploaded logo replaces the wordmark, in the header and the footer */
+.brand__logo{display:block;height:34px;width:auto;max-width:180px;object-fit:contain;object-position:left center}
+.ft .brand__logo{height:30px}
 .burger{display:none;width:34px;height:34px;align-items:center;justify-content:center;flex:none}
 .burger span{display:block;width:20px;height:1px;background:var(--ink);position:relative}
 .burger span::before,.burger span::after{content:"";position:absolute;left:0;width:20px;height:1px;background:var(--ink)}
@@ -329,7 +332,7 @@ html:not(.js) .curtain{display:none}
 
 /* ---------- booking ---------- */
 .book{background:var(--ink);color:#EDE9E3;padding:clamp(74px,10vw,132px) 0}
-.book .eyebrow{color:#8CC0DA}
+.book .eyebrow{color:color-mix(in srgb, var(--teal) 62%, #fff)}
 .book .h2{color:#FBF9F6}
 .book__head{max-width:62ch;margin-bottom:clamp(38px,4.6vw,60px)}
 .book__head p{color:#A8B2B9;margin-top:1.1em}
@@ -372,7 +375,7 @@ html:not(.js) .curtain{display:none}
 .book__done{border:1px solid var(--teal);border-radius:5px;padding:clamp(26px,3vw,38px);background:#191F23}
 .book__done .ref{font-family:var(--mono);font-size:1.5rem;letter-spacing:.1em;color:var(--teal);margin:.6em 0 .8em}
 .book__done p{color:#A8B2B9;font-size:.98rem;max-width:46ch}
-.book__done .again{margin-top:22px;font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:#8CC0DA;border-bottom:1px solid #3A464D;padding-bottom:.3em}
+.book__done .again{margin-top:22px;font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:color-mix(in srgb, var(--teal) 62%, #fff);border-bottom:1px solid #3A464D;padding-bottom:.3em}
 
 /* ---------- reviews ---------- */
 .revs{padding:clamp(74px,10vw,140px) 0}
@@ -574,7 +577,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
         </h1>
       </div>
 
-      <p class="lede hero__lede" data-hero="1">Preventive, restorative and cosmetic care in one calm surgery on Fife Avenue. Appointments run long enough to talk, the price is agreed before anything starts, and sedation is there the moment you want it.</p>
+      <p class="lede hero__lede" data-hero="1">Preventive, restorative and cosmetic care in one calm surgery. Appointments run long enough to talk, the price is agreed before anything starts, and sedation is there the moment you want it.</p>
 
       <div class="hero__cta" data-hero="1">
         <a class="btn btn--fill magnet" href="#book">Book appointment
@@ -597,9 +600,9 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
         <div class="hv__block" id="hvBlock"></div>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <figure class="hv__photo" id="hvPhoto">
-          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1100&q=80" alt="A patient smiling after treatment at Linden Dental Studio" width="1100" height="1375">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1100&q=80" alt="A patient smiling after treatment" width="1100" height="1375">
         </figure>
-        <span class="hv__cap">Tarisai, 14 months after</span>
+        <span class="hv__cap">A patient, after treatment</span>
       </div>
     </div>
   </div>
@@ -610,10 +613,10 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
 <!-- ============ REASSURANCE STRIP ============ -->
 <section class="strip">
   <div class="wrap strip__in">
-    <div class="strip__i" data-rev><b>Same week</b><span>92% of new patients are seen within five working days.</span></div>
-    <div class="strip__i" data-rev><b>Step-free</b><span>Ground-floor surgery, wide doors, parking in the courtyard.</span></div>
-    <div class="strip__i" data-rev><b>Sedation</b><span>Inhalation sedation for anxious adults and children, at no extra charge.</span></div>
-    <div class="strip__i" data-rev><b>Direct billing</b><span>CIMAS, PSMAS, First Mutual Health and Generation Health claimed for you.</span></div>
+    <div class="strip__i" data-rev><b>Same week</b><span>Most new patients are seen within five working days.</span></div>
+    <div class="strip__i" data-rev><b>Access</b><span>Tell us what you need for the visit and we will arrange it.</span></div>
+    <div class="strip__i" data-rev><b>Comfort</b><span>Numbing gel before every injection, and a break whenever you want one.</span></div>
+    <div class="strip__i" data-rev><b>Direct billing</b><span>Medical aid claimed for you, so you settle the shortfall only.</span></div>
   </div>
 </section>
 
@@ -627,7 +630,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
       </figure>
       <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
       <figure class="approach__fig approach__fig--b" data-clip>
-        <img loading="lazy" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80" alt="The Linden surgery, bright and uncluttered" width="800" height="800">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80" alt="The surgery, bright and uncluttered" width="800" height="800">
       </figure>
     </div>
 
@@ -635,7 +638,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
       <p class="eyebrow eyebrow--rule" data-rev>Our approach</p>
       <h2 class="h2 splitlines" data-lines>We take the fear out<br>of it, then we take<br>the <span class="it">work</span> seriously.</h2>
       <div class="approach__body" data-rev>
-        <p>Most people who walk through our door have put this off. Sometimes for a year, sometimes for a decade. Nobody at Linden will make you feel bad about that, and nobody will hand you a treatment plan on a first visit you did not ask for.</p>
+        <p>Most people who walk through our door have put this off. Sometimes for a year, sometimes for a decade. Nobody here will make you feel bad about that, and nobody will hand you a treatment plan on a first visit you did not ask for.</p>
         <p>What we will do is look properly, show you the photographs on the screen, tell you what is urgent and what can safely be watched, and give you a written price for every stage before a single instrument comes out.</p>
       </div>
 
@@ -652,10 +655,10 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
 <!-- ============ STATS ============ -->
 <section class="stats">
   <div class="wrap stats__in">
-    <div class="stat"><span class="v num"><span data-count="19">0</span></span><span class="k">Years on Fife Avenue</span></div>
-    <div class="stat"><span class="v num"><span data-count="8400">0</span><span class="suf">+</span></span><span class="k">Patients treated since 2007</span></div>
+    <div class="stat"><span class="v num"><span data-count="19">0</span></span><span class="k">Years in practice</span></div>
+    <div class="stat"><span class="v num"><span data-count="8400">0</span><span class="suf">+</span></span><span class="k">Patients treated</span></div>
     <div class="stat"><span class="v num"><span data-count="92">0</span><span class="suf">%</span></span><span class="k">Seen within the same week</span></div>
-    <div class="stat"><span class="v num"><span data-count="4.9" data-dec="1">0</span></span><span class="k">Average rating from 212 reviews</span></div>
+    <div class="stat"><span class="v num"><span data-count="4.9" data-dec="1">0</span></span><span class="k">Average patient rating</span></div>
   </div>
 </section>
 
@@ -666,7 +669,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
       <p class="eyebrow eyebrow--rule" data-rev>Treatments &amp; prices</p>
       <h2 class="h2 splitlines" data-lines>Six things we do,<br>and what each<br>one actually <span class="it">involves</span>.</h2>
     </div>
-    <p class="sechead__note" data-rev>Prices are the honest starting figure in US dollars, not a teaser. Medical aid is claimed directly and you settle the shortfall only. Anything above $400 can be spread over three months, interest free.</p>
+    <p class="sechead__note" data-rev>Prices are the honest starting figure in US dollars, not a teaser. Medical aid is claimed directly and you settle the shortfall only. Larger plans can be spread over three months, interest free.</p>
   </div>
 
   <div class="treat__grid">
@@ -677,17 +680,17 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <img data-t="2" loading="lazy" src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=900&q=80" alt="A clinician talking with a patient before treatment" width="900" height="1125">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <img data-t="3" loading="lazy" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=900&q=80" alt="The treatment room at Linden" width="900" height="1125">
+        <img data-t="3" loading="lazy" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=900&q=80" alt="The treatment room" width="900" height="1125">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <img data-t="4" loading="lazy" src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=900&q=80" alt="A dentist reviewing dental X-rays on a light box" width="900" height="1125">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <img data-t="5" loading="lazy" src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=900&q=80" alt="A dentist showing a patient their scan on screen" width="900" height="1125">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <img data-t="6" loading="lazy" src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&w=900&q=80" alt="Dr Rutendo Mabika, principal dentist" width="900" height="1125">
+        <img data-t="6" loading="lazy" src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&w=900&q=80" alt="The principal dentist at work" width="900" height="1125">
       </div>
       <div class="treat__pricebox">
         <b>Before you commit</b>
-        <p>A first examination and X-rays is $45. If you decide to go no further, that is where it ends. We will still send you the photographs and the written plan.</p>
+        <p>A first examination and X-rays is priced up front. If you decide to go no further, that is where it ends. We will still send you the photographs and the written plan.</p>
       </div>
     </div>
 
@@ -697,7 +700,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
           <span class="acc__n">01</span>
           <span class="acc__t">Examination &amp; Hygiene</span>
           <span class="acc__meta">45 min &middot; every 6 months</span>
-          <span class="acc__price">from $45</span>
+          <span class="acc__price">on request</span>
           <span class="acc__sign" aria-hidden="true"></span>
         </button>
         <div class="acc__panel"><div class="acc__inner">
@@ -711,11 +714,11 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
           <span class="acc__n">02</span>
           <span class="acc__t">Children&rsquo;s Check-up &amp; Sealants</span>
           <span class="acc__meta">30 min &middot; from age 2</span>
-          <span class="acc__price">from $30</span>
+          <span class="acc__price">on request</span>
           <span class="acc__sign" aria-hidden="true"></span>
         </button>
         <div class="acc__panel"><div class="acc__inner">
-          <p>A gentle look, a ride in the chair, fluoride varnish, and fissure sealants on the back teeth once the adult molars are through. On a first visit we will not put an instrument near a child who would rather just sit and watch. Free for under-fives booked alongside a parent&rsquo;s check-up.</p>
+          <p>A gentle look, a ride in the chair, fluoride varnish, and fissure sealants on the back teeth once the adult molars are through. On a first visit we will not put an instrument near a child who would rather just sit and watch. Ask about children booked alongside a parent&rsquo;s check-up.</p>
           <div class="acc__tags"><span>Preventive</span><span>Fluoride varnish</span><span>Free under 5</span></div>
         </div></div>
       </div>
@@ -725,11 +728,11 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
           <span class="acc__n">03</span>
           <span class="acc__t">White Fillings</span>
           <span class="acc__meta">40&ndash;60 min &middot; one visit</span>
-          <span class="acc__price">from $70</span>
+          <span class="acc__price">on request</span>
           <span class="acc__sign" aria-hidden="true"></span>
         </button>
         <div class="acc__panel"><div class="acc__inner">
-          <p>Composite bonded under rubber dam and shade-matched to the tooth beside it, so the repair disappears. Topical numbing gel goes on three minutes before the injection, which is why most patients tell us they never felt it. Guaranteed for two years.</p>
+          <p>Composite bonded under rubber dam and shade-matched to the tooth beside it, so the repair disappears. Topical numbing gel goes on three minutes before the injection, which is why most patients tell us they never felt it. Guaranteed, and we will tell you for how long.</p>
           <div class="acc__tags"><span>Restorative</span><span>Rubber dam</span><span>2-year guarantee</span></div>
         </div></div>
       </div>
@@ -739,12 +742,12 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
           <span class="acc__n">04</span>
           <span class="acc__t">Root Canal Treatment</span>
           <span class="acc__meta">90 min &middot; one or two visits</span>
-          <span class="acc__price">from $240</span>
+          <span class="acc__price">on request</span>
           <span class="acc__sign" aria-hidden="true"></span>
         </button>
         <div class="acc__panel"><div class="acc__inner">
           <p>Rotary files under magnification, an apex locator rather than guesswork, and a rubber dam throughout. Most single-canal front teeth are finished in one sitting; molars usually take two. A crown afterwards is normally the sensible next step and we will price it up front.</p>
-          <div class="acc__tags"><span>Restorative</span><span>Sedation available</span><span>Magnification</span></div>
+          <div class="acc__tags"><span>Restorative</span><span>Rubber dam</span><span>Magnification</span></div>
         </div></div>
       </div>
 
@@ -753,11 +756,11 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
           <span class="acc__n">05</span>
           <span class="acc__t">Professional Whitening</span>
           <span class="acc__meta">50 min in surgery &middot; 2 weeks at home</span>
-          <span class="acc__price">from $260</span>
+          <span class="acc__price">on request</span>
           <span class="acc__sign" aria-hidden="true"></span>
         </button>
         <div class="acc__panel"><div class="acc__inner">
-          <p>Trays scanned and printed here, ten per cent carbamide peroxide worn overnight for two weeks, then one in-surgery session to set the final shade. Desensitising gel is included, and so is a top-up syringe twelve months later. We photograph the starting shade so the change is measured, not imagined.</p>
+          <p>Trays scanned and printed here, ten per cent carbamide peroxide worn overnight for two weeks, then one in-surgery session to set the final shade. Desensitising gel is included, and so is a top-up syringe later on. We photograph the starting shade so the change is measured, not imagined.</p>
           <div class="acc__tags"><span>Cosmetic</span><span>Custom trays</span><span>Top-up included</span></div>
         </div></div>
       </div>
@@ -767,7 +770,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
           <span class="acc__n">06</span>
           <span class="acc__t">Clear Aligners</span>
           <span class="acc__meta">6&ndash;14 months &middot; reviews every 6 weeks</span>
-          <span class="acc__price">from $1,400</span>
+          <span class="acc__price">on request</span>
           <span class="acc__sign" aria-hidden="true"></span>
         </button>
         <div class="acc__panel"><div class="acc__inner">
@@ -778,7 +781,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
     </div>
   </div>
 
-  <p class="treat__also" data-rev><b>Also at Linden &mdash;</b> single-tooth implants from $1,150, wisdom-tooth removal from $180, night guards from $140, and same-day emergency relief for registered patients. Ask at reception, or mention it in the notes when you book.</p>
+  <p class="treat__also" data-rev><b>Also here &mdash;</b> single-tooth implants, wisdom-tooth removal, night guards and same-day emergency relief for registered patients. Ask at reception, or mention it in the notes when you book.</p>
 </section>
 
 <!-- ============ PINNED: YOUR FIRST VISIT ============ -->
@@ -817,11 +820,11 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
 
       <div class="visit__media" id="visitMedia">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <figure class="is-on" data-step="0"><img loading="lazy" src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1000&q=80" alt="A clinician greeting a patient at Linden" width="1000" height="1150"></figure>
+        <figure class="is-on" data-step="0"><img loading="lazy" src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1000&q=80" alt="A clinician greeting a patient" width="1000" height="1150"></figure>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <figure data-step="1"><img loading="lazy" src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1000&q=80" alt="A dentist explaining a scan to a patient" width="1000" height="1150"></figure>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <figure data-step="2"><img loading="lazy" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1000&q=80" alt="The Linden treatment room" width="1000" height="1150"></figure>
+        <figure data-step="2"><img loading="lazy" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1000&q=80" alt="The treatment room" width="1000" height="1150"></figure>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <figure data-step="3"><img loading="lazy" src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1000&q=80" alt="A dentist reviewing X-rays before writing a plan" width="1000" height="1150"></figure>
       </div>
@@ -834,12 +837,12 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
   <div class="team__quote">
     <div>
       <p class="eyebrow eyebrow--rule" data-rev>The dentist</p>
-      <blockquote class="team__q splitlines" data-lines>&ldquo;Nobody has ever been talked<br>into treatment in this practice.<br>If a tooth can be watched<br>rather than drilled, we watch it.&rdquo;</blockquote>
-      <p class="team__attr" data-rev><b>Dr Rutendo Mabika</b>Principal dentist &middot; Linden Dental Studio &middot; MDPCZ D-4471</p>
+      <blockquote class="team__q splitlines" data-lines>&ldquo;Nobody is ever talked into<br>treatment in this practice.<br>If a tooth can be watched<br>rather than drilled, we watch it.&rdquo;</blockquote>
+      <p class="team__attr" data-rev><b>The principal dentist</b>The person who examines you is the person who treats you</p>
     </div>
     <div class="team__fig">
       <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-      <figure data-clip><img loading="lazy" src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&w=900&q=80" alt="Dr Rutendo Mabika, principal dentist at Linden Dental Studio" width="900" height="1058"></figure>
+      <figure data-clip><img loading="lazy" src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&w=900&q=80" alt="The principal dentist" width="900" height="1058"></figure>
     </div>
   </div>
 
@@ -847,28 +850,28 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
     <section data-rev>
       <h4>Qualifications</h4>
       <ul>
-        <li><b>BDS, University of the Witwatersrand</b>Johannesburg, 2007</li>
-        <li><b>MSc Conservative Dentistry, King&rsquo;s College London</b>2013, distinction</li>
-        <li><b>Certificate in Inhalation Sedation</b>SAAD, 2016</li>
-        <li><b>Clear aligner provider, level II</b>Recertified 2025</li>
+        <li><b>Dental degree and registration</b>Full details on request</li>
+        <li><b>Continuing professional development</b>Kept current every year</li>
+        <li><b>Cross-infection control</b>Autoclaved instruments, single use where it matters</li>
+        <li><b>Radiographs</b>Digital, at the lowest useful dose</li>
       </ul>
     </section>
     <section data-rev>
       <h4>Registration &amp; membership</h4>
       <ul>
-        <li><b>Medical &amp; Dental Practitioners Council of Zimbabwe</b>Registration D-4471, in good standing</li>
-        <li><b>Dental Association of Zimbabwe</b>Member since 2008, council 2019&ndash;2022</li>
-        <li><b>Practice registration P-1187</b>Inspected annually</li>
-        <li><b>Indemnity: Dental Protection</b>Full clinical cover</li>
+        <li><b>National dental council</b>Registered and in good standing</li>
+        <li><b>National dental association</b>Member in good standing</li>
+        <li><b>Practice registration</b>Inspected annually</li>
+        <li><b>Professional indemnity</b>Full clinical cover</li>
       </ul>
     </section>
     <section data-rev>
       <h4>The rest of the team</h4>
       <ul>
-        <li><b>Dr Farai Chikomo</b>Associate dentist &middot; BDS (UZ), Dip. Implant Dentistry, RCS Edinburgh</li>
-        <li><b>Nyasha Muzenda</b>Oral hygienist &middot; Dip. Oral Hygiene, University of the Western Cape</li>
-        <li><b>Chiedza Nyoni</b>Practice manager &middot; handles every medical-aid claim in the building</li>
-        <li><b>Two dental nurses</b>Both trained in paediatric behaviour management</li>
+        <li><b>Associate dentist</b>Restorative work and implant dentistry</li>
+        <li><b>Oral hygienist</b>Cleaning, gum care and sealants</li>
+        <li><b>Practice manager</b>Handles every medical-aid claim in the building</li>
+        <li><b>Dental nurses</b>Trained in looking after nervous children</li>
       </ul>
     </section>
   </div>
@@ -945,39 +948,39 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
       <p class="eyebrow eyebrow--rule" data-rev>Patient reviews</p>
       <h2 class="h2 splitlines" data-lines>What people say<br>on the way <span class="it">out</span>.</h2>
     </div>
-    <p class="sechead__note" data-rev>4.9 from 212 verified reviews, collected by SMS after treatment. We publish every one, including the three-star ones.</p>
+    <p class="sechead__note" data-rev>Reviews are collected by text message after treatment. We publish every one, including the three-star ones.</p>
   </div>
 
   <div class="revs__grid" id="revGrid">
     <figure class="rev" data-rev>
       <div class="rev__stars" aria-label="5 out of 5"></div>
       <p>&ldquo;I had not been to a dentist in eleven years and I was expecting a lecture. Nobody made me feel bad about it. We did the cleaning that day and booked the rest for when I was ready.&rdquo;</p>
-      <footer><b>Tarisai M.</b>Examination &amp; hygiene &middot; March</footer>
+      <footer><b>Patient review</b>Examination &amp; hygiene</footer>
     </figure>
     <figure class="rev" data-rev>
       <div class="rev__stars" aria-label="5 out of 5"></div>
-      <p>&ldquo;The number on the written plan was the number I paid at the end. That almost never happens anywhere in this city, for anything.&rdquo;</p>
-      <footer><b>Blessing N.</b>Crown &amp; root canal &middot; February</footer>
+      <p>&ldquo;The number on the written plan was the number I paid at the end. That almost never happens anywhere, for anything.&rdquo;</p>
+      <footer><b>Patient review</b>Crown &amp; root canal</footer>
     </figure>
     <figure class="rev" data-rev>
       <div class="rev__stars" aria-label="5 out of 5"></div>
       <p>&ldquo;My son asked when he can go back. He is seven. On his first visit they let him press the button that moves the chair and did nothing else.&rdquo;</p>
-      <footer><b>Chipo D.</b>Children&rsquo;s check-up &middot; April</footer>
+      <footer><b>Patient review</b>Children&rsquo;s check-up</footer>
     </figure>
     <figure class="rev" data-rev>
       <div class="rev__stars" aria-label="5 out of 5"></div>
-      <p>&ldquo;Sedation for a root canal I had been dreading for two years. I remember the gas going on, and then I remember the tea afterwards. Nothing in between.&rdquo;</p>
-      <footer><b>Ian W.</b>Root canal treatment &middot; January</footer>
+      <p>&ldquo;A root canal I had been dreading for two years. I remember the gas going on, and then I remember the tea afterwards. Nothing in between.&rdquo;</p>
+      <footer><b>Patient review</b>Root canal treatment</footer>
     </figure>
     <figure class="rev" data-rev>
       <div class="rev__stars" aria-label="5 out of 5"></div>
       <p>&ldquo;Seven months of aligners, a five-minute review every six weeks, and they printed a model of the finished bite before I paid anything. That is what sold me.&rdquo;</p>
-      <footer><b>Nomsa Z.</b>Clear aligners &middot; May</footer>
+      <footer><b>Patient review</b>Clear aligners</footer>
     </figure>
     <figure class="rev" data-rev>
       <div class="rev__stars" aria-label="4 out of 5"></div>
       <p>&ldquo;Broke a front tooth on the Friday before a wedding. They took me at four that afternoon and bonded it. Parking was a nightmare, the dentistry was not.&rdquo;</p>
-      <footer><b>Kudzai R.</b>Emergency bonding &middot; December</footer>
+      <footer><b>Patient review</b>Emergency bonding</footer>
     </figure>
   </div>
 </section>
@@ -1003,9 +1006,9 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
 
     <div data-rev>
       <h4>Payment &amp; medical aid</h4>
-      <p>Cash in US dollars, EcoCash, Visa and Mastercard, or bank transfer. We claim directly from the four schemes below, so you settle the shortfall only and never the full amount up front.</p>
-      <div class="aidlist"><span>CIMAS</span><span>PSMAS</span><span>First Mutual Health</span><span>Generation Health</span></div>
-      <p>Treatment over $400 can be split across three monthly payments, interest free, with no credit check and nothing to sign beyond the plan itself. Written quotes are valid for 90 days.</p>
+      <p>Cash, mobile money, Visa and Mastercard, or bank transfer. We claim directly from the schemes below, so you settle the shortfall only and never the full amount up front.</p>
+      <div class="aidlist"><span>Medical aid</span><span>Cash</span><span>Card</span><span>Bank transfer</span></div>
+      <p>Larger treatments can be split across three monthly payments, interest free, with no credit check and nothing to sign beyond the plan itself. Written quotes are valid for 90 days.</p>
     </div>
 
     <div data-rev>
@@ -1017,7 +1020,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
         <a href="tel:+263770002299">+263 77 000 2299</a><br>
         <a href="mailto:hello@lindendental.co.zw">hello@lindendental.co.zw</a>
       </address>
-      <p style="margin-top:1.2em">Ground floor, step-free from the courtyard, wide doorways throughout. Secure parking behind the building, and the Fife Avenue rank is a two-minute walk.</p>
+      <p style="margin-top:1.2em">Tell us before you come if you need step-free access or extra time. Parking nearby, and the taxi rank is a short walk away.</p>
     </div>
   </div>
 </section>
@@ -1042,7 +1045,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
     <div class="ft__grid">
       <div class="ft__brand">
         <span class="brand"><span class="brand__mark">Linden</span><span class="brand__sub">Dental Studio</span></span>
-        <p>A small practice on Fife Avenue, Harare, doing preventive, restorative and cosmetic dentistry slowly and properly since 2007.</p>
+        <p>A small practice doing preventive, restorative and cosmetic dentistry slowly and properly.</p>
       </div>
       <div>
         <h5>Treatments</h5>
@@ -1060,7 +1063,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
         <ul>
           <li><a href="#approach">Our approach</a></li>
           <li><a href="#visit">Your first visit</a></li>
-          <li><a href="#team">Dr Rutendo Mabika</a></li>
+          <li><a href="#team">The dentist</a></li>
           <li><a href="#reviews">Patient reviews</a></li>
           <li><a href="#practical">Payment &amp; medical aid</a></li>
           <li><a href="#book">Book online</a></li>
@@ -1078,8 +1081,8 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
       </div>
     </div>
     <div class="ft__bot">
-      <span>&copy; 2026 Linden Dental Studio</span>
-      <span>MDPCZ practice registration P-1187</span>
+      <span>&copy; Linden Dental Studio</span>
+      <span>Registered dental practice</span>
       <span>Complaints procedure</span>
       <span>Privacy &amp; patient records</span>
       <span>Template &mdash; design showcase only</span>
@@ -1123,13 +1126,13 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
      ------------------------------------------------------------------ */
   var BOOKING = (function(){
     var TREATMENTS = [
-      {id:'exam',  name:'Examination & hygiene', dur:'45 minutes', price:'$45',    mins:45},
-      {id:'child', name:'Children’s check-up', dur:'30 minutes', price:'$30',  mins:30},
-      {id:'fill',  name:'White filling',         dur:'40–60 minutes', price:'$70', mins:60},
-      {id:'root',  name:'Root canal treatment',  dur:'90 minutes', price:'$240',   mins:90},
-      {id:'white', name:'Whitening consultation',dur:'30 minutes', price:'$260',   mins:30},
-      {id:'align', name:'Aligner assessment',    dur:'45 minutes', price:'$1,400', mins:45},
-      {id:'other', name:'Not sure yet',          dur:'30 minutes', price:'$45',    mins:30}
+      {id:'exam',  name:'Examination & hygiene', dur:'45 minutes', price:'',    mins:45},
+      {id:'child', name:'Children’s check-up', dur:'30 minutes', price:'',  mins:30},
+      {id:'fill',  name:'White filling',         dur:'40–60 minutes', price:'', mins:60},
+      {id:'root',  name:'Root canal treatment',  dur:'90 minutes', price:'',   mins:90},
+      {id:'white', name:'Whitening consultation',dur:'30 minutes', price:'',   mins:30},
+      {id:'align', name:'Aligner assessment',    dur:'45 minutes', price:'', mins:45},
+      {id:'other', name:'Not sure yet',          dur:'30 minutes', price:'',    mins:30}
     ];
     var DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -1175,7 +1178,7 @@ html:not(.js) .visit__media figure:not(.is-on),html.no-gsap .visit__media figure
 
     /* treatments */
     TREATMENTS.forEach(function(t){
-      var b = chip(t.name, t.price==='$45'&&t.id==='other' ? 'we will advise' : 'from '+t.price, false);
+      var b = chip(t.name, t.price ? 'from '+t.price : 'we will advise', false);
       b.addEventListener('click', function(){
         state.treat = t;
         elT.querySelectorAll('.chip').forEach(function(c){ c.setAttribute('aria-pressed','false'); });

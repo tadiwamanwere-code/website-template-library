@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Long Range Pharmacy — health shop &amp; dispensary, Harare</title>
-<meta name="description" content="Long Range Pharmacies — medicines, vitamins, skin care and sports nutrition, dispensed by pharmacists across three Harare branches.">
+<title>Long Range Pharmacy — health shop &amp; dispensary</title>
+<meta name="description" content="Long Range Pharmacies — medicines, vitamins, skin care and sports nutrition, dispensed by pharmacists across three branches.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
@@ -133,14 +133,7 @@ p{margin:0}
 #curtain.done{display:none}
 
 /* ── promo strip (coral = urgency) ───────────────────────────────────── */
-.promo-strip{background:var(--coral);color:#fff;overflow:hidden;position:relative}
-.promo-strip .track{display:flex;width:max-content;will-change:transform}
-.promo-strip .track>div{display:flex;align-items:center;flex:none}
-.promo-strip span{
-  font-family:var(--ui);font-size:11.5px;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;padding:9px 0;white-space:nowrap;
-}
-.promo-strip .dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.65);margin:0 26px}
+
 
 /* ── header ──────────────────────────────────────────────────────────── */
 .hdr{position:sticky;top:0;z-index:800;background:#fff;border-bottom:1px solid var(--line-2)}
@@ -573,7 +566,6 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
     transition-duration:.01ms!important;scroll-behavior:auto!important}
   #curtain{display:none}
   #scene{display:none}
-  .promo-strip .track{transform:none!important}
 }
 </style>
 </head>
@@ -590,17 +582,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
   </div>
 </div>
 
-<!-- ══ promo strip — coral, urgency only ════════════════════════════════ -->
-<div class="promo-strip" role="region" aria-label="Current offers">
-  <div class="track" id="strip">
-    <div>
-      <span>Free delivery in Harare on orders over $50</span><i class="dot"></i>
-      <span>Prescriptions checked by a pharmacist in 30 minutes</span><i class="dot"></i>
-      <span>Up to 25% off vitamins this week</span><i class="dot"></i>
-      <span>Three branches · open every day 07:30–18:30</span><i class="dot"></i>
-    </div>
-  </div>
-</div>
+
 
 <!-- ══ header ═══════════════════════════════════════════════════════════ -->
 <header class="hdr" id="hdr">
@@ -710,7 +692,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
           <span class="lnw"><span class="ln">script, collect</span></span>
           <span class="lnw"><span class="ln">it the same day</span></span>
         </h1>
-        <p class="sub">Upload a photo before 11:00 and a pharmacist dispenses it that afternoon. Delivery across Harare in two to four hours.</p>
+        <p class="sub">Upload a photo before 11:00 and a pharmacist dispenses it that afternoon. Delivery across the city in two to four hours.</p>
         <div class="cta">
           <a class="btn btn--pine" href="#prescriptions"><span>Upload a prescription</span></a>
           <span class="trust">Checked in 30 minutes</span>
@@ -762,7 +744,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
     </div>
     <div class="item" data-fade>
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.3-3 8-7 9.5-4-1.5-7-5.2-7-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg>
-      <div><b>MCAZ registered</b><small>Genuine stock, traceable batches</small></div>
+      <div><b>Fully registered</b><small>Genuine stock, traceable batches</small></div>
     </div>
     <div class="item" data-fade>
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="3" y="13" width="4" height="6" rx="1.6"/><rect x="17" y="13" width="4" height="6" rx="1.6"/><path d="M20 19v1a3 3 0 0 1-3 3h-3"/></svg>
@@ -772,7 +754,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
 </section>
 
 <!-- ══ promo tiles ══════════════════════════════════════════════════════ -->
-<section class="wrap" aria-label="This week at Long Range">
+<section class="wrap" aria-label="This week">
   <div class="promos">
     <article class="promo promo--light" data-promo data-dir="left">
       <div class="art" data-parallax data-frame>
@@ -829,7 +811,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
   <div class="shop-bar">
     <div>
       <h2 class="sec-title"><span class="lnw"><span class="ln">Latest delivery</span></span></h2>
-      <p style="font-size:14px;color:rgba(11,50,44,.62);margin-top:8px">Carefully selected products, in stock at our Harare branches.</p>
+      <p style="font-size:14px;color:rgba(11,50,44,.62);margin-top:8px">Carefully selected products, in stock at our branches.</p>
     </div>
     <p class="count" id="shopCount">Showing 16 products</p>
   </div>
@@ -837,16 +819,16 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
 </section>
 
 <!-- ══ split banner + count-ups ═════════════════════════════════════════ -->
-<section class="sec banner" id="about" aria-label="About Long Range">
+<section class="sec banner" id="about" aria-label="About us">
   <div class="wrap">
     <div class="row">
       <div>
-        <p class="eyebrow">Since 2004 · Bright Health Group</p>
+        <p class="eyebrow">A dispensary you can walk into</p>
         <h2 style="margin-top:16px">
           <span class="lnw"><span class="ln">A dispensary first,</span></span>
           <span class="lnw"><span class="ln">a shop second.</span></span>
         </h2>
-        <p class="lead">Three branches, one bonded store and a pharmacist on the floor at every one of them. Everything on this page is stock we hold in Harare, priced the same at the till as it is on the screen.</p>
+        <p class="lead">Several branches, one bonded store and a pharmacist on the floor at every one of them. Everything on this page is stock we hold, priced the same at the till as it is on the screen.</p>
         <a class="btn btn--green" href="#branches"><span>Find your branch</span>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -856,8 +838,8 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
            photograph travels slower than the frame it sits in -->
       <div class="media" data-clip data-frame>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <img src="https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?auto=format&fit=crop&w=1100&h=850&q=70" alt="Shelves of stock inside a Long Range Pharmacies branch" loading="lazy" width="1100" height="850">
-        <span class="tag">Graniteside dispensary</span>
+        <img src="https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?auto=format&fit=crop&w=1100&h=850&q=70" alt="Shelves of stock inside the shop" loading="lazy" width="1100" height="850">
+        <span class="tag">the main dispensary</span>
       </div>
     </div>
 
@@ -872,7 +854,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
       </div>
       <div data-fade>
         <p class="n tnum"><span data-count="3">0</span></p>
-        <p class="l">Harare branches</p>
+        <p class="l">branches</p>
       </div>
       <div data-fade>
         <p class="n tnum"><span data-count="14">0</span></p>
@@ -886,7 +868,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
 <section class="sec best" aria-label="Bestsellers">
   <div class="wrap">
     <div class="sec-head">
-      <h2 class="sec-title"><span class="lnw"><span class="ln">What Harare buys most</span></span></h2>
+      <h2 class="sec-title"><span class="lnw"><span class="ln">What our customers buy most</span></span></h2>
       <p>The four lines that leave our shelves fastest, restocked every Tuesday.</p>
     </div>
     <div class="grid" id="bestGrid"></div>
@@ -986,13 +968,13 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
           <p class="hint">JPG, PNG, HEIC or PDF · up to 10 MB each</p>
           <button class="btn btn--green" id="pick" type="button"><span>Choose a file</span></button>
           <input type="file" id="rxfile" accept="image/*,.pdf" multiple hidden>
-          <p class="fine">Nothing is uploaded from this demo — the picker is wired, the endpoint is not.</p>
+          <p class="fine">This is a preview. The picker works; the upload is connected when the site goes live.</p>
           <ul class="rx-files" id="rxlist"></ul>
         </div>
 
         <div class="rx-panel">
           <b>What happens next</b>
-          <p>You will get a WhatsApp message from the Graniteside dispensary within 30 minutes of sending, with the total and the collection or delivery time. Medical aid claims are processed at the counter — bring the card on collection.</p>
+          <p>You will get a WhatsApp message from the the main dispensary within 30 minutes of sending, with the total and the collection or delivery time. Medical aid claims are processed at the counter — bring the card on collection.</p>
         </div>
       </div>
     </div>
@@ -1005,7 +987,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
     <div class="row">
       <div class="portrait" data-clip data-frame>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&w=1000&h=760&q=70" alt="A Long Range pharmacist at the dispensing counter" loading="lazy" width="1000" height="760">
+        <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&w=1000&h=760&q=70" alt="A pharmacist at the dispensing counter" loading="lazy" width="1000" height="760">
       </div>
       <div>
         <p class="eyebrow">Come and see us</p>
@@ -1020,18 +1002,18 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
 
         <ul class="branches" data-stagger>
           <li data-fade>
-            <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg> Graniteside (HQ)</b>
-            <p class="addr">Shop 3, Kelvin Corner, Graniteside, Harare</p>
+            <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg> Main branch</b>
+            <p class="addr">Shop 3, Kelvin Corner</p>
             <p class="tel"><a href="tel:+263771600539">+263 77 160 0539</a><a href="tel:+263774426597">+263 77 442 6597</a></p>
           </li>
           <li data-fade>
-            <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg> Southerton</b>
-            <p class="addr">10 Highfield Junction, Southerton, Harare</p>
+            <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg> Second branch</b>
+            <p class="addr">10 Highfield Junction</p>
             <p class="tel"><a href="tel:+263785986848">+263 78 598 6848</a><a href="tel:+263786334877">+263 78 633 4877</a></p>
           </li>
           <li data-fade>
-            <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg> Shawasha Hills</b>
-            <p class="addr">Shop 5, Shawasha Hills Shopping Mall, Harare</p>
+            <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg> Third branch</b>
+            <p class="addr">Shop 5, Northside Mall</p>
             <p class="tel"><a href="tel:+263773440533">+263 77 344 0533</a></p>
           </li>
         </ul>
@@ -1060,7 +1042,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
         <ul class="clist">
           <li>
             <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4Z"/></svg></span>
-            <span><a href="tel:+263771600539">+263 77 160 0539</a><small>Graniteside dispensary</small></span>
+            <span><a href="tel:+263771600539">+263 77 160 0539</a><small>the main dispensary</small></span>
           </li>
           <li>
             <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg></span>
@@ -1068,7 +1050,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
           </li>
           <li>
             <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></span>
-            <span>Shop 3, Kelvin Corner, Graniteside<small>Harare, Zimbabwe</small></span>
+            <span>Shop 3, Kelvin Corner<small>Head office</small></span>
           </li>
           <li>
             <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
@@ -1084,12 +1066,12 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
         </div>
         <div class="fld"><label for="cf-branch">Branch</label>
           <select id="cf-branch" name="branch">
-            <option>Graniteside (HQ)</option><option>Southerton</option><option>Shawasha Hills</option>
+            <option>Main branch</option><option>Second branch</option><option>Third branch</option>
           </select>
         </div>
         <div class="fld"><label for="cf-msg">How can we help?</label><textarea id="cf-msg" name="message" required></textarea></div>
         <button class="btn btn--green" type="submit"><span>Send the message</span></button>
-        <p class="ok" role="status">Thank you — a pharmacist will call you back today. (Demo form: nothing was sent.)</p>
+        <p class="ok" role="status">Thank you — a pharmacist will call you back today.</p>
       </form>
     </div>
   </div>
@@ -1099,7 +1081,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
 <section class="sec wrap" aria-label="Instagram">
   <div class="sec-head">
     <h2 class="sec-title"><span class="lnw"><span class="ln">Follow us on Instagram</span></span></h2>
-    <p><a href="https://instagram.com" target="_blank" rel="noreferrer" style="color:var(--green-d);font-weight:700">@longrangepharmacies</a></p>
+    <p><a href="https://instagram.com" target="_blank" rel="noreferrer" style="color:var(--green-d);font-weight:700">@yourpharmacy</a></p>
   </div>
   <ul class="ig" id="ig" data-stagger></ul>
 </section>
@@ -1112,8 +1094,8 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
     <div class="fcols">
       <div>
         <span class="logo"><span class="word">long<i>range</i><i>.</i></span><span class="sub">Pharmacy</span></span>
-        <p class="blurb">Community pharmacy and health shop, trading in Harare since 2004. Part of Bright Health Group.</p>
-        <div class="pay"><span>VISA</span><span>MASTERCARD</span><span>ECOCASH</span><span>ZIPIT</span></div>
+        <p class="blurb">Community pharmacy and health shop, trading since 2004. </p>
+        <div class="pay"><span>VISA</span><span>MASTERCARD</span><span>MOBILE</span><span>TRANSFER</span></div>
       </div>
       <div>
         <h4>Shop</h4>
@@ -1158,8 +1140,8 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
       </div>
     </div>
     <div class="fbot">
-      <p>© 2026 Long Range Pharmacies · Bright Health Group. Registered with the Medicines Control Authority of Zimbabwe.</p>
-      <p>Template 19 · Website Template Library</p>
+      <p>© Long Range Pharmacies. Registered with the national medicines authority.</p>
+      <p></p>
     </div>
   </div>
 </footer>
@@ -1176,7 +1158,7 @@ footer{background:var(--ground);border-top:1px solid var(--line-2);padding:clamp
   <ul class="dl" id="cartList"></ul>
   <div class="df">
     <div class="sum"><span>Subtotal</span><span class="tnum" id="subtotal">$0.00</span></div>
-    <small id="shipNote">Add $50.00 more for free Harare delivery.</small>
+    <small id="shipNote">Add $50.00 more for free delivery.</small>
     <button class="btn btn--green" type="button" id="checkout"><span>Checkout</span></button>
   </div>
 </aside>
@@ -1332,7 +1314,7 @@ function renderStatic(){
 
   igEl.innerHTML = IG.map(function(id){
     return '<li data-fade><!-- PLACEHOLDER: swap for Higgsfield-generated asset -->' +
-      '<img src="' + U(id, 360, 360) + '" alt="From the Long Range Pharmacies Instagram feed" loading="lazy" width="360" height="360"></li>';
+      '<img src="' + U(id, 360, 360) + '" alt="From the Instagram feed" loading="lazy" width="360" height="360"></li>';
   }).join('');
 }
 
@@ -1400,8 +1382,8 @@ function paintCart(){
   $('#subtotal').textContent = money(t.sum);
   var left = 50 - t.sum;
   $('#shipNote').textContent = left > 0
-    ? 'Add ' + money(left) + ' more for free Harare delivery.'
-    : 'Free Harare delivery unlocked.';
+    ? 'Add ' + money(left) + ' more for free delivery.'
+    : 'Free delivery unlocked.';
 
   var ids = Object.keys(cart);
   $('#cartList').innerHTML = ids.length ? ids.map(function(id){
@@ -1413,7 +1395,7 @@ function paintCart(){
         '<b class="tnum">' + cart[id] + '</b>' +
         '<button type="button" data-q="1" data-id="' + id + '" aria-label="One more">+</button></div></div>' +
       '<span class="ln-price tnum">' + money(p.price * cart[id]) + '</span></li>';
-  }).join('') : '<li class="dempty">Your basket is empty. Everything on this page is in stock in Harare.</li>';
+  }).join('') : '<li class="dempty">Your basket is empty. Everything on this page is in stock.</li>';
 }
 
 function flyToBasket(card){
@@ -1614,7 +1596,7 @@ setTimeout(dropCurtain, 3200);
 var SLIDES = [
   { img:'1620916566398-39f1143ab7be', alt:'Bottles of facial serum and moisturiser on a mint studio floor', sale:'up to<em>25%</em>off', price:'from<em>$5</em>a pack' },
   { img:'1593095948071-474c5cc2989d', alt:'A tub of whey protein standing on a mint studio floor',          sale:'save<em>40%</em>today', price:'from<em>$24</em>a tub' },
-  { img:'1585435557343-3b092031a831', alt:'Dispensing shelves inside a Long Range Pharmacies branch',        sale:'check is<em>free</em>always', price:'delivery<em>$3</em>flat' }
+  { img:'1585435557343-3b092031a831', alt:'Dispensing shelves inside the shop',        sale:'check is<em>free</em>always', price:'delivery<em>$3</em>flat' }
 ];
 var DWELL = 6;
 var idx = 0, slideTween = null, paused = false;
@@ -1836,13 +1818,7 @@ if (hasST && !reduced){
   });
 }
 
-/* supporting only: the coral promo strip marquee */
-(function(){
-  var track = $('#strip'); if (!track) return;
-  track.appendChild(track.firstElementChild.cloneNode(true));
-  if (!hasGSAP || reduced) return;
-  gsap.to(track, { xPercent: -50, duration: 34, ease: 'none', repeat: -1 });
-})();
+
 
 /* ════════════════════════════════════════════════════════════════════════
    9 · SIGNATURE — three.js depth layer behind the hero

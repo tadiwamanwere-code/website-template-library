@@ -1,0 +1,466 @@
+{
+  "template": "25-gordons-bnb",
+  "title": "Gordon's Bnb",
+  "industry": "Stays and hospitality",
+  "covers": "Guesthouses, B&Bs, lodges, small hotels, self-catering, holiday lets",
+  "_note": "find is the exact literal that sits in index.html today. Whole strings only, longest find first. A find may be a list when the same thing appears in more than one place.",
+  "_palettes": "Four approved sets of this template's own CSS variables.",
+  "palettes": {
+    "warm-oak": {
+      "paper": "#F2EBDF",
+      "paper-2": "#EAE1D1",
+      "paper-3": "#DED2BD",
+      "ink": "#221C14",
+      "ink-2": "#3B3226",
+      "ink-3": "#6E624F",
+      "dark": "#17120C",
+      "dark-2": "#1F1810",
+      "cream": "#F6F1E7",
+      "gold": "#B8873F",
+      "gold-dk": "#9E7130",
+      "gold-l": "#8C6027"
+    },
+    "cool-stone": {
+      "paper": "#EDEEEA",
+      "paper-2": "#E3E5DF",
+      "paper-3": "#D4D7CF",
+      "ink": "#191C1A",
+      "ink-2": "#2F3431",
+      "ink-3": "#616763",
+      "dark": "#0F1211",
+      "dark-2": "#171B19",
+      "cream": "#F4F5F2",
+      "gold": "#7E9384",
+      "gold-dk": "#5F7568",
+      "gold-l": "#4E6355"
+    },
+    "sea-linen": {
+      "paper": "#EFEFEC",
+      "paper-2": "#E4E6E4",
+      "paper-3": "#D3D8D8",
+      "ink": "#15191C",
+      "ink-2": "#2B3236",
+      "ink-3": "#5E686D",
+      "dark": "#0D1114",
+      "dark-2": "#141A1E",
+      "cream": "#F4F5F4",
+      "gold": "#5E8C9E",
+      "gold-dk": "#45707F",
+      "gold-l": "#385D6B"
+    },
+    "plum-ash": {
+      "paper": "#EFEAEA",
+      "paper-2": "#E5DEDF",
+      "paper-3": "#D6CCCE",
+      "ink": "#1B1517",
+      "ink-2": "#332A2C",
+      "ink-3": "#665A5C",
+      "dark": "#130E10",
+      "dark-2": "#1B1417",
+      "cream": "#F5F1F1",
+      "gold": "#96566A",
+      "gold-dk": "#7A4154",
+      "gold-l": "#663647"
+    }
+  },
+  "swatchKeys": {
+    "accent": "gold",
+    "ink": "dark",
+    "paper": "paper"
+  },
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "gold",
+      "also": {
+        "gold-dk": "color-mix(in srgb, {} 82%, #000)",
+        "gold-l": "color-mix(in srgb, {} 68%, #000)"
+      }
+    }
+  },
+  "_brandTokens": "Words belonging to this template, not to a client.",
+  "brandTokens": [
+    "Gordon's Bnb",
+    "Gordon",
+    "Chelmer Vale",
+    "Marlow Rise",
+    "gordonsbnb"
+  ],
+  "swaps": [
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Gordon's Bnb",
+      "label": "House name",
+      "maxChars": 24,
+      "required": true
+    },
+    {
+      "key": "WHAT_THEY_DO",
+      "find": "Boutique bed &amp; breakfast",
+      "label": "What it is",
+      "maxChars": 34
+    },
+    {
+      "key": "HERO_LINE_1",
+      "find": "A quiet retreat,",
+      "label": "Hero line 1",
+      "maxChars": 20
+    },
+    {
+      "key": "HERO_LINE_2",
+      "find": "beautifully kept.",
+      "label": "Hero line 2",
+      "maxChars": 20
+    },
+    {
+      "key": "CITY",
+      "find": "Chelmer Vale",
+      "label": "Town or village",
+      "maxChars": 20
+    },
+    {
+      "key": "FOUNDED",
+      "find": "est. 1931",
+      "format": "est. {}",
+      "label": "Year the house was built",
+      "maxChars": 8,
+      "optional": true
+    },
+    {
+      "key": "PHONE",
+      "find": "+44 1420 55 8813",
+      "label": "Phone",
+      "maxChars": 20
+    },
+    {
+      "key": "PHONE_LINK",
+      "find": "tel:+441420558813",
+      "format": "tel:{}",
+      "label": "Phone, dialling form",
+      "maxChars": 20,
+      "optional": true,
+      "hint": "Worked out from the phone number if you leave it blank."
+    },
+    {
+      "key": "EMAIL",
+      "find": "hello@gordonsbnb.example",
+      "label": "Email",
+      "maxChars": 40
+    },
+    {
+      "key": "ADDRESS",
+      "find": "14 Marlow Rise",
+      "label": "Address, line 1",
+      "maxChars": 34
+    },
+    {
+      "key": "POSTCODE",
+      "find": "CV7 2LN",
+      "label": "Postcode",
+      "maxChars": 12,
+      "optional": true
+    },
+    {
+      "key": "ROOM_1_NAME",
+      "find": "The Garden Room",
+      "label": "Room 1 name",
+      "maxChars": 22,
+      "group": "details"
+    },
+    {
+      "key": "ROOM_2_NAME",
+      "find": "Room Two, West",
+      "label": "Room 2 name",
+      "maxChars": 22,
+      "group": "details"
+    },
+    {
+      "key": "ROOM_3_NAME",
+      "find": "The Loft",
+      "label": "Room 3 name",
+      "maxChars": 22,
+      "group": "details"
+    },
+    {
+      "key": "ROOM_4_NAME",
+      "find": "The Old Kitchen",
+      "label": "Room 4 name",
+      "maxChars": 22,
+      "group": "details"
+    },
+    {
+      "key": "RATE_1",
+      "find": "$135",
+      "label": "Room 1 rate a night",
+      "maxChars": 10,
+      "group": "details",
+      "hint": "The design ships with a sample figure. Change it before you send the link."
+    },
+    {
+      "key": "RATE_2",
+      "find": "$165",
+      "label": "Room 2 rate a night",
+      "maxChars": 10,
+      "group": "details"
+    },
+    {
+      "key": "RATE_3",
+      "find": "$190",
+      "label": "Room 3 rate a night",
+      "maxChars": 10,
+      "group": "details"
+    },
+    {
+      "key": "RATE_4",
+      "find": "$210",
+      "label": "Room 4 rate a night",
+      "maxChars": 10,
+      "group": "details"
+    },
+    {
+      "key": "RATE_1_NUM",
+      "find": "rate: 135",
+      "format": "rate: {}",
+      "label": "Room 1 rate, figure only",
+      "maxChars": 8,
+      "optional": true
+    },
+    {
+      "key": "RATE_2_NUM",
+      "find": "rate: 165",
+      "format": "rate: {}",
+      "label": "Room 2 rate, figure only",
+      "maxChars": 8,
+      "optional": true
+    },
+    {
+      "key": "RATE_3_NUM",
+      "find": "rate: 190",
+      "format": "rate: {}",
+      "label": "Room 3 rate, figure only",
+      "maxChars": 8,
+      "optional": true
+    },
+    {
+      "key": "RATE_4_NUM",
+      "find": "rate: 210",
+      "format": "rate: {}",
+      "label": "Room 4 rate, figure only",
+      "maxChars": 8,
+      "optional": true
+    },
+    {
+      "key": "NEARBY_1",
+      "find": "The village bakery",
+      "label": "Nearby 1",
+      "maxChars": 30,
+      "optional": true
+    },
+    {
+      "key": "NEARBY_2",
+      "find": "The Saturday market",
+      "label": "Nearby 2",
+      "maxChars": 30,
+      "optional": true
+    },
+    {
+      "key": "NEARBY_3",
+      "find": "The reservoir path",
+      "label": "Nearby 3",
+      "maxChars": 30,
+      "optional": true
+    },
+    {
+      "key": "NEARBY_4",
+      "find": "The village pub",
+      "label": "Nearby 4",
+      "maxChars": 30,
+      "optional": true
+    },
+    {
+      "key": "NEARBY_5",
+      "find": "The hill lookout",
+      "label": "Nearby 5",
+      "maxChars": 30,
+      "optional": true
+    },
+    {
+      "key": "NEARBY_6",
+      "find": "The bus to the station",
+      "label": "Nearby 6",
+      "maxChars": 30,
+      "optional": true
+    },
+    {
+      "key": "STAT_1_VALUE",
+      "find": "<p class=\"fact-v num\">1931</p>",
+      "format": "<p class=\"fact-v num\">{}</p>",
+      "label": "Year the house was built",
+      "type": "number",
+      "maxChars": 7
+    },
+    {
+      "key": "STAT_2_VALUE",
+      "find": "<p class=\"fact-v num\">4</p>",
+      "format": "<p class=\"fact-v num\">{}</p>",
+      "label": "Number of rooms",
+      "type": "number",
+      "maxChars": 7
+    },
+    {
+      "key": "STAT_3_VALUE",
+      "find": "<p class=\"fact-v num\">2009</p>",
+      "format": "<p class=\"fact-v num\">{}</p>",
+      "label": "Year the owners took it on",
+      "type": "number",
+      "maxChars": 7
+    },
+    {
+      "key": "STAT_4_VALUE",
+      "find": "<p class=\"fact-v num\">7:30</p>",
+      "format": "<p class=\"fact-v num\">{}</p>",
+      "label": "Breakfast time",
+      "maxChars": 7
+    },
+    {
+      "key": "SCORE",
+      "find": "<p class=\"score-v num\" id=\"scoreV\">9.7</p>",
+      "format": "<p class=\"score-v num\" id=\"scoreV\">{}</p>",
+      "label": "Average guest score",
+      "type": "number",
+      "maxChars": 5
+    }
+  ],
+  "images": [
+    {
+      "key": "LOGO",
+      "find": [
+        "<span class=\"mono\" aria-hidden=\"true\">\n      <svg viewBox=\"0 0 48 48\"><circle cx=\"24\" cy=\"24\" r=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" opacity=\".55\"/><path d=\"M12.5 29.5 24 17.5 35.5 29.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M17.5 31.5v-5.2M30.5 31.5v-5.2\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\"/><circle cx=\"24\" cy=\"24\" r=\"16.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".6\" opacity=\".3\"/></svg>\n    </span>\n    <span class=\"brand-name\">Gordon's Bnb</span>",
+        "<span class=\"mono\" aria-hidden=\"true\">\n          <svg viewBox=\"0 0 48 48\"><circle cx=\"24\" cy=\"24\" r=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" opacity=\".55\"/><path d=\"M12.5 29.5 24 17.5 35.5 29.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M17.5 31.5v-5.2M30.5 31.5v-5.2\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\"/><circle cx=\"24\" cy=\"24\" r=\"16.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".6\" opacity=\".3\"/></svg>\n        </span>\n        <span class=\"brand-name\">Gordon's Bnb</span>"
+      ],
+      "label": "Logo",
+      "kind": "logo",
+      "hint": "Replaces the house mark and wordmark, in the header and the footer.",
+      "format": "<img class=\"brand-logo\" src=\"{}\" alt=\"\">"
+    },
+    {
+      "key": "HERO",
+      "find": "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=2400&q=80",
+      "label": "Hero photo",
+      "ratio": "16/9",
+      "search": "country guesthouse exterior"
+    },
+    {
+      "key": "MORNING_1",
+      "find": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2200&q=80",
+      "label": "Morning frame 1",
+      "ratio": "16/9",
+      "search": "misty valley morning"
+    },
+    {
+      "key": "MORNING_2",
+      "find": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=2200&q=80",
+      "label": "Morning frame 2",
+      "ratio": "16/9",
+      "search": "fresh bread out of the oven"
+    },
+    {
+      "key": "MORNING_3",
+      "find": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=2200&q=80",
+      "label": "Morning frame 3",
+      "ratio": "16/9",
+      "search": "long breakfast table"
+    },
+    {
+      "key": "MORNING_4",
+      "find": "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=2200&q=80",
+      "label": "Morning frame 4",
+      "ratio": "16/9",
+      "search": "made bed morning light"
+    },
+    {
+      "key": "MORNING_5",
+      "find": "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?auto=format&fit=crop&w=2200&q=80",
+      "label": "Morning frame 5",
+      "ratio": "16/9",
+      "search": "garden at dusk"
+    },
+    {
+      "key": "ROOM_1",
+      "find": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1500&q=80",
+      "label": "Room 1 photo",
+      "ratio": "4/3",
+      "search": "bedroom with garden door"
+    },
+    {
+      "key": "ROOM_2",
+      "find": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1500&q=80",
+      "label": "Room 2 photo",
+      "ratio": "4/3",
+      "search": "bedroom window seat"
+    },
+    {
+      "key": "ROOM_3",
+      "find": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1500&q=80",
+      "label": "Room 3 photo",
+      "ratio": "4/3",
+      "search": "attic bedroom skylight"
+    },
+    {
+      "key": "ROOM_4",
+      "find": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1500&q=80",
+      "label": "Room 4 photo",
+      "ratio": "4/3",
+      "search": "family room bed"
+    },
+    {
+      "key": "BREAKFAST",
+      "find": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80",
+      "label": "Breakfast table",
+      "ratio": "3/2",
+      "search": "breakfast table laid"
+    },
+    {
+      "key": "AREA",
+      "find": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2200&q=80",
+      "label": "The area",
+      "ratio": "16/9",
+      "search": "woodland path"
+    },
+    {
+      "key": "CLOSING",
+      "find": "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=2200&q=80",
+      "label": "Closing photo",
+      "ratio": "16/9",
+      "search": "cosy guesthouse at night"
+    },
+    {
+      "key": "GUEST_1",
+      "find": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80",
+      "label": "Guest 1 portrait",
+      "ratio": "1/1",
+      "search": "portrait"
+    },
+    {
+      "key": "GUEST_2",
+      "find": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=80",
+      "label": "Guest 2 portrait",
+      "ratio": "1/1",
+      "search": "portrait"
+    },
+    {
+      "key": "GUEST_3",
+      "find": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=160&q=80",
+      "label": "Guest 3 portrait",
+      "ratio": "1/1",
+      "search": "portrait"
+    },
+    {
+      "key": "GUEST_4",
+      "find": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=160&q=80",
+      "label": "Guest 4 portrait",
+      "ratio": "1/1",
+      "search": "portrait"
+    }
+  ]
+}

@@ -1,0 +1,346 @@
+{
+  "template": "23-caro-accounting",
+  "title": "Caro Accounting",
+  "industry": "Professional services",
+  "covers": "Accountants, bookkeepers, tax agents, payroll bureaux, company secretaries, consultants",
+  "_note": "find is the exact literal that sits in index.html today. Whole strings only, longest find first.",
+  "_palettes": "Four approved sets of this template's own CSS variables. Only the accent family and the paper tint move; the near-black is the design.",
+  "palettes": {
+    "cyan-slate": {
+      "ink": "#0B0E10",
+      "ink-2": "#0F1315",
+      "ink-3": "#151A1D",
+      "ink-4": "#1D2428",
+      "paper": "#FFFFFF",
+      "paper-2": "#F3F4F5",
+      "paper-3": "#E6E8E9",
+      "mut": "#5E686E",
+      "dim": "#8B959B",
+      "line-d": "#D9DCDE",
+      "acc": "#17A2B8",
+      "acc-hi": "#3EC6DA",
+      "acc-lo": "#0E7A8B"
+    },
+    "green-slate": {
+      "ink": "#0A0F0C",
+      "ink-2": "#0E1411",
+      "ink-3": "#141B17",
+      "ink-4": "#1C251F",
+      "paper": "#FFFFFF",
+      "paper-2": "#F2F5F3",
+      "paper-3": "#E5EAE7",
+      "mut": "#5C6A62",
+      "dim": "#89968E",
+      "line-d": "#D7DDD9",
+      "acc": "#1F9D63",
+      "acc-hi": "#46C489",
+      "acc-lo": "#14764A"
+    },
+    "amber-slate": {
+      "ink": "#100D08",
+      "ink-2": "#15110B",
+      "ink-3": "#1C1710",
+      "ink-4": "#262016",
+      "paper": "#FFFFFF",
+      "paper-2": "#F6F4F0",
+      "paper-3": "#EAE6DE",
+      "mut": "#6B6459",
+      "dim": "#978F82",
+      "line-d": "#DEDACF",
+      "acc": "#B9800F",
+      "acc-hi": "#DCA636",
+      "acc-lo": "#8C5F08"
+    },
+    "indigo-slate": {
+      "ink": "#0A0C14",
+      "ink-2": "#0E1119",
+      "ink-3": "#141821",
+      "ink-4": "#1C212C",
+      "paper": "#FFFFFF",
+      "paper-2": "#F3F4F7",
+      "paper-3": "#E6E8ED",
+      "mut": "#5F6472",
+      "dim": "#8B90A0",
+      "line-d": "#D9DBE3",
+      "acc": "#4C63D2",
+      "acc-hi": "#7286E6",
+      "acc-lo": "#34479E"
+    }
+  },
+  "swatchKeys": {
+    "accent": "acc",
+    "ink": "ink",
+    "paper": "paper-2"
+  },
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "acc",
+      "also": {
+        "acc-hi": "color-mix(in srgb, {} 74%, #fff)",
+        "acc-lo": "color-mix(in srgb, {} 76%, #000)"
+      }
+    }
+  },
+  "_brandTokens": "Words belonging to this template, not to a client.",
+  "brandTokens": [
+    "Caro Accounting",
+    "Caro",
+    "Kadoma",
+    "caroaccounting"
+  ],
+  "swaps": [
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Caro Accounting &amp; Tax",
+      "label": "Practice name",
+      "maxChars": 30,
+      "required": true
+    },
+    {
+      "key": "BRAND_SHORT",
+      "find": "Caro<i>",
+      "format": "{}<i>",
+      "label": "Short name (the wordmark)",
+      "maxChars": 14
+    },
+    {
+      "key": "TAGLINE",
+      "find": "<i>Accounting &amp; Tax</i>",
+      "format": "<i>{}</i>",
+      "label": "Line beside the wordmark",
+      "maxChars": 22
+    },
+    {
+      "key": "WHAT_THEY_DO",
+      "find": "Accounting &middot; Tax &middot; Bookkeeping",
+      "label": "What they do",
+      "maxChars": 44
+    },
+    {
+      "key": "HERO_LINE_1",
+      "find": "Build a stronger,",
+      "label": "Hero line 1",
+      "maxChars": 22
+    },
+    {
+      "key": "HERO_LINE_2",
+      "find": "More profitable",
+      "label": "Hero line 2",
+      "maxChars": 20
+    },
+    {
+      "key": "HERO_LINE_3",
+      "find": "Future",
+      "label": "Hero line 3",
+      "maxChars": 12
+    },
+    {
+      "key": "CITY",
+      "find": "Kadoma",
+      "label": "City",
+      "maxChars": 20
+    },
+    {
+      "key": "PHONE",
+      "find": "+263 77 419 9766",
+      "label": "Phone",
+      "maxChars": 20
+    },
+    {
+      "key": "PHONE_LINK",
+      "find": "tel:+263774199766",
+      "format": "tel:{}",
+      "label": "Phone, dialling form",
+      "maxChars": 20,
+      "optional": true,
+      "hint": "Worked out from the phone number if you leave it blank."
+    },
+    {
+      "key": "EMAIL",
+      "find": "hello@caroaccounting.co.zw",
+      "label": "Email",
+      "maxChars": 40
+    },
+    {
+      "key": "ADDRESS",
+      "find": "Westview, Kadoma",
+      "label": "Office address",
+      "maxChars": 34
+    },
+    {
+      "key": "ASSISTANT_NAME",
+      "find": "Caro AI",
+      "label": "Name of the on-page assistant",
+      "maxChars": 16,
+      "optional": true
+    },
+    {
+      "key": "VALUES",
+      "find": "Integrity &middot; Accuracy &middot; Excellence",
+      "label": "Values line in the footer",
+      "maxChars": 44,
+      "optional": true
+    },
+    {
+      "key": "PRICE_1",
+      "find": "US$120",
+      "label": "Tier 1 monthly fee",
+      "maxChars": 10,
+      "group": "details",
+      "hint": "The design ships with a sample figure. Change it before you send the link."
+    },
+    {
+      "key": "PRICE_2",
+      "find": "US$340",
+      "label": "Tier 2 monthly fee",
+      "maxChars": 10,
+      "group": "details"
+    },
+    {
+      "key": "PRICE_3",
+      "find": "US$780",
+      "label": "Tier 3 monthly fee",
+      "maxChars": 10,
+      "group": "details"
+    },
+    {
+      "key": "HERO_STAT_1",
+      "find": "<b class=\"num\">2012</b><span>Trading since</span>",
+      "format": "<b class=\"num\">{}</b><span>Trading since</span>",
+      "label": "Trading since",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "HERO_STAT_2",
+      "find": "<b class=\"num\">99.4%</b><span>Filed on time</span>",
+      "format": "<b class=\"num\">{}</b><span>Filed on time</span>",
+      "label": "Filed on time",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_1_VALUE",
+      "find": "data-count=\"11940\"",
+      "format": "data-count=\"{}\"",
+      "label": "Returns filed",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_2_VALUE",
+      "find": "data-count=\"312\"",
+      "format": "data-count=\"{}\"",
+      "label": "Clients on retainer",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_3_VALUE",
+      "find": "data-count=\"14\"",
+      "format": "data-count=\"{}\"",
+      "label": "Years in practice",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_4_VALUE",
+      "find": "data-count=\"99.4\"",
+      "format": "data-count=\"{}\"",
+      "label": "Filed before deadline (%)",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "RETURNS_SINCE",
+      "find": "Returns filed since 2012",
+      "label": "Label under the returns figure",
+      "maxChars": 30,
+      "optional": true
+    },
+    {
+      "key": "FOOTER_WORD",
+      "find": "<div class=\"ftr-word\" aria-hidden=\"true\"><b>Caro</b></div>",
+      "format": "<div class=\"ftr-word\" aria-hidden=\"true\"><b>{}</b></div>",
+      "label": "The big word in the footer",
+      "maxChars": 14,
+      "optional": true
+    }
+  ],
+  "images": [
+    {
+      "key": "LOGO",
+      "find": [
+        "<span class=\"brand-mark\" aria-hidden=\"true\">\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\">\n          <path d=\"M20 6.5A9 9 0 1 0 21 12\"/><path d=\"M16.5 9.2A5.4 5.4 0 1 0 17 12\"/>\n        </svg>\n      </span>\n      <span class=\"brand-txt\">Caro<i>Accounting &amp; Tax</i></span>",
+        "<span class=\"brand-mark\" aria-hidden=\"true\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\">\n              <path d=\"M20 6.5A9 9 0 1 0 21 12\"/><path d=\"M16.5 9.2A5.4 5.4 0 1 0 17 12\"/>\n            </svg>\n          </span>\n          <span class=\"brand-txt\">Caro<i>Accounting &amp; Tax</i></span>"
+      ],
+      "label": "Logo",
+      "kind": "logo",
+      "hint": "Replaces the mark and wordmark, in the header and the footer.",
+      "format": "<img class=\"brand-logo\" src=\"{}\" alt=\"\">"
+    },
+    {
+      "key": "HERO",
+      "find": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&amp;fit=crop&amp;w=2200&amp;q=80",
+      "label": "Hero photo",
+      "ratio": "16/9",
+      "search": "modern office building"
+    },
+    {
+      "key": "OFFICE",
+      "find": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&amp;fit=crop&amp;w=1400&amp;q=80",
+      "label": "The office",
+      "ratio": "3/2",
+      "search": "accounting office interior"
+    },
+    {
+      "key": "SERVICE_1",
+      "find": "https://images.unsplash.com/photo-1648201637025-1c77b9be3013?auto=format&amp;fit=crop&amp;w=1100&amp;q=80",
+      "label": "Service 1",
+      "ratio": "4/3",
+      "search": "bookkeeping ledger desk"
+    },
+    {
+      "key": "SERVICE_2",
+      "find": "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&amp;fit=crop&amp;w=1100&amp;q=80",
+      "label": "Service 2",
+      "ratio": "4/3",
+      "search": "financial statements calculator"
+    },
+    {
+      "key": "SERVICE_3",
+      "find": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&amp;fit=crop&amp;w=1100&amp;q=80",
+      "label": "Service 3",
+      "ratio": "4/3",
+      "search": "tax paperwork"
+    },
+    {
+      "key": "SERVICE_4",
+      "find": "https://images.unsplash.com/photo-1529119368496-2dfda6ec2804?auto=format&amp;fit=crop&amp;w=1100&amp;q=80",
+      "label": "Service 4",
+      "ratio": "4/3",
+      "search": "payroll office work"
+    },
+    {
+      "key": "SERVICE_5",
+      "find": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=1100&amp;q=80",
+      "label": "Service 5",
+      "ratio": "4/3",
+      "search": "business report charts"
+    },
+    {
+      "key": "SERVICE_6",
+      "find": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&amp;fit=crop&amp;w=1100&amp;q=80",
+      "label": "Service 6",
+      "ratio": "4/3",
+      "search": "business advisory meeting"
+    },
+    {
+      "key": "CASE",
+      "find": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&amp;fit=crop&amp;w=1400&amp;q=80",
+      "label": "Case study photo",
+      "ratio": "3/2",
+      "search": "team meeting accounts"
+    }
+  ]
+}

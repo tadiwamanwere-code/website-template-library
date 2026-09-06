@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Caro Accounting &amp; Tax — Kadoma, Zimbabwe</title>
-<meta name="description" content="Caro Accounting &amp; Tax. Bookkeeping, accounting, ZIMRA returns, PAYE and payroll, statutory reporting and business advisory for companies in Kadoma and across Zimbabwe. Registered tax agents since 2012.">
+<title>Caro Accounting &amp; Tax — Kadoma</title>
+<meta name="description" content="Bookkeeping, accounting, tax returns, payroll, statutory reporting and business advisory. Registered tax agents, fixed monthly fees agreed in advance.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet">
@@ -170,6 +170,8 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
 .brand{display:flex;align-items:center;gap:13px;flex:none}
 .brand-mark{width:38px;height:38px;border:1px solid var(--acc);display:grid;place-items:center;flex:none}
 .brand-mark svg{width:20px;height:20px;color:var(--acc)}
+/* an uploaded logo replaces the wordmark, in the header and the footer */
+.brand-logo{display:block;height:30px;width:auto;max-width:180px;object-fit:contain;object-position:left center}
 .brand-txt{font-family:var(--disp);font-stretch:76%;font-weight:800;text-transform:uppercase;
   font-size:21px;line-height:.9;letter-spacing:.02em}
 .brand-txt i{display:block;font-family:var(--body);font-style:normal;font-weight:400;
@@ -605,7 +607,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
 <!-- ================================= HEADER ================================= -->
 <header class="hdr" id="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="#home" aria-label="Caro Accounting and Tax, home">
+    <a class="brand" href="#home" aria-label="Home">
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M20 6.5A9 9 0 1 0 21 12"/><path d="M16.5 9.2A5.4 5.4 0 1 0 17 12"/>
@@ -662,7 +664,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
 
   <div class="hero-in wrap">
     <div class="hero-copy" id="heroCopy">
-      <p class="eyebrow">Kadoma, Zimbabwe &middot; Accounting &middot; Tax &middot; Bookkeeping</p>
+      <p class="eyebrow">Accounting &middot; Tax &middot; Bookkeeping</p>
       <h1 class="disp" id="heroH1">
         <span class="mask"><span class="l1">Build a stronger,</span></span>
         <span class="mask"><span class="l2">More profitable</span></span>
@@ -671,8 +673,8 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
     </div>
 
     <div class="hero-blurb" id="heroBlurb">
-      <p data-fade>Registered tax agents for 312 Zimbabwean businesses. We keep the ledger current,
-        file every ZIMRA return on time, run the payroll, and put a number in front of you that you
+      <p data-fade>Registered tax agents and accountants. We keep the ledger current,
+        file every tax return on time, run the payroll, and put a number in front of you that you
         can actually make a decision on.</p>
       <div class="hero-cta" data-fade>
         <a class="btn btn-fill mag" href="#contact"><span>Get in touch
@@ -685,7 +687,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
     <div class="hero-foot" data-fade>
       <div><b class="num">2012</b><span>Trading since</span></div>
       <div><b class="num">99.4%</b><span>Filed on time</span></div>
-      <div><b>ICAZ &middot; ZIMRA</b><span>Registered practice</span></div>
+      <div><b>Registered</b><span>Registered practice</span></div>
       <div><b class="num">+263 77 419 9766</b><span>Kadoma office</span></div>
     </div>
   </div>
@@ -694,22 +696,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
 </section>
 
 <!-- ================================= TICKER ================================= -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track" id="ticker">
-    <div>
-      <b>Bookkeeping</b><em>&#9632;</em><b>ZIMRA returns</b><em>&#9632;</em><b>VAT7</b><em>&#9632;</em>
-      <b>PAYE &amp; NSSA</b><em>&#9632;</em><b>Payroll</b><em>&#9632;</em><b>Management accounts</b><em>&#9632;</em>
-      <b>Company formation</b><em>&#9632;</em><b>Audit files</b><em>&#9632;</em><b>Tax clearance</b><em>&#9632;</em>
-      <b>Business advisory</b><em>&#9632;</em>
-    </div>
-    <div>
-      <b>Bookkeeping</b><em>&#9632;</em><b>ZIMRA returns</b><em>&#9632;</em><b>VAT7</b><em>&#9632;</em>
-      <b>PAYE &amp; NSSA</b><em>&#9632;</em><b>Payroll</b><em>&#9632;</em><b>Management accounts</b><em>&#9632;</em>
-      <b>Company formation</b><em>&#9632;</em><b>Audit files</b><em>&#9632;</em><b>Tax clearance</b><em>&#9632;</em>
-      <b>Business advisory</b><em>&#9632;</em>
-    </div>
-  </div>
-</div>
+
 
 <!-- ============================== FIRM / ABOUT ============================== -->
 <section class="sec" id="firm">
@@ -720,9 +707,9 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
         <p class="eyebrow" data-fade>The firm</p>
         <h2 class="disp" data-split style="margin-top:22px">A practice built<br>on a clean ledger</h2>
       </div>
-      <p class="lede" data-fade>Fourteen years in Kadoma, working with millers, hardware groups,
-        clinics, schools, contractors and co-operatives across Mashonaland West. Most clients arrive
-        behind. Nobody stays behind.</p>
+      <p class="lede" data-fade>Years of practice, working with millers, hardware groups,
+      clinics, schools, contractors and co-operatives. Most clients arrive
+      behind. Nobody stays behind.</p>
     </div>
 
     <div class="firm-grid">
@@ -730,18 +717,17 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
         <p>We are not a filing service. A return is the last five minutes of a month of work, and if
           the month was done properly the return takes care of itself.</p>
         <p>That means the bank, the cash box and the mobile money wallet reconcile every month, not
-          every March. It means the payroll and the PAYE schedule agree before the P2 goes out. It
-          means the trial balance is built from documents you can produce if ZIMRA asks for them,
-          because sooner or later ZIMRA asks for them.</p>
-        <p>Where records have fallen behind we rebuild them from bank statements, EcoCash exports and
-          supplier invoices, file what is outstanding, and deal with the penalty position directly
+          every March. It means the payroll and the tax schedule agree before the return goes out. It
+          means the trial balance is built from documents you can produce if the tax office asks for them,
+      because sooner or later it asks for them.</p>
+        <p>Where records have fallen behind we rebuild them from bank statements, mobile money exports and supplier invoices, file what is outstanding, and deal with the penalty position directly
           with the revenue authority rather than leaving it hanging over you.</p>
         <p>You get a named accountant, a fixed monthly fee agreed in advance, and a management pack
           on the same day each month.</p>
       </div>
       <figure class="firm-fig" data-clip style="margin:0">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="The Caro practice office in Kadoma" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="The practice office" loading="lazy">
         <figcaption>Westview, Kadoma &middot; <b>Open 08:00&ndash;17:00 Mon&ndash;Fri</b></figcaption>
       </figure>
     </div>
@@ -762,7 +748,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
       <article data-fade>
         <span class="k">03 / Excellence</span>
         <h3>On the same date</h3>
-        <p>Management accounts land on the 12th. VAT by the 25th. PAYE by the 10th. A rhythm you can
+        <p>Management accounts land on the 12th. VAT by the 25th. Payroll tax by the 10th. A rhythm you can
           plan the rest of the business around.</p>
       </article>
     </div>
@@ -800,7 +786,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
               business actually did rather than what someone remembers it doing.</p>
             <ul class="svc-inc">
               <li>Income and expenditure captured from source documents</li>
-              <li>Bank, petty cash, EcoCash and OneMoney reconciliations</li>
+              <li>Bank, petty cash and mobile money reconciliations</li>
               <li>Debtors and creditors ledgers with an ageing report</li>
               <li>Arrears rebuild for books that have fallen behind</li>
             </ul>
@@ -824,18 +810,18 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
           </article>
 
           <article class="svc-panel">
-            <span class="n">03 &mdash; Tax &amp; ZIMRA</span>
+            <span class="n">03 &mdash; Tax &amp; returns</span>
             <h3 class="disp">Every return,<br>on the date</h3>
             <p class="d">Registration, filing and correspondence handled end to end, with every
               legitimate deduction claimed and every acknowledgement kept on file.</p>
             <ul class="svc-inc">
-              <li>VAT7 returns, Category A, B and C</li>
-              <li>ITF12C self-assessment and QPD provisional payments</li>
-              <li>ITF263 tax clearance and BP number registration</li>
+              <li>VAT returns, every category</li>
+              <li>Self-assessment and provisional payments</li>
+              <li>Tax clearance and tax-number registration</li>
               <li>Audit queries, objections and payment-plan negotiation</li>
             </ul>
-            <p class="svc-for"><b>Who it&rsquo;s for</b> VAT-registered traders, companies on
-              quarterly QPDs, and anyone holding a ZIMRA letter they have not opened yet.</p>
+            <p class="svc-for"><b>Who it&rsquo;s for</b> VAT-registered traders, companies paying
+            quarterly on account, and anyone holding a letter from the tax office they have not opened yet.</p>
           </article>
 
           <article class="svc-panel">
@@ -845,9 +831,9 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
               and the schedules that go with them submitted before the deadline.</p>
             <ul class="svc-inc">
               <li>Monthly runs and individual payslips, up to 120 staff</li>
-              <li>PAYE (P2), NSSA, ZIMDEF and standards levy computation</li>
+              <li>Payroll tax, social security and levy computation</li>
               <li>Leave, bonus, gratuity and terminal benefit calculations</li>
-              <li>ITF16 annual reconciliation and payroll audit file</li>
+              <li>Annual payroll reconciliation and audit file</li>
             </ul>
             <p class="svc-for"><b>Who it&rsquo;s for</b> Employers of five staff and up, especially
               anyone still running the payroll on a spreadsheet in the back office.</p>
@@ -874,7 +860,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
             <p class="d">Costing, structure and planning work. The part where the accounts stop being
               a compliance chore and start telling you what to do next.</p>
             <ul class="svc-inc">
-              <li>Company formation: CR6, CR14 and incorporation</li>
+              <li>Company formation and statutory filings</li>
               <li>Costing, pricing and gross-margin review by product line</li>
               <li>Budgeting, cash-flow forecasting and funding applications</li>
               <li>Structure, systems and internal-control design</li>
@@ -926,8 +912,8 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
           <li>Bookkeeping to 80 transactions a month</li>
           <li>Bank, cash and mobile money reconciliation</li>
           <li>Quarterly management summary</li>
-          <li>Annual income tax return and ITF263 clearance</li>
-          <li>ZIMRA correspondence handled on your behalf</li>
+          <li>Annual income tax return and tax clearance</li>
+          <li>Tax correspondence handled on your behalf</li>
           <li class="off">Payroll processing</li>
           <li class="off">Monthly VAT filing</li>
         </ul>
@@ -941,8 +927,8 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
         <div class="tier-fee"><b class="num">US$340</b><s>per month</s></div>
         <ul class="tier-list">
           <li>Everything in Essentials, transactions unmetered</li>
-          <li>Monthly VAT7 return, filed and acknowledged</li>
-          <li>PAYE (P2) and NSSA submitted by the 10th</li>
+          <li>Monthly VAT return, filed and acknowledged</li>
+          <li>Payroll tax and social security by the 10th</li>
           <li>Payroll and payslips for up to 25 staff</li>
           <li>Management accounts delivered by the 12th</li>
           <li>Named accountant, reachable directly</li>
@@ -972,16 +958,15 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
 
     <div class="oneoff" data-fade>
       <div><span>Company registration</span><b class="num">US$180</b></div>
-      <div><span>ZIMRA BP number</span><b class="num">US$95</b></div>
+      <div><span>Tax number registration</span><b class="num">US$95</b></div>
       <div><span>Arrears rebuild, per year</span><b class="num">US$240</b></div>
-      <div><span>Tax clearance ITF263</span><b class="num">US$60</b></div>
+      <div><span>Tax clearance certificate</span><b class="num">US$60</b></div>
       <div><span>Payroll setup, one-off</span><b class="num">US$150</b></div>
     </div>
 
-    <p class="price-note" data-fade>Fees are quoted and invoiced in United States dollars, payable in
-      USD or at the prevailing interbank rate in ZWG. The first records review is free and takes
-      about forty-five minutes. Statutory audits are signed by an independent PAAB-registered
-      auditor; we prepare the file and manage the process, we do not audit our own work.</p>
+    <p class="price-note" data-fade>Fees are quoted and invoiced in United States dollars. The first records review is free and takes
+      about forty-five minutes. Statutory audits are signed by an independent registered
+        auditor; we prepare the file and manage the process, we do not audit our own work.</p>
   </div>
 </section>
 
@@ -1012,59 +997,58 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
       <tbody>
         <tr>
           <td>Registered Tax Agent</td>
-          <td>Zimbabwe Revenue Authority (ZIMRA)</td>
-          <td class="ref">TA-04871</td>
+          <td>National revenue authority</td>
+          <td class="ref">On request</td>
           <td class="st">Current</td>
         </tr>
         <tr>
           <td>Public Practice Certificate</td>
-          <td>Institute of Chartered Accountants of Zimbabwe (ICAZ)</td>
-          <td class="ref">PPC-2019/0442</td>
+          <td>National institute of chartered accountants</td>
+          <td class="ref">On request</td>
           <td class="st">Current</td>
         </tr>
         <tr>
           <td>Member in Practice</td>
-          <td>Institute of Administration &amp; Commerce (IAC)</td>
-          <td class="ref">M-8842</td>
+          <td>Professional accounting body</td>
+          <td class="ref">On request</td>
           <td class="st">Current</td>
         </tr>
         <tr>
           <td>Registered employer</td>
-          <td>National Social Security Authority (NSSA)</td>
-          <td class="ref">0114-882-6</td>
+          <td>National social security authority</td>
+          <td class="ref">On request</td>
           <td class="st">Current</td>
         </tr>
         <tr>
           <td>Audit file preparation &amp; liaison</td>
-          <td>Signed by an independent PAAB-registered auditor</td>
+          <td>Signed by an independent registered auditor</td>
           <td class="ref">Referred</td>
           <td class="st">By engagement</td>
         </tr>
         <tr>
           <td>Professional indemnity cover</td>
-          <td>US$250,000 limit, renewed annually</td>
-          <td class="ref">PI-2026/117</td>
+          <td>Renewed annually</td>
+          <td class="ref">On request</td>
           <td class="st">Current</td>
         </tr>
         <tr>
           <td>Client records handling</td>
-          <td>Cyber and Data Protection Act [Chapter 12:07]</td>
+          <td>Data protection law</td>
           <td class="ref">Registered</td>
           <td class="st">Compliant</td>
         </tr>
       </tbody>
     </table>
 
-    <p class="cred-note">Registration numbers shown are illustrative for this template. Replace them
-      with the practice&rsquo;s own before publishing, and never display a certificate reference the
-      firm does not actually hold.</p>
+    <p class="cred-note">Every reference above reads &ldquo;on request&rdquo; until the practice&rsquo;s own is
+        put in its place. Never display a certificate reference the firm does not hold.</p>
 
     <div class="proc">
       <article data-fade>
         <span class="k">01</span>
         <h4>Records review</h4>
         <p>Forty-five minutes, free, at our office or yours. We look at what exists, what is missing
-          and what ZIMRA is currently owed.</p>
+          and what the tax office is currently owed.</p>
       </article>
       <article data-fade>
         <span class="k">02</span>
@@ -1081,7 +1065,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
       <article data-fade>
         <span class="k">04</span>
         <h4>Monthly rhythm</h4>
-        <p>PAYE by the 10th, accounts by the 12th, VAT by the 25th. Same dates, every month, without
+        <p>Payroll tax by the 10th, accounts by the 12th, VAT by the 25th. Same dates, every month, without
           being chased.</p>
       </article>
     </div>
@@ -1097,25 +1081,25 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
         <p class="eyebrow" data-fade>Client outcomes</p>
         <h2 class="disp" data-split style="margin-top:22px">What it was worth</h2>
       </div>
-      <p class="lede" data-fade>Three engagements, with the figures the client agreed we could
-        publish. Names used with permission.</p>
+      <p class="lede" data-fade>Three engagements of the kind we take on most often.
+        Details are anonymised.</p>
     </div>
 
     <div class="work-lead">
       <figure class="work-fig" data-clip style="margin:0">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Client meeting reviewing rebuilt accounts" loading="lazy">
-        <figcaption class="work-stat"><b class="num">US$34,350</b><span>Penalty exposure removed</span></figcaption>
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="A meeting reviewing rebuilt accounts" loading="lazy">
+        <figcaption class="work-stat"><b class="num">83%</b><span>Penalty exposure removed</span></figcaption>
       </figure>
       <div class="work-copy" data-fade>
-        <p class="who">Rimuka Milling (Pvt) Ltd &middot; Kadoma &middot; 2024</p>
-        <h3 class="disp">Thirty-one months<br>of unfiled VAT</h3>
-        <p>A maize and stockfeed miller arrived with a ZIMRA assessment, no VAT returns since 2021,
+        <p class="who">A maize and stockfeed miller</p>
+        <h3 class="disp">Years of returns<br>brought up to date</h3>
+        <p>The client arrived with an assessment, years of unfiled VAT returns,
           and a bookkeeper who had left the country. Records existed only as bank statements and a
           shoebox of supplier invoices.</p>
-        <p>We rebuilt thirty-one periods from source, filed every outstanding VAT7 and ITF12C, and
-          took the penalty position to ZIMRA with a full reconciliation attached. The assessed
-          exposure of US$41,200 settled at US$6,850 on a six-month payment plan.</p>
+        <p>We rebuilt every period from source, filed every outstanding return, and took the
+          penalty position to the tax office with a full reconciliation attached. The assessment
+          settled at a fraction of the sum first demanded, on a payment plan.</p>
         <div class="work-kpi">
           <div><b class="num">11 wks</b><span>Records rebuilt</span></div>
           <div><b class="num">31</b><span>Periods filed</span></div>
@@ -1126,20 +1110,19 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
 
     <div class="work-more">
       <article data-fade>
-        <p class="who">Patel Hardware Group &middot; Chegutu &amp; Kadoma</p>
+        <p class="who">A hardware group, four branches</p>
         <h4>Payroll off the spreadsheet</h4>
-        <p>Seventy-eight staff across four branches were being paid from a workbook that nobody had
-          rebuilt since 2019. Annual PAYE variance of <b>US$3,140</b> went to <b>zero</b> in the
-          first quarter, and the monthly run dropped from <b>three days to four hours</b>. ITF16
+        <p>Staff across four branches were being paid from a workbook nobody had
+          rebuilt in years. The annual payroll-tax variance went to zero in the
+          first quarter, and the monthly run dropped from days to hours. The annual
           reconciliation now closes without a query.</p>
       </article>
       <article data-fade>
-        <p class="who">Sanyati Cotton Collective &middot; Mashonaland West</p>
+        <p class="who">A growers&rsquo; co-operative</p>
         <h4>First statements, first facility</h4>
-        <p>A 214-member growers&rsquo; co-operative had never produced statements a bank would read.
+        <p>A growers&rsquo; co-operative had never produced statements a bank would read.
           We built two comparative years under IFRS for SMEs, prepared the audit file and sat in the
-          credit meeting. Result: a <b>US$120,000</b> input facility approved, at <b>4.2%</b> below
-          the rate first quoted.</p>
+          credit meeting. The input facility was approved, below the rate first quoted.</p>
       </article>
     </div>
   </div>
@@ -1156,10 +1139,10 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
           dates, what a registration costs, which category of VAT you fall into, what happens if you
           are behind.</p>
         <p data-fade>It is a first look, not advice. Anything that changes what you file comes back
-          to a person with a practice certificate before it goes anywhere near ZIMRA.</p>
+          to a person with a practice certificate before it goes anywhere near a return.</p>
         <ul>
-          <li data-fade><b>Trained on</b> Zimbabwean tax deadlines, ZIMRA form sets and our own fee schedule</li>
-          <li data-fade><b>Never</b> asks for a BP number, a bank login or a payslip</li>
+          <li data-fade><b>Trained on</b> the filing calendar, the form sets and our own fee schedule</li>
+          <li data-fade><b>Never</b> asks for a tax number, a bank login or a payslip</li>
           <li data-fade><b>Escalates</b> to a named accountant within one working day</li>
         </ul>
       </div>
@@ -1182,7 +1165,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
           <button type="button" data-q="3">My books are three years behind</button>
         </div>
         <form class="ai-in" id="aiForm">
-          <input id="aiInput" type="text" placeholder="Ask about VAT, PAYE, ZIMRA deadlines&hellip;" aria-label="Ask Caro AI a question" autocomplete="off">
+          <input id="aiInput" type="text" placeholder="Ask about VAT, payroll or filing deadlines&hellip;" aria-label="Ask the assistant a question" autocomplete="off">
           <button type="submit">Send</button>
         </form>
       </div>
@@ -1199,21 +1182,21 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
         <p class="eyebrow" data-fade>Next step</p>
         <h2 class="disp" data-split style="margin:24px 0">Bring us the<br><em>shoebox</em></h2>
         <p data-fade>Forty-five minutes, no fee, no obligation. We will tell you where the books
-          stand, what is outstanding at ZIMRA, and what it costs to fix. In writing, within five
+          stand, what is outstanding at the tax office, and what it costs to fix. In writing, within five
           working days.</p>
       </div>
       <div class="cta-act" data-fade>
         <a class="btn btn-fill mag" href="tel:+263774199766"><span>Call the office
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 18L18 6M9 6h9v9"/></svg>
         </span></a>
-        <a class="btn btn-line mag" href="#ask"><span>Ask Caro AI first</span></a>
+        <a class="btn btn-line mag" href="#ask"><span>Ask the assistant first</span></a>
       </div>
     </div>
 
     <div class="cta-det">
       <div><span>Telephone</span><a href="tel:+263774199766"><b class="num">+263 77 419 9766</b></a></div>
       <div><span>Email</span><a href="mailto:hello@caroaccounting.co.zw"><b>hello@caroaccounting.co.zw</b></a></div>
-      <div><span>Office</span><b>Westview, Kadoma<br>Mashonaland West</b></div>
+      <div><span>Office</span><b>Westview, Kadoma</b></div>
     </div>
   </div>
 </section>
@@ -1233,8 +1216,8 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
           </span>
           <span class="brand-txt">Caro<i>Accounting &amp; Tax</i></span>
         </a>
-        <p>Registered tax agents and accountants in Kadoma, working with businesses across
-          Mashonaland West and the rest of Zimbabwe since 2012.</p>
+        <p>Registered tax agents and accountants, working with businesses of every size
+      across the region.</p>
         <p class="tag">Integrity &middot; Accuracy &middot; Excellence</p>
       </div>
 
@@ -1243,7 +1226,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
         <ul>
           <li><a href="#services">Bookkeeping</a></li>
           <li><a href="#services">Accounting &amp; year end</a></li>
-          <li><a href="#services">Tax &amp; ZIMRA returns</a></li>
+          <li><a href="#services">Tax and returns</a></li>
           <li><a href="#services">Payroll processing</a></li>
           <li><a href="#services">Management reporting</a></li>
           <li><a href="#services">Business advisory</a></li>
@@ -1265,8 +1248,8 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
       <div>
         <h5>Compliance</h5>
         <ul>
-          <li><a href="#credentials">ZIMRA tax agent</a></li>
-          <li><a href="#credentials">ICAZ practice certificate</a></li>
+          <li><a href="#credentials">Registered tax agent</a></li>
+          <li><a href="#credentials">Practice certificate</a></li>
           <li><a href="#credentials">Professional indemnity</a></li>
           <li><a href="#credentials">Data protection</a></li>
           <li><a href="#credentials">Engagement terms</a></li>
@@ -1277,8 +1260,8 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
     <div class="ftr-word" aria-hidden="true"><b>Caro</b></div>
 
     <div class="ftr-bot">
-      <span>&copy; 2026 Caro Accounting &amp; Tax (Pvt) Ltd</span>
-      <span>Westview, Kadoma, Zimbabwe</span>
+      <span>&copy; Caro Accounting &amp; Tax</span>
+      <span>Westview, Kadoma</span>
       <div class="r">
         <a href="#credentials">Terms of engagement</a>
         <a href="#credentials">Privacy</a>
@@ -1683,10 +1666,10 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
   /* 9 · Ask Caro AI — canned, typed answers                             */
   /* ------------------------------------------------------------------ */
   var ANSWERS = [
-    'Category C files monthly, by the 25th of the following month. Categories A and B file for a two-month period, also by the 25th after that period closes. If you are on the Practice tier we prepare, file and send you the ZIMRA acknowledgement the same day, so nothing sits unconfirmed.',
-    'PAYE itself comes out of the employee, not out of you. Your own cost is the 3% NSSA employer contribution, the 1% ZIMDEF levy and the standards levy where it applies. On a 40-person payroll that is usually US$260 to US$420 a month, and we submit the P2 by the 10th.',
-    'Yes. Name search, CR6 and CR14 lodgement, certificate of incorporation, then the ZIMRA BP number and a first ITF263 clearance. US$180 for the registration, US$95 for the BP number, and it normally runs 9 to 14 working days.',
-    'That is the most common first job we take. We rebuild from bank statements, EcoCash exports and supplier invoices, file everything outstanding, then take the penalty position to ZIMRA with the reconciliation attached. Arrears work is quoted from US$240 per year of records.'
+    'Filing frequency depends on the category you are registered in: monthly for the largest, otherwise for a period at a time. If you are on the Practice tier we prepare, file and send you the acknowledgement the same day, so nothing sits unconfirmed.',
+    'Payroll tax itself comes out of the employee, not out of you. Your own cost is the employer social security contribution and the training and standards levies where they apply. We work the figure out from your headcount, and submit the return by the 10th.',
+    'Yes. Name search, the statutory lodgements, certificate of incorporation, then the tax number and a first clearance certificate. US$180 for the registration, US$95 for the tax number, and it normally runs 9 to 14 working days.',
+    'That is the most common first job we take. We rebuild from bank statements, mobile money exports and supplier invoices, file everything outstanding, then take the penalty position to the tax office with the reconciliation attached. Arrears work is quoted from US$240 per year of records.'
   ];
   var FALLBACK = 'I can help with filing dates, registrations, payroll costs and catching up on late books. For anything that changes what you actually file, I will pass you to a named accountant, usually within one working day. Would you like to book the free 45-minute records review?';
 
@@ -1707,7 +1690,7 @@ h3.disp{font-size:clamp(24px,2.5vw,40px);line-height:.95}
     var d = document.createElement('div');
     d.className = 'ai-msg a';
     var tag = document.createElement('i');
-    tag.textContent = 'Caro AI';
+    tag.textContent = document.querySelector('.ai-head b') ? document.querySelector('.ai-head b').textContent : 'Assistant';
     d.appendChild(tag);
     var body = document.createElement('span');
     d.appendChild(body);

@@ -517,6 +517,11 @@ function deriveSwaps(template, given) {
     set('BRAND_INITIAL', firstWord(name).charAt(0).toUpperCase());
     set('CURTAIN_NAME', name);
     set('NAME_CAPS', name.toUpperCase());
+    set('FOOTER_WORD', firstWord(name));
+    set('BUSINESS_NAME_PLURAL', name);
+    /* A template with an assistant on the page names it after the firm.
+       Left alone it would still be called after the template. */
+    set('ASSISTANT_NAME', firstWord(name) + ' AI');
   }
 
   const does = String(out.WHAT_THEY_DO || '').trim();
@@ -528,6 +533,14 @@ function deriveSwaps(template, given) {
 
   const city = String(out.CITY || '').trim();
   if (city && name) set('PLACE_LINE', name + ' — ' + city);
+
+  /* A tel: link is the phone number with everything but the digits taken
+     out. Nobody should have to type it twice. */
+  const phone = String(out.PHONE || '').trim();
+  if (phone && known.has('PHONE_LINK') && !out.PHONE_LINK) {
+    const digits = phone.replace(/[^\d+]/g, '').replace(/(?!^)\+/g, '');
+    if (digits.length > 5) out.PHONE_LINK = digits;
+  }
 
   /* Anything still too long is left in place on purpose. render() warns and
      the person decides. A silent drop is worse than an ugly line, because

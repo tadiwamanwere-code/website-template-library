@@ -1,0 +1,105 @@
+{
+  "template": "22-smile-dental",
+  "title": "Linden Dental",
+  "industry": "Health and clinics",
+  "covers": "Dentists, orthodontists, optometrists, physiotherapy, GP and private clinics",
+  "_note": "find is the exact literal that sits in index.html today. Whole strings only, longest find first. A find may be a list when the same thing appears in more than one place. format wraps a value that lives inside an attribute or a tag.",
+
+  "_palettes": "Four approved sets of this template's own CSS variables. Every accent has been checked for contrast against the page it sits on.",
+  "palettes": {
+    "clinic-teal": {
+      "cream": "#FAF8F5", "cream-2": "#F2EEE8", "paper": "#FFFFFF",
+      "ink": "#141A1E", "ink-2": "#42525C", "muted": "#7F8D96",
+      "rule": "#E4DDD3", "rule-2": "#EFEAE3",
+      "teal": "#5B9DBF", "teal-deep": "#3B7897", "teal-tint": "#EDF4F8"
+    },
+    "clinic-sage": {
+      "cream": "#F8F9F5", "cream-2": "#EDF0E9", "paper": "#FFFFFF",
+      "ink": "#151A17", "ink-2": "#435049", "muted": "#7F8C85",
+      "rule": "#DCE1D7", "rule-2": "#E9EDE5",
+      "teal": "#6E9B84", "teal-deep": "#457258", "teal-tint": "#EEF4F0"
+    },
+    "clinic-navy": {
+      "cream": "#F7F8FA", "cream-2": "#ECEEF3", "paper": "#FFFFFF",
+      "ink": "#141821", "ink-2": "#434C5C", "muted": "#7C8593",
+      "rule": "#DBDFE7", "rule-2": "#E8EBF0",
+      "teal": "#5B7FBF", "teal-deep": "#3B5C93", "teal-tint": "#EDF1F8"
+    },
+    "clinic-clay": {
+      "cream": "#FAF7F4", "cream-2": "#F1ECE6", "paper": "#FFFFFF",
+      "ink": "#1D1714", "ink-2": "#55483F", "muted": "#8E8278",
+      "rule": "#E4DBD2", "rule-2": "#EFE9E3",
+      "teal": "#C08063", "teal-deep": "#9A5C41", "teal-tint": "#F8F0EC"
+    }
+  },
+  "swatchKeys": { "accent": "teal", "ink": "ink", "paper": "cream" },
+
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "teal",
+      "also": {
+        "teal-deep": "color-mix(in srgb, {} 74%, #000)",
+        "teal-tint": "color-mix(in srgb, {} 12%, #fff)"
+      }
+    }
+  },
+
+  "_brandTokens": "Words belonging to this template, not to a client. If any survive a render that set BUSINESS_NAME, a swap was missed.",
+  "brandTokens": ["Linden Dental Studio", "Linden", "lindendental"],
+
+  "swaps": [
+    { "key": "BUSINESS_NAME", "find": "Linden Dental Studio", "label": "Practice name", "maxChars": 30, "required": true },
+    { "key": "BRAND_SHORT", "find": "<span class=\"brand__mark\">Linden</span>", "format": "<span class=\"brand__mark\">{}</span>", "label": "Short name (the wordmark)", "maxChars": 14 },
+    { "key": "TAGLINE", "find": "<span class=\"brand__sub\">Dental Studio</span>", "format": "<span class=\"brand__sub\">{}</span>", "label": "Line under the wordmark", "maxChars": 20 },
+    { "key": "WHAT_THEY_DO", "find": "Gentle dental care", "label": "What they do", "maxChars": 26 },
+    { "key": "HEADLINE_1", "find": "<span class=\"w\">A</span> <span class=\"w it\">quieter</span> <span class=\"w\">kind</span>", "format": "<span class=\"w\">{}</span>", "label": "Hero line 1", "maxChars": 18, "optional": true, "hint": "The middle word is set in italic in the original. One phrase here replaces all three words." },
+    { "key": "CITY", "find": "Harare", "label": "City", "maxChars": 22 },
+    { "key": "PHONE", "find": "+263 77 000 2299", "label": "Phone", "maxChars": 20 },
+    { "key": "PHONE_LINK", "find": "tel:+263770002299", "format": "tel:{}", "label": "Phone, dialling form", "maxChars": 20, "optional": true, "hint": "Worked out from the phone number if you leave it blank." },
+    { "key": "EMAIL", "find": "hello@lindendental.co.zw", "label": "Email", "maxChars": 40 },
+    { "key": "ADDRESS", "find": "Suite 4, Fife Avenue Medical Park", "label": "Address, line 1", "maxChars": 40 },
+    { "key": "ADDRESS_2", "find": "27 Fife Avenue, Harare", "label": "Address, line 2", "maxChars": 34 },
+    { "key": "HOURS_WEEKDAY", "find": "07:30 &ndash; 17:00", "label": "Hours, Monday to Thursday", "maxChars": 18 },
+    { "key": "HOURS_FRIDAY", "find": "07:30 &ndash; 15:00", "label": "Hours, Friday", "maxChars": 18 },
+    { "key": "HOURS_SATURDAY", "find": "08:00 &ndash; 12:30", "label": "Hours, Saturday", "maxChars": 18 },
+    { "key": "PRINCIPAL_NAME", "find": "The principal dentist", "label": "The lead clinician", "maxChars": 28, "optional": true },
+    { "key": "PRINCIPAL_ROLE", "find": "The person who examines you is the person who treats you", "label": "Line under that name", "maxChars": 62, "optional": true },
+    { "key": "AID_1", "find": "<span>Medical aid</span>", "format": "<span>{}</span>", "label": "Payment or scheme 1", "maxChars": 22, "optional": true },
+    { "key": "AID_2", "find": "<span>Cash</span>", "format": "<span>{}</span>", "label": "Payment or scheme 2", "maxChars": 22, "optional": true },
+    { "key": "AID_3", "find": "<span>Card</span>", "format": "<span>{}</span>", "label": "Payment or scheme 3", "maxChars": 22, "optional": true },
+    { "key": "AID_4", "find": "<span>Bank transfer</span>", "format": "<span>{}</span>", "label": "Payment or scheme 4", "maxChars": 22, "optional": true },
+    { "key": "PRICE_1", "find": "<span class=\"acc__price\">on request</span>", "format": "<span class=\"acc__price\">{}</span>", "label": "Price shown on every treatment", "maxChars": 14, "optional": true, "hint": "One value fills all six rows. Change individual ones by clicking them in the preview." },
+
+    { "key": "STAT_1_VALUE", "find": "data-count=\"19\"", "format": "data-count=\"{}\"", "label": "Years in practice", "type": "number", "maxChars": 7 },
+    { "key": "STAT_2_VALUE", "find": "data-count=\"8400\"", "format": "data-count=\"{}\"", "label": "Patients treated", "type": "number", "maxChars": 7 },
+    { "key": "STAT_3_VALUE", "find": "data-count=\"92\"", "format": "data-count=\"{}\"", "label": "Seen within the same week (%)", "type": "number", "maxChars": 7 },
+    { "key": "STAT_4_VALUE", "find": "data-count=\"4.9\"", "format": "data-count=\"{}\"", "label": "Average rating", "type": "number", "maxChars": 7 }
+  ],
+
+  "images": [
+    {
+      "key": "LOGO",
+      "find": [
+        "<span class=\"brand__mark\">Linden</span>\n      <span class=\"brand__sub\">Dental Studio</span>",
+        "<span class=\"brand__mark\">Linden</span><span class=\"brand__sub\">Dental Studio</span>"
+      ],
+      "label": "Logo",
+      "kind": "logo",
+      "hint": "Replaces the wordmark in the header and the footer. A transparent PNG or SVG works best.",
+      "format": "<img class=\"brand__logo\" src=\"{}\" alt=\"\">"
+    },
+    { "key": "HERO", "find": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1100&q=80", "label": "Hero portrait", "ratio": "4/5", "search": "smiling patient portrait" },
+    { "key": "SURGERY", "find": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80", "label": "The surgery", "ratio": "1/1", "search": "dental surgery interior" },
+    { "key": "TREAT_1", "find": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=900&q=80", "label": "Treatment 1", "ratio": "4/5", "search": "dental hygienist cleaning" },
+    { "key": "TREAT_2", "find": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=900&q=80", "label": "Treatment 2", "ratio": "4/5", "search": "child at the dentist" },
+    { "key": "TREAT_3", "find": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=900&q=80", "label": "Treatment 3", "ratio": "4/5", "search": "dental treatment room" },
+    { "key": "TREAT_4", "find": "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=900&q=80", "label": "Treatment 4", "ratio": "4/5", "search": "dentist at work" },
+    { "key": "TREAT_5", "find": "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=900&q=80", "label": "Treatment 5", "ratio": "4/5", "search": "dentist showing patient a scan" },
+    { "key": "DENTIST", "find": "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&w=900&q=80", "label": "The lead clinician", "ratio": "4/5", "search": "dentist portrait" },
+    { "key": "VISIT_1", "find": "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1000&q=80", "label": "First visit, step 1", "ratio": "4/5", "search": "dental reception welcome" },
+    { "key": "VISIT_2", "find": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1000&q=80", "label": "First visit, step 2", "ratio": "4/5", "search": "dentist talking to patient" },
+    { "key": "VISIT_3", "find": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1000&q=80", "label": "First visit, step 3", "ratio": "4/5", "search": "dental examination" },
+    { "key": "VISIT_4", "find": "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1000&q=80", "label": "First visit, step 4", "ratio": "4/5", "search": "dental treatment plan screen" }
+  ]
+}

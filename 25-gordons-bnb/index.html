@@ -180,6 +180,9 @@ p{margin:0}
 }
 .brand{display:flex;align-items:center;gap:14px}
 .brand-name{font-family:var(--serif);font-size:22px;letter-spacing:-.01em;white-space:nowrap}
+/* an uploaded logo replaces the wordmark, in the header and the footer */
+.brand-logo{display:block;height:30px;width:auto;max-width:180px;object-fit:contain;object-position:left center}
+.foot-brand .brand-logo{height:34px}
 .nav-links{display:flex;align-items:center;gap:clamp(18px,2.4vw,38px)}
 .nav-links a{
   font-size:14px;font-weight:400;position:relative;padding:6px 0;opacity:.9;
@@ -623,7 +626,7 @@ p{margin:0}
 <section class="seq" id="mornings">
   <div class="seq-head">
     <span class="eyebrow">A day, roughly</span>
-    <h2 class="js-split">One morning at Gordon's, from the valley up.</h2>
+    <h2 class="js-split">One morning at the house, from the valley up.</h2>
     <p>Nothing here happens quickly. The sequence below moves at the pace the house does &mdash; five frames, each held long enough to actually look at.</p>
   </div>
 
@@ -773,7 +776,7 @@ p{margin:0}
       <div class="room-body">
         <span class="eyebrow eyebrow--ink eyebrow--plain">Rear wing &middot; sleeps four</span>
         <h3 class="room-name js-split">The Old Kitchen</h3>
-        <p class="room-note">The house's original 1931 kitchen. The range alcove is now a reading nook with a lamp in it, there is a small kitchenette behind a linen curtain, and it takes four people without anybody feeling squeezed. Families take this one, and so do two couples travelling together.</p>
+        <p class="room-note">The original kitchen of the house. The range alcove is now a reading nook with a lamp in it, there is a small kitchenette behind a linen curtain, and it takes four people without anybody feeling squeezed. Families take this one, and so do two couples travelling together.</p>
         <dl class="room-specs">
           <div class="spec"><dt>Size</dt><dd class="num">41 m&sup2;</dd></div>
           <div class="spec"><dt>Bed</dt><dd>One king and a sofa bed &middot; sleeps 4</dd></div>
@@ -848,7 +851,7 @@ p{margin:0}
 
       <div class="sum-actions">
         <button class="pill pill--gold" id="requestBtn" type="button">Request these dates</button>
-        <span class="sum-ok" id="requestOk" hidden>Thank you. Ruth answers from hello@gordonsbnb.example, usually the same day.</span>
+        <span class="sum-ok" id="requestOk" hidden>Thank you. We answer from hello@gordonsbnb.example, usually the same day.</span>
       </div>
     </div>
   </div>
@@ -859,8 +862,8 @@ p{margin:0}
   <div class="house-top">
     <div>
       <span class="eyebrow">The house</span>
-      <h2 class="js-split">Ruth and Samson took it on in 2009.</h2>
-      <p class="lede" style="margin-top:26px">Ruth grew up two streets away and had walked past the house for thirty years before it came up for sale. Samson cooks. They live on the ground floor at the back, which is why somebody is always in when you arrive.</p>
+      <h2 class="js-split">The owners took it on, and live in it.</h2>
+      <p class="lede" style="margin-top:26px">One of them grew up two streets away and had walked past the house for years before it came up for sale. The other cooks. They live on the ground floor at the back, which is why somebody is always in when you arrive.</p>
     </div>
     <div>
       <div class="house-pic">
@@ -874,11 +877,11 @@ p{margin:0}
   <div class="house-parts">
     <div class="part">
       <h3>Who runs it</h3>
-      <p>Two people and, at weekends, their daughter Ada. There is no front desk and no night porter. If the bell goes at eleven, one of them will still answer it &mdash; but do call first, so somebody is awake and expecting you.</p>
+      <p>Two people and, at weekends, one more of the family. There is no front desk and no night porter. If the bell goes at eleven, one of them will still answer it &mdash; but do call first, so somebody is awake and expecting you.</p>
     </div>
     <div class="part">
       <h3>What breakfast is like</h3>
-      <p>One long table, everybody at it. Bread out of the oven at seven, eggs from four hens named Dot, Marge, Pin and one nobody got round to naming, figs from the courtyard in season, and coffee ground when you sit down. Porridge if you would rather. In your room if you say so the night before.</p>
+      <p>One long table, everybody at it. Bread out of the oven at seven, eggs from the hens at the bottom of the garden, fruit from the courtyard in season, and coffee ground when you sit down. Porridge if you would rather. In your room if you say so the night before.</p>
     </div>
     <div class="part">
       <h3>What the mornings are like</h3>
@@ -887,7 +890,7 @@ p{margin:0}
   </div>
 
   <figure class="quote">
-    <figcaption>Ruth Gordon &middot; keeper of the house</figcaption>
+    <figcaption>The keeper of the house</figcaption>
     <blockquote class="js-split">We have four rooms. That is on purpose. We would rather know your name by the second morning.</blockquote>
   </figure>
 
@@ -902,7 +905,7 @@ p{margin:0}
     </div>
     <div>
       <p class="fact-v num">2009</p>
-      <p class="fact-k">Ruth and Samson took it on</p>
+      <p class="fact-k">The owners took it on</p>
     </div>
     <div>
       <p class="fact-v num">7:30</p>
@@ -918,47 +921,47 @@ p{margin:0}
       <span class="eyebrow">Within a walk</span>
       <h2 class="js-split">Everything worth doing is close enough to walk to.</h2>
     </div>
-    <p class="lede">Chelmer Vale is small. You will not need a car once you have parked, and the six things below are the six we actually send people to.</p>
+    <p class="lede">The village is small. You will not need a car once you have parked, and the six things below are the six we actually send people to.</p>
   </div>
 
   <div class="area-pic">
     <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2200&q=80" alt="The wooded path that runs from the end of Marlow Rise to the reservoir" loading="lazy">
+    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2200&q=80" alt="The wooded path that runs from the end of the road to the water" loading="lazy">
   </div>
 
   <div class="walks">
     <div class="walk">
-      <p class="walk-name">Loveridge Bakery</p>
-      <p class="walk-note">Sourdough out at seven, sold out by eleven most days. Take the cash, they have never fixed the card machine.</p>
+      <p class="walk-name">The village bakery</p>
+      <p class="walk-note">Sourdough out at seven, sold out by eleven most days. Take cash, the card machine is temperamental.</p>
       <p class="walk-time"><i></i><span class="num">4 min walk</span></p>
     </div>
     <div class="walk">
-      <p class="walk-name">The Saturday market, Fenner Street</p>
-      <p class="walk-note">Vegetables, three cheesemongers, and a man who sells only honey and will talk to you about it for an hour.</p>
+      <p class="walk-name">The Saturday market</p>
+      <p class="walk-note">Vegetables, cheese, and a man who sells only honey and will talk to you about it for an hour.</p>
       <p class="walk-time"><i></i><span class="num">6 min walk</span></p>
     </div>
     <div class="walk">
       <p class="walk-name">The reservoir path</p>
-      <p class="walk-note">A flat 5.2 km loop on gravel, doable in an hour. Herons at the north end, early.</p>
+      <p class="walk-note">A flat loop on gravel, doable in an hour. Herons at the far end, early.</p>
       <p class="walk-time"><i></i><span class="num">9 min walk</span></p>
     </div>
     <div class="walk">
-      <p class="walk-name">The Crown &amp; Anchor</p>
+      <p class="walk-name">The village pub</p>
       <p class="walk-note">A proper pub with a proper kitchen. Book a table on Fridays or you will be eating at the bar.</p>
       <p class="walk-time"><i></i><span class="num">11 min walk</span></p>
     </div>
     <div class="walk">
-      <p class="walk-name">Chelmer Hill lookout</p>
-      <p class="walk-note">Twenty minutes up through the beeches and the whole valley opens underneath you. Best an hour before sunset.</p>
+      <p class="walk-name">The hill lookout</p>
+      <p class="walk-note">Twenty minutes up through the trees and the whole valley opens underneath you. Best an hour before sunset.</p>
       <p class="walk-time"><i></i><span class="num">22 min walk</span></p>
     </div>
     <div class="walk">
-      <p class="walk-name">Bus 14 to the mainline station</p>
-      <p class="walk-note">Every twenty minutes until 22:40. Eighteen minutes end to end, and it stops at the top of our road.</p>
+      <p class="walk-name">The bus to the station</p>
+      <p class="walk-note">Every twenty minutes until late. Under half an hour end to end, and it stops at the top of our road.</p>
       <p class="walk-time"><i></i><span class="num">3 min walk</span></p>
     </div>
   </div>
-  <p class="walks-foot">Walking times measured from the front gate, at an unhurried pace, by Samson, twice.</p>
+  <p class="walks-foot">Walking times measured from the front gate, at an unhurried pace, twice.</p>
 </section>
 
 <!-- ============================ REVIEWS ============================ -->
@@ -970,7 +973,7 @@ p{margin:0}
     </div>
     <div class="score">
       <p class="score-v num" id="scoreV">9.7</p>
-      <p class="score-k">average from 214 stays</p>
+      <p class="score-k">average guest score</p>
     </div>
   </div>
 
@@ -981,20 +984,20 @@ p{margin:0}
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy">
         <div>
-          <p class="rev-nm">Hannah Leverett</p>
-          <p class="rev-mt">The Loft &middot; stayed March 2026</p>
+          <p class="rev-nm">Guest &mdash; the top-floor room</p>
+          <p class="rev-mt">Verified stay</p>
         </div>
       </div>
     </article>
 
     <article class="rev">
-      <q>Samson noticed I was not eating the eggs and put porridge in front of me the next morning without my having asked. That is the whole place, really.</q>
+      <q>Somebody noticed I was not eating the eggs and put porridge in front of me the next morning without my having asked. That is the whole place, really.</q>
       <div class="rev-by">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy">
         <div>
-          <p class="rev-nm">Anton Pirie</p>
-          <p class="rev-mt">Room Two, West &middot; stayed January 2026</p>
+          <p class="rev-nm">Guest &mdash; the west room</p>
+          <p class="rev-mt">Verified stay</p>
         </div>
       </div>
     </article>
@@ -1005,20 +1008,20 @@ p{margin:0}
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy">
         <div>
-          <p class="rev-nm">Fola Adeyemi</p>
-          <p class="rev-mt">The Garden Room &middot; stayed November 2025</p>
+          <p class="rev-nm">Guest &mdash; the ground-floor room</p>
+          <p class="rev-mt">Verified stay</p>
         </div>
       </div>
     </article>
 
     <article class="rev">
-      <q>Four of us in the Old Kitchen and nobody was on top of anybody. Ruth lent us an umbrella on the Sunday and then refused to take it back.</q>
+      <q>Four of us in the family room and nobody was on top of anybody. They lent us an umbrella on the Sunday and then refused to take it back.</q>
       <div class="rev-by">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy">
         <div>
-          <p class="rev-nm">Grete Sandvik</p>
-          <p class="rev-mt">The Old Kitchen &middot; stayed October 2025</p>
+          <p class="rev-nm">Guest &mdash; the family room</p>
+          <p class="rev-mt">Verified stay</p>
         </div>
       </div>
     </article>
@@ -1041,7 +1044,7 @@ p{margin:0}
         <div class="note"><dt>Check-in</dt><dd><b>14:00</b> to <b>20:00</b>. Later by arrangement &mdash; please call, do not just arrive.</dd></div>
         <div class="note"><dt>Check-out</dt><dd><b>10:30</b>. We will hold bags in the hall until six, no charge.</dd></div>
         <div class="note"><dt>Children</dt><dd>Welcome from <b>eight</b> years. We have no cot and no highchair, and the stairs are steep.</dd></div>
-        <div class="note"><dt>Pets</dt><dd>No, sorry. There is a house cat, Biscuit, and she was here first.</dd></div>
+        <div class="note"><dt>Pets</dt><dd>No, sorry. There is a house cat, and she was here first.</dd></div>
       </dl>
       <dl style="margin:0">
         <div class="note"><dt>Parking</dt><dd><b>Three</b> off-street spaces, free, first come. Street parking is unrestricted after six.</dd></div>
@@ -1108,7 +1111,7 @@ p{margin:0}
     <div class="foot-col">
       <h4>The house</h4>
       <ul>
-        <li><a href="#house" data-scroll>Ruth and Samson</a></li>
+        <li><a href="#house" data-scroll>The owners</a></li>
         <li><a href="#house" data-scroll>Breakfast</a></li>
         <li><a href="#mornings" data-scroll>A morning here</a></li>
         <li><a href="#area" data-scroll>Chelmer Vale</a></li>
@@ -1129,8 +1132,8 @@ p{margin:0}
   </div>
 
   <div class="foot-bar">
-    <span>&copy; 2026 Gordon's Bnb &middot; Registered with the Chelmer Vale tourism board, no. 4412</span>
-    <span>Template 25 of the library &middot; <a href="#top" data-scroll>Back to the top</a></span>
+    <span>&copy; Gordon's Bnb &middot; Registered guest accommodation</span>
+    <span><a href="#top" data-scroll>Back to the top</a></span>
   </div>
 </footer>
 

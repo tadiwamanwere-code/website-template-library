@@ -706,6 +706,22 @@ a{color:inherit;}
         + '</div>';
     }).join('');
 
+    /* Fields this template asks for on top of the usual six: a room rate, a
+       monthly fee, whatever the design puts a figure in. They are here
+       because a figure the client never gave is the thing most likely to
+       go out wrong. */
+    var extra = (current.fields || []).filter(function(f){
+      return f.group === 'details' && INTAKE.every(function(i){ return i.key !== f.key; });
+    });
+    if(extra.length){
+      html += extra.map(function(f){
+        return '<div class="fld"><label for="f-' + f.key + '">' + esc(f.label) + '</label>'
+          + '<input id="f-' + f.key + '" data-key="' + f.key + '"' + (f.maxChars ? ' data-max="' + f.maxChars + '"' : '')
+          + ' placeholder="' + esc(f.hint ? 'the design’s own figure' : '') + '" value="' + esc(state.swaps[f.key] || '') + '">'
+          + (f.maxChars ? '<span class="count"></span>' : '') + '</div>';
+      }).join('');
+    }
+
     /* the numbers the design's big stat blocks need */
     var stats = (current.fields || []).filter(function(f){ return /^STAT_\d+_VALUE$/.test(f.key); });
     if(stats.length){

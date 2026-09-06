@@ -25,3 +25,5 @@ builder/.env
 # installed by npx skills — tooling, not part of the library
 .claude/
 skills-lock.json
+
+.env*

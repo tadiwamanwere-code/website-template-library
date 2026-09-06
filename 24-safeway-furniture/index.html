@@ -157,6 +157,8 @@ ul,ol{list-style:none;padding:0}
   display:grid;place-items:center;
 }
 .brand-mark svg{width:20px;height:20px}
+/* an uploaded logo replaces the wordmark, in the header and the footer */
+.brand-logo{display:block;height:28px;width:auto;max-width:180px;object-fit:contain;object-position:left center}
 .brand-word{display:flex;flex-direction:column;line-height:1}
 .brand-word b{font-weight:800;font-size:17px;letter-spacing:.01em}
 .brand-word i{
@@ -649,7 +651,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
 <div id="loader" aria-hidden="true">
   <div class="loader-in">
     <div class="loader-top">
-      <div class="lab">Safeway Furniture — Greendale, Harare</div>
+      <div class="lab">Safeway Furniture — Greendale</div>
       <div class="lab" id="loadPct">Measuring</div>
     </div>
     <div class="loader-read"><span id="loadNum" class="num">0</span><em>MM</em></div>
@@ -747,9 +749,9 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
 
   <div class="shell hero-in">
     <div class="hero-copy">
-      <p class="eyebrow">Home and office furniture &middot; Harare</p>
+      <p class="eyebrow">Home and office furniture</p>
       <h1 class="h1" data-lines>Built to fit<br>your space.</h1>
-      <p class="hero-p" data-fade>Safeway Furniture has been designing and manufacturing fitted kitchens, wardrobes and office furniture in Zimbabwe since 2012 — measured on site, made in our own workshop, installed by our own team.</p>
+      <p class="hero-p" data-fade>Safeway Furniture has been designing and manufacturing fitted kitchens, wardrobes and office furniture since 2012 — measured on site, made in our own workshop, installed by our own team.</p>
       <div class="hero-cta" data-fade>
         <a class="pill pill-solid" href="#quote" data-mag>Request a free quote</a>
         <a class="pill pill-ghost" href="#work" data-mag>See our work
@@ -774,8 +776,8 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
     <div class="fig-copy">
       <p class="eyebrow">01 — Under one roof</p>
       <h2 class="h2" data-lines>We measure it,<br>we make it,<br>we fit it.</h2>
-      <p class="lede">Most fitted-furniture companies in Harare are middlemen. They take your dimensions, send a drawing to a workshop across town, and hope. We own the beam saw, the edgebander, the CNC and the spray booth, and the fitters who arrive at your house are on our payroll. When something is 3 mm out, there is nobody to blame and nobody to phone. We just fix it.</p>
-      <p class="fig-note">Vertical integration is not a slogan here. It is why a Safeway kitchen leaves the floor in 26 working days instead of 60.</p>
+      <p class="lede">Most fitted-furniture companies are middlemen. They take your dimensions, send a drawing to a workshop across town, and hope. We own the beam saw, the edgebander, the CNC and the spray booth, and the fitters who arrive at your house are on our payroll. When something is 3 mm out, there is nobody to blame and nobody to phone. We just fix it.</p>
+      <p class="fig-note">Vertical integration is not a slogan here. It is why a kitchen leaves our floor in weeks rather than months.</p>
     </div>
     <div class="fig-grid">
       <div class="fig">
@@ -796,7 +798,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
       <div class="fig">
         <span class="fig-bar" data-bar></span>
         <div class="fig-n num" data-count="1800">0<em>m²</em></div>
-        <div class="fig-l">Workshop floor<br>Msasa, Harare</div>
+        <div class="fig-l">Workshop floor<br>Under one roof</div>
       </div>
     </div>
   </div>
@@ -836,7 +838,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
             <div><dt>Where</dt><dd>Your site</dd></div>
             <div><dt>Who comes</dt><dd>One cabinetmaker</dd></div>
             <div><dt>You get</dt><dd>Dimensioned survey + photo set</dd></div>
-            <div><dt>Cost</dt><dd>Free within 40 km of Harare CBD</dd></div>
+            <div><dt>Cost</dt><dd>Free within 40 km of the workshop</dd></div>
           </dl>
           <p class="step-foot">Working tolerance: ±2 mm across a 6 metre run.</p>
         </div>
@@ -856,7 +858,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
           </div>
           <p class="step-text">We draw the run in 3D, then price it line by line so you can see what every choice costs before you make it. Swap quartz for laminate and watch the number move. Two revisions are included. Nothing reaches the workshop until you have signed a drawing with real dimensions on it, not a mood board.</p>
           <dl class="step-specs">
-            <div><dt>Where</dt><dd>Greendale studio</dd></div>
+            <div><dt>Where</dt><dd>Our own studio</dd></div>
             <div><dt>Revisions</dt><dd>Two included</dd></div>
             <div><dt>You get</dt><dd>3D views, elevations, itemised quote</dd></div>
             <div><dt>Deposit</dt><dd>60% at sign-off</dd></div>
@@ -879,8 +881,8 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
           </div>
           <p class="step-text">Boards are cut on our beam saw, edged on a PUR bander for a joint you cannot feel with a fingernail, and drilled on the CNC to the 32 mm system so shelves land where the drawing says. Sprayed fronts go through a dust-extracted booth: primer, denib, two coats, cure. Every carcass is dry-assembled and numbered before it leaves the floor.</p>
           <dl class="step-specs">
-            <div><dt>Where</dt><dd>Msasa workshop, 1 800 m²</dd></div>
-            <div><dt>Made by</dt><dd>14 cabinetmakers, 3 sprayers</dd></div>
+            <div><dt>Where</dt><dd>Our own workshop</dd></div>
+            <div><dt>Made by</dt><dd>Our own cabinetmakers and sprayers</dd></div>
             <div><dt>Checked</dt><dd>Dry-assembled and numbered</dd></div>
             <div><dt>Outsourced</dt><dd>Nothing</dd></div>
           </dl>
@@ -907,7 +909,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
             <div><dt>You get</dt><dd>Snags closed, handover signed</dd></div>
             <div><dt>Guarantee</dt><dd>5 years cabinetry, 2 years moving parts</dd></div>
           </dl>
-          <p class="step-foot">96% of our installs in 2025 finished on or before the promised date.</p>
+          <p class="step-foot">Almost every install finishes on or before the promised date.</p>
         </div>
       </article>
 
@@ -1151,7 +1153,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
         <p class="eyebrow">04 — Inside the unit</p>
         <h2 class="h2" data-lines>Anyone can make<br>a nice front.</h2>
       </div>
-      <p class="lede">Closed, every fitted kitchen in Harare looks the same. Drag the handle and look at what is behind the door: the box, the back, the runners, the feet. That is where the money either went or did not.</p>
+      <p class="lede">Closed, every fitted kitchen looks the same. Drag the handle and look at what is behind the door: the box, the back, the runners, the feet. That is where the money either went or did not.</p>
     </header>
 
     <div class="rv" id="rv" style="--p:70">
@@ -1195,7 +1197,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
         <p class="eyebrow">05 — What we fit</p>
         <h2 class="h2" data-lines>Four rooms<br>we know cold.</h2>
       </div>
-      <p class="lede">Prices are honest starting points for work we do every week, supplied and installed in Harare. A survey turns them into a real number in three to five days.</p>
+      <p class="lede">Prices are honest starting points for work we do every week, supplied and installed. A survey turns them into a real number in three to five days.</p>
     </header>
 
     <div class="room-grid">
@@ -1302,7 +1304,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
         <p class="eyebrow">06 — Recent installations</p>
         <h2 class="h2" data-lines>Signed off<br>in the last year.</h2>
       </div>
-      <p class="lede">Every one of these was measured, made and fitted by Safeway. Addresses withheld, suburbs are real.</p>
+      <p class="lede">Every one of these was measured, made and fitted by us. Addresses withheld.</p>
     </header>
 
     <div class="work-grid">
@@ -1312,7 +1314,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
           <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
           <img data-par="10" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=80" alt="Handleless matt kitchen with island" loading="lazy">
         </div>
-        <figcaption class="shot-cap"><b>Handleless matt kitchen, 5.2 m run</b><span>Borrowdale Brooke</span><i>Kitchen &middot; 2025</i></figcaption>
+        <figcaption class="shot-cap"><b>Handleless matt kitchen, 5.2 m run</b><span>Private house</span><i>Kitchen &middot; 2025</i></figcaption>
       </figure>
 
       <figure class="shot shot-b">
@@ -1320,7 +1322,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
           <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
           <img data-par="14" src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&q=80" alt="Walk-in wardrobe in oak veneer" loading="lazy">
         </div>
-        <figcaption class="shot-cap"><b>Walk-in wardrobe, oak veneer</b><span>Mount Pleasant</span><i>Wardrobe &middot; 2025</i></figcaption>
+        <figcaption class="shot-cap"><b>Walk-in wardrobe, oak veneer</b><span>Private house</span><i>Wardrobe &middot; 2025</i></figcaption>
       </figure>
 
       <figure class="shot shot-c">
@@ -1328,7 +1330,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
           <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
           <img data-par="12" src="https://images.unsplash.com/photo-1604709177225-055f99402ea3?auto=format&fit=crop&w=1400&q=80" alt="Scullery with quartz worktops" loading="lazy">
         </div>
-        <figcaption class="shot-cap"><b>Scullery and pantry, quartz tops</b><span>Greendale</span><i>Kitchen &middot; 2025</i></figcaption>
+        <figcaption class="shot-cap"><b>Scullery and pantry, quartz tops</b><span>Private house</span><i>Kitchen &middot; 2025</i></figcaption>
       </figure>
 
       <figure class="shot shot-d">
@@ -1336,7 +1338,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
           <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
           <img data-par="9" src="https://images.unsplash.com/photo-1524230572899-a752b3835840?auto=format&fit=crop&w=1600&q=80" alt="Reception desk and storage wall" loading="lazy">
         </div>
-        <figcaption class="shot-cap"><b>Reception desk and storage wall</b><span>Msasa</span><i>Office &middot; 2024</i></figcaption>
+        <figcaption class="shot-cap"><b>Reception desk and storage wall</b><span>Company office</span><i>Office &middot; 2024</i></figcaption>
       </figure>
 
       <figure class="shot shot-e">
@@ -1344,7 +1346,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
           <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
           <img data-par="13" src="https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=1400&q=80" alt="Boardroom table and credenza in mukwa" loading="lazy">
         </div>
-        <figcaption class="shot-cap"><b>Boardroom table and credenza, mukwa</b><span>Highlands</span><i>Office &middot; 2024</i></figcaption>
+        <figcaption class="shot-cap"><b>Boardroom table and credenza, mukwa</b><span>Company office</span><i>Office &middot; 2024</i></figcaption>
       </figure>
 
       <figure class="shot shot-f">
@@ -1352,7 +1354,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
           <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
           <img data-par="10" src="https://images.unsplash.com/photo-1503174971373-b1f69850bded?auto=format&fit=crop&w=1600&q=80" alt="Pharmacy shopfitting with display bays" loading="lazy">
         </div>
-        <figcaption class="shot-cap"><b>Pharmacy fit-out, 11 bays and dispensary</b><span>Avondale</span><i>Retail &middot; 2024</i></figcaption>
+        <figcaption class="shot-cap"><b>Pharmacy fit-out, 11 bays and dispensary</b><span>Retail unit</span><i>Retail &middot; 2024</i></figcaption>
       </figure>
 
     </div>
@@ -1367,7 +1369,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
     <div class="quote-copy">
       <p class="eyebrow">07 — Free measure and quote</p>
       <h2 class="h2" data-lines>Book the measure.<br>Then decide.</h2>
-      <p class="lede">No charge, no obligation, no pressure at the kitchen table. We survey anywhere inside 40 km of Harare CBD free of charge, and you keep the dimensioned drawing whatever you decide to do with it.</p>
+      <p class="lede">No charge, no obligation, no pressure at the kitchen table. We survey anywhere inside 40 km of the workshop free of charge, and you keep the dimensioned drawing whatever you decide to do with it.</p>
 
       <ol class="steps-next">
         <li><b>01</b><p>We phone you back <strong>within one working day</strong> to agree a time that suits the household.</p></li>
@@ -1375,7 +1377,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
         <li><b>03</b><p>Your 3D drawing and itemised quote land in your inbox <strong>in 3 to 5 working days</strong>.</p></li>
       </ol>
 
-      <p class="quote-note">Outside the 40 km radius we still come, and we still do not charge if you order. Bulawayo, Mutare and Gweru surveys are quoted per trip.</p>
+      <p class="quote-note">Outside the 40 km radius we still come, and we still do not charge if you order. Surveys further out are quoted per trip.</p>
     </div>
 
     <form class="form" id="quoteForm" novalidate>
@@ -1450,7 +1452,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
           </span>
           <span class="brand-word"><b>SAFEWAY</b><i>FURNITURE</i></span>
         </a>
-        <p class="foot-blurb">Designing and manufacturing fitted kitchens, wardrobes and office furniture in Zimbabwe since 2012. Measured on site, made in our own workshop, installed by our own team.</p>
+        <p class="foot-blurb">Designing and manufacturing fitted kitchens, wardrobes and office furniture since 2012. Measured on site, made in our own workshop, installed by our own team.</p>
         <dl class="foot-addr">
           <div>
             <dt>Showroom</dt>
@@ -1458,7 +1460,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
           </div>
           <div>
             <dt>Workshop</dt>
-            <dd>Stand 7, Martin Drive, Msasa, Harare<br>1 800 m² &middot; Visits by appointment</dd>
+            <dd>Stand 7, Martin Drive<br>Visits by appointment</dd>
           </div>
         </dl>
       </div>
@@ -1502,7 +1504,7 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
     <div class="foot-bot">
       <span>© 2026 Safeway Furniture (Pvt) Ltd &middot; Established 2012</span>
       <span>Manufacturer &amp; supplier &middot; Free measure and quote</span>
-      <span>Harare, Zimbabwe</span>
+      <span>Head office</span>
     </div>
   </div>
 </footer>
