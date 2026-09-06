@@ -9,3 +9,6 @@ Thumbs.db
 _inspo-notes/verification/
 
 .vercel
+
+# builder scratch output — rendered test sites, not source
+builder/out/

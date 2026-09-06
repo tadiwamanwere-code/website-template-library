@@ -1,0 +1,46 @@
+{
+  "template": "20-tower-construction",
+  "industry": "Construction and trades",
+  "covers": "Builders, civils, roofing, plant hire, electrical, plumbing",
+  "themes": ["navy-amber", "charcoal-rust", "forest-brass", "slate-teal"],
+
+  "_brandTokens": "Words belonging to this template, not to a client. If any survive a render that set BUSINESS_NAME, a swap was missed.",
+  "brandTokens": ["Tower Construction", "Tower", "Construction"],
+
+  "_note": "find is the exact literal that sits in index.html today. Replace whole strings only, longest find first. format wraps a value that lives inside an attribute: the renderer builds the replacement by putting the new value where {} sits.",
+
+  "swaps": [
+    { "key": "BUSINESS_NAME", "find": "Tower Construction", "label": "Business name", "maxChars": 34, "required": true },
+    { "key": "HERO_LINE_1", "find": "Tower", "label": "Hero line 1 (giant type)", "maxChars": 12, "hint": "First word of the name. Long words overflow the hero." },
+    { "key": "HERO_LINE_2", "find": "Construction", "label": "Hero line 2 (giant type)", "maxChars": 14, "hint": "Rest of the name, or the trade." },
+    { "key": "WHAT_THEY_DO", "find": "Building &amp; Civil Engineering Contractors", "label": "What they do", "maxChars": 52 },
+    { "key": "TAGLINE", "find": "Building &amp; Civil Engineering", "label": "Short tagline (under the logo)", "maxChars": 32 },
+    { "key": "SHORT_TRADE", "find": "Contractors", "label": "Trade, one word", "maxChars": 22 },
+
+    { "key": "CITY", "find": "Harare", "label": "City", "maxChars": 24 },
+    { "key": "PHONE", "find": "+263 24 277 1980", "label": "Phone", "maxChars": 24 },
+    { "key": "EMAIL", "find": "hello@example.com", "label": "Email", "maxChars": 40 },
+    { "key": "ADDRESS", "find": "Address on request", "label": "Address", "maxChars": 60 },
+    { "key": "HOURS", "find": "Mon&ndash;Fri 07:30&ndash;17:00 &nbsp;·&nbsp; Sat 08:00&ndash;12:00", "label": "Opening hours", "maxChars": 70 },
+    { "key": "CURRENCY", "find": "US$", "label": "Currency symbol (enquiry form)", "maxChars": 4 },
+
+    { "key": "SIGNATORY_NAME", "find": "The Managing Director", "label": "Who signs off the work", "maxChars": 28, "optional": true },
+    { "key": "SIGNATORY_ROLE", "find": "Speak to us directly", "label": "Line under that name", "maxChars": 34, "optional": true },
+
+    { "key": "STAT_1_VALUE", "find": "data-count=\"28\"", "format": "data-count=\"{}\"", "label": "Years trading", "type": "number", "maxChars": 7 },
+    { "key": "STAT_2_VALUE", "find": "data-count=\"312\"", "format": "data-count=\"{}\"", "label": "Projects delivered", "type": "number", "maxChars": 7 },
+    { "key": "STAT_3_VALUE", "find": "data-count=\"40\"", "format": "data-count=\"{}\"", "label": "Team on the books", "type": "number", "maxChars": 7 },
+    { "key": "STAT_4_VALUE", "find": "data-count=\"9\"", "format": "data-count=\"{}\"", "label": "Trades in-house", "type": "number", "maxChars": 7 }
+  ],
+
+  "images": [
+    { "key": "HERO", "find": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2400&q=80", "label": "Hero photo", "ratio": "16/9" },
+    { "key": "ABOUT", "find": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80", "label": "About photo", "ratio": "4/5" },
+    { "key": "WORK_1", "find": "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1600&q=80", "label": "Work 1", "ratio": "16/11" },
+    { "key": "WORK_2", "find": "https://images.unsplash.com/photo-1508450859948-4e04fabaa4ea?auto=format&fit=crop&w=1200&q=80", "label": "Work 2", "ratio": "3/4" },
+    { "key": "WORK_3", "find": "https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&w=1200&q=80", "label": "Work 3", "ratio": "4/5" },
+    { "key": "WORK_4", "find": "https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?auto=format&fit=crop&w=1600&q=80", "label": "Work 4", "ratio": "16/10" },
+    { "key": "WORK_5", "find": "https://images.unsplash.com/photo-1503708928676-1cb796a0891e?auto=format&fit=crop&w=1600&q=80", "label": "Work 5", "ratio": "3/2" },
+    { "key": "WORK_6", "find": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80", "label": "Work 6", "ratio": "4/5" }
+  ]
+}

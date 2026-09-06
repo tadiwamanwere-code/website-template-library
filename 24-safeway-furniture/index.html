@@ -138,21 +138,8 @@ ul,ol{list-style:none;padding:0}
 .loader-foot{margin-top:22px;display:flex;justify-content:space-between;gap:20px}
 
 /* ==========================================================================
-   1 — TOP BAR + NAV
+   1 — NAV
    ========================================================================== */
-.topbar{
-  background:var(--navy-950);border-bottom:1px solid var(--line);
-  position:relative;z-index:60;
-}
-.topbar-in{
-  display:flex;align-items:center;justify-content:space-between;gap:20px;
-  height:38px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--mute-2);
-}
-.tb-right{display:flex;align-items:center;gap:18px}
-.tb-right a{transition:color .25s}
-.tb-right a:hover{color:var(--accent)}
-.tb-sep{width:1px;height:12px;background:var(--line-2)}
-.tb-hours{white-space:nowrap}
 
 .nav{
   position:sticky;top:0;z-index:80;height:var(--nav-h);
@@ -587,7 +574,6 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
   .nav-links{display:none}
   .nav-cta{display:none}
   .burger{display:grid}
-  .tb-hours{display:none}
   .hero-copy{max-width:100%}
   .hero-dims{display:none}
   .sec-head-split{grid-template-columns:1fr;align-items:start;gap:26px}
@@ -623,8 +609,6 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
 }
 @media(max-width:640px){
   body{font-size:16px}
-  .topbar-in{height:auto;padding:9px 0;flex-direction:column;align-items:flex-start;gap:4px}
-  .tb-right{gap:12px;font-size:10.5px}
   .fig-grid{grid-template-columns:1fr}
   .step-specs{grid-template-columns:1fr}
   .rv-specs{grid-template-columns:1fr}
@@ -679,20 +663,6 @@ body.menu-on .burger span:nth-child(3){transform:translateY(-4.5px) rotate(-45de
     <div class="loader-foot">
       <span class="lab">Wall to wall</span>
       <span class="lab">Tolerance ±2 mm</span>
-    </div>
-  </div>
-</div>
-
-<!-- =====================================================================
-     TOP BAR
-     ===================================================================== -->
-<div class="topbar">
-  <div class="shell topbar-in">
-    <span class="tb-hours">Showroom Mon–Fri 07:30–17:00 &middot; Sat 08:00–13:00</span>
-    <div class="tb-right">
-      <a href="#quote">34 Amby Drive, Greendale, Harare</a>
-      <span class="tb-sep"></span>
-      <a href="tel:+263772868870">+263 772 868 870</a>
     </div>
   </div>
 </div>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tower Construction — Building &amp; Civil Engineering Contractors</title>
-<meta name="description" content="Tower Construction. Building and civil engineering contractors serving Zimbabwe since 1980. Category &quot;A&quot; registered with the Construction Industry Federation of Zimbabwe.">
+<meta name="description" content="Tower Construction. Building and civil engineering contractors based in Harare. Fully registered and insured, with our own trades and our own site management.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -23,27 +23,53 @@
    Type    : Inter 800/900 display  +  JetBrains Mono for every label & figure
    ========================================================================== */
 
+/* ==========================================================================
+   THEME TABLE — four approved themes, six values each.
+
+   Everything else on the page is derived from these six below, so a theme
+   can never break a colour pair. Never add a fifth free-choice colour.
+   Set the theme on the root element:  <html data-theme="charcoal-rust">
+   No attribute = navy-amber.
+   ========================================================================== */
+:root,
+html[data-theme="navy-amber"]{
+  --brand:#0E2A5E;    /* headings, dark panels, the brand ground */
+  --accent:#F5A833;   /* the one accent: CTAs, index numbers, drawn line */
+  --ink:#0B1C36;      /* body text */
+  --paper:#FFFFFF;    /* page background */
+  --paper-2:#F4F5F7;  /* alternate band background */
+  --rule:#D9DEE6;     /* hairlines and borders */
+}
+html[data-theme="charcoal-rust"]{
+  --brand:#282B31; --accent:#E07E47; --ink:#191B1F;
+  --paper:#FFFFFF; --paper-2:#F5F4F2; --rule:#DEDAD4;
+}
+html[data-theme="forest-brass"]{
+  --brand:#123529; --accent:#C08F33; --ink:#0F2219;
+  --paper:#FFFFFF; --paper-2:#F2F5F1; --rule:#D5DDD4;
+}
+html[data-theme="slate-teal"]{
+  --brand:#1E3138; --accent:#18B0B0; --ink:#12222A;
+  --paper:#FFFFFF; --paper-2:#F0F5F6; --rule:#D2DDE0;
+}
+
 :root{
-  --navy:#0E2A5E;
-  --navy-2:#0A2049;
-  --navy-3:#061634;
+  /* ---- derived from the six above. Do not set these per theme. --------- */
+  --navy:var(--brand);
+  --navy-2:color-mix(in srgb, var(--brand) 76%, #000);
+  --navy-3:color-mix(in srgb, var(--brand) 54%, #000);
   --navy-line:rgba(255,255,255,.16);
 
-  --amber:#F5A833;
-  --amber-2:#E0961F;
+  --amber:var(--accent);
+  --amber-2:color-mix(in srgb, var(--accent) 88%, #000);
 
   --white:#FFFFFF;
-  --paper:#FFFFFF;
-  --paper-2:#F4F5F7;
-  --paper-3:#EDEFF2;
+  --paper-3:color-mix(in srgb, var(--paper-2) 70%, var(--rule));
 
-  --ink:#0B1C36;
-  --ink-2:#374764;
-  --grey:#66738A;
-  --grey-2:#93A0B4;
-
-  --rule:#D9DEE6;
-  --rule-2:#C3CAD6;
+  --ink-2:color-mix(in srgb, var(--ink) 81%, var(--paper));
+  --grey:color-mix(in srgb, var(--ink) 62%, var(--paper));
+  --grey-2:color-mix(in srgb, var(--ink) 42%, var(--paper));
+  --rule-2:color-mix(in srgb, var(--rule) 88%, var(--ink));
 
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -63,7 +89,8 @@ body{
   margin:0;background:var(--paper);color:var(--ink);
   font-family:var(--sans);font-size:16px;line-height:1.6;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;
+  overflow-x:clip;   /* never 'hidden': it makes <body> a scroll container
+                        and silently kills position:sticky and scrollTo */
 }
 img{display:block;max-width:100%;}
 a{color:inherit;text-decoration:none;}
@@ -138,6 +165,7 @@ ol,ul{list-style:none;padding:0;}
 .intro-name{
   font-family:var(--sans);font-weight:900;text-transform:uppercase;
   letter-spacing:-.03em;line-height:.9;font-size:clamp(28px,5vw,68px);
+  max-width:11ch;   /* wraps any business name; never a hard <br> */
 }
 .intro-count{
   font-family:var(--mono);font-weight:700;font-variant-numeric:tabular-nums;
@@ -155,15 +183,6 @@ ol,ul{list-style:none;padding:0;}
    HEADER
    ========================================================================== */
 .hdr-shell{position:fixed;top:0;left:0;right:0;z-index:90;}
-.topbar{
-  background:var(--navy-3);color:rgba(255,255,255,.72);
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  height:34px;overflow:hidden;transition:height .4s var(--ease);
-}
-.topbar-in{display:flex;align-items:center;justify-content:space-between;height:34px;gap:20px;}
-.topbar b{color:var(--amber);font-weight:500;}
-.hdr-shell.is-stuck .topbar{height:0;}
-
 .hdr{
   height:var(--hdr);
   transition:background-color .4s var(--ease),border-color .4s var(--ease);
@@ -174,6 +193,7 @@ ol,ul{list-style:none;padding:0;}
 
 .brand{display:flex;align-items:center;gap:12px;color:var(--white);}
 .brand .mark{width:26px;height:30px;flex:none;}
+.brand .mark .bar{fill:var(--amber);}
 .brand-txt strong{
   display:block;font-weight:800;font-size:15px;letter-spacing:.06em;
   text-transform:uppercase;line-height:1.1;
@@ -204,13 +224,24 @@ ol,ul{list-style:none;padding:0;}
    HERO
    ========================================================================== */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;background:var(--navy);}
+/* a flex child with margin:0 auto stops stretching and shrinks to its
+   content, so every .wrap inside the hero has to claim its width */
+.hero > .wrap{width:100%;}
 .hero-media{position:absolute;inset:-14% 0 -14% 0;will-change:transform;}
 .hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 38%;}
-.hero-veil{position:absolute;inset:0;background:var(--navy);mix-blend-mode:multiply;opacity:.88;}
-.hero-veil2{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,22,52,.72) 0%,rgba(6,22,52,.1) 34%,rgba(6,22,52,.28) 66%,rgba(6,22,52,.88) 100%);}
+.hero-veil{position:absolute;inset:0;background:var(--navy);mix-blend-mode:multiply;opacity:.28;}
+/* the only gradient on the page: a legibility scrim, and only where the
+   type sits. Vertical for the header and the fact strip, horizontal so
+   the headline has ground under it while the right of the photo stays open. */
+.hero-veil2{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.5) 34%,rgba(0,0,0,.12) 62%,rgba(0,0,0,0) 85%),
+    linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 26%,rgba(0,0,0,0) 56%,rgba(0,0,0,.86) 100%);
+}
 .hero-grid{
   position:absolute;inset:0;pointer-events:none;
-  background-image:linear-gradient(to right,rgba(255,255,255,.085) 1px,transparent 1px);
+  background-image:linear-gradient(to right,rgba(255,255,255,.06) 1px,transparent 1px);
   background-size:calc(100% / 6) 100%;
 }
 .hero-body{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;justify-content:center;color:var(--white);padding-top:calc(var(--hdr) + 74px);padding-bottom:44px;width:100%;}
@@ -229,7 +260,7 @@ ol,ul{list-style:none;padding:0;}
 }
 .hero-foot .cell{padding:20px 0 26px;border-left:1px solid var(--navy-line);padding-left:20px;}
 .hero-foot .cell:first-child{border-left:0;padding-left:0;}
-.hero-foot .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.hero-foot .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.66);}
 .hero-foot .v{font-family:var(--mono);font-size:clamp(13px,1.35vw,17px);font-weight:700;color:var(--white);margin-top:6px;font-variant-numeric:tabular-nums;}
 .hero-foot .v em{font-style:normal;color:var(--amber);}
 .hero-explore{
@@ -244,15 +275,6 @@ ol,ul{list-style:none;padding:0;}
 .hero-explore .bar{width:1px;height:64px;background:rgba(255,255,255,.28);position:relative;overflow:hidden;}
 .hero-explore .bar i{position:absolute;top:0;left:0;width:100%;height:34%;background:var(--amber);animation:runbar 2.4s var(--ease-io) infinite;}
 @keyframes runbar{0%{transform:translateY(-110%);}60%,100%{transform:translateY(310%);}}
-
-/* ---- ticker (supporting only) -------------------------------------------- */
-.ticker{background:var(--navy-3);color:var(--white);overflow:hidden;border-block:1px solid var(--navy-line);}
-.ticker-track{display:flex;width:max-content;}
-.ticker-track span{
-  font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.22em;
-  text-transform:uppercase;padding:15px 0;white-space:nowrap;display:flex;align-items:center;
-}
-.ticker-track span i{display:inline-block;width:5px;height:5px;background:var(--amber);margin:0 26px;flex:none;}
 
 /* ==========================================================================
    SECTION FURNITURE
@@ -412,7 +434,7 @@ ol,ul{list-style:none;padding:0;}
   transition:border-color .45s var(--ease),background-color .45s var(--ease),box-shadow .45s var(--ease);
 }
 .proc-step.r .proc-node{left:calc(50% + var(--jog));}
-.proc-step.is-on .proc-node{border-color:var(--amber);background:var(--amber);box-shadow:0 0 0 6px rgba(245,168,51,.16);}
+.proc-step.is-on .proc-node{border-color:var(--amber);background:var(--amber);box-shadow:0 0 0 6px color-mix(in srgb, var(--accent) 16%, transparent);}
 .proc-card{position:relative;z-index:1;}
 .proc-card .i{
   font-family:var(--mono);font-size:clamp(28px,3.4vw,50px);font-weight:700;line-height:1;
@@ -493,9 +515,18 @@ ol,ul{list-style:none;padding:0;}
 @media (max-width:1023px){
   .nav{display:none;}
   .burger{display:block;}
+
+  /* header: wordmark and burger only. The tagline wrapped to three lines and
+     the CTA to two, which pushed the logo out of a fixed-height bar. */
+  .hdr{height:auto;}
+  .hdr-in{height:auto;min-height:62px;padding-block:9px;gap:12px;}
+  .brand-txt strong{font-size:14px;white-space:nowrap;}
+  .brand-txt span{display:none;}
+  .hdr .btn{display:none;}
+  .nav a{white-space:nowrap;}
   .about-grid{grid-template-columns:1fr;}
   .about-media{max-width:520px;}
-  .cap-inner{grid-template-columns:1fr;}
+  .cap-inner{grid-template-columns:minmax(0,1fr);}
   .cap-rows{margin-top:40px;}
   .quote-grid{grid-template-columns:1fr;}
   .creds{grid-template-columns:repeat(3,1fr);}
@@ -526,8 +557,6 @@ ol,ul{list-style:none;padding:0;}
   .hero-explore{display:none;}
 }
 @media (max-width:719px){
-  .topbar-in .t-hide{display:none;}
-  .topbar-in{justify-content:center;}
   .svc-grid{grid-template-columns:1fr;}
   .creds{grid-template-columns:repeat(2,1fr);}
   .form{grid-template-columns:1fr;}
@@ -536,6 +565,71 @@ ol,ul{list-style:none;padding:0;}
   .p1,.p2,.p3,.p4,.p5,.p6{grid-column:1 / -1;}
   .contact-list div{grid-template-columns:1fr;gap:6px;}
   .hero h1{font-size:clamp(40px,12.5vw,80px);}
+}
+
+/* ==========================================================================
+   MOBILE
+
+   Phones are where a pitch link actually gets opened, so this is a first-class
+   width, not a fallback. Three things are fixed here: the mono micro-labels
+   are lifted to a readable floor, every tap target is brought to 44px, and
+   the capability row is restacked so its spec column can wrap.
+   ========================================================================== */
+@media (max-width:719px){
+
+  /* --- readable labels. The house style is tiny tracked mono; at 9px on a
+         phone that is decoration, not text. Sizes up, tracking down a touch
+         so the lines still fit. --- */
+  .brand-txt span{font-size:10px;letter-spacing:.18em;}
+  .eyebrow{font-size:10.5px;letter-spacing:.18em;gap:10px;}
+  .eyebrow i{width:28px;}
+  .sec-idx{font-size:10.5px;letter-spacing:.16em;}
+  .hero-sub{font-size:11.5px;letter-spacing:.2em;}
+  .hero-foot .k{font-size:10.5px;letter-spacing:.16em;}
+  .stat .l,.about-badge .l{font-size:11px;letter-spacing:.16em;}
+  .cred .k,.proj-spec .k{font-size:10px;letter-spacing:.16em;}
+  .svc .spec,.proc-card .meta{font-size:10.5px;letter-spacing:.16em;}
+  .contact-list .k{font-size:10.5px;letter-spacing:.16em;}
+  .fld label{font-size:10px;letter-spacing:.16em;}
+  .form-foot small{font-size:10.5px;letter-spacing:.1em;}
+  .form-msg{font-size:11px;letter-spacing:.1em;}
+  .sla{font-size:10.5px;letter-spacing:.16em;}
+  .ftr h4{font-size:10.5px;letter-spacing:.18em;}
+  .ftr-bot p,.ftr-bot a{font-size:10.5px;letter-spacing:.12em;}
+  .gal-foot p,.proc-foot p{font-size:10.5px;letter-spacing:.12em;}
+
+  /* --- 44px tap targets --- */
+  .burger{padding:11px;margin-right:-11px;}
+  .brand{padding:7px 0;}
+  .nav a{padding:12px 0;}
+  .btn{padding:16px 22px;}
+  .hdr .btn{padding:14px 18px;}
+  .ftr li{margin-bottom:0;}
+  .ftr li a{display:block;padding:12px 0;}
+  .ftr-bot a{display:inline-block;padding:14px 0;}
+  .fld{padding:14px 16px 12px;}
+  .fld input,.fld select,.fld textarea{padding:12px 0 8px;}
+  .fld .chev{bottom:20px;}
+
+  /* --- the capability row wraps instead of overflowing --- */
+  .cap-rows{padding-left:20px;}
+  .cap-row{grid-template-columns:auto minmax(0,1fr);row-gap:6px;column-gap:14px;}
+  .cap-row .f{grid-column:1 / -1;text-align:left;white-space:normal;}
+
+  /* --- the hero on a phone --- */
+  /* the horizontal scrim is sized for a wide frame; on a 390px hero it covers
+     the whole picture, so only the vertical one is kept */
+  .hero-veil2{
+    background:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.14) 30%,rgba(0,0,0,.34) 62%,rgba(0,0,0,.88) 100%);
+  }
+  /* 64vw is 237px here, which forced an ugly two-word wrap */
+  .hero-sub{max-width:none;line-height:1.75;}
+  .hero-lede{margin-top:18px;}
+
+  /* --- everything else that reads better stacked at this width --- */
+  .creds{grid-template-columns:1fr;}
+  .hero-foot{grid-template-columns:1fr 1fr;}
+  .about-media{max-width:none;}
 }
 
 /* ==========================================================================
@@ -561,30 +655,24 @@ ol,ul{list-style:none;padding:0;}
   <div class="intro-body">
     <div class="intro-inner" style="width:100%">
       <div class="intro-row">
-        <div class="intro-name" id="introName">Tower<br>Construction</div>
+        <div class="intro-name" id="introName">Tower Construction</div>
         <div class="intro-count num"><span id="introNum">0</span><sup>%</sup></div>
       </div>
       <div class="intro-plumb"><i id="introBar"></i></div>
-      <div class="intro-meta">Est. 1980 &nbsp;·&nbsp; Harare, Zimbabwe &nbsp;·&nbsp; CIFOZ Category &ldquo;A&rdquo; &nbsp;·&nbsp; Reg. 0143/A</div>
+      <div class="intro-meta">Building &amp; Civil Engineering &nbsp;·&nbsp; Harare &nbsp;·&nbsp; Registered, insured, bonded</div>
     </div>
   </div>
 </div>
 
 <!-- ======================= HEADER ======================= -->
 <div class="hdr-shell" id="hdrShell">
-  <div class="topbar">
-    <div class="wrap topbar-in">
-      <span class="t-hide">14 Bessemer Road, Graniteside, Harare</span>
-      <span>+263 24 277 1980 &nbsp;·&nbsp; <b>CIFOZ Category &ldquo;A&rdquo; — Reg. 0143/A</b></span>
-    </div>
-  </div>
   <div class="hdr" id="hdr">
     <div class="wrap hdr-in">
       <a class="brand" href="#top" aria-label="Tower Construction, home">
         <svg class="mark" viewBox="0 0 28 32" aria-hidden="true">
           <path d="M14 1 L21.5 9.5 H6.5 Z" fill="currentColor"/>
           <rect x="10.5" y="11.5" width="7" height="14.5" fill="currentColor"/>
-          <rect x="3" y="28" width="22" height="3" fill="#F5A833"/>
+          <rect class="bar" x="3" y="28" width="22" height="3"/>
         </svg>
         <span class="brand-txt">
           <strong>Tower Construction</strong>
@@ -612,20 +700,20 @@ ol,ul{list-style:none;padding:0;}
 <section class="hero" id="hero">
   <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
   <div class="hero-media" id="heroMedia">
-    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2400&q=80" alt="Tower crane over a reinforced concrete frame at sunset">
+    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2400&q=80" alt="Aerial view of a reinforced foundation slab with the site team walking across it">
   </div>
   <div class="hero-veil"></div>
   <div class="hero-veil2"></div>
   <div class="hero-grid"></div>
 
   <div class="wrap hero-body">
-    <p class="eyebrow" data-fade><i></i>Since 1980</p>
+    <p class="eyebrow" data-fade><i></i>Contractors</p>
     <h1 class="dsp">
       <span class="ln"><span>Tower</span></span>
       <span class="ln"><span>Construction</span></span>
     </h1>
-    <p class="hero-sub" data-fade>Building &amp; Civil Engineering Contractors &nbsp;·&nbsp; Harare, Zimbabwe</p>
-    <p class="hero-lede" data-fade>Turning ambition into concrete reality. Forty-five years of structural, civil and industrial work across Zimbabwe &mdash; Category &ldquo;A&rdquo; registered with the Construction Industry Federation of Zimbabwe.</p>
+    <p class="hero-sub" data-fade>Building &amp; Civil Engineering Contractors &nbsp;·&nbsp; Harare</p>
+    <p class="hero-lede" data-fade>Turning ambition into concrete reality. Structural, civil and industrial work, priced by the people who will build it and run by a site manager who is there every day.</p>
     <div class="hero-btns" data-fade>
       <a href="#quote" class="btn btn-amber" data-magnet>Request a Quote
         <svg width="15" height="10" viewBox="0 0 15 10" fill="none" aria-hidden="true"><path d="M0 5h13M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg>
@@ -636,10 +724,10 @@ ol,ul{list-style:none;padding:0;}
 
   <div class="wrap">
     <div class="hero-foot" data-fade>
-      <div class="cell"><div class="k">Established</div><div class="v">1980</div></div>
-      <div class="cell"><div class="k">Projects delivered</div><div class="v">312</div></div>
-      <div class="cell"><div class="k">CIFOZ grading</div><div class="v"><em>Category &ldquo;A&rdquo;</em></div></div>
-      <div class="cell"><div class="k">Days without LTI</div><div class="v">2 190</div></div>
+      <div class="cell"><div class="k">Registration</div><div class="v"><em>Fully registered</em></div></div>
+      <div class="cell"><div class="k">Insurance</div><div class="v">Fully insured</div></div>
+      <div class="cell"><div class="k">Quotations</div><div class="v">Free &amp; itemised</div></div>
+      <div class="cell"><div class="k">Response</div><div class="v">2 working days</div></div>
     </div>
   </div>
 
@@ -649,32 +737,27 @@ ol,ul{list-style:none;padding:0;}
   </div>
 </section>
 
-<!-- ======================= TICKER (supporting) ======================= -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track" id="tickerTrack"></div>
-</div>
-
 <!-- ======================= ABOUT + STATS ======================= -->
 <section class="sec" id="about">
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow dark"><i></i>01 &mdash; The Firm</p>
-      <span class="sec-idx">Harare &nbsp;/&nbsp; Est. 1980</span>
+      <span class="sec-idx">Based in Harare</span>
     </div>
 
     <div class="about-grid">
       <div class="about-copy">
         <h2 class="dsp h2" data-lines>
           <span class="ln"><span>Building</span></span>
-          <span class="ln"><span>Zimbabwe&rsquo;s</span></span>
-          <span class="ln"><span>Future</span></span>
+          <span class="ln"><span>Work That</span></span>
+          <span class="ln"><span>Lasts</span></span>
         </h2>
         <p class="lead" data-fade>We are contractors, not consultants. Every job is priced by the people who will build it, run by a permanent site agent, and handed over with a full as-built set.</p>
-        <p data-fade>Tower Construction started in 1980 with two tipper trucks and a contract to build a grain depot outside Marondera. Forty-five years on we hold Category &ldquo;A&rdquo; registration with the Construction Industry Federation of Zimbabwe, run sixty-eight owned plant units out of the Msasa yard, and employ three hundred and forty people directly.</p>
-        <p data-fade>Concrete, roads, water, steel. We work across all ten provinces, in-house from setting out to commissioning, and we have never sub-let a structural frame. That is the whole method. It has not changed in forty-five years.</p>
+        <p data-fade>We started small, with a few machines and a willingness to take the jobs other firms turned down. We still run our own plant, we still employ our crews directly, and we still price every job ourselves. That is the whole method, and it is why clients come back.</p>
+        <p data-fade>Concrete, roads, water, steel. We work in-house from setting out to commissioning, we do not sub-let the structural frame, and the person who prices your job is the person who runs it.</p>
         <div class="sig" data-fade>
-          <strong>R. T. Mutasa</strong>
-          <span>Managing Director &nbsp;·&nbsp; Pr.Eng, ZIE</span>
+          <strong>The Managing Director</strong>
+          <span>Speak to us directly</span>
         </div>
       </div>
 
@@ -682,32 +765,32 @@ ol,ul{list-style:none;padding:0;}
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <div class="ph"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80" alt="Site engineer and crane operator on a concrete frame" loading="lazy" decoding="async"></div>
         <div class="about-badge">
-          <div class="n num"><span data-count="45">0</span></div>
-          <div class="l">Years on site &nbsp;·&nbsp; 1980&ndash;2026</div>
+          <div class="n num"><span data-count="28">0</span></div>
+          <div class="l">Years on site</div>
         </div>
       </div>
     </div>
 
     <div class="stats">
       <div class="stat">
-        <div class="n"><span data-count="45">0</span></div>
+        <div class="n"><span data-count="28">0</span></div>
         <div class="l">Years trading</div>
-        <div class="s">Continuously registered and trading since March 1980.</div>
+        <div class="s">Registered and trading without a break in that time.</div>
       </div>
       <div class="stat">
         <div class="n"><span data-count="312">0</span></div>
         <div class="l">Projects delivered</div>
-        <div class="s">Practical completion certificates issued, all provinces.</div>
+        <div class="s">Practical completion certificates issued and signed off.</div>
       </div>
       <div class="stat">
-        <div class="n"><span data-count="1480000">0</span><em>m&sup2;</em></div>
-        <div class="l">Square metres built</div>
-        <div class="s">Gross floor area constructed to date, buildings only.</div>
+        <div class="n"><span data-count="40">0</span></div>
+        <div class="l">Team on the books</div>
+        <div class="s">Tradesmen, operators and site staff, employed directly.</div>
       </div>
       <div class="stat">
-        <div class="n"><span data-count="2190">0</span></div>
-        <div class="l">Days without LTI</div>
-        <div class="s">No lost-time injury since 12 September 2019.</div>
+        <div class="n"><span data-count="9">0</span></div>
+        <div class="l">Trades in-house</div>
+        <div class="s">Disciplines run by our own teams, not sub-contracted.</div>
       </div>
     </div>
   </div>
@@ -729,22 +812,22 @@ ol,ul{list-style:none;padding:0;}
 
       <div class="cap-rows" id="capRows">
         <div class="cap-spine"><i id="capFill"></i></div>
-        <div class="cap-row"><span class="i">01</span><span class="t">Bonding capacity</span><span class="f">US$ 25M &nbsp;/&nbsp; single contract</span></div>
-        <div class="cap-row"><span class="i">02</span><span class="t">Owned plant fleet</span><span class="f">68 units &nbsp;/&nbsp; Msasa yard</span></div>
-        <div class="cap-row"><span class="i">03</span><span class="t">Direct workforce</span><span class="f">340 employed &nbsp;/&nbsp; 41 artisans</span></div>
-        <div class="cap-row"><span class="i">04</span><span class="t">Concrete batching</span><span class="f">60 m&sup3; / hr &nbsp;/&nbsp; own pump</span></div>
-        <div class="cap-row"><span class="i">05</span><span class="t">Survey &amp; setting out</span><span class="f">GNSS RTK + 2 total stations</span></div>
-        <div class="cap-row"><span class="i">06</span><span class="t">Quality management</span><span class="f">ISO 9001:2015 &nbsp;/&nbsp; cube tested</span></div>
+        <div class="cap-row"><span class="i">01</span><span class="t">Bonding &amp; guarantees</span><span class="f">Arranged per contract</span></div>
+        <div class="cap-row"><span class="i">02</span><span class="t">Plant &amp; equipment</span><span class="f">The right kit on site</span></div>
+        <div class="cap-row"><span class="i">03</span><span class="t">Workforce</span><span class="f">Our own trades and crews</span></div>
+        <div class="cap-row"><span class="i">04</span><span class="t">Materials &amp; supply</span><span class="f">Priced and scheduled up front</span></div>
+        <div class="cap-row"><span class="i">05</span><span class="t">Survey &amp; setting out</span><span class="f">Done before we price</span></div>
+        <div class="cap-row"><span class="i">06</span><span class="t">Quality management</span><span class="f">Tested, recorded, signed off</span></div>
       </div>
     </div>
 
     <div class="creds" data-stagger>
-      <div class="cred"><span class="k">Grading</span><span class="v">CIFOZ<br>Category &ldquo;A&rdquo;</span></div>
-      <div class="cred"><span class="k">Registration</span><span class="v">Reg. No.<br>0143/A</span></div>
-      <div class="cred"><span class="k">Procurement</span><span class="v">PRAZ<br>S/2019/0442</span></div>
-      <div class="cred"><span class="k">Quality</span><span class="v">ISO 9001:2015<br>QMS/ZW/1187</span></div>
-      <div class="cred"><span class="k">Revenue</span><span class="v">ZIMRA BP<br>0200147993</span></div>
-      <div class="cred"><span class="k">Safety</span><span class="v">NSSA<br>41-77-0195</span></div>
+      <div class="cred"><span class="k">Registration</span><span class="v">Company<br>registered</span></div>
+      <div class="cred"><span class="k">Insurance</span><span class="v">Works &amp; public<br>liability</span></div>
+      <div class="cred"><span class="k">Procurement</span><span class="v">Tender<br>documents held</span></div>
+      <div class="cred"><span class="k">Quality</span><span class="v">Documented<br>QA system</span></div>
+      <div class="cred"><span class="k">Revenue</span><span class="v">Tax<br>compliant</span></div>
+      <div class="cred"><span class="k">Safety</span><span class="v">Safety file<br>per site</span></div>
     </div>
   </div>
 </section>
@@ -760,39 +843,39 @@ ol,ul{list-style:none;padding:0;}
           <span class="ln"><span>We Take On</span></span>
         </h2>
       </div>
-      <span class="sec-idx">Six disciplines &nbsp;/&nbsp; all in-house</span>
+      <span class="sec-idx">Six disciplines &nbsp;/&nbsp; one contractor</span>
     </div>
 
     <div class="svc-grid" data-stagger>
       <article class="svc">
         <span class="i">01</span>
         <h3 class="dsp h3">Structural<br>Concrete</h3>
-        <p>Formwork, reinforcement and in-situ pours from pad footings to a fourteen-storey core. Own batching plant, own boom pump, own cube testing.</p>
+        <p>Formwork, reinforcement and in-situ pours, from pad footings to a full building core. Mix designs tested, cubes taken, results recorded.</p>
         <span class="spec">In-situ · Precast · Post-tension</span>
       </article>
       <article class="svc">
         <span class="i">02</span>
         <h3 class="dsp h3">Roads &amp;<br>Earthworks</h3>
-        <p>Bulk excavation, haul roads, subgrade, base and surfacing. Twenty-two earthmoving units on rotation across three provinces at any one time.</p>
-        <span class="spec">27.4 km surfaced in 2025</span>
+        <p>Bulk excavation, haul roads, subgrade, base and surfacing. Levels checked against the drawing before anything is covered over.</p>
+        <span class="spec">Setting out · Base · Surfacing</span>
       </article>
       <article class="svc">
         <span class="i">03</span>
         <h3 class="dsp h3">Industrial<br>Buildings</h3>
         <p>Warehousing, workshops, retail and office. Design-and-build, or construct-only priced against your bill of quantities line by line.</p>
-        <span class="spec">18 400 m&sup2; largest single shed</span>
+        <span class="spec">Design-build or construct-only</span>
       </article>
       <article class="svc">
         <span class="i">04</span>
         <h3 class="dsp h3">Water &amp;<br>Sewer</h3>
         <p>Bulk mains, pump stations, reservoirs and township reticulation for local authorities, mines and private estates.</p>
-        <span class="spec">41 km DN450 uPVC, Chiredzi</span>
+        <span class="spec">Mains · Pumps · Reticulation</span>
       </article>
       <article class="svc">
         <span class="i">05</span>
         <h3 class="dsp h3">Steel &amp;<br>Cladding</h3>
-        <p>Portal frames, mezzanines, walkways and IBR cladding fabricated in the Msasa shop and erected by our own riggers.</p>
-        <span class="spec">620 tonnes fabricated in 2025</span>
+        <p>Portal frames, mezzanines, walkways and sheet cladding, fabricated off site and erected by our own riggers.</p>
+        <span class="spec">Fabricated, galvanised, erected</span>
       </article>
       <article class="svc">
         <span class="i">06</span>
@@ -809,103 +892,103 @@ ol,ul{list-style:none;padding:0;}
   <div class="wrap">
     <div class="sec-head" style="padding-top:clamp(40px,5vw,80px);border-top:2px solid var(--ink)">
       <div>
-        <p class="eyebrow dark"><i></i>04 &mdash; Our Gallery</p>
+        <p class="eyebrow dark"><i></i>04 &mdash; Selected Work</p>
         <h2 class="dsp h2" data-lines style="margin-top:22px">
-          <span class="ln"><span>Six Jobs,</span></span>
-          <span class="ln"><span>Six Provinces</span></span>
+          <span class="ln"><span>The Work</span></span>
+          <span class="ln"><span>We Deliver</span></span>
         </h2>
       </div>
-      <span class="sec-idx">Selected works &nbsp;/&nbsp; 2021&ndash;2025</span>
+      <span class="sec-idx">Selected works &nbsp;/&nbsp; recent contracts</span>
     </div>
 
     <div class="gal">
       <figure class="proj p1" data-proj>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <div class="ph"><span class="tag">Industrial</span><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80" alt="Msasa Logistics Park warehouse frame" loading="lazy" decoding="async"></div>
+        <div class="ph"><span class="tag">Industrial</span><img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1600&q=80" alt="Container and freight yard seen from above" loading="lazy" decoding="async"></div>
         <figcaption>
-          <div class="proj-head"><h3 class="dsp h3">Msasa Logistics Park</h3><span class="yr num">2024</span></div>
+          <div class="proj-head"><h3 class="dsp h3">Industrial &amp; Logistics</h3><span class="yr num">New build</span></div>
           <div class="proj-spec">
-            <div><span class="k">Location</span><span class="v">Msasa, Harare</span></div>
-            <div><span class="k">Floor area</span><span class="v">18 400 m&sup2;</span></div>
+            <div><span class="k">Sector</span><span class="v">Warehousing &amp; yards</span></div>
+            <div><span class="k">Structure</span><span class="v">Steel portal frame</span></div>
             <div><span class="k">Client</span><span class="v">Private developer</span></div>
-            <div><span class="k">Contract value</span><span class="v">US$ 9.4M</span></div>
+            <div><span class="k">Route</span><span class="v">Design and build</span></div>
           </div>
         </figcaption>
       </figure>
 
       <figure class="proj p2" data-proj>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <div class="ph"><span class="tag">Civil</span><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" alt="Bulk water main pipeline trench works" loading="lazy" decoding="async"></div>
+        <div class="ph"><span class="tag">Structures</span><img src="https://images.unsplash.com/photo-1508450859948-4e04fabaa4ea?auto=format&fit=crop&w=1200&q=80" alt="Reinforced concrete frame and scaffolding on a building under construction" loading="lazy" decoding="async"></div>
         <figcaption>
-          <div class="proj-head"><h3 class="dsp h3">Chiredzi Bulk Water Main</h3><span class="yr num">2023</span></div>
+          <div class="proj-head"><h3 class="dsp h3">Frames &amp; Structures</h3><span class="yr num">In-situ</span></div>
           <div class="proj-spec">
-            <div><span class="k">Location</span><span class="v">Chiredzi, Masvingo</span></div>
-            <div><span class="k">Extent</span><span class="v">41 km DN450</span></div>
-            <div><span class="k">Client</span><span class="v">Municipal authority</span></div>
-            <div><span class="k">Contract value</span><span class="v">US$ 6.2M</span></div>
+            <div><span class="k">Sector</span><span class="v">Commercial &amp; industrial</span></div>
+            <div><span class="k">Structure</span><span class="v">Reinforced concrete</span></div>
+            <div><span class="k">Client</span><span class="v">Main contractor</span></div>
+            <div><span class="k">Route</span><span class="v">Construct only</span></div>
           </div>
         </figcaption>
       </figure>
 
       <figure class="proj p3" data-proj>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <div class="ph"><span class="tag">Healthcare</span><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="Borrowdale Medical Centre completed facade" loading="lazy" decoding="async"></div>
+        <div class="ph"><span class="tag">Commercial</span><img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&w=1200&q=80" alt="Completed white rendered commercial building in daylight" loading="lazy" decoding="async"></div>
         <figcaption>
-          <div class="proj-head"><h3 class="dsp h3">Borrowdale Medical Centre</h3><span class="yr num">2022</span></div>
+          <div class="proj-head"><h3 class="dsp h3">Offices &amp; Fit-Out</h3><span class="yr num">Fit-out</span></div>
           <div class="proj-spec">
-            <div><span class="k">Location</span><span class="v">Borrowdale, Harare</span></div>
-            <div><span class="k">Floor area</span><span class="v">6 900 m&sup2;</span></div>
-            <div><span class="k">Client</span><span class="v">Private healthcare group</span></div>
-            <div><span class="k">Contract value</span><span class="v">US$ 7.8M</span></div>
+            <div><span class="k">Sector</span><span class="v">Commercial &amp; retail</span></div>
+            <div><span class="k">Structure</span><span class="v">Frame and envelope</span></div>
+            <div><span class="k">Client</span><span class="v">Property owner</span></div>
+            <div><span class="k">Route</span><span class="v">Design and build</span></div>
           </div>
         </figcaption>
       </figure>
 
       <figure class="proj p4" data-proj>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <div class="ph"><span class="tag">Mining</span><img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1600&q=80" alt="Heavy industrial workshop steelwork" loading="lazy" decoding="async"></div>
+        <div class="ph"><span class="tag">Earthworks</span><img src="https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?auto=format&fit=crop&w=1600&q=80" alt="Excavators and a dozer cutting a platform on an earthworks site" loading="lazy" decoding="async"></div>
         <figcaption>
-          <div class="proj-head"><h3 class="dsp h3">Hwange Colliery Workshop</h3><span class="yr num">2021</span></div>
+          <div class="proj-head"><h3 class="dsp h3">Bulk Earthworks</h3><span class="yr num">Site prep</span></div>
           <div class="proj-spec">
-            <div><span class="k">Location</span><span class="v">Hwange, Mat. North</span></div>
-            <div><span class="k">Floor area</span><span class="v">11 200 m&sup2;</span></div>
-            <div><span class="k">Client</span><span class="v">Mining parastatal</span></div>
-            <div><span class="k">Contract value</span><span class="v">US$ 5.1M</span></div>
+            <div><span class="k">Sector</span><span class="v">Sites &amp; platforms</span></div>
+            <div><span class="k">Works</span><span class="v">Cut, fill and compaction</span></div>
+            <div><span class="k">Client</span><span class="v">Developer or mine</span></div>
+            <div><span class="k">Route</span><span class="v">Measured contract</span></div>
           </div>
         </figcaption>
       </figure>
 
       <figure class="proj p5" data-proj>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <div class="ph"><span class="tag">Roads</span><img src="https://images.unsplash.com/photo-1449157291145-7efd050a4d0e?auto=format&fit=crop&w=1600&q=80" alt="Rehabilitated highway and bridge structure" loading="lazy" decoding="async"></div>
+        <div class="ph"><span class="tag">Roads</span><img src="https://images.unsplash.com/photo-1503708928676-1cb796a0891e?auto=format&fit=crop&w=1600&q=80" alt="Excavator working alongside a road under construction" loading="lazy" decoding="async"></div>
         <figcaption>
-          <div class="proj-head"><h3 class="dsp h3">Nyanga Road Rehabilitation</h3><span class="yr num">2025</span></div>
+          <div class="proj-head"><h3 class="dsp h3">Roads &amp; Surfacing</h3><span class="yr num">Rehabilitation</span></div>
           <div class="proj-spec">
-            <div><span class="k">Location</span><span class="v">Nyanga, Manicaland</span></div>
-            <div><span class="k">Extent</span><span class="v">27.4 km</span></div>
+            <div><span class="k">Sector</span><span class="v">Roads &amp; access</span></div>
+            <div><span class="k">Works</span><span class="v">Subgrade to surfacing</span></div>
             <div><span class="k">Client</span><span class="v">Roads authority</span></div>
-            <div><span class="k">Contract value</span><span class="v">US$ 12.6M</span></div>
+            <div><span class="k">Route</span><span class="v">Measured contract</span></div>
           </div>
         </figcaption>
       </figure>
 
       <figure class="proj p6" data-proj>
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
-        <div class="ph"><span class="tag">Residential</span><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80" alt="Kariba Lakeside Apartments completed block" loading="lazy" decoding="async"></div>
+        <div class="ph"><span class="tag">Residential</span><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80" alt="Completed apartment block from the street" loading="lazy" decoding="async"></div>
         <figcaption>
-          <div class="proj-head"><h3 class="dsp h3">Kariba Lakeside Apartments</h3><span class="yr num">2024</span></div>
+          <div class="proj-head"><h3 class="dsp h3">Apartments &amp; Housing</h3><span class="yr num">New build</span></div>
           <div class="proj-spec">
-            <div><span class="k">Location</span><span class="v">Kariba, Mash. West</span></div>
-            <div><span class="k">Floor area</span><span class="v">9 350 m&sup2;</span></div>
-            <div><span class="k">Client</span><span class="v">Hospitality investor</span></div>
-            <div><span class="k">Contract value</span><span class="v">US$ 8.3M</span></div>
+            <div><span class="k">Sector</span><span class="v">Residential</span></div>
+            <div><span class="k">Structure</span><span class="v">Concrete frame</span></div>
+            <div><span class="k">Client</span><span class="v">Property investor</span></div>
+            <div><span class="k">Route</span><span class="v">Design and build</span></div>
           </div>
         </figcaption>
       </figure>
     </div>
 
     <div class="gal-foot">
-      <p>Total contract value shown &nbsp;·&nbsp; <span class="num" style="color:var(--navy);font-weight:700">US$ 49.4M</span></p>
+      <p>Project list and client references &nbsp;·&nbsp; <span class="num" style="color:var(--navy);font-weight:700">on request</span></p>
       <a href="#quote" class="btn btn-navy">Full project list on request
         <svg width="15" height="10" viewBox="0 0 15 10" fill="none" aria-hidden="true"><path d="M0 5h13M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg>
       </a>
@@ -975,7 +1058,7 @@ ol,ul{list-style:none;padding:0;}
           <span class="proc-node"></span>
           <div class="proc-card">
             <div class="i">05</div>
-            <h3 class="dsp h3">Construction</h3>
+            <h3 class="dsp h3">On Site</h3>
             <p>Permanent site agent, weekly valuations, monthly progress photographs and a programme reissued every Friday whether the news is good or not.</p>
             <span class="meta">Programme dependent</span>
           </div>
@@ -993,7 +1076,7 @@ ol,ul{list-style:none;padding:0;}
     </div>
 
     <div class="proc-foot">
-      <p>Average time from first site visit to breaking ground &nbsp;·&nbsp; <span class="num" style="color:var(--amber)">9 weeks</span></p>
+      <p>Six stages, one contracts manager &nbsp;·&nbsp; <span class="num" style="color:var(--amber)">01 &rarr; 06</span></p>
       <a href="#quote" class="btn btn-amber" data-magnet>Start at stage 01
         <svg width="15" height="10" viewBox="0 0 15 10" fill="none" aria-hidden="true"><path d="M0 5h13M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg>
       </a>
@@ -1014,10 +1097,10 @@ ol,ul{list-style:none;padding:0;}
         <p class="lede">Send the drawings, the bill of quantities, or a sketch on the back of an envelope. We will tell you what it costs to build and how long it takes.</p>
 
         <div class="contact-list">
-          <div><span class="k">Head office</span><span class="v">14 Bessemer Road, Graniteside,<br>Harare, Zimbabwe</span></div>
-          <div><span class="k">Plant yard</span><span class="v">Stand 4412, Msasa Industrial, Harare</span></div>
+          <div><span class="k">Office</span><span class="v">Address on request</span></div>
+          <div><span class="k">Area covered</span><span class="v">Harare and surrounding areas</span></div>
           <div><span class="k">Telephone</span><span class="v mono">+263 24 277 1980</span></div>
-          <div><span class="k">Tenders</span><span class="v mono">tenders@towerconstruction.co.zw</span></div>
+          <div><span class="k">Email</span><span class="v mono">hello@example.com</span></div>
           <div><span class="k">Hours</span><span class="v mono">Mon&ndash;Fri 07:30&ndash;17:00 &nbsp;·&nbsp; Sat 08:00&ndash;12:00</span></div>
         </div>
 
@@ -1025,9 +1108,9 @@ ol,ul{list-style:none;padding:0;}
       </div>
 
       <form class="form" id="quoteForm" novalidate>
-        <div class="fld"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" placeholder="Tendai Moyo" required></div>
-        <div class="fld"><label for="f-org">Company / organisation</label><input id="f-org" name="org" type="text" placeholder="Moyo Properties (Pvt) Ltd"></div>
-        <div class="fld"><label for="f-email">Email</label><input id="f-email" name="email" type="email" placeholder="you@company.co.zw" required></div>
+        <div class="fld"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" placeholder="Your name" required></div>
+        <div class="fld"><label for="f-org">Company / organisation</label><input id="f-org" name="org" type="text" placeholder="Your company"></div>
+        <div class="fld"><label for="f-email">Email</label><input id="f-email" name="email" type="email" placeholder="you@company.com" required></div>
         <div class="fld"><label for="f-tel">Telephone</label><input id="f-tel" name="tel" type="tel" placeholder="+263 77 000 0000"></div>
         <div class="fld">
           <label for="f-type">Project type</label>
@@ -1053,7 +1136,7 @@ ol,ul{list-style:none;padding:0;}
           </select>
           <svg class="chev" width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6"/></svg>
         </div>
-        <div class="fld full"><label for="f-site">Site location</label><input id="f-site" name="site" type="text" placeholder="Stand number, suburb, town, province"></div>
+        <div class="fld full"><label for="f-site">Site location</label><input id="f-site" name="site" type="text" placeholder="Street, suburb and town"></div>
         <div class="fld full"><label for="f-notes">Scope notes</label><textarea id="f-notes" name="notes" placeholder="Floor area, storeys, programme, whether drawings exist, target start date."></textarea></div>
         <div class="form-foot">
           <small>Enquiries are logged and answered by a contracts manager, not a call centre.</small>
@@ -1061,7 +1144,7 @@ ol,ul{list-style:none;padding:0;}
             <svg width="15" height="10" viewBox="0 0 15 10" fill="none" aria-hidden="true"><path d="M0 5h13M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg>
           </button>
         </div>
-        <div class="form-msg" id="formMsg">Enquiry logged. Reference TC-2026-0447. A contracts manager will be in touch within two working days.</div>
+        <div class="form-msg" id="formMsg">Enquiry logged. A contracts manager will be in touch within two working days.</div>
       </form>
     </div>
   </div>
@@ -1078,14 +1161,14 @@ ol,ul{list-style:none;padding:0;}
           <svg class="mark" viewBox="0 0 28 32" aria-hidden="true">
             <path d="M14 1 L21.5 9.5 H6.5 Z" fill="currentColor"/>
             <rect x="10.5" y="11.5" width="7" height="14.5" fill="currentColor"/>
-            <rect x="3" y="28" width="22" height="3" fill="#F5A833"/>
+            <rect class="bar" x="3" y="28" width="22" height="3"/>
           </svg>
           <span class="brand-txt">
             <strong>Tower Construction</strong>
             <span>Building &amp; Civil Engineering</span>
           </span>
         </a>
-        <p>Building and civil engineering contractors serving Zimbabwe since 1980. Category &ldquo;A&rdquo; registered, ISO 9001:2015 certified, bonded to US$ 25M on a single contract.</p>
+        <p>Building and civil engineering contractors based in Harare. Registered, insured and bonded, with our own trades and our own site management.</p>
       </div>
 
       <div>
@@ -1107,24 +1190,24 @@ ol,ul{list-style:none;padding:0;}
           <li><a href="#projects">Selected works</a></li>
           <li><a href="#process">How we work</a></li>
           <li><a href="#capability">SHEQ &amp; safety</a></li>
-          <li><a href="#quote">Plant hire</a></li>
+          <li><a href="#quote">Request a quote</a></li>
           <li><a href="#quote">Careers</a></li>
         </ul>
       </div>
 
       <div>
-        <h4>Registrations</h4>
+        <h4>Assurance</h4>
         <ul class="ftr-reg">
-          <li><b>CIFOZ Category &ldquo;A&rdquo;</b>Reg. 0143/A</li>
-          <li><b>PRAZ</b>S/2019/0442</li>
-          <li><b>ISO 9001:2015</b>QMS/ZW/1187</li>
-          <li><b>NSSA</b>41-77-0195</li>
+          <li><b>Company registration</b>On file, shared on request</li>
+          <li><b>Insurance</b>Contract works and liability</li>
+          <li><b>Tax compliance</b>Certificate current</li>
+          <li><b>Safety</b>File issued for every site</li>
         </ul>
       </div>
     </div>
 
     <div class="ftr-bot">
-      <p>&copy; 1980&ndash;2026 Tower Construction (Private) Limited &nbsp;·&nbsp; Registered in Zimbabwe No. 1980/00447</p>
+      <p>&copy; <span id="yr">2026</span> Tower Construction &nbsp;·&nbsp; All rights reserved</p>
       <p>Building &amp; Civil Engineering Contractors</p>
       <a href="#top">Back to top &uarr;</a>
     </div>
@@ -1143,17 +1226,10 @@ ol,ul{list-style:none;padding:0;}
   var $  = function(s,c){ return (c||document).querySelector(s); };
   var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
 
-  /* ---------------------------------------------------------------- ticker */
-  (function buildTicker(){
-    var items = ['Structural concrete','Roads & earthworks','Water reticulation','Steel fabrication',
-                 'Industrial buildings','Bulk excavation','Sewer & drainage','Refurbishment'];
-    var track = document.getElementById('tickerTrack');
-    if(!track) return;
-    var html = '';
-    for(var pass=0; pass<2; pass++){
-      for(var i=0;i<items.length;i++){ html += '<span>'+items[i]+'<i></i></span>'; }
-    }
-    track.innerHTML = html;
+  /* ------------------------------------------------- copyright year */
+  (function(){
+    var y = document.getElementById('yr');
+    if(y){ y.textContent = new Date().getFullYear(); }
   })();
 
   /* --------------------------------------------------- final-state fallback */
@@ -1187,6 +1263,8 @@ ol,ul{list-style:none;padding:0;}
       touchMultiplier: 1.6
     });
     lenis.on('scroll', ScrollTrigger.update);
+    /* the builder's preview drives this page from outside the iframe */
+    window.lenis = lenis;
     gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
   }
@@ -1457,19 +1535,6 @@ ol,ul{list-style:none;padding:0;}
     $$('[data-magnet]').forEach(magnetic);
   }
 
-  /* -------------------------------------------------- ticker (supporting) */
-  var tt = document.getElementById('tickerTrack');
-  if(tt){ gsap.to(tt, { xPercent: -50, duration: 34, ease: 'none', repeat: -1 }); }
-
-  /* ---------------------------------------------------------- header state */
-  var shell = document.getElementById('hdrShell');
-  function updateHdr(){
-    shell.classList.toggle('is-stuck', (window.scrollY || window.pageYOffset) > 60);
-  }
-  window.addEventListener('scroll', updateHdr, { passive: true });
-  if(lenis){ lenis.on('scroll', updateHdr); }
-  updateHdr();
-
   /* ------------------------------------------------------- nav active link */
   var links = $$('#nav a');
   ['#about','#capability','#services','#projects','#process','#quote'].forEach(function(id){
@@ -1506,6 +1571,18 @@ ol,ul{list-style:none;padding:0;}
   }
 
   function wireStatics(){
+    /* Header background. Must run whether or not GSAP loaded: without it the
+       white wordmark sits on the white sections and disappears. */
+    var shell = document.getElementById('hdrShell');
+    if(shell){
+      var updateHdr = function(){
+        shell.classList.toggle('is-stuck', (window.scrollY || window.pageYOffset) > 60);
+      };
+      window.addEventListener('scroll', updateHdr, { passive: true });
+      if(window.lenis){ window.lenis.on('scroll', updateHdr); }
+      updateHdr();
+    }
+
     var form = document.getElementById('quoteForm');
     if(form){
       form.addEventListener('submit', function(e){
@@ -1526,7 +1603,7 @@ ol,ul{list-style:none;padding:0;}
         nav.style.flexDirection = 'column';
         nav.style.alignItems = 'flex-start';
         nav.style.gap = '4px';
-        nav.style.background = '#0E2A5E';
+        nav.style.background = 'var(--brand)';
         nav.style.padding = open ? '0' : '18px 24px 24px';
       });
     }

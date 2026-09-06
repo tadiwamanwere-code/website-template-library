@@ -12,13 +12,15 @@ This library is a growing set of **standalone design showcases** (hero + a coupl
 
 1. **No AI-slop gradients.** Never use a decorative rainbow/purple-blue gradient fill on backgrounds, buttons, or text as a stylistic crutch. Gradients are only allowed as a thin legibility scrim over a photo/video (dark-to-transparent overlay), never as the "brand" look.
 2. **No colored icon badges / emoji bullets.** No circular gradient-filled icon chips, no colorful feature-icon grids. If an icon is used it's monochrome (currentColor / white / black), small, and functional — not decorative.
-3. **Typography carries the design.** Every template leans on one strong display typeface pairing (see per-template spec) at large sizes as the primary visual interest — not stock photography with icon soup.
-4. **Real motion, not just fade-ins.** Use word/line reveal on scroll, hover-weight text (variable font weight on mousemove), marquee/scroll-linked transforms, magnetic buttons, or number count-ups — something with actual craft, matching the reference site behavior for that template.
-5. **One accent color per template max**, used sparingly (a button, an underline, a badge outline) — never as a background wash. Everything else is near-black / near-white / true grays.
-6. **Self-contained.** Inline `<style>` and `<script>`, Google Fonts `<link>` tag, no npm/build step, no external JS frameworks unless loaded via CDN `<script>` tag (e.g. GSAP is fine via CDN if genuinely needed for scroll effects).
-7. **Assets:** the `higgsfield` MCP server is **authenticated and connected**. Its tools load at session start, so a session begun before authentication will not see them — start a fresh session to use it. Until an asset is regenerated, templates use free-license placeholders (Unsplash / Pexels / Coverr direct URLs) chosen to match each template mood. Every placeholder carries an HTML comment `<!-- PLACEHOLDER: swap for Higgsfield-generated asset -->` so a swap pass is a simple find-and-replace.
-8. **Responsive**, but desktop-first polish matters most since these are design references.
-9. Every template folder gets: `index.html`, `notes.md` (2-3 lines: what real site inspired it, the one animation technique worth stealing, the accent color hex).
+3. **No top utility strip.** Never a thin band above the header carrying an address, phone number, opening hours or a trust line. The header starts at the top of the page; contact details live in the contact section and the footer. Nor a scrolling marquee strip immediately under the hero.
+4. **Do not lean on tinting the hero photograph.** A heavy colour multiply over the whole image flattens a photograph into a colour wash. Use a light brand tint for cohesion and put a legibility scrim only where type actually sits.
+5. **Typography carries the design.** Every template leans on one strong display typeface pairing (see per-template spec) at large sizes as the primary visual interest — not stock photography with icon soup.
+6. **Real motion, not just fade-ins.** Use word/line reveal on scroll, hover-weight text (variable font weight on mousemove), marquee/scroll-linked transforms, magnetic buttons, or number count-ups — something with actual craft, matching the reference site behavior for that template.
+7. **One accent color per template max**, used sparingly (a button, an underline, a badge outline) — never as a background wash. Everything else is near-black / near-white / true grays.
+8. **Self-contained.** Inline `<style>` and `<script>`, Google Fonts `<link>` tag, no npm/build step, no external JS frameworks unless loaded via CDN `<script>` tag (e.g. GSAP is fine via CDN if genuinely needed for scroll effects).
+9. **Assets:** the `higgsfield` MCP server is **authenticated and connected**. Its tools load at session start, so a session begun before authentication will not see them — start a fresh session to use it. Until an asset is regenerated, templates use free-license placeholders (Unsplash / Pexels / Coverr direct URLs) chosen to match each template mood. Every placeholder carries an HTML comment `<!-- PLACEHOLDER: swap for Higgsfield-generated asset -->` so a swap pass is a simple find-and-replace.
+10. **Responsive**, but desktop-first polish matters most since these are design references.
+11. Every template folder gets: `index.html`, `notes.md` (2-3 lines: what real site inspired it, the one animation technique worth stealing, the accent color hex).
 
 ## Reference sites actually studied for this batch (via Playwright, screenshots in `_inspo-notes/`)
 
