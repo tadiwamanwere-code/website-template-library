@@ -37,8 +37,14 @@
   .top-row {
     display: flex; justify-content: space-between; align-items: baseline;
     padding: 72px 0 56px; border-bottom: 1px solid var(--line);
+  }  .wordmark { font-size: 15px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+  /* through to the builder, which turns any of these into a client site */
+  .build-link {
+    margin-left: auto; font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; text-decoration: none; padding: 9px 15px;
+    border: 1px solid currentColor; white-space: nowrap; transition: opacity .2s;
   }
-  .wordmark { font-size: 15px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+  .build-link:hover { opacity: .6; }
   .top-meta {
     font-family: 'JetBrains Mono', monospace; font-size: 11px;
     color: var(--muted); letter-spacing: 0.06em;
@@ -187,6 +193,7 @@
   <div class="top-row">
     <div class="wordmark">Template Library</div>
     <div class="top-meta" id="topMeta">BATCH 01–03</div>
+    <a class="build-link" href="/build">Build a website &rarr;</a>
   </div>
 
   <div class="masthead">
