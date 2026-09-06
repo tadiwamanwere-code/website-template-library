@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   The tool's own interface follows the house rules: no decorative gradients,
+   no coloured icon badges, typography and rules carry it. It is a workbench,
+   so it stays quiet and gets out of the way of the page being built.
+   ========================================================================== */
+:root{
+  --bg:#0C0E11;
+  --bg-2:#111419;
+  --bg-3:#161A20;
+  --line:#242A32;
+  --line-2:#333B45;
+  --ink:#EBEEF2;
+  --ink-2:#9AA5B1;
+  --ink-3:#6B7580;
+  --accent:#F5A833;
+  --ok:#4ED08A;
+  --warn:#E8734A;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;overflow:hidden;
+}
+button,input,select,textarea{font:inherit;color:inherit;}
+a{color:inherit;}
+
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+.lbl{
+  font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-3);
+}
+
+/* ---- chrome -------------------------------------------------------------- */
+.top{
+  flex:none;height:56px;display:flex;align-items:center;gap:20px;
+  padding:0 20px;border-bottom:1px solid var(--line);background:var(--bg-2);
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;}
+.brand svg{width:18px;height:20px;flex:none;}
+.brand b{font-size:14px;}
+.steps{display:flex;align-items:center;gap:4px;margin-left:8px;}
+.step{
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);padding:7px 11px;border:1px solid transparent;white-space:nowrap;
+}
+.step.is-on{color:var(--ink);border-color:var(--line-2);}
+.step.is-done{color:var(--ink-2);}
+.top .right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+
+.btn{
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;padding:11px 16px;border-radius:0;
+  border:1px solid var(--line-2);background:transparent;color:var(--ink);
+  transition:background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease);
+}
+.btn:hover{border-color:var(--ink-3);background:var(--bg-3);}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#17120A;}
+.btn-primary:hover{background:#ffbc4d;border-color:#ffbc4d;color:#17120A;}
+.btn-quiet{border-color:transparent;color:var(--ink-2);padding-inline:10px;}
+.btn-quiet:hover{color:var(--ink);background:var(--bg-3);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ---- screens ------------------------------------------------------------- */
+.screens{flex:1;min-height:0;position:relative;}
+.screen{position:absolute;inset:0;overflow:auto;display:none;}
+.screen.is-on{display:block;}
+.pad{max-width:1180px;margin:0 auto;padding:40px 24px 64px;}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--line);}
+.head h1{margin:8px 0 0;font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.025em;}
+.head p{margin:8px 0 0;color:var(--ink-2);max-width:60ch;}
+
+/* ---- my sites ------------------------------------------------------------ */
+.rows{margin-top:26px;border-top:1px solid var(--line);}
+.row{
+  display:grid;grid-template-columns:1.4fr 1fr .7fr .7fr auto;gap:18px;align-items:center;
+  padding:15px 4px;border-bottom:1px solid var(--line);
+}
+.row:hover{background:var(--bg-2);}
+.row .name{font-weight:600;}
+.row .meta{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.04em;}
+.tag{
+  display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--line-2);color:var(--ink-2);
+}
+.tag.finished{border-color:var(--ok);color:var(--ok);}
+.empty{padding:56px 4px;color:var(--ink-3);border-bottom:1px solid var(--line);}
+
+/* ---- template picker ----------------------------------------------------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:26px;}
+.card{background:var(--bg);cursor:pointer;position:relative;display:flex;flex-direction:column;}
+.card:hover{background:var(--bg-2);}
+.card .shot{position:relative;height:230px;overflow:hidden;background:var(--bg-3);border-bottom:1px solid var(--line);}
+.card iframe{position:absolute;top:0;left:0;width:1440px;height:1010px;border:0;transform:scale(.3);transform-origin:top left;pointer-events:none;}
+.card .body{padding:16px 18px 20px;}
+.card h3{margin:0;font-size:16px;font-weight:700;letter-spacing:-.01em;}
+.card .covers{margin:7px 0 0;color:var(--ink-3);font-size:12.5px;line-height:1.5;}
+.card .use{margin-top:14px;}
+.swatches{display:flex;gap:5px;margin-top:13px;}
+.sw{width:15px;height:15px;border:1px solid var(--line-2);}
+
+/* ---- details form -------------------------------------------------------- */
+.form{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:26px;}
+.fld{background:var(--bg-2);padding:14px 16px 12px;position:relative;}
+.fld.full{grid-column:1/-1;}
+.fld label{display:block;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);}
+.fld input,.fld textarea{width:100%;background:transparent;border:0;outline:none;padding:9px 0 3px;font-size:15px;}
+.fld textarea{resize:vertical;min-height:84px;line-height:1.55;}
+.fld input::placeholder,.fld textarea::placeholder{color:#4A525C;}
+.fld::after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease);}
+.fld:focus-within::after{transform:scaleX(1);}
+.fld .count{position:absolute;right:14px;bottom:12px;font-family:var(--mono);font-size:10px;color:var(--ink-3);}
+.fld .count.over{color:var(--warn);}
+.note{margin-top:16px;color:var(--ink-3);font-size:12.5px;max-width:66ch;}
+.actions{display:flex;gap:10px;align-items:center;margin-top:24px;flex-wrap:wrap;}
+
+/* ---- preview ------------------------------------------------------------- */
+#preview.screen{display:none;}
+#preview.is-on{display:grid;grid-template-columns:216px 1fr 236px;overflow:hidden;}
+.rail{background:var(--bg-2);border-right:1px solid var(--line);overflow:auto;padding:18px 0;}
+.rail.right{border-right:0;border-left:1px solid var(--line);}
+.rail h4{margin:0 16px 10px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);}
+.rail .grp{padding-bottom:20px;margin-bottom:18px;border-bottom:1px solid var(--line);}
+.rail .grp:last-child{border-bottom:0;margin-bottom:0;}
+.theme{display:flex;align-items:center;gap:11px;width:100%;padding:9px 16px;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink-2);}
+.theme:hover{background:var(--bg-3);color:var(--ink);}
+.theme.is-on{color:var(--ink);background:var(--bg-3);}
+.theme .chips{display:flex;flex:none;}
+.theme .chips i{display:block;width:13px;height:13px;}
+.theme span{font-family:var(--mono);font-size:11px;letter-spacing:.04em;}
+.sect{display:flex;align-items:center;gap:8px;width:100%;padding:8px 16px;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink-2);font-family:var(--mono);font-size:11px;letter-spacing:.05em;}
+.sect:hover{background:var(--bg-3);color:var(--ink);}
+.sect .eye{margin-left:auto;opacity:.45;font-size:14px;line-height:1;}
+.sect.is-hidden{color:var(--ink-3);text-decoration:line-through;}
+.stage{position:relative;background:#000;overflow:hidden;}
+.stage iframe{width:100%;height:100%;border:0;display:block;background:#fff;}
+.stage .bar{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;display:flex;align-items:center;gap:14px;
+  padding:9px 14px;background:rgba(12,14,17,.94);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-3);
+}
+.stage .bar .grow{margin-left:auto;}
+.widths{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);}
+.widths button{background:var(--bg-2);border:0;cursor:pointer;padding:6px 10px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-3);}
+.widths button.is-on{background:var(--bg-3);color:var(--ink);}
+.warnbox{padding:12px 16px;margin:0 16px;border:1px solid var(--warn);color:var(--warn);font-size:11.5px;line-height:1.5;font-family:var(--mono);}
+
+/* ---- rail controls ------------------------------------------------------- */
+.pane{padding:0 16px;}
+.sub{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin:12px 0 5px;}
+.sub b{float:right;font-weight:500;color:var(--ink-2);}
+.sel{width:100%;background:var(--bg-3);border:1px solid var(--line);color:var(--ink);padding:8px 9px;font-size:12.5px;border-radius:0;}
+.pane input[type=range]{width:100%;accent-color:var(--accent);background:transparent;}
+.logo-slot{
+  display:flex;align-items:center;justify-content:center;min-height:56px;padding:8px;
+  border:1px dashed var(--line-2);background:var(--bg-3);
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-3);text-align:center;line-height:1.5;
+}
+.logo-slot img{max-height:40px;max-width:100%;object-fit:contain;}
+.check{display:flex;align-items:flex-start;gap:7px;margin-top:9px;font-size:11.5px;color:var(--ink-2);line-height:1.4;cursor:pointer;}
+.check input{accent-color:var(--accent);margin-top:2px;flex:none;}
+.col-row{display:flex;align-items:center;gap:9px;padding:5px 0;}
+.col-row input[type=color]{width:26px;height:22px;padding:0;border:1px solid var(--line-2);background:none;cursor:pointer;flex:none;}
+.col-row span{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-2);}
+.col-row code{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink-3);}
+
+/* ---- the image panel ----------------------------------------------------- */
+.imgpanel{
+  position:absolute;z-index:8;width:290px;background:var(--bg-2);border:1px solid var(--line-2);
+  padding:14px;display:none;
+}
+.imgpanel.is-on{display:block;}
+.imgpanel h5{margin:0 0 4px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);}
+.imgpanel p{margin:0 0 10px;font-size:11.5px;color:var(--ink-3);line-height:1.5;}
+.imgpanel input[type=url]{width:100%;background:var(--bg-3);border:1px solid var(--line);color:var(--ink);padding:8px 9px;font-size:12px;}
+.imgpanel .rowbtns{display:flex;gap:6px;margin-top:9px;}
+.imgpanel .rowbtns .btn{flex:1;justify-content:center;padding:9px 8px;}
+
+/* ---- finish -------------------------------------------------------------- */
+.link{
+  display:flex;align-items:center;gap:14px;margin-top:26px;padding:18px 20px;
+  border:1px solid var(--line-2);background:var(--bg-2);flex-wrap:wrap;
+}
+.link code{font-family:var(--mono);font-size:15px;letter-spacing:.02em;word-break:break-all;flex:1;min-width:220px;}
+#qr{margin-top:24px;padding:16px;background:#fff;width:max-content;line-height:0;}
+.done-grid{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start;margin-top:8px;}
+
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(120%);
+  background:var(--bg-3);border:1px solid var(--line-2);padding:12px 18px;z-index:60;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  transition:transform .4s var(--ease);
+}
+.toast.is-on{transform:translateX(-50%) translateY(0);}
+
+@media (max-width:900px){
+  .steps{display:none;}
+  .form{grid-template-columns:1fr;}
+  #preview.is-on{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
+  .rail{display:none;}
+  .row{grid-template-columns:1fr auto;}
+  .row .meta:nth-of-type(2),.row .tag{display:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <span class="brand">
+    <svg viewBox="0 0 28 32" aria-hidden="true">
+      <path d="M14 1 L21.5 9.5 H6.5 Z" fill="currentColor"/>
+      <rect x="10.5" y="11.5" width="7" height="14.5" fill="currentColor"/>
+      <rect x="3" y="28" width="22" height="3" fill="#F5A833"/>
+    </svg>
+    <b>Site builder</b>
+  </span>
+  <nav class="steps" id="steps">
+    <span class="step" data-goto="sites">My sites</span>
+    <span class="step" data-goto="templates">Template</span>
+    <span class="step" data-goto="details">Details</span>
+    <span class="step" data-goto="preview">Preview</span>
+    <span class="step" data-goto="finish">Finish</span>
+  </nav>
+  <div class="right" id="topRight"></div>
+</header>
+
+<main class="screens">
+
+  <!-- ============================================================ 1. SITES -->
+  <section class="screen" id="sites">
+    <div class="pad">
+      <div class="head">
+        <div>
+          <p class="lbl">01 — My sites</p>
+          <h1>Everything built so far</h1>
+        </div>
+        <button class="btn btn-primary" id="newSite">New site</button>
+      </div>
+      <div class="rows" id="siteRows"></div>
+    </div>
+  </section>
+
+  <!-- ======================================================== 2. TEMPLATES -->
+  <section class="screen" id="templates">
+    <div class="pad">
+      <div class="head">
+        <div>
+          <p class="lbl">02 — Pick a template</p>
+          <h1>Choose the starting point</h1>
+          <p>These are live pages, not screenshots. Pick the industry that fits;
+             the wording is already written so it is true for any firm in it.</p>
+        </div>
+      </div>
+      <div class="cards" id="cards"></div>
+    </div>
+  </section>
+
+  <!-- ========================================================== 3. DETAILS -->
+  <section class="screen" id="details">
+    <div class="pad">
+      <div class="head">
+        <div>
+          <p class="lbl">03 — About the business</p>
+          <h1>Tell us the basics</h1>
+          <p>Only the name is needed. Everything you leave blank keeps wording
+             that is true for any business in this industry.</p>
+        </div>
+      </div>
+      <div class="form" id="detailForm"></div>
+      <p class="note" id="detailNote"></p>
+      <div class="actions">
+        <button class="btn btn-primary" id="toPreview">See the website</button>
+        <button class="btn btn-quiet" data-goto="templates">Back to templates</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== 4. PREVIEW -->
+  <section class="screen" id="preview">
+    <aside class="rail">
+      <div class="grp">
+        <h4>Theme</h4>
+        <div id="themeList"></div>
+      </div>
+
+      <div class="grp">
+        <h4>Logo</h4>
+        <div class="pane">
+          <div id="logoPreview" class="logo-slot">No logo — using the template mark</div>
+          <label class="btn" style="width:100%;justify-content:center;margin-top:9px">
+            Upload a logo
+            <input type="file" id="logoFile" accept="image/png,image/svg+xml,image/jpeg,image/webp" hidden>
+          </label>
+          <button class="btn btn-quiet" id="logoClear" style="width:100%;margin-top:5px">Remove</button>
+          <label class="check"><input type="checkbox" id="logoHasName"> The logo already has the name in it</label>
+        </div>
+      </div>
+
+      <div class="grp">
+        <h4>Type</h4>
+        <div class="pane">
+          <label class="sub">Headings and body</label>
+          <select id="fontDisplay" class="sel"></select>
+          <label class="sub">Labels and figures</label>
+          <select id="fontMono" class="sel"></select>
+
+          <label class="sub">Heading size <b id="tdVal">100%</b></label>
+          <input type="range" id="typeDisplay" min="70" max="150" step="5" value="100">
+          <label class="sub">Body size <b id="tbVal">100%</b></label>
+          <input type="range" id="typeBody" min="80" max="140" step="5" value="100">
+        </div>
+      </div>
+
+      <div class="grp">
+        <h4>Colours</h4>
+        <div class="pane" id="colourPane"></div>
+        <div class="pane" style="padding-top:8px">
+          <button class="btn btn-quiet" id="colourReset" style="width:100%">Back to the theme</button>
+        </div>
+      </div>
+
+      <div class="grp">
+        <div class="pane">
+          <button class="btn" style="width:100%" data-goto="details">Edit the details</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="stage">
+      <iframe id="stage" title="The website"></iframe>
+      <div class="imgpanel" id="imgPanel">
+        <h5 id="imgKey">Image</h5>
+        <p>Paste a link to a picture, or upload one from this computer.</p>
+        <input type="url" id="imgUrl" placeholder="https://…">
+        <div class="rowbtns">
+          <button class="btn btn-primary" id="imgApply">Use link</button>
+          <label class="btn" style="justify-content:center;cursor:pointer">Upload
+            <input type="file" id="imgFile" accept="image/*" hidden>
+          </label>
+        </div>
+        <div class="rowbtns">
+          <button class="btn btn-quiet" id="imgReset">Back to the original</button>
+          <button class="btn btn-quiet" id="imgClose">Close</button>
+        </div>
+      </div>
+      <div class="bar">
+        <span>Click any words on the page to change them.</span>
+        <span class="grow"></span>
+        <span id="saveState">saved</span>
+        <div class="widths" id="widths">
+          <button data-w="0" class="is-on">Full</button>
+          <button data-w="768">768</button>
+          <button data-w="390">390</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="rail right">
+      <div class="grp">
+        <h4>Sections</h4>
+        <div id="sectionList"></div>
+      </div>
+      <div class="grp" id="warnGrp" style="display:none">
+        <h4>Warnings</h4>
+        <div class="warnbox" id="warnBox"></div>
+      </div>
+      <div class="grp">
+        <div style="padding:0 16px">
+          <button class="btn btn-primary" style="width:100%" id="toFinish">Finish</button>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- =========================================================== 5. FINISH -->
+  <section class="screen" id="finish">
+    <div class="pad">
+      <div class="head">
+        <div>
+          <p class="lbl">05 — Finished</p>
+          <h1 id="finishTitle">The site is live</h1>
+          <p>Send this link to the prospect. It works immediately and it is
+             hidden from search engines.</p>
+        </div>
+      </div>
+      <div class="done-grid">
+        <div>
+          <div class="link">
+            <code id="liveUrl">—</code>
+            <button class="btn" id="copyLink">Copy link</button>
+            <a class="btn" id="openLink" target="_blank" rel="noopener">Open</a>
+          </div>
+          <div class="actions">
+            <button class="btn btn-quiet" data-goto="preview">Keep editing</button>
+            <button class="btn btn-quiet" data-goto="sites">Back to my sites</button>
+          </div>
+        </div>
+        <div id="qr"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var $  = function(s,c){ return (c||document).querySelector(s); };
+  var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
+
+  /* ------------------------------------------------------------- the state
+     Exactly what a saved site is: the inputs, never the finished HTML. */
+  var state = { slug:null, template:null, theme:null, swaps:{}, edits:[], style:{}, notes:'', status:'draft' };
+  var templates = [];
+  var fonts = [];
+  var COLOURS = [
+    { key:'brand',   name:'Brand' },
+    { key:'accent',  name:'Accent' },
+    { key:'ink',     name:'Text' },
+    { key:'paper',   name:'Page' },
+    { key:'paper-2', name:'Bands' },
+    { key:'rule',    name:'Lines' }
+  ];
+  var current = null;          // the chosen template's card
+  var screen = 'sites';
+
+  /* ---------------------------------------------------------------- helpers */
+  function api(path, opts){
+    return fetch(path, Object.assign({ headers:{'Content-Type':'application/json'} }, opts))
+      .then(function(r){ return r.json(); });
+  }
+  var toastTimer;
+  function toast(msg){
+    var t = $('#toast'); t.textContent = msg; t.classList.add('is-on');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('is-on'); }, 2200);
+  }
+  function go(name){
+    screen = name;
+    $$('.screen').forEach(function(s){ s.classList.toggle('is-on', s.id === name); });
+    var order = ['sites','templates','details','preview','finish'];
+    var at = order.indexOf(name);
+    $$('#steps .step').forEach(function(s, i){
+      s.classList.toggle('is-on', i === at);
+      s.classList.toggle('is-done', i < at);
+    });
+    if(name === 'sites') loadSites();
+  }
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('[data-goto]');
+    if(el) go(el.getAttribute('data-goto'));
+  });
+
+  /* Templates write entities into the source, but the browser hands them back
+     as characters. Put the named forms back so a find string still matches
+     the file. These are the only entities the library actually uses. */
+  var ENTS = [
+    ['&','&amp;'], ['<','&lt;'], ['>','&gt;'],
+    [' ','&nbsp;'], ['—','&mdash;'], ['–','&ndash;'],
+    ['“','&ldquo;'], ['”','&rdquo;'], ['’','&rsquo;'], ['‘','&lsquo;'],
+    ['²','&sup2;'], ['³','&sup3;'], ['ç','&ccedil;'],
+    ['©','&copy;'], ['↑','&uarr;'], ['→','&rarr;']
+  ];
+  function toSource(html){
+    /* innerHTML has already escaped & < >, so skip those three here. */
+    return ENTS.slice(3).reduce(function(s, p){ return s.split(p[0]).join(p[1]); }, html);
+  }
+
+  /* ------------------------------------------------------------ persistence */
+  var saveTimer, saving = false;
+  function setSaveState(txt){ var el = $('#saveState'); if(el) el.textContent = txt; }
+
+  function save(now){
+    clearTimeout(saveTimer);
+    setSaveState('saving…');
+    var run = function(){
+      saving = true;
+      return api('/api/sites', { method:'POST', body: JSON.stringify(state) })
+        .then(function(res){
+          saving = false;
+          if(res.error){ toast(res.error); setSaveState('not saved'); return res; }
+          state.slug = res.slug;
+          setSaveState('saved · v' + res.version);
+          showWarnings(res.warnings || []);
+          return res;
+        });
+    };
+    if(now) return run();
+    return new Promise(function(resolve){ saveTimer = setTimeout(function(){ run().then(resolve); }, 500); });
+  }
+
+  function showWarnings(list){
+    var grp = $('#warnGrp'), box = $('#warnBox');
+    if(!grp) return;
+    if(!list.length){ grp.style.display = 'none'; return; }
+    grp.style.display = '';
+    box.textContent = list.join('\n\n');
+  }
+
+  /* ================================================================ 1. SITES */
+  function loadSites(){
+    api('/api/sites').then(function(rows){
+      var wrap = $('#siteRows');
+      if(!rows.length){
+        wrap.innerHTML = '<div class="empty">Nothing built yet. Click <b>New site</b> to start.</div>';
+        return;
+      }
+      wrap.innerHTML = rows.map(function(r){
+        return '<div class="row">'
+          + '<div><div class="name">' + esc(r.name) + '</div>'
+          +   '<div class="meta">' + esc(r.template) + '</div></div>'
+          + '<div class="meta">' + esc(r.url) + '</div>'
+          + '<div class="meta">' + esc(r.theme || '—') + '</div>'
+          + '<div><span class="tag ' + (r.status === 'finished' ? 'finished' : '') + '">' + esc(r.status) + '</span></div>'
+          + '<div style="display:flex;gap:6px">'
+          +   '<button class="btn btn-quiet" data-open="' + esc(r.slug) + '">Open</button>'
+          +   '<a class="btn btn-quiet" href="' + esc(r.url) + '" target="_blank" rel="noopener">View</a>'
+          + '</div></div>';
+      }).join('');
+      $$('[data-open]', wrap).forEach(function(b){
+        b.addEventListener('click', function(){ openSite(b.getAttribute('data-open')); });
+      });
+    });
+  }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+
+  function openSite(slug){
+    api('/api/sites/' + slug).then(function(rec){
+      if(rec.error) return toast(rec.error);
+      state = { slug:rec.slug, template:rec.template, theme:rec.theme, swaps:rec.swaps || {},
+                edits:rec.edits || [], style:rec.style || {}, notes:rec.notes || '',
+                status:rec.status || 'draft' };
+      current = templates.find(function(t){ return t.template === rec.template; }) || null;
+      buildDetails();
+      go('preview');
+      mountPreview();
+    });
+  }
+
+  $('#newSite').addEventListener('click', function(){
+    state = { slug:null, template:null, theme:null, swaps:{}, edits:[], style:{}, notes:'', status:'draft' };
+    current = null;
+    go('templates');
+  });
+
+  /* ============================================================ 2. TEMPLATES */
+  function loadTemplates(){
+    return api('/api/templates').then(function(rows){
+      templates = rows;
+      var wrap = $('#cards');
+      if(!rows.length){
+        wrap.innerHTML = '<div class="empty" style="padding:40px">No template has a swap card yet.</div>';
+        return;
+      }
+      wrap.innerHTML = rows.map(function(t){
+        return '<article class="card" data-t="' + esc(t.template) + '">'
+          + '<div class="shot"><iframe src="/' + esc(t.template) + '/index.html" loading="lazy" tabindex="-1" scrolling="no"></iframe></div>'
+          + '<div class="body">'
+          +   '<p class="lbl">' + esc(t.industry) + '</p>'
+          +   '<h3>' + esc(t.template.replace(/^\d+-/, '').replace(/-/g, ' ')) + '</h3>'
+          +   '<p class="covers">' + esc(t.covers) + '</p>'
+          +   '<div class="swatches">' + t.themes.map(function(){ return '<i class="sw"></i>'; }).join('') + '</div>'
+          +   '<div class="use"><button class="btn btn-primary">Use this template</button></div>'
+          + '</div></article>';
+      }).join('');
+      $$('.card', wrap).forEach(function(c){
+        c.addEventListener('click', function(){ chooseTemplate(c.getAttribute('data-t')); });
+      });
+      paintSwatches();
+    });
+  }
+
+  /* Read the real theme colours out of each template so the picker shows the
+     actual palette rather than a guess. */
+  function paintSwatches(){
+    $$('.card').forEach(function(card){
+      var t = templates.find(function(x){ return x.template === card.getAttribute('data-t'); });
+      if(!t) return;
+      fetch('/' + t.template + '/index.html').then(function(r){ return r.text(); }).then(function(src){
+        var chips = $$('.sw', card);
+        t.themes.forEach(function(name, i){
+          var re = new RegExp('data-theme="' + name + '"\\]?\\{[^}]*?--brand:\\s*(#[0-9A-Fa-f]{3,8})[^}]*?--accent:\\s*(#[0-9A-Fa-f]{3,8})');
+          var m = src.match(re) || src.match(/:root,[\s\S]{0,200}?--brand:\s*(#[0-9A-Fa-f]{3,8})[\s\S]{0,80}?--accent:\s*(#[0-9A-Fa-f]{3,8})/);
+          if(m && chips[i]){ chips[i].style.background = m[1]; chips[i].style.borderColor = m[2]; }
+        });
+      });
+    });
+  }
+
+  function chooseTemplate(name){
+    var t = templates.find(function(x){ return x.template === name; });
+    if(!t) return;
+    current = t;
+    state.template = name;
+    if(!state.theme) state.theme = t.themes[0];
+    buildDetails();
+    go('details');
+  }
+
+  /* ============================================================== 3. DETAILS
+     Five fields, not thirty. Everything else keeps the template's own wording,
+     which is already true for any business in the industry. */
+  var INTAKE = [
+    { key:'BUSINESS_NAME', label:'Business name',  ph:'Kestrel Civils',                 full:false },
+    { key:'WHAT_THEY_DO',  label:'What they do',   ph:'Groundworks and civil engineering', full:false },
+    { key:'CITY',          label:'City',           ph:'Bulawayo',                       full:false },
+    { key:'PHONE',         label:'Phone',          ph:'+263 29 288 4410',               full:false },
+    { key:'EMAIL',         label:'Email',          ph:'office@example.com',             full:false },
+    { key:'ADDRESS',       label:'Address (optional)', ph:'Unit 7, Kelvin North',       full:false }
+  ];
+
+  function buildDetails(){
+    if(!current) return;
+    var byKey = {};
+    (current.fields || []).forEach(function(f){ byKey[f.key] = f; });
+
+    var html = INTAKE.filter(function(f){ return byKey[f.key]; }).map(function(f){
+      var max = byKey[f.key].maxChars;
+      return '<div class="fld' + (f.full ? ' full' : '') + '">'
+        + '<label for="f-' + f.key + '">' + esc(f.label) + '</label>'
+        + '<input id="f-' + f.key + '" data-key="' + f.key + '" ' + (max ? 'data-max="' + max + '"' : '')
+        +   ' placeholder="' + esc(f.ph) + '" value="' + esc(state.swaps[f.key] || '') + '">'
+        + (max ? '<span class="count"></span>' : '')
+        + '</div>';
+    }).join('');
+
+    /* the numbers the design's big stat blocks need */
+    var stats = (current.fields || []).filter(function(f){ return /^STAT_\d+_VALUE$/.test(f.key); });
+    if(stats.length){
+      html += stats.map(function(f){
+        return '<div class="fld"><label for="f-' + f.key + '">' + esc(f.label) + '</label>'
+          + '<input id="f-' + f.key + '" data-key="' + f.key + '" inputmode="numeric"'
+          + ' placeholder="' + esc(f.value) + '" value="' + esc(state.swaps[f.key] || '') + '"></div>';
+      }).join('');
+    }
+
+    html += '<div class="fld full"><label for="f-notes">Anything else worth knowing</label>'
+         +  '<textarea id="f-notes" placeholder="Their current site, what they want said, what to avoid."></textarea></div>';
+
+    $('#detailForm').innerHTML = html;
+    $('#f-notes').value = state.notes || '';
+
+    $$('#detailForm input').forEach(function(inp){
+      var count = inp.parentNode.querySelector('.count');
+      var max = Number(inp.getAttribute('data-max') || 0);
+      var tick = function(){
+        state.swaps[inp.getAttribute('data-key')] = inp.value;
+        if(count && max){
+          count.textContent = inp.value.length + '/' + max;
+          count.classList.toggle('over', inp.value.length > max);
+        }
+      };
+      inp.addEventListener('input', tick);
+      tick();
+    });
+    $('#f-notes').addEventListener('input', function(){ state.notes = this.value; });
+
+    $('#detailNote').textContent = 'Stat labels stay as they are — only the numbers change. '
+      + 'A number left blank keeps the template default rather than inventing one.';
+  }
+
+  $('#toPreview').addEventListener('click', function(){
+    if(!state.swaps.BUSINESS_NAME){ toast('A business name, at least'); $('#f-BUSINESS_NAME').focus(); return; }
+    save(true).then(function(){ go('preview'); mountPreview(); });
+  });
+
+  /* ============================================================== 4. PREVIEW */
+  function mountPreview(){
+    if(!current) current = templates.find(function(t){ return t.template === state.template; });
+    buildThemeList();
+    buildTypeControls();
+    buildColourControls();
+    paintLogo();
+    reloadStage(true);
+  }
+
+  /* Anything that changes the markup — a logo, a picture, a hidden section —
+     is saved and then re-rendered, so what is on screen is what is published.
+     Themes, colours and type sizes are variables, so they change live. */
+  function reloadStage(skipSave){
+    var frame = $('#stage');
+    var draw = function(){
+      frame.src = '/s/' + state.slug + '?t=' + Date.now();
+      frame.onload = wireEditing;
+    };
+    if(skipSave) return draw();
+    save(true).then(draw);
+  }
+
+  function buildThemeList(){
+    if(!current) return;
+    $('#themeList').innerHTML = current.themes.map(function(name){
+      return '<button class="theme' + (name === state.theme ? ' is-on' : '') + '" data-theme="' + esc(name) + '">'
+        + '<span class="chips"><i data-role="brand"></i><i data-role="accent"></i></span>'
+        + '<span>' + esc(name.replace(/-/g, ' ')) + '</span></button>';
+    }).join('');
+    $$('#themeList .theme').forEach(function(b){
+      b.addEventListener('click', function(){ setTheme(b.getAttribute('data-theme')); });
+    });
+    paintThemeChips();
+  }
+
+  /* Show each theme's own colours. Any colour picked by hand is an inline
+     override on the same element, so it has to come off while we look. */
+  function paintThemeChips(){
+    var doc = frameDoc();
+    if(!doc) return;
+    var root = doc.documentElement;
+    var prevTheme = root.getAttribute('data-theme');
+    var saved = COLOURS.map(function(c){ return [c.key, root.style.getPropertyValue('--' + c.key)]; });
+    saved.forEach(function(p){ root.style.removeProperty('--' + p[0]); });
+
+    $$('#themeList .theme').forEach(function(b){
+      root.setAttribute('data-theme', b.getAttribute('data-theme'));
+      var cs = doc.defaultView.getComputedStyle(root);
+      b.querySelector('[data-role="brand"]').style.background  = cs.getPropertyValue('--brand').trim();
+      b.querySelector('[data-role="accent"]').style.background = cs.getPropertyValue('--accent').trim();
+    });
+
+    root.setAttribute('data-theme', prevTheme);
+    saved.forEach(function(p){ if(p[1]) root.style.setProperty('--' + p[0], p[1]); });
+  }
+
+  /* A theme is six CSS variables. Nothing needs rebuilding to change one. */
+  function setTheme(name){
+    state.theme = name;
+    var doc = frameDoc();
+    if(doc) doc.documentElement.setAttribute('data-theme', name);
+    $$('#themeList .theme').forEach(function(b){ b.classList.toggle('is-on', b.getAttribute('data-theme') === name); });
+    save();
+  }
+
+  function frameDoc(){
+    try { return $('#stage').contentDocument; } catch(e){ return null; }
+  }
+
+  /* ---- click the page, not a form ---------------------------------------- */
+  function wireEditing(){
+    var doc = frameDoc();
+    if(!doc) return;
+    doc.documentElement.setAttribute('data-theme', state.theme);
+    /* always land at the top of the page, whatever the last scroll was */
+    try { doc.defaultView.scrollTo(0, 0); } catch(e){}
+    paintThemeChips();
+    buildSectionList(doc);
+
+    syncColourInputs();
+    if(state.style.typeDisplay) liveScale('display', state.style.typeDisplay * 100);
+    if(state.style.typeBody) liveScale('body', state.style.typeBody * 100);
+
+    var style = doc.createElement('style');
+    style.textContent =
+      '[data-edit-hover]{outline:1px dashed rgba(245,168,51,.9);outline-offset:3px;cursor:text}' +
+      '[data-img-hover]{outline:2px solid rgba(245,168,51,.9);outline-offset:-2px;cursor:pointer}' +
+      '[contenteditable="true"]{outline:2px solid #F5A833;outline-offset:3px;background:rgba(245,168,51,.08)}';
+    doc.head.appendChild(style);
+
+    var hovered = null, hoveredImg = null;
+    doc.addEventListener('mouseover', function(e){
+      var img = swappable(e.target);
+      if(hoveredImg && hoveredImg !== img) hoveredImg.removeAttribute('data-img-hover');
+      if(img) img.setAttribute('data-img-hover','');
+      hoveredImg = img;
+
+      var el = img ? null : editable(e.target);
+      if(hovered && hovered !== el) hovered.removeAttribute('data-edit-hover');
+      if(el && el.getAttribute('contenteditable') !== 'true') el.setAttribute('data-edit-hover','');
+      hovered = el;
+    }, true);
+
+    doc.addEventListener('click', function(e){
+      var img = swappable(e.target);
+      if(img){ e.preventDefault(); e.stopPropagation(); openImagePanel(img); return; }
+      var el = editable(e.target);
+      if(!el) return;
+      e.preventDefault();
+      e.stopPropagation();
+      $('#imgPanel').classList.remove('is-on');
+      beginEdit(el);
+    }, true);
+  }
+
+  /* An image the template listed as a slot. Anything else on the page is
+     decoration and is left alone. */
+  function swappable(node){
+    var el = node;
+    while(el && el.nodeType === 3) el = el.parentNode;
+    if(!el || el.tagName !== 'IMG') return null;
+    return imageKeyFor(el) ? el : null;
+  }
+
+  /* Only leaves: an element whose children are all text, so an edit maps to
+     one contiguous string in the source. */
+  function editable(node){
+    var el = node;
+    while(el && el.nodeType === 3) el = el.parentNode;
+    if(!el || el.nodeType !== 1) return null;
+    if(/^(HTML|BODY|SCRIPT|STYLE|IMG|SVG|PATH|RECT|INPUT|SELECT|TEXTAREA|OPTION)$/.test(el.tagName)) return null;
+    if(el.closest('svg')) return null;
+    var text = (el.textContent || '').trim();
+    if(!text) return null;
+    for(var i = 0; i < el.children.length; i++){
+      if(!/^(BR|B|I|EM|STRONG|SUP|SUB)$/.test(el.children[i].tagName)) return null;
+    }
+    return el;
+  }
+
+  function beginEdit(el){
+    var before = el.innerHTML;
+    el.setAttribute('contenteditable', 'true');
+    el.removeAttribute('data-edit-hover');
+    el.focus();
+    var doc = frameDoc();
+    var range = doc.createRange();
+    range.selectNodeContents(el);
+    doc.defaultView.getSelection().removeAllRanges();
+    doc.defaultView.getSelection().addRange(range);
+
+    var limit = Math.max(12, Math.round(el.textContent.length * 1.2));
+    var warned = false;
+    var onInput = function(){
+      var over = el.textContent.length > limit;
+      el.style.boxShadow = over ? 'inset 0 0 0 2px #E8734A' : '';
+      if(over && !warned){ warned = true; toast('Longer than the design allows'); }
+    };
+    var finish = function(){
+      el.removeEventListener('input', onInput);
+      el.removeEventListener('blur', finish);
+      el.removeEventListener('keydown', onKey);
+      el.removeAttribute('contenteditable');
+      el.style.boxShadow = '';
+      var after = el.innerHTML;
+      if(after !== before) recordEdit(before, after);
+    };
+    var onKey = function(e){
+      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); el.blur(); }
+      if(e.key === 'Escape'){ el.innerHTML = before; el.blur(); }
+    };
+    el.addEventListener('input', onInput);
+    el.addEventListener('blur', finish);
+    el.addEventListener('keydown', onKey);
+  }
+
+  /* An edit is stored exactly like a swap: the text that was there, and the
+     text that replaced it. Same dumb mechanism, so it re-renders identically. */
+  function recordEdit(before, after){
+    var find = toSource(before), replace = toSource(after);
+    var prior = state.edits.find(function(e){ return e.replace === find; });
+    if(prior) prior.replace = replace;              // editing the same line twice
+    else state.edits.push({ find:find, replace:replace });
+    save();
+  }
+
+  /* ---- sections ---------------------------------------------------------- */
+  function buildSectionList(doc){
+    /* Pinned sections get wrapped in a spacer by GSAP, so look anywhere inside
+       main rather than only at its direct children. */
+    var secs = $$('main section[id], footer', doc);
+    $('#sectionList').innerHTML = secs.map(function(s){
+      var id = s.id || 'footer';
+      var hidden = isHidden(id);
+      return '<button class="sect' + (hidden ? ' is-hidden' : '') + '" data-sec="' + esc(id) + '">'
+        + esc(sectionName(s, id))
+        + '<span class="eye">' + (hidden ? '+' : '−') + '</span></button>';
+    }).join('');
+    $$('#sectionList .sect').forEach(function(b){
+      b.addEventListener('click', function(e){
+        var id = b.getAttribute('data-sec');
+        if(e.target.classList.contains('eye')) toggleSection(id);
+        else scrollTo(id);
+      });
+    });
+  }
+
+  /* Templates number their sections with a mono eyebrow — "02 — Capability
+     Statement" — which is already the section's name. Use it, minus the
+     number. Fall back to the id, which is always sensible. */
+  function sectionName(el, id){
+    var eyebrow = el.querySelector('.eyebrow, [class*="eyebrow"]');
+    var raw = eyebrow ? eyebrow.textContent : id;
+    raw = String(raw).replace(/\s+/g, ' ').trim().replace(/^\d+\s*[—–-]\s*/, '');
+    if(!raw) raw = id;
+    return raw.charAt(0).toUpperCase() + raw.slice(1).slice(0, 21);
+  }
+
+  function hideFind(id){ return 'id="' + id + '"'; }
+  function hideRepl(id){ return 'id="' + id + '" style="display:none"'; }
+  function isHidden(id){
+    return state.edits.some(function(e){ return e.find === hideFind(id) && e.replace === hideRepl(id); });
+  }
+
+  function toggleSection(id){
+    if(isHidden(id)){
+      state.edits = state.edits.filter(function(e){ return !(e.find === hideFind(id) && e.replace === hideRepl(id)); });
+    } else {
+      state.edits.push({ find: hideFind(id), replace: hideRepl(id) });
+    }
+    save(true).then(function(){
+      var frame = $('#stage');
+      frame.src = '/s/' + state.slug + '?t=' + Date.now();
+      frame.onload = wireEditing;
+    });
+  }
+
+  function scrollTo(id){
+    var doc = frameDoc();
+    if(!doc) return;
+    var el = id === 'footer' ? doc.querySelector('footer') : doc.getElementById(id);
+    if(!el) return;
+    var y = el.getBoundingClientRect().top + (doc.defaultView.scrollY || 0);
+    if(doc.defaultView.lenis) doc.defaultView.lenis.scrollTo(y, { duration: 0.8 });
+    else doc.defaultView.scrollTo({ top: y, behavior: 'smooth' });
+  }
+
+  /* ======================================================= LOGO, TYPE, COLOUR
+     All three are the same idea: the template already routes every typeface
+     through --sans/--mono and every colour through its six theme values, so
+     the tool only ever writes variables. It never touches a rule. */
+
+  /* Files become data URIs, so a finished site stays one self-contained file
+     with nothing to host alongside it. */
+  function readFile(file, maxKB){
+    return new Promise(function(resolve, reject){
+      if(!file) return reject(new Error('no file'));
+      if(file.size > maxKB * 1024) return reject(new Error('That file is ' + Math.round(file.size/1024) + 'KB. Keep it under ' + maxKB + 'KB.'));
+      var fr = new FileReader();
+      fr.onload = function(){ resolve(fr.result); };
+      fr.onerror = function(){ reject(new Error('Could not read that file')); };
+      fr.readAsDataURL(file);
+    });
+  }
+
+  /* ---- logo -------------------------------------------------------------- */
+  function paintLogo(){
+    var slot = $('#logoPreview');
+    if(state.swaps.LOGO){
+      slot.innerHTML = '<img src="' + esc(state.swaps.LOGO) + '" alt="">';
+      slot.style.borderStyle = 'solid';
+    } else {
+      slot.textContent = 'No logo — using the template mark';
+      slot.style.borderStyle = 'dashed';
+    }
+    $('#logoHasName').checked = !!state.style.hideBrandText;
+  }
+  $('#logoFile').addEventListener('change', function(){
+    var f = this.files[0]; this.value = '';
+    readFile(f, 220).then(function(uri){
+      state.swaps.LOGO = uri;
+      paintLogo();
+      reloadStage();
+      toast('Logo added');
+    }).catch(function(e){ toast(e.message); });
+  });
+  $('#logoHasName').addEventListener('change', function(){
+    state.style.hideBrandText = this.checked || undefined;
+    reloadStage();
+  });
+  $('#logoClear').addEventListener('click', function(){
+    delete state.swaps.LOGO;
+    paintLogo();
+    reloadStage();
+  });
+
+  /* ---- type -------------------------------------------------------------- */
+  function buildTypeControls(){
+    var body = fonts.filter(function(f){ return !f.mono; });
+    var mono = fonts.filter(function(f){ return f.mono; });
+    var opt = function(f, sel){ return '<option' + (f.name === sel ? ' selected' : '') + '>' + esc(f.name) + '</option>'; };
+    $('#fontDisplay').innerHTML = '<option value="">Template default</option>' + body.map(function(f){ return opt(f, state.style.fontDisplay); }).join('');
+    $('#fontMono').innerHTML   = '<option value="">Template default</option>' + mono.map(function(f){ return opt(f, state.style.fontMono); }).join('');
+    $('#typeDisplay').value = Math.round((state.style.typeDisplay || 1) * 100);
+    $('#typeBody').value    = Math.round((state.style.typeBody || 1) * 100);
+    $('#tdVal').textContent = $('#typeDisplay').value + '%';
+    $('#tbVal').textContent = $('#typeBody').value + '%';
+  }
+
+  $('#fontDisplay').addEventListener('change', function(){ state.style.fontDisplay = this.value || undefined; reloadStage(); });
+  $('#fontMono').addEventListener('change', function(){ state.style.fontMono = this.value || undefined; reloadStage(); });
+
+  /* Size is a variable the template multiplies its own clamps by, so it can
+     be nudged live without a rebuild. */
+  function liveScale(which, pct){
+    var doc = frameDoc();
+    if(doc) doc.documentElement.style.setProperty('--type-' + which, pct / 100);
+  }
+  $('#typeDisplay').addEventListener('input', function(){
+    $('#tdVal').textContent = this.value + '%';
+    state.style.typeDisplay = Number(this.value) / 100;
+    liveScale('display', this.value);
+    save();
+  });
+  $('#typeBody').addEventListener('input', function(){
+    $('#tbVal').textContent = this.value + '%';
+    state.style.typeBody = Number(this.value) / 100;
+    liveScale('body', this.value);
+    save();
+  });
+
+  /* ---- colour ------------------------------------------------------------ */
+  function buildColourControls(){
+    $('#colourPane').innerHTML = COLOURS.map(function(c){
+      return '<div class="col-row">'
+        + '<input type="color" data-col="' + c.key + '">'
+        + '<span>' + esc(c.name) + '</span><code data-hex="' + c.key + '"></code></div>';
+    }).join('');
+    $$('#colourPane input[type=color]').forEach(function(inp){
+      inp.addEventListener('input', function(){
+        var key = inp.getAttribute('data-col');
+        state.style[key] = inp.value;
+        var doc = frameDoc();
+        if(doc) doc.documentElement.style.setProperty('--' + key, inp.value);
+        $('[data-hex="' + key + '"]').textContent = inp.value;
+        save();
+      });
+    });
+    syncColourInputs();
+  }
+
+  /* Show what the page is actually using, whether that came from the theme or
+     from a colour picked here. */
+  function syncColourInputs(){
+    var doc = frameDoc();
+    if(!doc) return;
+    var cs = doc.defaultView.getComputedStyle(doc.documentElement);
+    COLOURS.forEach(function(c){
+      var v = (state.style[c.key] || cs.getPropertyValue('--' + c.key).trim() || '#000000');
+      if(!/^#[0-9A-Fa-f]{6}$/.test(v)) v = hexOf(doc, v);
+      var inp = $('[data-col="' + c.key + '"]');
+      if(inp) inp.value = v;
+      var code = $('[data-hex="' + c.key + '"]');
+      if(code) code.textContent = state.style[c.key] ? v : '';
+    });
+  }
+  function hexOf(doc, value){
+    var probe = doc.createElement('div');
+    probe.style.color = value;
+    doc.body.appendChild(probe);
+    var rgb = doc.defaultView.getComputedStyle(probe).color.match(/\d+/g) || [0,0,0];
+    probe.remove();
+    return '#' + rgb.slice(0,3).map(function(n){ return ('0' + Number(n).toString(16)).slice(-2); }).join('');
+  }
+
+  $('#colourReset').addEventListener('click', function(){
+    COLOURS.forEach(function(c){ delete state.style[c.key]; });
+    reloadStage();
+    toast('Colours back to the theme');
+  });
+
+  /* ---- swapping a picture ------------------------------------------------- */
+  var imgTarget = null;
+
+  function openImagePanel(img){
+    var key = imageKeyFor(img);
+    if(!key) return;
+    imgTarget = key;
+    var panel = $('#imgPanel');
+    var box = $('#stage').getBoundingClientRect();
+    var r = img.getBoundingClientRect();
+    panel.style.left = Math.min(box.width - 302, Math.max(10, r.left + 10)) + 'px';
+    panel.style.top  = Math.min(box.height - 210, Math.max(10, r.top + 10)) + 'px';
+    $('#imgKey').textContent = key.replace(/_/g, ' ');
+    $('#imgUrl').value = state.swaps[key] && !/^data:/.test(state.swaps[key]) ? state.swaps[key] : '';
+    panel.classList.add('is-on');
+  }
+
+  /* Work out which slot an image belongs to by matching what is on screen
+     against the template's own list. */
+  function imageKeyFor(img){
+    var src = img.getAttribute('src') || '';
+    var images = (current && current.images) || [];
+    for(var i = 0; i < images.length; i++){
+      var k = images[i].key;
+      if(state.swaps[k] && src === state.swaps[k]) return k;
+      if(images[i].value && src === images[i].value) return k;
+    }
+    return null;
+  }
+
+  function setImage(value){
+    if(!imgTarget) return;
+    if(value) state.swaps[imgTarget] = value; else delete state.swaps[imgTarget];
+    $('#imgPanel').classList.remove('is-on');
+    reloadStage();
+  }
+  $('#imgApply').addEventListener('click', function(){ setImage($('#imgUrl').value.trim()); });
+  $('#imgReset').addEventListener('click', function(){ setImage(null); });
+  $('#imgClose').addEventListener('click', function(){ $('#imgPanel').classList.remove('is-on'); });
+  $('#imgFile').addEventListener('change', function(){
+    var f = this.files[0]; this.value = '';
+    readFile(f, 900).then(function(uri){ setImage(uri); })
+      .catch(function(e){ toast(e.message); });
+  });
+
+  /* ---- width preview ----------------------------------------------------- */
+  $$('#widths button').forEach(function(b){
+    b.addEventListener('click', function(){
+      $$('#widths button').forEach(function(x){ x.classList.remove('is-on'); });
+      b.classList.add('is-on');
+      var w = Number(b.getAttribute('data-w'));
+      var f = $('#stage');
+      f.style.width = w ? w + 'px' : '100%';
+      f.style.margin = w ? '0 auto' : '0';
+      f.style.borderInline = w ? '1px solid #242A32' : '0';
+    });
+  });
+
+  /* =============================================================== 5. FINISH */
+  $('#toFinish').addEventListener('click', function(){
+    state.status = 'finished';
+    save(true).then(function(res){
+      var url = location.origin + '/s/' + state.slug;
+      $('#liveUrl').textContent = url;
+      $('#openLink').href = url;
+      $('#qr').innerHTML = '';
+      if(window.QRCode) new QRCode($('#qr'), { text:url, width:150, height:150, colorDark:'#0C0E11', colorLight:'#ffffff' });
+      $('#finishTitle').textContent = 'The site is live';
+      go('finish');
+    });
+  });
+
+  $('#copyLink').addEventListener('click', function(){
+    navigator.clipboard.writeText($('#liveUrl').textContent).then(function(){ toast('Link copied'); });
+  });
+
+  /* ------------------------------------------------------------------ start */
+  Promise.all([
+    loadTemplates(),
+    api('/api/fonts').then(function(f){ fonts = f; })
+  ]).then(function(){ go('sites'); });
+})();
+</script>
+</body>
+</html>

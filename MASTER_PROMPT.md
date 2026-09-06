@@ -457,9 +457,53 @@ the link first and the clever part becomes optional, which is what it should be.
 
 ## Hosting
 
-Put this on **Cloudflare Pages**, not Vercel. Cloudflare allows commercial use
-on the free plan and gives unlimited bandwidth on static assets. Vercel's free
-Hobby plan is personal, non-commercial only, and this is agency work.
+There are two separate things to host, and they have different jobs.
+
+- **The builder app.** Low traffic. Only we use it.
+- **The generated client sites.** Public. What prospects judge us on. Must never
+  be down.
+
+**The generated sites go on Cloudflare.** Worker plus R2 or KV. Free tier,
+commercial use allowed, unlimited bandwidth on static assets. This is not
+optional and it is not a cost decision, it is the right tool.
+
+**The builder app can go on either.** Two valid choices:
+
+*Both on Cloudflare.* Simplest. One dashboard, one deploy, costs nothing.
+
+*Builder on Vercel, sites on Cloudflare.* Valid if Vercel's tooling suits the
+app better. The real benefit is blast radius: a broken deploy on the builder
+cannot take down a single client link. The cost is **$20 a month for Vercel
+Pro**. The builder is a commercial tool for an agency, so Vercel's free Hobby
+plan does not cover it, even though the client sites live elsewhere. Splitting
+does not avoid that.
+
+### If you split, these two things are mandatory
+
+**1. The write endpoint needs a shared secret, and the browser must never hold
+it.** If `POST /api/sites` is open, a stranger can publish anything onto our
+domain. The chain must be:
+
+```
+browser  ->  our Vercel backend (holds the secret in an env var)  ->  the Worker
+```
+
+Never call the Worker directly from client-side JavaScript. The key would be in
+the page source and therefore public.
+
+**2. CORS on the Worker allows our builder's origin and only ours.** Never `*`
+on a write endpoint.
+
+### Use our own domain for both, whichever way we go
+
+```
+builder.<ourdomain>       the app
+sites.<ourdomain>/s/<slug>   the generated sites
+```
+
+Two reasons. It looks like a real product when we send a link. And either half
+can move to a different host later by changing DNS, without touching the other
+half and without breaking a single link already sent out.
 
 ---
 

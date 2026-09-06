@@ -79,6 +79,45 @@ function replaceAll(haystack, find, replacement) {
   return haystack.split(find).join(replacement);
 }
 
+/**
+ * Apply every replacement in ONE pass over the original string.
+ *
+ * Doing them one after another looks the same and is not: a value that has
+ * just been written in can be matched again by a later rule. Filling
+ * "Building & Civil Engineering Contractors" with "Plumbing and Drainage
+ * Contractors" and then replacing the leftover word "Contractors" gave
+ * "Plumbing and Drainage Plumbing". One pass over the original cannot do that.
+ *
+ * @param {string} source
+ * @param {Array<{find:string, replacement:string}>} rules  longest find first
+ */
+function applyOnce(source, rules) {
+  const hits = [];
+  rules.forEach((rule, priority) => {
+    if (!rule.find) return;
+    let at = source.indexOf(rule.find);
+    while (at !== -1) {
+      hits.push({ start: at, end: at + rule.find.length, text: rule.replacement, priority });
+      at = source.indexOf(rule.find, at + rule.find.length);
+    }
+  });
+
+  /* Earliest first; where two rules start together the longer one wins,
+     which is what "longest first" means once positions are involved. */
+  hits.sort((a, b) => a.start - b.start || a.priority - b.priority);
+
+  let out = '';
+  let cursor = 0;
+  let applied = 0;
+  for (const hit of hits) {
+    if (hit.start < cursor) continue;          // already covered by a longer match
+    out += source.slice(cursor, hit.start) + hit.text;
+    cursor = hit.end;
+    applied++;
+  }
+  return { text: out + source.slice(cursor), applied };
+}
+
 /* ----------------------------------------------------------------- themes */
 
 function themesOf(card) {
@@ -92,6 +131,71 @@ function applyTheme(html, theme) {
     return '<html' + attrs.replace(/\s+data-theme="[^"]*"/i, '') + '>';
   });
   return cleaned.replace(/<html\b([^>]*)>/i, `<html$1 data-theme="${theme}">`);
+}
+
+/* ------------------------------------------------------------------ style
+   Fonts, type scale and colour, laid over the template as one small block of
+   CSS variables. The template already routes every typeface through --sans
+   and --mono and every colour through the six theme values, so this changes
+   the whole page without touching a single rule.
+
+   The families are a fixed list, for the same reason there are four themes
+   and not a colour picker: a free choice of typeface is a good way to wreck
+   a good layout. */
+
+const FONTS = {
+  'Inter':            { css: 'Inter:wght@400;500;600;700;800;900', stack: '"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif' },
+  'Archivo':          { css: 'Archivo:wght@400;500;600;700;800;900', stack: '"Archivo",Helvetica,Arial,sans-serif' },
+  'Manrope':          { css: 'Manrope:wght@400;500;600;700;800', stack: '"Manrope",Helvetica,Arial,sans-serif' },
+  'Space Grotesk':    { css: 'Space+Grotesk:wght@400;500;600;700', stack: '"Space Grotesk",Helvetica,Arial,sans-serif' },
+  'Sora':             { css: 'Sora:wght@400;500;600;700;800', stack: '"Sora",Helvetica,Arial,sans-serif' },
+  'IBM Plex Sans':    { css: 'IBM+Plex+Sans:wght@400;500;600;700', stack: '"IBM Plex Sans",Helvetica,Arial,sans-serif' },
+  'Fraunces':         { css: 'Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900', stack: '"Fraunces",Georgia,serif' },
+  'Instrument Serif': { css: 'Instrument+Serif:ital@0;1', stack: '"Instrument Serif",Georgia,serif' },
+  'JetBrains Mono':   { css: 'JetBrains+Mono:wght@400;500;700', stack: '"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' },
+  'IBM Plex Mono':    { css: 'IBM+Plex+Mono:wght@400;500;700', stack: '"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' },
+  'Space Mono':       { css: 'Space+Mono:wght@400;700', stack: '"Space Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' }
+};
+
+const COLOUR_KEYS = ['brand', 'accent', 'ink', 'paper', 'paper-2', 'rule'];
+
+function fontList() {
+  return Object.keys(FONTS).map(name => ({ name, mono: /Mono/.test(name) }));
+}
+
+function styleBlock(style) {
+  style = style || {};
+  const vars = [];
+  const families = [];
+
+  const display = FONTS[style.fontDisplay];
+  const mono = FONTS[style.fontMono];
+  if (display) { vars.push(`  --sans:${display.stack};`); families.push(display.css); }
+  if (mono) { vars.push(`  --mono:${mono.stack};`); families.push(mono.css); }
+
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, Number(v)));
+  if (style.typeDisplay && Number(style.typeDisplay) !== 1) vars.push(`  --type-display:${clamp(style.typeDisplay, 0.7, 1.5)};`);
+  if (style.typeBody && Number(style.typeBody) !== 1) vars.push(`  --type-body:${clamp(style.typeBody, 0.8, 1.4)};`);
+
+  for (const key of COLOUR_KEYS) {
+    const v = style[key];
+    if (v && /^#[0-9A-Fa-f]{3,8}$/.test(v)) vars.push(`  --${key}:${v};`);
+  }
+
+  /* A wordmark logo already says the name, so the text one beside it is a
+     duplicate. A mark-only logo still needs it, which is why this is a
+     choice and not automatic. */
+  const extra = style.hideBrandText ? '.brand-txt{display:none;}\n' : '';
+
+  if (!vars.length && !extra) return '';
+
+  const link = families.length
+    ? `<link href="https://fonts.googleapis.com/css2?${families.map(f => 'family=' + f).join('&')}&display=swap" rel="stylesheet">\n`
+    : '';
+
+  /* html[data-theme] sets the six colours, so this has to outrank it. */
+  const block = vars.length ? `:root,html[data-theme]{\n${vars.join('\n')}\n}\n` : '';
+  return link + `<style id="site-style">\n${block}${extra}</style>\n`;
 }
 
 /* ---------------------------------------------------------------- noindex */
@@ -113,7 +217,7 @@ function applyNoindex(html, wanted) {
  * @param {string} template  folder name, e.g. "20-tower-construction"
  * @param {object} swaps     { BUSINESS_NAME: "Acme Builders", ... }
  * @param {string} theme     one of the template's approved themes
- * @param {object} [opts]    { noindex: true }
+ * @param {object} [opts]    { noindex, edits: [{find, replace}], style: {fonts, scales, colours} }
  * @returns {{ html: string, warnings: string[], applied: number }}
  */
 function render(template, swaps, theme, opts) {
@@ -144,6 +248,7 @@ function render(template, swaps, theme, opts) {
 
   let html = source;
   let applied = 0;
+  const rules = [];
 
   for (const entry of ordered) {
     if (!html.includes(entry.find)) {
@@ -154,8 +259,10 @@ function render(template, swaps, theme, opts) {
     const raw = swaps[entry.key];
     if (raw === undefined || raw === null || String(raw).trim() === '') continue;
 
+    /* Everything is escaped, images included: a URL lands inside an HTML
+       attribute, so a stray quote there would break out of the tag. */
     const isImage = (card.images || []).some(i => i.key === entry.key);
-    const value = isImage ? String(raw).trim() : escapeHtml(String(raw).trim());
+    const value = escapeHtml(String(raw).trim());
 
     /* Length check against what the designer allowed for. */
     const limit = entry.maxChars;
@@ -166,13 +273,40 @@ function render(template, swaps, theme, opts) {
       warnings.push(`TOO LONG: "${entry.key}" is ${len} characters against a default of ${visibleLength(entry.find)}. Over 20% longer breaks these layouts.`);
     }
 
-    const replacement = entry.format ? entry.format.replace('{}', value) : value;
-    html = replaceAll(html, entry.find, replacement);
-    applied++;
+    rules.push({ find: entry.find, replacement: entry.format ? entry.format.replace('{}', value) : value });
   }
+
+  /* One pass, so a value that has just been written in cannot be matched
+     again by a later rule. */
+  const swapped = applyOnce(html, rules);
+  html = swapped.text;
+  applied += swapped.applied;
+
+  /* Edits made by clicking the page. Each one is the exact text that was on
+     the page and the text that replaced it, so it is the same dumb mechanism
+     as a swap and re-renders identically. They are a second pass, because
+     they were typed against a page that already had the swaps in it. */
+  const editRules = [];
+  for (const edit of opts.edits || []) {
+    if (!edit || !edit.find || edit.find === edit.replace) continue;
+    if (!html.includes(edit.find)) {
+      warnings.push(`LOST EDIT: ${JSON.stringify(edit.find.slice(0, 40))} is no longer on the page, so that change could not be re-applied.`);
+      continue;
+    }
+    editRules.push({ find: edit.find, replacement: edit.replace });
+  }
+  editRules.sort((a, b) => b.find.length - a.find.length);
+  const edited = applyOnce(html, editRules);
+  html = edited.text;
+  applied += edited.applied;
 
   html = applyTheme(html, themes.includes(chosen) ? chosen : themes[0]);
   html = applyNoindex(html, opts.noindex !== false);
+
+  /* Fonts, type scale and any hand-picked colours, last so they win. */
+  html = html.replace(/\s*<style id="site-style">[\s\S]*?<\/style>\n?/g, '');
+  const block = styleBlock(opts.style);
+  if (block) html = html.replace('</head>', block + '</head>');
 
   /* The worst failure this can have is shipping a page to a prospect with the
      template's own business name still on it. Once a client name is set, none
@@ -205,6 +339,16 @@ function shorten(phrase, maxWords) {
   return words.join(' ');
 }
 
+/* Drop whole words until it fits. Better a short true line than one that
+   overflows the slot it was designed for. */
+function trimTo(phrase, limit) {
+  if (visibleLength(phrase) <= limit) return phrase;
+  const words = phrase.split(/\s+/);
+  while (words.length > 1 && visibleLength(words.join(' ')) > limit) words.pop();
+  while (words.length > 1 && JOINERS.has(words[words.length - 1].toLowerCase())) words.pop();
+  return words.join(' ').slice(0, limit);
+}
+
 function deriveSwaps(template, given) {
   const { card } = loadTemplate(template);
   const known = new Set((card.swaps || []).map(s => s.key));
@@ -221,7 +365,12 @@ function deriveSwaps(template, given) {
 
   const does = (out.WHAT_THEY_DO || '').trim();
   if (does) {
-    if (known.has('TAGLINE') && !out.TAGLINE) out.TAGLINE = does;
+    if (known.has('TAGLINE') && !out.TAGLINE) {
+      /* The tagline sits under the logo in a fixed slot, so it is trimmed to
+         fit rather than left to overflow and warn. */
+      const limit = (card.swaps.find(s => s.key === 'TAGLINE') || {}).maxChars;
+      out.TAGLINE = limit ? trimTo(does, limit) : does;
+    }
     if (known.has('SHORT_TRADE') && !out.SHORT_TRADE) out.SHORT_TRADE = shorten(does, 2);
   }
 
@@ -243,7 +392,7 @@ function listTemplates() {
     });
 }
 
-module.exports = { render, deriveSwaps, listTemplates, loadTemplate, escapeHtml, visibleLength };
+module.exports = { render, deriveSwaps, listTemplates, loadTemplate, escapeHtml, visibleLength, fontList, FONTS, COLOUR_KEYS };
 
 /* -------------------------------------------------------------------- CLI
    node builder/render.js 20-tower-construction \

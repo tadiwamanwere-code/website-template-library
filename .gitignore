@@ -12,3 +12,4 @@ _inspo-notes/verification/
 
 # builder scratch output — rendered test sites, not source
 builder/out/
+builder/sites/
