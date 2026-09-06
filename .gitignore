@@ -13,3 +13,15 @@ _inspo-notes/verification/
 # builder scratch output — rendered test sites, not source
 builder/out/
 builder/sites/
+
+# keys — never commit
+builder/.env
+.env
+.env.local
+
+# skills installed by npx skills
+.agents/
+
+# installed by npx skills — tooling, not part of the library
+.claude/
+skills-lock.json

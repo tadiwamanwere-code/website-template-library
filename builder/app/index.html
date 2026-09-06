@@ -93,7 +93,7 @@ a{color:inherit;}
 }
 .row:hover{background:var(--bg-2);}
 .row .name{font-weight:600;}
-.row .meta{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.04em;}
+.row .meta{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.04em;word-break:break-all;}
 .tag{
   display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:700;
   letter-spacing:.16em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--line-2);color:var(--ink-2);
@@ -102,7 +102,13 @@ a{color:inherit;}
 .empty{padding:56px 4px;color:var(--ink-3);border-bottom:1px solid var(--line);}
 
 /* ---- template picker ----------------------------------------------------- */
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:26px;}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;}
+.filters button{
+  background:var(--bg-2);border:1px solid var(--line);cursor:pointer;padding:7px 12px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+.filters button.is-on{color:var(--ink);border-color:var(--line-2);background:var(--bg-3);}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:14px;}
 .card{background:var(--bg);cursor:pointer;position:relative;display:flex;flex-direction:column;}
 .card:hover{background:var(--bg-2);}
 .card .shot{position:relative;height:230px;overflow:hidden;background:var(--bg-3);border-bottom:1px solid var(--line);}
@@ -111,8 +117,9 @@ a{color:inherit;}
 .card h3{margin:0;font-size:16px;font-weight:700;letter-spacing:-.01em;}
 .card .covers{margin:7px 0 0;color:var(--ink-3);font-size:12.5px;line-height:1.5;}
 .card .use{margin-top:14px;}
-.swatches{display:flex;gap:5px;margin-top:13px;}
-.sw{width:15px;height:15px;border:1px solid var(--line-2);}
+.swatches{display:flex;gap:6px;margin-top:13px;}
+.sw{display:flex;width:39px;height:14px;border:1px solid var(--line-2);}
+.sw i{flex:1;display:block;}
 
 /* ---- details form -------------------------------------------------------- */
 .form{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:26px;}
@@ -140,7 +147,7 @@ a{color:inherit;}
 .theme{display:flex;align-items:center;gap:11px;width:100%;padding:9px 16px;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink-2);}
 .theme:hover{background:var(--bg-3);color:var(--ink);}
 .theme.is-on{color:var(--ink);background:var(--bg-3);}
-.theme .chips{display:flex;flex:none;}
+.theme .chips{display:flex;flex:none;border:1px solid var(--line-2);}
 .theme .chips i{display:block;width:13px;height:13px;}
 .theme span{font-family:var(--mono);font-size:11px;letter-spacing:.04em;}
 .sect{display:flex;align-items:center;gap:8px;width:100%;padding:8px 16px;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink-2);font-family:var(--mono);font-size:11px;letter-spacing:.05em;}
@@ -158,7 +165,7 @@ a{color:inherit;}
 .widths{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);}
 .widths button{background:var(--bg-2);border:0;cursor:pointer;padding:6px 10px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-3);}
 .widths button.is-on{background:var(--bg-3);color:var(--ink);}
-.warnbox{padding:12px 16px;margin:0 16px;border:1px solid var(--warn);color:var(--warn);font-size:11.5px;line-height:1.5;font-family:var(--mono);}
+.warnbox{padding:12px 16px;margin:0 16px;border:1px solid var(--warn);color:var(--warn);font-size:11.5px;line-height:1.5;font-family:var(--mono);white-space:pre-wrap;}
 
 /* ---- rail controls ------------------------------------------------------- */
 .pane{padding:0 16px;}
@@ -179,17 +186,27 @@ a{color:inherit;}
 .col-row span{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-2);}
 .col-row code{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink-3);}
 
-/* ---- the image panel ----------------------------------------------------- */
+/* ---- the picture panel --------------------------------------------------- */
 .imgpanel{
-  position:absolute;z-index:8;width:290px;background:var(--bg-2);border:1px solid var(--line-2);
-  padding:14px;display:none;
+  position:absolute;z-index:8;width:334px;max-height:calc(100% - 60px);overflow:auto;
+  background:var(--bg-2);border:1px solid var(--line-2);padding:14px;display:none;
 }
 .imgpanel.is-on{display:block;}
 .imgpanel h5{margin:0 0 4px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);}
 .imgpanel p{margin:0 0 10px;font-size:11.5px;color:var(--ink-3);line-height:1.5;}
-.imgpanel input[type=url]{width:100%;background:var(--bg-3);border:1px solid var(--line);color:var(--ink);padding:8px 9px;font-size:12px;}
+.imgpanel input[type=url],.imgpanel input[type=search]{width:100%;background:var(--bg-3);border:1px solid var(--line);color:var(--ink);padding:8px 9px;font-size:12px;}
 .imgpanel .rowbtns{display:flex;gap:6px;margin-top:9px;}
 .imgpanel .rowbtns .btn{flex:1;justify-content:center;padding:9px 8px;}
+.tabs{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:11px;}
+.tabs button{flex:1;background:var(--bg-3);border:0;cursor:pointer;padding:7px 6px;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);}
+.tabs button.is-on{background:var(--bg);color:var(--ink);}
+.tabpane{display:none;}
+.tabpane.is-on{display:block;}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:10px;max-height:230px;overflow:auto;}
+.grid button{padding:0;border:1px solid transparent;background:var(--bg-3);cursor:pointer;aspect-ratio:1;overflow:hidden;}
+.grid button:hover{border-color:var(--accent);}
+.grid img{width:100%;height:100%;object-fit:cover;display:block;}
+.credit{margin-top:8px;font-size:10px;color:var(--ink-3);line-height:1.5;}
 
 /* ---- finish -------------------------------------------------------------- */
 .link{
@@ -215,6 +232,7 @@ a{color:inherit;}
   .rail{display:none;}
   .row{grid-template-columns:1fr auto;}
   .row .meta:nth-of-type(2),.row .tag{display:none;}
+  .done-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -266,6 +284,7 @@ a{color:inherit;}
              the wording is already written so it is true for any firm in it.</p>
         </div>
       </div>
+      <div class="filters" id="filters"></div>
       <div class="cards" id="cards"></div>
     </div>
   </section>
@@ -326,7 +345,7 @@ a{color:inherit;}
         </div>
       </div>
 
-      <div class="grp">
+      <div class="grp" id="colourGrp">
         <h4>Colours</h4>
         <div class="pane" id="colourPane"></div>
         <div class="pane" style="padding-top:8px">
@@ -343,23 +362,41 @@ a{color:inherit;}
 
     <div class="stage">
       <iframe id="stage" title="The website"></iframe>
+
       <div class="imgpanel" id="imgPanel">
-        <h5 id="imgKey">Image</h5>
-        <p>Paste a link to a picture, or upload one from this computer.</p>
-        <input type="url" id="imgUrl" placeholder="https://…">
-        <div class="rowbtns">
-          <button class="btn btn-primary" id="imgApply">Use link</button>
-          <label class="btn" style="justify-content:center;cursor:pointer">Upload
-            <input type="file" id="imgFile" accept="image/*" hidden>
-          </label>
+        <h5 id="imgKey">Picture</h5>
+
+        <div class="tabs" id="imgTabs">
+          <button data-tab="search" class="is-on">Find a photo</button>
+          <button data-tab="own">Use my own</button>
         </div>
-        <div class="rowbtns">
-          <button class="btn btn-quiet" id="imgReset">Back to the original</button>
+
+        <div class="tabpane is-on" data-pane="search">
+          <input type="search" id="photoQ" placeholder="kitchen, dentist, workshop…">
+          <div class="grid" id="photoGrid"></div>
+          <p class="credit" id="photoCredit">Photos from Unsplash. Free to use, no credit required.</p>
+        </div>
+
+        <div class="tabpane" data-pane="own">
+          <p>Paste a link to a picture, or upload one from this computer.</p>
+          <input type="url" id="imgUrl" placeholder="https://…">
+          <div class="rowbtns">
+            <button class="btn btn-primary" id="imgApply">Use link</button>
+            <label class="btn" style="justify-content:center;cursor:pointer">Upload
+              <input type="file" id="imgFile" accept="image/*" hidden>
+            </label>
+          </div>
+        </div>
+
+        <div class="rowbtns" style="border-top:1px solid var(--line);padding-top:9px;margin-top:12px">
+          <button class="btn btn-quiet" id="imgHide">Remove picture</button>
+          <button class="btn btn-quiet" id="imgReset">Original</button>
           <button class="btn btn-quiet" id="imgClose">Close</button>
         </div>
       </div>
+
       <div class="bar">
-        <span>Click any words on the page to change them.</span>
+        <span>Click words to change them. Click a picture to swap or remove it.</span>
         <span class="grow"></span>
         <span id="saveState">saved</span>
         <div class="widths" id="widths">
@@ -405,6 +442,7 @@ a{color:inherit;}
             <button class="btn" id="copyLink">Copy link</button>
             <a class="btn" id="openLink" target="_blank" rel="noopener">Open</a>
           </div>
+          <p class="note" id="finishNote"></p>
           <div class="actions">
             <button class="btn btn-quiet" data-goto="preview">Keep editing</button>
             <button class="btn btn-quiet" data-goto="sites">Back to my sites</button>
@@ -427,32 +465,48 @@ a{color:inherit;}
   var $  = function(s,c){ return (c||document).querySelector(s); };
   var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
 
+  var API = '/bapi';
+  var HIDE = '__HIDE__';               // must match render.js
+
   /* ------------------------------------------------------------- the state
      Exactly what a saved site is: the inputs, never the finished HTML. */
   var state = { slug:null, template:null, theme:null, swaps:{}, edits:[], style:{}, notes:'', status:'draft' };
   var templates = [];
   var fonts = [];
-  var COLOURS = [
-    { key:'brand',   name:'Brand' },
-    { key:'accent',  name:'Accent' },
-    { key:'ink',     name:'Text' },
-    { key:'paper',   name:'Page' },
-    { key:'paper-2', name:'Bands' },
-    { key:'rule',    name:'Lines' }
-  ];
-  var current = null;          // the chosen template's card
+  var env = { storage:'disk', photos:false };
+  var stageUrl = null;                 // where the preview and the link point
+  var portableUrl = null;              // the link that works with no storage
+  var current = null;                  // the chosen template's card
   var screen = 'sites';
+
+  /* Templates written with the six universal colour names. Anything else
+     declares its own adjustable colours in swap.json. */
+  var UNIVERSAL = [
+    { key:'brand',   label:'Brand',  cssVar:'brand' },
+    { key:'accent',  label:'Accent', cssVar:'accent' },
+    { key:'ink',     label:'Text',   cssVar:'ink' },
+    { key:'paper',   label:'Page',   cssVar:'paper' },
+    { key:'paper-2', label:'Bands',  cssVar:'paper-2' },
+    { key:'rule',    label:'Lines',  cssVar:'rule' }
+  ];
+  function colourRoles(){
+    if(current && current.adjust && current.adjust.length) return current.adjust;
+    if(current && current.template === '20-tower-construction') return UNIVERSAL;
+    return [];
+  }
 
   /* ---------------------------------------------------------------- helpers */
   function api(path, opts){
-    return fetch(path, Object.assign({ headers:{'Content-Type':'application/json'} }, opts))
+    return fetch(API + path, Object.assign({ headers:{'Content-Type':'application/json'} }, opts))
       .then(function(r){ return r.json(); });
   }
   var toastTimer;
   function toast(msg){
     var t = $('#toast'); t.textContent = msg; t.classList.add('is-on');
-    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('is-on'); }, 2200);
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('is-on'); }, 2600);
   }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+
   function go(name){
     screen = name;
     $$('.screen').forEach(function(s){ s.classList.toggle('is-on', s.id === name); });
@@ -477,7 +531,8 @@ a{color:inherit;}
     [' ','&nbsp;'], ['—','&mdash;'], ['–','&ndash;'],
     ['“','&ldquo;'], ['”','&rdquo;'], ['’','&rsquo;'], ['‘','&lsquo;'],
     ['²','&sup2;'], ['³','&sup3;'], ['ç','&ccedil;'],
-    ['©','&copy;'], ['↑','&uarr;'], ['→','&rarr;']
+    ['©','&copy;'], ['↑','&uarr;'], ['→','&rarr;'],
+    ['·','&middot;'], ['…','&hellip;'], ['®','&reg;']
   ];
   function toSource(html){
     /* innerHTML has already escaped & < >, so skip those three here. */
@@ -485,20 +540,21 @@ a{color:inherit;}
   }
 
   /* ------------------------------------------------------------ persistence */
-  var saveTimer, saving = false;
+  var saveTimer;
   function setSaveState(txt){ var el = $('#saveState'); if(el) el.textContent = txt; }
 
   function save(now){
     clearTimeout(saveTimer);
     setSaveState('saving…');
     var run = function(){
-      saving = true;
-      return api('/api/sites', { method:'POST', body: JSON.stringify(state) })
+      return api('/sites', { method:'POST', body: JSON.stringify(state) })
         .then(function(res){
-          saving = false;
           if(res.error){ toast(res.error); setSaveState('not saved'); return res; }
-          state.slug = res.slug;
-          setSaveState('saved · v' + res.version);
+          state.slug = res.slug || state.slug;
+          stageUrl = res.url;
+          portableUrl = res.portable;
+          setSaveState(res.slug ? ('saved · v' + res.version) : 'link only');
+          if(res.saveError) setSaveState('not saved');
           showWarnings(res.warnings || []);
           return res;
         });
@@ -517,9 +573,9 @@ a{color:inherit;}
 
   /* ================================================================ 1. SITES */
   function loadSites(){
-    api('/api/sites').then(function(rows){
+    api('/sites').then(function(rows){
       var wrap = $('#siteRows');
-      if(!rows.length){
+      if(!rows.length || rows.error){
         wrap.innerHTML = '<div class="empty">Nothing built yet. Click <b>New site</b> to start.</div>';
         return;
       }
@@ -540,14 +596,14 @@ a{color:inherit;}
       });
     });
   }
-  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
 
   function openSite(slug){
-    api('/api/sites/' + slug).then(function(rec){
+    api('/sites/' + slug).then(function(rec){
       if(rec.error) return toast(rec.error);
       state = { slug:rec.slug, template:rec.template, theme:rec.theme, swaps:rec.swaps || {},
                 edits:rec.edits || [], style:rec.style || {}, notes:rec.notes || '',
                 status:rec.status || 'draft' };
+      stageUrl = '/s/' + rec.slug;
       current = templates.find(function(t){ return t.template === rec.template; }) || null;
       buildDetails();
       go('preview');
@@ -557,51 +613,58 @@ a{color:inherit;}
 
   $('#newSite').addEventListener('click', function(){
     state = { slug:null, template:null, theme:null, swaps:{}, edits:[], style:{}, notes:'', status:'draft' };
-    current = null;
+    current = null; stageUrl = null; portableUrl = null;
     go('templates');
   });
 
   /* ============================================================ 2. TEMPLATES */
+  var filter = 'all';
+
   function loadTemplates(){
-    return api('/api/templates').then(function(rows){
+    return api('/templates').then(function(rows){
       templates = rows;
-      var wrap = $('#cards');
-      if(!rows.length){
-        wrap.innerHTML = '<div class="empty" style="padding:40px">No template has a swap card yet.</div>';
-        return;
-      }
-      wrap.innerHTML = rows.map(function(t){
-        return '<article class="card" data-t="' + esc(t.template) + '">'
-          + '<div class="shot"><iframe src="/' + esc(t.template) + '/index.html" loading="lazy" tabindex="-1" scrolling="no"></iframe></div>'
-          + '<div class="body">'
-          +   '<p class="lbl">' + esc(t.industry) + '</p>'
-          +   '<h3>' + esc(t.template.replace(/^\d+-/, '').replace(/-/g, ' ')) + '</h3>'
-          +   '<p class="covers">' + esc(t.covers) + '</p>'
-          +   '<div class="swatches">' + t.themes.map(function(){ return '<i class="sw"></i>'; }).join('') + '</div>'
-          +   '<div class="use"><button class="btn btn-primary">Use this template</button></div>'
-          + '</div></article>';
-      }).join('');
-      $$('.card', wrap).forEach(function(c){
-        c.addEventListener('click', function(){ chooseTemplate(c.getAttribute('data-t')); });
-      });
-      paintSwatches();
+      paintFilters();
+      paintCards();
     });
   }
 
-  /* Read the real theme colours out of each template so the picker shows the
-     actual palette rather than a guess. */
-  function paintSwatches(){
-    $$('.card').forEach(function(card){
-      var t = templates.find(function(x){ return x.template === card.getAttribute('data-t'); });
-      if(!t) return;
-      fetch('/' + t.template + '/index.html').then(function(r){ return r.text(); }).then(function(src){
-        var chips = $$('.sw', card);
-        t.themes.forEach(function(name, i){
-          var re = new RegExp('data-theme="' + name + '"\\]?\\{[^}]*?--brand:\\s*(#[0-9A-Fa-f]{3,8})[^}]*?--accent:\\s*(#[0-9A-Fa-f]{3,8})');
-          var m = src.match(re) || src.match(/:root,[\s\S]{0,200}?--brand:\s*(#[0-9A-Fa-f]{3,8})[\s\S]{0,80}?--accent:\s*(#[0-9A-Fa-f]{3,8})/);
-          if(m && chips[i]){ chips[i].style.background = m[1]; chips[i].style.borderColor = m[2]; }
-        });
-      });
+  function paintFilters(){
+    var groups = ['all'].concat(templates.map(function(t){ return t.industry; })
+      .filter(function(v, i, a){ return v && a.indexOf(v) === i; }).sort());
+    $('#filters').innerHTML = groups.map(function(g){
+      return '<button data-f="' + esc(g) + '"' + (g === filter ? ' class="is-on"' : '') + '>'
+        + esc(g === 'all' ? 'All ' + templates.length : g) + '</button>';
+    }).join('');
+    $$('#filters button').forEach(function(b){
+      b.addEventListener('click', function(){ filter = b.getAttribute('data-f'); paintFilters(); paintCards(); });
+    });
+  }
+
+  function paintCards(){
+    var wrap = $('#cards');
+    var rows = templates.filter(function(t){ return filter === 'all' || t.industry === filter; });
+    if(!rows.length){
+      wrap.innerHTML = '<div class="empty" style="padding:40px">No template has a swap card yet.</div>';
+      return;
+    }
+    wrap.innerHTML = rows.map(function(t){
+      return '<article class="card" data-t="' + esc(t.template) + '">'
+        + '<div class="shot"><iframe src="/' + esc(t.template) + '/index.html" loading="lazy" tabindex="-1" scrolling="no"></iframe></div>'
+        + '<div class="body">'
+        +   '<p class="lbl">' + esc(t.industry) + '</p>'
+        +   '<h3>' + esc(t.title) + '</h3>'
+        +   '<p class="covers">' + esc(t.covers) + '</p>'
+        +   '<div class="swatches">' + (t.swatches || []).map(function(s){
+              return '<span class="sw" title="' + esc(s.name) + '">'
+                + '<i style="background:' + esc(s.ink) + '"></i>'
+                + '<i style="background:' + esc(s.paper) + '"></i>'
+                + '<i style="background:' + esc(s.accent) + '"></i></span>';
+            }).join('') + '</div>'
+        +   '<div class="use"><button class="btn btn-primary">Use this template</button></div>'
+        + '</div></article>';
+    }).join('');
+    $$('.card', wrap).forEach(function(c){
+      c.addEventListener('click', function(){ chooseTemplate(c.getAttribute('data-t')); });
     });
   }
 
@@ -610,21 +673,22 @@ a{color:inherit;}
     if(!t) return;
     current = t;
     state.template = name;
-    if(!state.theme) state.theme = t.themes[0];
+    if(!state.theme || t.themes.indexOf(state.theme) === -1) state.theme = t.themes[0];
     buildDetails();
     go('details');
   }
 
   /* ============================================================== 3. DETAILS
-     Five fields, not thirty. Everything else keeps the template's own wording,
-     which is already true for any business in the industry. */
+     A handful of fields, not thirty. Everything else keeps the template's own
+     wording, which is already true for any business in the industry. */
   var INTAKE = [
-    { key:'BUSINESS_NAME', label:'Business name',  ph:'Kestrel Civils',                 full:false },
-    { key:'WHAT_THEY_DO',  label:'What they do',   ph:'Groundworks and civil engineering', full:false },
-    { key:'CITY',          label:'City',           ph:'Bulawayo',                       full:false },
-    { key:'PHONE',         label:'Phone',          ph:'+263 29 288 4410',               full:false },
-    { key:'EMAIL',         label:'Email',          ph:'office@example.com',             full:false },
-    { key:'ADDRESS',       label:'Address (optional)', ph:'Unit 7, Kelvin North',       full:false }
+    { key:'BUSINESS_NAME', label:'Business name',      ph:'Kestrel Civils' },
+    { key:'WHAT_THEY_DO',  label:'What they do',       ph:'Groundworks and civil engineering' },
+    { key:'CITY',          label:'City',               ph:'Bulawayo' },
+    { key:'PHONE',         label:'Phone',              ph:'+263 29 288 4410' },
+    { key:'EMAIL',         label:'Email',              ph:'office@example.com' },
+    { key:'ADDRESS',       label:'Address (optional)', ph:'Unit 7, Kelvin North' },
+    { key:'HOURS',         label:'Opening hours (optional)', ph:'Mon to Fri, 8 till 5' }
   ];
 
   function buildDetails(){
@@ -634,7 +698,7 @@ a{color:inherit;}
 
     var html = INTAKE.filter(function(f){ return byKey[f.key]; }).map(function(f){
       var max = byKey[f.key].maxChars;
-      return '<div class="fld' + (f.full ? ' full' : '') + '">'
+      return '<div class="fld">'
         + '<label for="f-' + f.key + '">' + esc(f.label) + '</label>'
         + '<input id="f-' + f.key + '" data-key="' + f.key + '" ' + (max ? 'data-max="' + max + '"' : '')
         +   ' placeholder="' + esc(f.ph) + '" value="' + esc(state.swaps[f.key] || '') + '">'
@@ -648,7 +712,7 @@ a{color:inherit;}
       html += stats.map(function(f){
         return '<div class="fld"><label for="f-' + f.key + '">' + esc(f.label) + '</label>'
           + '<input id="f-' + f.key + '" data-key="' + f.key + '" inputmode="numeric"'
-          + ' placeholder="' + esc(f.value) + '" value="' + esc(state.swaps[f.key] || '') + '"></div>';
+          + ' placeholder="leave blank to keep the design’s own" value="' + esc(state.swaps[f.key] || '') + '"></div>';
       }).join('');
     }
 
@@ -694,58 +758,44 @@ a{color:inherit;}
 
   /* Anything that changes the markup — a logo, a picture, a hidden section —
      is saved and then re-rendered, so what is on screen is what is published.
-     Themes, colours and type sizes are variables, so they change live. */
+     Themes and type sizes are variables, so those change live. */
   function reloadStage(skipSave){
     var frame = $('#stage');
     var draw = function(){
-      frame.src = '/s/' + state.slug + '?t=' + Date.now();
+      if(!stageUrl) return;
+      frame.src = stageUrl + (stageUrl.indexOf('?') === -1 ? '?' : '&') + 't=' + Date.now();
       frame.onload = wireEditing;
     };
-    if(skipSave) return draw();
+    if(skipSave && stageUrl) return draw();
     save(true).then(draw);
   }
 
   function buildThemeList(){
     if(!current) return;
+    var sw = {};
+    (current.swatches || []).forEach(function(s){ sw[s.name] = s; });
     $('#themeList').innerHTML = current.themes.map(function(name){
+      var s = sw[name] || {};
       return '<button class="theme' + (name === state.theme ? ' is-on' : '') + '" data-theme="' + esc(name) + '">'
-        + '<span class="chips"><i data-role="brand"></i><i data-role="accent"></i></span>'
+        + '<span class="chips">'
+        +   '<i style="background:' + esc(s.ink || '#333') + '"></i>'
+        +   '<i style="background:' + esc(s.paper || '#eee') + '"></i>'
+        +   '<i style="background:' + esc(s.accent || '#888') + '"></i>'
+        + '</span>'
         + '<span>' + esc(name.replace(/-/g, ' ')) + '</span></button>';
     }).join('');
     $$('#themeList .theme').forEach(function(b){
       b.addEventListener('click', function(){ setTheme(b.getAttribute('data-theme')); });
     });
-    paintThemeChips();
   }
 
-  /* Show each theme's own colours. Any colour picked by hand is an inline
-     override on the same element, so it has to come off while we look. */
-  function paintThemeChips(){
-    var doc = frameDoc();
-    if(!doc) return;
-    var root = doc.documentElement;
-    var prevTheme = root.getAttribute('data-theme');
-    var saved = COLOURS.map(function(c){ return [c.key, root.style.getPropertyValue('--' + c.key)]; });
-    saved.forEach(function(p){ root.style.removeProperty('--' + p[0]); });
-
-    $$('#themeList .theme').forEach(function(b){
-      root.setAttribute('data-theme', b.getAttribute('data-theme'));
-      var cs = doc.defaultView.getComputedStyle(root);
-      b.querySelector('[data-role="brand"]').style.background  = cs.getPropertyValue('--brand').trim();
-      b.querySelector('[data-role="accent"]').style.background = cs.getPropertyValue('--accent').trim();
-    });
-
-    root.setAttribute('data-theme', prevTheme);
-    saved.forEach(function(p){ if(p[1]) root.style.setProperty('--' + p[0], p[1]); });
-  }
-
-  /* A theme is six CSS variables. Nothing needs rebuilding to change one. */
+  /* A theme is a set of CSS variables written into the page at render time,
+     so switching one is a re-render. It is fast, and it cannot drift from
+     what gets published. */
   function setTheme(name){
     state.theme = name;
-    var doc = frameDoc();
-    if(doc) doc.documentElement.setAttribute('data-theme', name);
     $$('#themeList .theme').forEach(function(b){ b.classList.toggle('is-on', b.getAttribute('data-theme') === name); });
-    save();
+    reloadStage();
   }
 
   function frameDoc(){
@@ -756,15 +806,9 @@ a{color:inherit;}
   function wireEditing(){
     var doc = frameDoc();
     if(!doc) return;
-    doc.documentElement.setAttribute('data-theme', state.theme);
-    /* always land at the top of the page, whatever the last scroll was */
     try { doc.defaultView.scrollTo(0, 0); } catch(e){}
-    paintThemeChips();
     buildSectionList(doc);
-
     syncColourInputs();
-    if(state.style.typeDisplay) liveScale('display', state.style.typeDisplay * 100);
-    if(state.style.typeBody) liveScale('body', state.style.typeBody * 100);
 
     var style = doc.createElement('style');
     style.textContent =
@@ -873,7 +917,7 @@ a{color:inherit;}
   function buildSectionList(doc){
     /* Pinned sections get wrapped in a spacer by GSAP, so look anywhere inside
        main rather than only at its direct children. */
-    var secs = $$('main section[id], footer', doc);
+    var secs = $$('main section[id], section[id], footer', doc).filter(function(s, i, a){ return a.indexOf(s) === i; });
     $('#sectionList').innerHTML = secs.map(function(s){
       var id = s.id || 'footer';
       var hidden = isHidden(id);
@@ -885,7 +929,7 @@ a{color:inherit;}
       b.addEventListener('click', function(e){
         var id = b.getAttribute('data-sec');
         if(e.target.classList.contains('eye')) toggleSection(id);
-        else scrollTo(id);
+        else scrollToSection(id);
       });
     });
   }
@@ -894,33 +938,24 @@ a{color:inherit;}
      Statement" — which is already the section's name. Use it, minus the
      number. Fall back to the id, which is always sensible. */
   function sectionName(el, id){
-    var eyebrow = el.querySelector('.eyebrow, [class*="eyebrow"]');
+    var eyebrow = el.querySelector('.eyebrow, [class*="eyebrow"], .lab, .label');
     var raw = eyebrow ? eyebrow.textContent : id;
     raw = String(raw).replace(/\s+/g, ' ').trim().replace(/^\d+\s*[—–-]\s*/, '');
     if(!raw) raw = id;
     return raw.charAt(0).toUpperCase() + raw.slice(1).slice(0, 21);
   }
 
-  function hideFind(id){ return 'id="' + id + '"'; }
-  function hideRepl(id){ return 'id="' + id + '" style="display:none"'; }
-  function isHidden(id){
-    return state.edits.some(function(e){ return e.find === hideFind(id) && e.replace === hideRepl(id); });
-  }
+  function isHidden(id){ return (state.style.hideSections || []).indexOf(id) !== -1; }
 
   function toggleSection(id){
-    if(isHidden(id)){
-      state.edits = state.edits.filter(function(e){ return !(e.find === hideFind(id) && e.replace === hideRepl(id)); });
-    } else {
-      state.edits.push({ find: hideFind(id), replace: hideRepl(id) });
-    }
-    save(true).then(function(){
-      var frame = $('#stage');
-      frame.src = '/s/' + state.slug + '?t=' + Date.now();
-      frame.onload = wireEditing;
-    });
+    var list = state.style.hideSections || [];
+    if(isHidden(id)) list = list.filter(function(x){ return x !== id; });
+    else list = list.concat([id]);
+    state.style.hideSections = list.length ? list : undefined;
+    reloadStage();
   }
 
-  function scrollTo(id){
+  function scrollToSection(id){
     var doc = frameDoc();
     if(!doc) return;
     var el = id === 'footer' ? doc.querySelector('footer') : doc.getElementById(id);
@@ -930,10 +965,7 @@ a{color:inherit;}
     else doc.defaultView.scrollTo({ top: y, behavior: 'smooth' });
   }
 
-  /* ======================================================= LOGO, TYPE, COLOUR
-     All three are the same idea: the template already routes every typeface
-     through --sans/--mono and every colour through its six theme values, so
-     the tool only ever writes variables. It never touches a rule. */
+  /* ======================================================= LOGO, TYPE, COLOUR */
 
   /* Files become data URIs, so a finished site stays one self-contained file
      with nothing to host alongside it. */
@@ -951,6 +983,12 @@ a{color:inherit;}
   /* ---- logo -------------------------------------------------------------- */
   function paintLogo(){
     var slot = $('#logoPreview');
+    var has = current && (current.images || []).some(function(i){ return i.key === 'LOGO'; });
+    if(!has){
+      slot.textContent = 'This template has no logo slot';
+      slot.style.borderStyle = 'dashed';
+      return;
+    }
     if(state.swaps.LOGO){
       slot.innerHTML = '<img src="' + esc(state.swaps.LOGO) + '" alt="">';
       slot.style.borderStyle = 'solid';
@@ -995,40 +1033,39 @@ a{color:inherit;}
   $('#fontDisplay').addEventListener('change', function(){ state.style.fontDisplay = this.value || undefined; reloadStage(); });
   $('#fontMono').addEventListener('change', function(){ state.style.fontMono = this.value || undefined; reloadStage(); });
 
-  /* Size is a variable the template multiplies its own clamps by, so it can
-     be nudged live without a rebuild. */
-  function liveScale(which, pct){
-    var doc = frameDoc();
-    if(doc) doc.documentElement.style.setProperty('--type-' + which, pct / 100);
-  }
+  /* Size is arithmetic on the stylesheet, so it takes a re-render. Waiting
+     until the slider is let go keeps that to one. */
+  var sizeTimer;
+  function sizeChanged(){ clearTimeout(sizeTimer); sizeTimer = setTimeout(function(){ reloadStage(); }, 420); }
   $('#typeDisplay').addEventListener('input', function(){
     $('#tdVal').textContent = this.value + '%';
     state.style.typeDisplay = Number(this.value) / 100;
-    liveScale('display', this.value);
-    save();
+    sizeChanged();
   });
   $('#typeBody').addEventListener('input', function(){
     $('#tbVal').textContent = this.value + '%';
     state.style.typeBody = Number(this.value) / 100;
-    liveScale('body', this.value);
-    save();
+    sizeChanged();
   });
 
-  /* ---- colour ------------------------------------------------------------ */
+  /* ---- colour ------------------------------------------------------------
+     Four themes are the colour control. These pickers exist for the case
+     where a client has a brand colour that has to be matched exactly. Each
+     template says which of its own colours are safe to move. */
   function buildColourControls(){
-    $('#colourPane').innerHTML = COLOURS.map(function(c){
+    var roles = colourRoles();
+    $('#colourGrp').style.display = roles.length ? '' : 'none';
+    if(!roles.length) return;
+    $('#colourPane').innerHTML = roles.map(function(c){
       return '<div class="col-row">'
-        + '<input type="color" data-col="' + c.key + '">'
-        + '<span>' + esc(c.name) + '</span><code data-hex="' + c.key + '"></code></div>';
+        + '<input type="color" data-col="' + esc(c.key) + '" data-var="' + esc(c.cssVar || c.key) + '">'
+        + '<span>' + esc(c.label) + '</span><code data-hex="' + esc(c.key) + '"></code></div>';
     }).join('');
     $$('#colourPane input[type=color]').forEach(function(inp){
-      inp.addEventListener('input', function(){
-        var key = inp.getAttribute('data-col');
-        state.style[key] = inp.value;
-        var doc = frameDoc();
-        if(doc) doc.documentElement.style.setProperty('--' + key, inp.value);
-        $('[data-hex="' + key + '"]').textContent = inp.value;
-        save();
+      inp.addEventListener('change', function(){
+        state.style[inp.getAttribute('data-col')] = inp.value;
+        $('[data-hex="' + inp.getAttribute('data-col') + '"]').textContent = inp.value;
+        reloadStage();
       });
     });
     syncColourInputs();
@@ -1040,8 +1077,8 @@ a{color:inherit;}
     var doc = frameDoc();
     if(!doc) return;
     var cs = doc.defaultView.getComputedStyle(doc.documentElement);
-    COLOURS.forEach(function(c){
-      var v = (state.style[c.key] || cs.getPropertyValue('--' + c.key).trim() || '#000000');
+    colourRoles().forEach(function(c){
+      var v = state.style[c.key] || cs.getPropertyValue('--' + (c.cssVar || c.key)).trim() || '#000000';
       if(!/^#[0-9A-Fa-f]{6}$/.test(v)) v = hexOf(doc, v);
       var inp = $('[data-col="' + c.key + '"]');
       if(inp) inp.value = v;
@@ -1059,27 +1096,47 @@ a{color:inherit;}
   }
 
   $('#colourReset').addEventListener('click', function(){
-    COLOURS.forEach(function(c){ delete state.style[c.key]; });
+    colourRoles().forEach(function(c){ delete state.style[c.key]; });
     reloadStage();
     toast('Colours back to the theme');
   });
 
-  /* ---- swapping a picture ------------------------------------------------- */
+  /* ---- pictures ----------------------------------------------------------- */
   var imgTarget = null;
 
   function openImagePanel(img){
     var key = imageKeyFor(img);
     if(!key) return;
     imgTarget = key;
+    var slot = ((current && current.images) || []).find(function(i){ return i.key === key; }) || {};
+
     var panel = $('#imgPanel');
     var box = $('#stage').getBoundingClientRect();
     var r = img.getBoundingClientRect();
-    panel.style.left = Math.min(box.width - 302, Math.max(10, r.left + 10)) + 'px';
-    panel.style.top  = Math.min(box.height - 210, Math.max(10, r.top + 10)) + 'px';
-    $('#imgKey').textContent = key.replace(/_/g, ' ');
-    $('#imgUrl').value = state.swaps[key] && !/^data:/.test(state.swaps[key]) ? state.swaps[key] : '';
+    panel.style.left = Math.min(box.width - 346, Math.max(10, r.left + 10)) + 'px';
+    panel.style.top  = Math.min(Math.max(10, box.height - 380), Math.max(10, r.top + 10)) + 'px';
+
+    $('#imgKey').textContent = slot.label || key.replace(/_/g, ' ');
+    $('#imgUrl').value = state.swaps[key] && !/^data:/.test(state.swaps[key]) && state.swaps[key] !== HIDE ? state.swaps[key] : '';
+    $('#photoGrid').innerHTML = '';
+    $('#photoQ').value = slot.search || '';
+    setTab('search');
     panel.classList.add('is-on');
+    if(!env.photos){
+      setTab('own');
+      $('#photoCredit').textContent = 'Photo search is off: no Unsplash key on this deployment.';
+    } else if(slot.search){
+      runSearch();
+    }
   }
+
+  function setTab(name){
+    $$('#imgTabs button').forEach(function(b){ b.classList.toggle('is-on', b.getAttribute('data-tab') === name); });
+    $$('.tabpane').forEach(function(p){ p.classList.toggle('is-on', p.getAttribute('data-pane') === name); });
+  }
+  $$('#imgTabs button').forEach(function(b){
+    b.addEventListener('click', function(){ setTab(b.getAttribute('data-tab')); });
+  });
 
   /* Work out which slot an image belongs to by matching what is on screen
      against the template's own list. */
@@ -1091,6 +1148,8 @@ a{color:inherit;}
       if(state.swaps[k] && src === state.swaps[k]) return k;
       if(images[i].value && src === images[i].value) return k;
     }
+    /* an uploaded logo keeps the mark's class, which is enough to know it */
+    if(img.classList.contains('mark') && state.swaps.LOGO) return 'LOGO';
     return null;
   }
 
@@ -1098,15 +1157,48 @@ a{color:inherit;}
     if(!imgTarget) return;
     if(value) state.swaps[imgTarget] = value; else delete state.swaps[imgTarget];
     $('#imgPanel').classList.remove('is-on');
+    if(imgTarget === 'LOGO') paintLogo();
     reloadStage();
   }
   $('#imgApply').addEventListener('click', function(){ setImage($('#imgUrl').value.trim()); });
   $('#imgReset').addEventListener('click', function(){ setImage(null); });
+  $('#imgHide').addEventListener('click', function(){ setImage(HIDE); toast('Picture removed'); });
   $('#imgClose').addEventListener('click', function(){ $('#imgPanel').classList.remove('is-on'); });
   $('#imgFile').addEventListener('change', function(){
     var f = this.files[0]; this.value = '';
     readFile(f, 900).then(function(uri){ setImage(uri); })
       .catch(function(e){ toast(e.message); });
+  });
+
+  /* ---- photo search ------------------------------------------------------- */
+  var searchTimer;
+  function runSearch(){
+    var q = $('#photoQ').value.trim();
+    if(!q){ $('#photoGrid').innerHTML = ''; return; }
+    var slot = ((current && current.images) || []).find(function(i){ return i.key === imgTarget; }) || {};
+    var orient = slot.ratio && /^(16|3|4|2)\/(9|2|3|10|11)$/.test(slot.ratio) ? 'landscape'
+               : slot.ratio && /^(3|4)\/(4|5)$/.test(slot.ratio) ? 'portrait' : '';
+    $('#photoGrid').innerHTML = '<p class="credit" style="grid-column:1/-1">Looking…</p>';
+    api('/photos?q=' + encodeURIComponent(q) + (orient ? '&orientation=' + orient : ''))
+      .then(function(res){
+        if(res.error){ $('#photoGrid').innerHTML = ''; $('#photoCredit').textContent = res.error; return; }
+        if(!res.results.length){ $('#photoGrid').innerHTML = '<p class="credit" style="grid-column:1/-1">Nothing found.</p>'; return; }
+        $('#photoGrid').innerHTML = res.results.map(function(p, i){
+          return '<button data-i="' + i + '" title="' + esc(p.by || '') + '"><img src="' + esc(p.thumb) + '" alt="' + esc(p.alt) + '" loading="lazy"></button>';
+        }).join('');
+        $$('#photoGrid button').forEach(function(b){
+          b.addEventListener('click', function(){
+            var p = res.results[Number(b.getAttribute('data-i'))];
+            /* Unsplash asks for this ping when a photo is used. */
+            api('/photos/use', { method:'POST', body: JSON.stringify({ download: p.download }) });
+            setImage(p.full);
+          });
+        });
+        $('#photoCredit').textContent = 'Photos from Unsplash — free to use commercially, no credit required.';
+      });
+  }
+  $('#photoQ').addEventListener('input', function(){
+    clearTimeout(searchTimer); searchTimer = setTimeout(runSearch, 450);
   });
 
   /* ---- width preview ----------------------------------------------------- */
@@ -1126,12 +1218,20 @@ a{color:inherit;}
   $('#toFinish').addEventListener('click', function(){
     state.status = 'finished';
     save(true).then(function(res){
-      var url = location.origin + '/s/' + state.slug;
+      var path = res.url || portableUrl;
+      if(!path){ toast('Could not make a link: ' + (res.saveError || 'unknown')); return; }
+      var url = location.origin + path;
       $('#liveUrl').textContent = url;
       $('#openLink').href = url;
       $('#qr').innerHTML = '';
-      if(window.QRCode) new QRCode($('#qr'), { text:url, width:150, height:150, colorDark:'#0C0E11', colorLight:'#ffffff' });
+      if(window.QRCode && url.length < 900){
+        new QRCode($('#qr'), { text:url, width:150, height:150, colorDark:'#0C0E11', colorLight:'#ffffff' });
+      }
       $('#finishTitle').textContent = 'The site is live';
+      $('#finishNote').textContent = res.slug
+        ? 'Saved as version ' + res.version + '. Finishing again writes a new version and never overwrites this one.'
+        : 'This link carries the whole site inside it, so it needs no database and never expires. '
+          + 'Add a Blob store in the Vercel dashboard to get short links and a saved list.';
       go('finish');
     });
   });
@@ -1143,8 +1243,14 @@ a{color:inherit;}
   /* ------------------------------------------------------------------ start */
   Promise.all([
     loadTemplates(),
-    api('/api/fonts').then(function(f){ fonts = f; })
-  ]).then(function(){ go('sites'); });
+    api('/fonts').then(function(f){ fonts = f; }),
+    api('/env').then(function(e){ env = e; })
+  ]).then(function(){
+    if(env.storage !== 'blob' && env.storage !== 'disk'){
+      $('#topRight').innerHTML = '<span class="lbl">link-only mode</span>';
+    }
+    go('sites');
+  });
 })();
 </script>
 </body>

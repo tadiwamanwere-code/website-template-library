@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/app.js": {
+      "includeFiles": "{**/index.html,**/swap.json}"
+    }
+  },
+  "rewrites": [
+    { "source": "/build", "destination": "/api/app?p=/build" },
+    { "source": "/bapi/:rest*", "destination": "/api/app?p=/bapi/:rest*" },
+    { "source": "/s/:rest*", "destination": "/api/app?p=/s/:rest*" },
+    { "source": "/p/:rest*", "destination": "/api/app?p=/p/:rest*" }
+  ]
+}

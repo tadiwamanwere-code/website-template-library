@@ -2,12 +2,6 @@
   "template": "20-tower-construction",
   "industry": "Construction and trades",
   "covers": "Builders, civils, roofing, plant hire, electrical, plumbing",
-  "themes": [
-    "navy-amber",
-    "charcoal-rust",
-    "forest-brass",
-    "slate-teal"
-  ],
   "_brandTokens": "Words belonging to this template, not to a client. If any survive a render that set BUSINESS_NAME, a swap was missed.",
   "brandTokens": [
     "Tower Construction",
@@ -151,49 +145,124 @@
       "key": "HERO",
       "find": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2400&q=80",
       "label": "Hero photo",
-      "ratio": "16/9"
+      "ratio": "16/9",
+      "search": "construction site"
     },
     {
       "key": "ABOUT",
       "find": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80",
       "label": "About photo",
-      "ratio": "4/5"
+      "ratio": "4/5",
+      "search": "builder on site"
     },
     {
       "key": "WORK_1",
       "find": "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1600&q=80",
       "label": "Work 1",
-      "ratio": "16/11"
+      "ratio": "16/11",
+      "search": "building construction"
     },
     {
       "key": "WORK_2",
       "find": "https://images.unsplash.com/photo-1508450859948-4e04fabaa4ea?auto=format&fit=crop&w=1200&q=80",
       "label": "Work 2",
-      "ratio": "3/4"
+      "ratio": "3/4",
+      "search": "steel frame building"
     },
     {
       "key": "WORK_3",
       "find": "https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&w=1200&q=80",
       "label": "Work 3",
-      "ratio": "4/5"
+      "ratio": "4/5",
+      "search": "construction worker"
     },
     {
       "key": "WORK_4",
       "find": "https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?auto=format&fit=crop&w=1600&q=80",
       "label": "Work 4",
-      "ratio": "16/10"
+      "ratio": "16/10",
+      "search": "road works"
     },
     {
       "key": "WORK_5",
       "find": "https://images.unsplash.com/photo-1503708928676-1cb796a0891e?auto=format&fit=crop&w=1600&q=80",
       "label": "Work 5",
-      "ratio": "3/2"
+      "ratio": "3/2",
+      "search": "warehouse building"
     },
     {
       "key": "WORK_6",
       "find": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80",
       "label": "Work 6",
-      "ratio": "4/5"
+      "ratio": "4/5",
+      "search": "concrete structure"
     }
-  ]
+  ],
+  "title": "Tower Construction",
+  "_palettes": "Four approved sets of this template’s six colour variables. The renderer writes them into the page; the template needs to know nothing about them.",
+  "palettes": {
+    "navy-amber": {
+      "brand": "#0E2A5E",
+      "accent": "#F5A833",
+      "ink": "#0B1C36",
+      "paper": "#FFFFFF",
+      "paper-2": "#F4F5F7",
+      "rule": "#D9DEE6"
+    },
+    "charcoal-rust": {
+      "brand": "#282B31",
+      "accent": "#E07E47",
+      "ink": "#191B1F",
+      "paper": "#FFFFFF",
+      "paper-2": "#F5F4F2",
+      "rule": "#DEDAD4"
+    },
+    "forest-brass": {
+      "brand": "#123529",
+      "accent": "#C08F33",
+      "ink": "#0F2219",
+      "paper": "#FFFFFF",
+      "paper-2": "#F2F5F1",
+      "rule": "#D5DDD4"
+    },
+    "slate-teal": {
+      "brand": "#1E3138",
+      "accent": "#18B0B0",
+      "ink": "#12222A",
+      "paper": "#FFFFFF",
+      "paper-2": "#F0F5F6",
+      "rule": "#D2DDE0"
+    }
+  },
+  "swatchKeys": {
+    "accent": "accent",
+    "ink": "brand",
+    "paper": "paper-2"
+  },
+  "adjust": {
+    "brand": {
+      "label": "Brand",
+      "var": "brand"
+    },
+    "accent": {
+      "label": "Accent",
+      "var": "accent"
+    },
+    "ink": {
+      "label": "Text",
+      "var": "ink"
+    },
+    "paper": {
+      "label": "Page",
+      "var": "paper"
+    },
+    "paper-2": {
+      "label": "Bands",
+      "var": "paper-2"
+    },
+    "rule": {
+      "label": "Lines",
+      "var": "rule"
+    }
+  }
 }
