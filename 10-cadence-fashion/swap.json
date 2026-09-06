@@ -1,0 +1,284 @@
+{
+  "template": "10-cadence-fashion",
+  "title": "Cadence",
+  "industry": "Fashion and studios",
+  "covers": "Fashion labels, designers, jewellers, photographers, galleries, creative studios",
+  "_note": "find is the exact literal that sits in index.html today. Whole strings only, longest find first.",
+  "_palettes": "Four approved sets. This design is black, white and one signal colour; only the signal moves.",
+  "palettes": {
+    "signal-red": {
+      "blk": "#000000",
+      "wht": "#ffffff",
+      "red": "#FF1E00"
+    },
+    "signal-blue": {
+      "blk": "#000000",
+      "wht": "#ffffff",
+      "red": "#1B4DFF"
+    },
+    "signal-lime": {
+      "blk": "#000000",
+      "wht": "#ffffff",
+      "red": "#B4FF00"
+    },
+    "signal-mono": {
+      "blk": "#000000",
+      "wht": "#ffffff",
+      "red": "#8A8A8A"
+    }
+  },
+  "swatchKeys": {
+    "accent": "red",
+    "ink": "blk",
+    "paper": "wht"
+  },
+  "adjust": {
+    "accent": {
+      "label": "Signal colour",
+      "var": "red"
+    }
+  },
+  "_brandTokens": "Words belonging to this template, not to a client.",
+  "brandTokens": [
+    "CADENCE",
+    "Cadence",
+    "SEVERANCE",
+    "Severance",
+    "Antwerp",
+    "Nationalestraat",
+    "cadence.be"
+  ],
+  "swaps": [
+    {
+      "key": "NAME_CAPS",
+      "find": "CADENCE",
+      "label": "Name in capitals",
+      "maxChars": 16,
+      "required": true,
+      "hint": "The design sets this in capitals throughout."
+    },
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Cadence",
+      "label": "Label name",
+      "maxChars": 20,
+      "required": true
+    },
+    {
+      "key": "COLLECTION_CAPS",
+      "find": "SEVERANCE",
+      "label": "Collection name, capitals",
+      "maxChars": 18
+    },
+    {
+      "key": "COLLECTION",
+      "find": "Severance",
+      "label": "Collection name",
+      "maxChars": 18
+    },
+    {
+      "key": "WHAT_THEY_DO",
+      "find": "ATELIER ANTWERP",
+      "label": "What it is, capitals",
+      "maxChars": 22
+    },
+    {
+      "key": "CITY",
+      "find": "Antwerp",
+      "label": "City",
+      "maxChars": 18
+    },
+    {
+      "key": "ADDRESS",
+      "find": "Nationalestraat 28",
+      "label": "Studio address",
+      "maxChars": 34
+    },
+    {
+      "key": "POSTCODE",
+      "find": "2000 Antwerp, BE",
+      "label": "Postcode line",
+      "maxChars": 26,
+      "optional": true
+    },
+    {
+      "key": "EMAIL",
+      "find": "studio@cadence.be",
+      "label": "Email",
+      "maxChars": 40
+    },
+    {
+      "key": "PHONE",
+      "find": "+32 3 226 04 91",
+      "label": "Phone",
+      "maxChars": 20
+    },
+    {
+      "key": "SEASON",
+      "find": "FALL&ndash;WINTER 2026",
+      "label": "Season, capitals",
+      "maxChars": 24,
+      "group": "details"
+    },
+    {
+      "key": "SEASON_SHORT",
+      "find": "FW26",
+      "label": "Season, short form",
+      "maxChars": 8,
+      "group": "details"
+    },
+    {
+      "key": "FOUNDED_LINE",
+      "find": "EST. 2019 &middot; NINE COLLECTIONS",
+      "label": "Founded line",
+      "maxChars": 34,
+      "optional": true
+    },
+    {
+      "key": "STAT_1_VALUE",
+      "find": "data-count=\"24\"",
+      "format": "data-count=\"{}\"",
+      "label": "Looks in the collection",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_2_VALUE",
+      "find": "data-count=\"11\"",
+      "format": "data-count=\"{}\"",
+      "label": "Materials sourced",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_3_VALUE",
+      "find": "data-count=\"1340\"",
+      "format": "data-count=\"{}\"",
+      "label": "Cloth consumed, metres",
+      "type": "number",
+      "maxChars": 8
+    },
+    {
+      "key": "STAT_4_VALUE",
+      "find": "data-count=\"41\"",
+      "format": "data-count=\"{}\"",
+      "label": "Hands on the run",
+      "type": "number",
+      "maxChars": 8
+    }
+  ],
+  "images": [
+    {
+      "key": "HERO",
+      "find": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=80",
+      "label": "Hero photo",
+      "ratio": "3/4",
+      "search": "fashion editorial coat"
+    },
+    {
+      "key": "LOOK_1",
+      "find": "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=80",
+      "label": "Look 1",
+      "ratio": "3/4",
+      "search": "fashion lookbook coat"
+    },
+    {
+      "key": "LOOK_2",
+      "find": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=80",
+      "label": "Look 2",
+      "ratio": "3/4",
+      "search": "silk slip dress"
+    },
+    {
+      "key": "LOOK_3",
+      "find": "https://images.unsplash.com/photo-1485462537746-965f33f7f6a7?w=1200&q=80",
+      "label": "Look 3",
+      "ratio": "3/4",
+      "search": "cashmere cape"
+    },
+    {
+      "key": "LOOK_4",
+      "find": "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=900&q=80",
+      "label": "Look 4",
+      "ratio": "3/4",
+      "search": "tailored trousers"
+    },
+    {
+      "key": "LOOK_5",
+      "find": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=80",
+      "label": "Look 5",
+      "ratio": "3/4",
+      "search": "column dress"
+    },
+    {
+      "key": "LOOK_6",
+      "find": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=1200&q=80",
+      "label": "Look 6",
+      "ratio": "3/4",
+      "search": "leather biker jacket"
+    },
+    {
+      "key": "LOOK_7",
+      "find": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&q=80",
+      "label": "Look 7",
+      "ratio": "3/4",
+      "search": "knit rollneck"
+    },
+    {
+      "key": "LOOK_8",
+      "find": "https://images.unsplash.com/photo-1445205170230-053b83016050?w=1200&q=80",
+      "label": "Look 8",
+      "ratio": "3/4",
+      "search": "poplin shirtdress"
+    },
+    {
+      "key": "LOOK_9",
+      "find": "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?w=900&q=80",
+      "label": "Look 9",
+      "ratio": "3/4",
+      "search": "alpaca greatcoat"
+    },
+    {
+      "key": "LOOK_10",
+      "find": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1200&q=80",
+      "label": "Look 10",
+      "ratio": "3/4",
+      "search": "evening trouser taffeta"
+    },
+    {
+      "key": "ATELIER",
+      "find": "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=900&q=80",
+      "label": "The atelier",
+      "ratio": "3/4",
+      "search": "atelier fitting studio"
+    },
+    {
+      "key": "MATERIAL_1",
+      "find": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1100&q=80",
+      "label": "Material 1",
+      "ratio": "1/1",
+      "search": "wool fabric texture"
+    },
+    {
+      "key": "MATERIAL_2",
+      "find": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=1100&q=80",
+      "label": "Material 2",
+      "ratio": "1/1",
+      "search": "silk fabric texture"
+    },
+    {
+      "key": "MATERIAL_3",
+      "find": "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?w=1100&q=80",
+      "label": "Material 3",
+      "ratio": "1/1",
+      "search": "cashmere knit texture"
+    },
+    {
+      "key": "MATERIAL_4",
+      "find": "https://images.unsplash.com/photo-1518049362265-d5b2a6467637?w=1100&q=80",
+      "label": "Material 4",
+      "ratio": "1/1",
+      "search": "leather hide texture"
+    }
+  ]
+}

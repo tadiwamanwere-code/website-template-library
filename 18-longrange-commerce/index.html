@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HALDEN — Objects for the everyday table</title>
-<meta name="description" content="HALDEN makes stoneware, cookware, glass and linen for the everyday table. Fired in Jutland, woven in Portugal, shipped from Copenhagen.">
+<meta name="description" content="Stoneware, cookware, glass and linen for the everyday table. Made in small European workshops, sold part by part.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================================
-   HALDEN — premium homeware storefront  (template 18, reference e-commerce)
+   HALDEN — premium homeware storefront
 
    Ground : porcelain with a cool grey-green cast
    Ink    : near-black
@@ -143,15 +143,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
 /* --------------------------------------------------------------------------
    PROMO STRIP + HEADER
    -------------------------------------------------------------------------- */
-.strip{height:34px;background:var(--ink);color:var(--porcelain);display:flex;align-items:center;overflow:hidden;position:relative;z-index:60;}
-.strip__track{display:flex;white-space:nowrap;will-change:transform;}
-.strip__set{display:flex;align-items:center;}
-.strip__item{
-  display:inline-flex;align-items:center;gap:11px;padding-inline:26px;
-  font-size:10.5px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:#C3CAC4;
-}
-.strip__item b{color:var(--porcelain);font-weight:600;}
-.strip__dot{width:3px;height:3px;border-radius:50%;background:var(--accent);flex:none;}
+
 
 .hdr{
   position:sticky;top:0;z-index:70;background:rgba(241,242,238,.88);
@@ -636,29 +628,19 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
   <div>
     <div class="intro__mark" id="introMark">HALDEN</div>
     <div class="intro__meta">
-      <span>Est. Copenhagen</span>
+      <span>Objects for the table</span>
       <span class="intro__bar"><i id="introBar"></i></span>
       <span class="intro__count" id="introCount">000</span>
     </div>
   </div>
 </div>
 
-<!-- ============================= PROMO STRIP ============================= -->
-<div class="strip" aria-label="Store notices">
-  <div class="strip__track" id="stripTrack">
-    <div class="strip__set">
-      <span class="strip__item"><i class="strip__dot"></i> Carbon-neutral delivery <b>free over &pound;120</b></span>
-      <span class="strip__item"><i class="strip__dot"></i> <b>30 days</b> to change your mind</span>
-      <span class="strip__item"><i class="strip__dot"></i> Lids and handles sold <b>separately, forever</b></span>
-      <span class="strip__item"><i class="strip__dot"></i> Made in <b>Denmark, Portugal &amp; France</b></span>
-    </div>
-  </div>
-</div>
+
 
 <!-- =============================== HEADER =============================== -->
 <header class="hdr">
   <div class="wrap hdr__in">
-    <a href="#top" class="brand">HALDEN<sup>CPH</sup></a>
+    <a href="#top" class="brand">HALDEN</a>
     <nav class="nav" aria-label="Departments">
       <a href="#range">Tableware</a>
       <a href="#range">Cookware</a>
@@ -694,7 +676,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
     <div class="hero__copy">
       <p class="eyebrow" data-rv>Autumn range &mdash; no. 14</p>
       <h1 class="dsp hero__h" data-split="lines">A table set for<br>the ninth of<br>a <em>Tuesday</em>.</h1>
-      <p class="hero__sub" data-rv>Stoneware fired in Jutland, glass blown outside Lyon, flax woven in Guimar&atilde;es. Everything HALDEN sells is made to be used daily, washed carelessly, and replaced part by part rather than whole.</p>
+      <p class="hero__sub" data-rv>Stoneware fired in one workshop, glass blown in another, flax woven in a third. Everything HALDEN sells is made to be used daily, washed carelessly, and replaced part by part rather than whole.</p>
       <div class="hero__cta" data-rv>
         <a href="#range" class="btn btn--fill">Shop the range
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6.5 18.5 12 13 17.5"/></svg>
@@ -702,7 +684,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
         <a href="#workshop" class="btn btn--ghost">Inside the kiln</a>
       </div>
       <dl class="hero__facts" data-rv>
-        <div><dt>Ships from</dt><dd>Copenhagen</dd></div>
+        <div><dt>Ships from</dt><dd>The workshop</dd></div>
         <div><dt>Delivery</dt><dd>2&ndash;4 days</dd></div>
         <div><dt>Returns</dt><dd>30 days</dd></div>
       </dl>
@@ -712,7 +694,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
       <img id="heroImg" src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=1600&q=80&auto=format&fit=crop" alt="A laid table of stoneware plates, linen napkins and clear glass tumblers in daylight" fetchpriority="high">
       <div class="hero__tagbox" data-rv>
         <p class="eyebrow eyebrow--accent">New this week</p>
-        <p>The <b>Skagen</b> dinner service, reissued in the bone glaze &mdash; eleven pieces, fired twice, seconds sold at cost.</p>
+        <p>The <b>house</b> dinner service, reissued in the bone glaze &mdash; eleven pieces, fired twice, seconds sold at cost.</p>
         <a href="#range">See the eleven pieces
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6.5 18.5 12 13 17.5"/></svg>
         </a>
@@ -801,12 +783,12 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
 <section class="pin" id="workshop">
   <div class="pin__stage" id="pinStage">
     <div class="pin__left">
-      <p class="pin__idx"><span>The kiln at Vejle</span> &mdash; <b id="pinNum">01</b> / 03</p>
+      <p class="pin__idx"><span>The kiln</span> &mdash; <b id="pinNum">01</b> / 03</p>
       <div class="pin__track"><i id="pinBar"></i></div>
       <div class="pin__steps">
         <article class="pin__step" data-step="0">
           <h3 class="dsp">Clay, weighed<br>and rested</h3>
-          <p>Every batch starts as 340kg of Jutland stoneware clay, wedged and then rested for eleven days before a single piece is thrown. Skipping that rest is why cheap stoneware crazes in its second year.</p>
+          <p>Every batch starts as 340kg of stoneware clay, wedged and then rested for eleven days before a single piece is thrown. Skipping that rest is why cheap stoneware crazes in its second year.</p>
           <dl><div><dt>Batch</dt><dd>340 kg</dd></div><div><dt>Rest</dt><dd>11 days</dd></div></dl>
         </article>
         <article class="pin__step" data-step="1">
@@ -825,7 +807,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
       <figure data-fig="0">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
         <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1200&q=80&auto=format&fit=crop" alt="Grey stoneware clay being worked on a workshop bench" loading="lazy">
-        <figcaption>01 &mdash; Clay store, Vejle</figcaption>
+        <figcaption>01 &mdash; The clay store</figcaption>
       </figure>
       <figure data-fig="1">
         <!-- PLACEHOLDER: swap for Higgsfield-generated asset -->
@@ -859,7 +841,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
       <h2 class="dsp" data-split="lines" style="font-size:clamp(30px,3.5vw,54px)">Read this before<br>the dishwasher.</h2>
       <div class="acc" id="acc">
         <div class="acc__item">
-          <button class="acc__btn" aria-expanded="false">Jutland stoneware <span></span></button>
+          <button class="acc__btn" aria-expanded="false">Stoneware <span></span></button>
           <div class="acc__panel"><p>Vitrified at 1,280&deg;C, so it takes the dishwasher, the oven to 220&deg;C and the freezer without complaint. It will not take a cold plate under a hot grill &mdash; that is thermal shock and no glaze survives it. The bone glaze lightens slightly over the first year of use; that is the clay showing through, and it is not a fault.</p></div>
         </div>
         <div class="acc__item">
@@ -868,11 +850,11 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
         </div>
         <div class="acc__item">
           <button class="acc__btn" aria-expanded="false">Mouth-blown glass <span></span></button>
-          <div class="acc__panel"><p>Blown in soda-lime glass near Lyon, so each tumbler carries a faint seam and a slightly different weight. Dishwasher-safe on a normal cycle; avoid the intensive programme, which etches the surface over a few hundred washes. Bubbles in the wall are evidence of the mouth, not a defect.</p></div>
+          <div class="acc__panel"><p>Blown in soda-lime glass by hand, so each tumbler carries a faint seam and a slightly different weight. Dishwasher-safe on a normal cycle; avoid the intensive programme, which etches the surface over a few hundred washes. Bubbles in the wall are evidence of the mouth, not a defect.</p></div>
         </div>
         <div class="acc__item">
           <button class="acc__btn" aria-expanded="false">Washed European flax <span></span></button>
-          <div class="acc__panel"><p>Grown in Normandy, spun and woven in Guimar&atilde;es, stonewashed twice so it arrives soft rather than starched. Wash at 40&deg;C with like colours, tumble low, and do not iron unless you want the crease sharp. Flax improves for roughly forty washes and then holds steady for years.</p></div>
+          <div class="acc__panel"><p>Grown in Europe, spun and woven in Europe, stonewashed twice so it arrives soft rather than starched. Wash at 40&deg;C with like colours, tumble low, and do not iron unless you want the crease sharp. Flax improves for roughly forty washes and then holds steady for years.</p></div>
         </div>
         <div class="acc__item">
           <button class="acc__btn" aria-expanded="false">Spares and replacements <span></span></button>
@@ -904,7 +886,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
     <div class="ft__grid">
       <div>
         <p class="ft__brand">HALDEN</p>
-        <p class="ft__blurb">Objects for the everyday table. Designed in Copenhagen, made in six workshops across Denmark, Portugal and France since 1998.</p>
+        <p class="ft__blurb">Objects for the everyday table. Made in six small European workshops.</p>
       </div>
       <div>
         <h4>Shop</h4>
@@ -930,8 +912,8 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
       <div>
         <h4>Workshop</h4>
         <ul>
-          <li><a href="#workshop">The kiln at Vejle</a></li>
-          <li><a href="#workshop">Our six makers</a></li>
+          <li><a href="#workshop">The kiln</a></li>
+          <li><a href="#workshop">Our makers</a></li>
           <li><a href="#workshop">Materials</a></li>
           <li><a href="#workshop">Trade &amp; hospitality</a></li>
           <li><a href="#workshop">Work with us</a></li>
@@ -940,7 +922,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
       <div>
         <h4>Visit</h4>
         <ul>
-          <li><a href="#top">Gothersgade 41, 1123 K&oslash;benhavn</a></li>
+          <li><a href="#top">Gothersgade 41</a></li>
           <li><a href="#top">Mon&ndash;Sat, 10:00&ndash;18:00</a></li>
           <li><a href="#top">hello@halden.example</a></li>
           <li><a href="#top">+45 33 12 04 77</a></li>
@@ -948,9 +930,9 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
       </div>
     </div>
     <div class="ft__bar">
-      <span>&copy; 2026 Halden Husflid ApS &middot; CVR 28 41 90 03</span>
-      <span class="ft__pay"><span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>MOBILEPAY</span><span>PAYPAL</span></span>
-      <span>Prices include VAT &middot; Shipping to the UK &amp; EU</span>
+      <span>&copy; Halden &middot; Company number on request</span>
+      <span class="ft__pay"><span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>APPLE PAY</span><span>PAYPAL</span></span>
+      <span>Prices include VAT</span>
     </div>
   </div>
 </footer>
@@ -1105,10 +1087,10 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
   /* The flat product shape used by every surface: grid, card, cart line,
      order line. `id` is stable and unique — the cart reducer keys off it. */
   var PRODUCTS = [
-    { id: "hld-plate-skagen-27", name: "Skagen Dinner Plate, 27cm", brand: "Halden Stoneware", category: "tableware",
+    { id: "hld-plate-house-27", name: "House Dinner Plate, 27cm", brand: "Halden Stoneware", category: "tableware",
       price: 24, badge: "best", fit: "cover", stock: 140, desc: "Bone glaze, twice fired, stacks eight deep.",
       img: U + "photo-1493663284031-b7e3aefcae8e" + Q, alt: "A round stoneware dinner plate in a soft bone glaze" },
-    { id: "hld-bowl-skagen-18", name: "Skagen Serving Bowl, 18cm", brand: "Halden Stoneware", category: "tableware",
+    { id: "hld-bowl-house-18", name: "House Serving Bowl, 18cm", brand: "Halden Stoneware", category: "tableware",
       price: 32, badge: null, fit: "cover", stock: 86, desc: "Deep enough for a whole bag of salad.",
       img: U + "photo-1584346133934-a3afd2a33c4c" + Q, alt: "A deep stoneware serving bowl" },
     { id: "hld-mug-fjord-300", name: "Fjord Mug, 300ml", brand: "Halden Stoneware", category: "tableware",
@@ -1617,7 +1599,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
     var opts = [
       ["standard", "Standard, carbon-neutral", "2–4 working days", shipping("standard")],
       ["named", "Named day", "Choose the date at the door", subtotal() >= FREE_SHIP_OVER ? 0 : SHIPPING.named],
-      ["collect", "Collect in Copenhagen", "Gothersgade 41, ready in 2 hours", 0]
+      ["collect", "Collect from the shop", "Gothersgade 41, ready in 2 hours", 0]
     ];
     return opts.map(function (o) {
       return '<label><input type="radio" name="ship" value="' + o[0] + '"' + (form.ship === o[0] ? " checked" : "") + ">" +
@@ -1853,7 +1835,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
       '<div class="done__tick"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>' +
       '<h2 class="dsp">Order ' + order.id + " is in.</h2>" +
       '<p class="done__lead">Thank you, ' + esc(form.name.split(" ")[0] || "friend") + ". We have sent the receipt to <b>" +
-      esc(form.email || "your inbox") + "</b>. The workshop packs orders each afternoon; you will get a tracking link the moment it leaves Copenhagen.</p>" +
+      esc(form.email || "your inbox") + "</b>. The workshop packs orders each afternoon; you will get a tracking link the moment it leaves us.</p>" +
       '<dl class="done__meta">' +
       "<div><dt>Order</dt><dd>" + order.id + "</dd></div>" +
       "<div><dt>Total paid</dt><dd>" + money(order.total) + "</dd></div>" +
@@ -2157,18 +2139,7 @@ hr.rule{height:1px;background:var(--rule);border:0;margin:0;}
   });
 
   /* =======================================================================
-     15. PROMO STRIP MARQUEE (supporting element only)
-     ======================================================================= */
-  (function marquee() {
-    var track = $("#stripTrack");
-    var set = track.firstElementChild;
-    track.appendChild(set.cloneNode(true));
-    track.appendChild(set.cloneNode(true));
-    if (!hasGSAP || REDUCED) return;
-    var w = set.getBoundingClientRect().width;
-    if (!w) return;
-    gsap.to(track, { x: -w, duration: w / 42, ease: "none", repeat: -1 });
-  })();
+
 
   /* =======================================================================
      16. INTRO CURTAIN

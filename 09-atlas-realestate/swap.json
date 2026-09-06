@@ -1,0 +1,81 @@
+{
+  "template": "09-atlas-realestate",
+  "title": "Campo Alto",
+  "industry": "Property",
+  "covers": "Developers, estate agents, letting agents, architects, one-off houses, land sales",
+  "_note": "find is the exact literal that sits in index.html today. Whole strings only, longest find first.",
+
+  "_palettes": "Four approved sets of this template's own CSS variables. The sand family is the ground; the accent is the one warm note.",
+  "palettes": {
+    "sand-clay": {
+      "sand": "#F2EDE6", "bone": "#E9E2D7", "clay": "#DDD3C4", "shadow": "#CFC4B3",
+      "ink": "#1E1C19", "ink-2": "#46423B", "ink-3": "#7E776C",
+      "line": "#D3C9BA", "accent": "#A0563A"
+    },
+    "stone-olive": {
+      "sand": "#EFF0EB", "bone": "#E5E7E0", "clay": "#D6D9CE", "shadow": "#C6CABC",
+      "ink": "#1B1D19", "ink-2": "#41453C", "ink-3": "#787D71",
+      "line": "#CDD1C4", "accent": "#5C7148"
+    },
+    "chalk-slate": {
+      "sand": "#EDEFF1", "bone": "#E2E5E9", "clay": "#D2D7DD", "shadow": "#C1C7CF",
+      "ink": "#181B1E", "ink-2": "#3D4247", "ink-3": "#727981",
+      "line": "#C9CFD6", "accent": "#3E5A78"
+    },
+    "ash-plum": {
+      "sand": "#F0EDEE", "bone": "#E6E1E3", "clay": "#D7D0D3", "shadow": "#C6BEC2",
+      "ink": "#1D191B", "ink-2": "#443E41", "ink-3": "#7B7377",
+      "line": "#CFC7CB", "accent": "#7A3F55"
+    }
+  },
+  "swatchKeys": { "accent": "accent", "ink": "ink", "paper": "sand" },
+
+  "adjust": { "accent": { "label": "Accent", "var": "accent" } },
+
+  "_brandTokens": "Words belonging to this template, not to a client.",
+  "brandTokens": ["Campo Alto", "Atlas Residential", "Príncipe Real", "Lisboa", "atlas.pt"],
+
+  "swaps": [
+    { "key": "BUSINESS_NAME", "find": "Atlas Residential", "label": "Developer or agency name", "maxChars": 26, "required": true },
+    { "key": "DEVELOPMENT", "find": "Campo Alto", "label": "Development name", "maxChars": 20, "required": true },
+    { "key": "HERO_LINE_1", "find": "<span class=\"ln\">Campo</span>", "format": "<span class=\"ln\">{}</span>", "label": "Hero line 1 (giant type)", "maxChars": 12 },
+    { "key": "HERO_LINE_2", "find": "<span class=\"ln ln--in\">Alto</span>", "format": "<span class=\"ln ln--in\">{}</span>", "label": "Hero line 2 (giant type)", "maxChars": 12 },
+    { "key": "DISTRICT", "find": "Príncipe Real", "label": "District or area", "maxChars": 22 },
+    { "key": "CITY", "find": "Lisboa", "label": "City", "maxChars": 20 },
+    { "key": "PHONE", "find": "+351 21 099 4420", "label": "Phone", "maxChars": 20 },
+    { "key": "PHONE_LINK", "find": "tel:+351210994420", "format": "tel:{}", "label": "Phone, dialling form", "maxChars": 20, "optional": true, "hint": "Worked out from the phone number if you leave it blank." },
+    { "key": "EMAIL", "find": "residences@atlas.pt", "label": "Email", "maxChars": 40 },
+    { "key": "ADDRESS", "find": "Rua da Escola Politécnica 42", "label": "Sales gallery address", "maxChars": 40 },
+    { "key": "POSTCODE", "find": "1250-100 Lisboa", "label": "Postcode line", "maxChars": 26, "optional": true },
+    { "key": "HOURS", "find": "Tue–Sat, 10:00–18:00", "label": "Viewing hours", "maxChars": 26 },
+
+    { "key": "UNIT_1_NAME", "find": "The Vilar", "label": "Residence 1 name", "maxChars": 22, "group": "details" },
+    { "key": "UNIT_2_NAME", "find": "The Século", "label": "Residence 2 name", "maxChars": 22, "group": "details" },
+    { "key": "UNIT_3_NAME", "find": "The Jacaranda", "label": "Residence 3 name", "maxChars": 22, "group": "details" },
+    { "key": "UNIT_4_NAME", "find": "The Miradouro", "label": "Residence 4 name", "maxChars": 22, "group": "details" },
+    { "key": "PRICE_1", "find": "€785,000", "label": "Residence 1, from", "maxChars": 14, "group": "details", "hint": "The design ships with a sample figure. Change it before you send the link." },
+    { "key": "PRICE_2", "find": "€1,145,000", "label": "Residence 2, from", "maxChars": 14, "group": "details" },
+    { "key": "PRICE_3", "find": "€1,680,000", "label": "Residence 3, from", "maxChars": 14, "group": "details" },
+    { "key": "PRICE_4", "find": "€3,400,000", "label": "Residence 4, price", "maxChars": 14, "group": "details" },
+    { "key": "RESERVATION", "find": "€15,000, refundable for 21 days", "label": "Reservation terms", "maxChars": 40, "optional": true },
+
+    { "key": "STAT_1_VALUE", "find": "data-count=\"42\"", "format": "data-count=\"{}\"", "label": "Number of residences", "type": "number", "maxChars": 8 },
+    { "key": "STAT_2_VALUE", "find": "data-count=\"7\"", "format": "data-count=\"{}\"", "label": "Storeys", "type": "number", "maxChars": 8 },
+    { "key": "STAT_3_VALUE", "find": "data-count=\"2300\"", "format": "data-count=\"{}\"", "label": "Largest residence, sq ft", "type": "number", "maxChars": 8 },
+    { "key": "STAT_4_VALUE", "find": "data-count=\"2027\"", "format": "data-count=\"{}\"", "label": "Completion year", "type": "number", "maxChars": 8 },
+    { "key": "FOOTER_WORD", "find": "<div class=\"foot__word\">Campo Alto</div>", "format": "<div class=\"foot__word\">{}</div>", "label": "The big word in the footer", "maxChars": 18, "optional": true }
+  ],
+
+  "images": [
+    { "key": "HERO", "find": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1500&q=80", "label": "Hero photo", "ratio": "4/3", "search": "modern apartment living room" },
+    { "key": "PLACE", "find": "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1100&q=80", "label": "The neighbourhood", "ratio": "4/3", "search": "city street old buildings" },
+    { "key": "FACADE", "find": "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=80", "label": "The façade", "ratio": "3/4", "search": "building facade brick" },
+    { "key": "UNIT_1", "find": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1300&q=80", "label": "Residence 1", "ratio": "4/3", "search": "one bedroom apartment interior" },
+    { "key": "UNIT_2", "find": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1300&q=80", "label": "Residence 2", "ratio": "4/3", "search": "maisonette terrace" },
+    { "key": "UNIT_3", "find": "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1300&q=80", "label": "Residence 3", "ratio": "4/3", "search": "corner apartment windows" },
+    { "key": "UNIT_4", "find": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1300&q=80", "label": "Residence 4", "ratio": "4/3", "search": "penthouse roof terrace" },
+    { "key": "SPEC", "find": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80", "label": "Specification photo", "ratio": "3/2", "search": "kitchen detail marble" },
+    { "key": "DETAIL", "find": "https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=800&q=80", "label": "Detail photo", "ratio": "1/1", "search": "joinery detail" },
+    { "key": "GARDEN_ROOM", "find": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80", "label": "Shared room", "ratio": "16/9", "search": "residents lounge library" }
+  ]
+}

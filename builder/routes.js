@@ -8,7 +8,7 @@
      /build                the app
      /bapi/templates       what can be built from
      /bapi/fonts           the typefaces on offer
-     /bapi/photos          picture search, through Unsplash
+     /bapi/photos          picture search, through Unsplash and Pexels
      /bapi/sites           saved sites: list, create
      /bapi/sites/:slug     one site: read, delete
      /s/:slug              a saved site, rendered
@@ -45,6 +45,7 @@ function loadEnv() {
 loadEnv();
 
 const UNSPLASH = process.env.UNSPLASH_ACCESS_KEY || process.env.VITE_UNSPLASH_ACCESS_KEY || '';
+const PEXELS = process.env.PEXELS_API_KEY || '';
 
 /* ---------------------------------------------------------------- replies */
 
@@ -87,34 +88,72 @@ function buildSite(record) {
 }
 
 /* ---------------------------------------------------------------- pictures
-   Unsplash search, proxied so the key never reaches the browser. Their terms
-   ask that a download is registered when a photo is actually used, which is
-   what /bapi/photos/use does. */
+   Two libraries, searched together and proxied so the keys never reach the
+   browser. Unsplash asks that a download is registered when a photo is
+   actually used, which is what /bapi/photos/use does. */
 
-async function searchPhotos(query, page, orientation) {
-  if (!UNSPLASH) return { error: 'No Unsplash key set. Add UNSPLASH_ACCESS_KEY to builder/.env', results: [] };
+async function fromUnsplash(query, page, orientation) {
+  if (!UNSPLASH) return [];
   const url = 'https://api.unsplash.com/search/photos'
     + '?query=' + encodeURIComponent(query)
-    + '&per_page=24&page=' + (Number(page) || 1)
+    + '&per_page=18&page=' + (Number(page) || 1)
     + (orientation ? '&orientation=' + encodeURIComponent(orientation) : '');
 
   const res = await fetch(url, { headers: { Authorization: 'Client-ID ' + UNSPLASH, 'Accept-Version': 'v1' } });
-  if (!res.ok) return { error: 'Unsplash said ' + res.status, results: [] };
+  if (!res.ok) return [];
   const body = await res.json();
 
-  return {
-    total: body.total || 0,
-    results: (body.results || []).map(p => ({
-      id: p.id,
-      thumb: p.urls && p.urls.small,
-      /* w=2000 is enough for a hero on a 2x screen and keeps the page light */
-      full: p.urls && (p.urls.raw ? p.urls.raw + '&auto=format&fit=crop&w=2000&q=80' : p.urls.regular),
-      alt: p.alt_description || p.description || '',
-      by: p.user && p.user.name,
-      byLink: p.user && p.user.links && p.user.links.html,
-      download: p.links && p.links.download_location
-    }))
-  };
+  return (body.results || []).map(p => ({
+    id: 'u-' + p.id,
+    source: 'unsplash',
+    thumb: p.urls && p.urls.small,
+    /* w=2000 is enough for a hero on a 2x screen and keeps the page light */
+    full: p.urls && (p.urls.raw ? p.urls.raw + '&auto=format&fit=crop&w=2000&q=80' : p.urls.regular),
+    alt: p.alt_description || p.description || '',
+    by: p.user && p.user.name,
+    download: p.links && p.links.download_location
+  }));
+}
+
+async function fromPexels(query, page, orientation) {
+  if (!PEXELS) return [];
+  const url = 'https://api.pexels.com/v1/search'
+    + '?query=' + encodeURIComponent(query)
+    + '&per_page=18&page=' + (Number(page) || 1)
+    + (orientation ? '&orientation=' + encodeURIComponent(orientation) : '');
+
+  const res = await fetch(url, { headers: { Authorization: PEXELS } });
+  if (!res.ok) return [];
+  const body = await res.json();
+
+  return (body.photos || []).map(p => ({
+    id: 'p-' + p.id,
+    source: 'pexels',
+    thumb: p.src && p.src.medium,
+    full: p.src && (p.src.large2x || p.src.large),
+    alt: p.alt || '',
+    by: p.photographer,
+    download: null                    // Pexels asks for a credit, not a ping
+  }));
+}
+
+/* Both libraries, shuffled together a few at a time, so one of them does not
+   fill the whole panel. */
+async function searchPhotos(query, page, orientation) {
+  if (!UNSPLASH && !PEXELS) {
+    return { error: 'No photo library keys set. Add UNSPLASH_ACCESS_KEY or PEXELS_API_KEY to builder/.env', results: [] };
+  }
+  const [a, b] = await Promise.all([
+    fromUnsplash(query, page, orientation).catch(() => []),
+    fromPexels(query, page, orientation).catch(() => [])
+  ]);
+
+  const mixed = [];
+  for (let i = 0; i < Math.max(a.length, b.length); i += 3) {
+    mixed.push(...a.slice(i, i + 3), ...b.slice(i, i + 3));
+  }
+  if (!mixed.length) return { error: 'Nothing came back from the photo libraries.', results: [] };
+  return { total: mixed.length, results: mixed };
 }
 
 /* ------------------------------------------------------------------ routes */
@@ -142,7 +181,9 @@ async function handle(req, res) {
         fields: (card.swaps || []).map(s => ({
           key: s.key, label: s.label, maxChars: s.maxChars || null,
           type: s.type || 'text', optional: !!s.optional, hint: s.hint || null,
-          group: s.group || 'details'
+          /* only fields a template explicitly puts in the details group
+             show up on the form; everything else is edited by clicking it */
+          group: s.group || null
         })),
         images: (card.images || []).map(i => ({
           key: i.key, label: i.label, kind: i.kind || 'photo',
@@ -166,7 +207,7 @@ async function handle(req, res) {
   if (route === '/bapi/env') {
     return json(res, 200, {
       storage: store.DRIVER,
-      photos: !!UNSPLASH,
+      photos: !!(UNSPLASH || PEXELS),
       shortLinks: store.DRIVER === 'blob' || !process.env.VERCEL
     });
   }
