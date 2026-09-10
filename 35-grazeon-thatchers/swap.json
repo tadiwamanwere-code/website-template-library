@@ -1,0 +1,262 @@
+{
+  "template": "35-grazeon-thatchers",
+  "title": "Grazeon Thatchers",
+  "industry": "Construction and trades",
+  "covers": "Roofers, thatchers, timber and outdoor structures, any trade with divisions and a work gallery",
+  "_note": "Cloned with builder/passes/clone-site.js from grazeon-thatchers.vercel.app, then this pass took the original firm's details off it.",
+  "fontVars": {
+    "heading": [],
+    "body": [],
+    "mono": []
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
+  ],
+  "roleMap": {
+    "accent": [
+      "accent"
+    ],
+    "accentDeep": [
+      "accent-deep"
+    ],
+    "accentSoft": [
+      "accent-soft"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "dark": [
+      "dark"
+    ],
+    "ink2": [
+      "ink-2"
+    ],
+    "dark2": [
+      "dark-2"
+    ],
+    "sheet": [
+      "sheet"
+    ],
+    "paper": [
+      "paper"
+    ],
+    "paper2": [
+      "paper-2"
+    ]
+  },
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "accent",
+      "also": {
+        "accent-deep": "color-mix(in srgb, {} 76%, #000)"
+      }
+    },
+    "ink": {
+      "label": "Text",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 82%, #fff)"
+      }
+    },
+    "sheet": {
+      "label": "Page background",
+      "var": "sheet"
+    },
+    "paper": {
+      "label": "Section bands",
+      "var": "paper"
+    },
+    "dark": {
+      "label": "Dark blocks",
+      "var": "dark"
+    }
+  },
+  "_brandTokens": "Words belonging to the site this was cloned from, not to a client.",
+  "brandTokens": [
+    "Grazeon Thatchers",
+    "GRAZEON THATCHERS",
+    "GRAZEON",
+    "Grazeon",
+    "2003",
+    "GRAZEON THATCHERS &middot; SINCE 2003",
+    "Botswana, Zambia, South Africa and Kenya",
+    "Zimbabwean",
+    "THATCHSAYF",
+    "Thatchsayf",
+    "&middot; SINCE 2003",
+    "SINCE 2003"
+  ],
+  "swaps": [
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Your Business Name",
+      "label": "Business name",
+      "maxChars": 34,
+      "required": true
+    },
+    {
+      "key": "BRAND_1",
+      "find": "YourBusiness",
+      "label": "Name, short form 1",
+      "maxChars": 24
+    },
+    {
+      "key": "BRAND_2",
+      "find": "YourBusiness2",
+      "label": "Name, short form 2",
+      "maxChars": 24
+    },
+    {
+      "key": "BRAND_3",
+      "find": "YourBusiness3",
+      "label": "Name, short form 3",
+      "maxChars": 24
+    },
+    {
+      "key": "EMAIL",
+      "find": "hello@yourbusiness.example",
+      "label": "Email",
+      "maxChars": 44
+    },
+    {
+      "key": "EMAIL_2",
+      "find": "team1@yourbusiness.example",
+      "label": "Second email",
+      "maxChars": 44
+    },
+    {
+      "key": "PHONE",
+      "find": "+00 000 000 0000",
+      "label": "Phone",
+      "maxChars": 24
+    },
+    {
+      "key": "PHONE_2",
+      "find": "+00 000 000 0002",
+      "label": "Phone 2",
+      "maxChars": 24
+    },
+    {
+      "key": "PHONE_3",
+      "find": "+00 000 000 0003",
+      "label": "Phone 3",
+      "maxChars": 24
+    }
+  ],
+  "images": [
+    {
+      "key": "PIC_1",
+      "find": "https://grazeon-thatchers.vercel.app/images/hero-lodge-complex.webp",
+      "label": "Picture 1",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_2",
+      "find": "https://grazeon-thatchers.vercel.app/images/project-thatch-domes.webp",
+      "label": "Picture 2",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_3",
+      "find": "https://grazeon-thatchers.vercel.app/images/grass-bundles-stacked.webp",
+      "label": "Picture 3",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_4",
+      "find": "https://grazeon-thatchers.vercel.app/images/thatch-roof-sweep.webp",
+      "label": "Picture 4",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_5",
+      "find": "https://grazeon-thatchers.vercel.app/images/detail-wavy-ridge.webp",
+      "label": "Picture 5",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_6",
+      "find": "https://grazeon-thatchers.vercel.app/images/project-vf-safari-lodge.webp",
+      "label": "Picture 6",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_7",
+      "find": "https://grazeon-thatchers.vercel.app/images/project-shearwater-village.webp",
+      "label": "Picture 7",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_8",
+      "find": "https://grazeon-thatchers.vercel.app/images/project-vf-rainforest-cafe.webp",
+      "label": "Picture 8",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_9",
+      "find": "https://grazeon-thatchers.vercel.app/images/project-bush-villa.webp",
+      "label": "Picture 9",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_10",
+      "find": "https://grazeon-thatchers.vercel.app/images/project-suite-rethatch.webp",
+      "label": "Picture 10",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_11",
+      "find": "https://grazeon-thatchers.vercel.app/images/stock-boma-fire.webp",
+      "label": "Picture 11",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_12",
+      "find": "https://grazeon-thatchers.vercel.app/images/stock-savanna-grass.webp",
+      "label": "Picture 12",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_13",
+      "find": "https://grazeon-thatchers.vercel.app/images/thatch-roof-ridge.webp",
+      "label": "Picture 13",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_14",
+      "find": "https://grazeon-thatchers.vercel.app/images/project-shearwater-alt.webp",
+      "label": "Picture 14",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_15",
+      "find": "https://grazeon-thatchers.vercel.app/images/team-honest-chindewere.webp",
+      "label": "Picture 15",
+      "ratio": "3/2",
+      "search": "person at work"
+    }
+  ]
+}

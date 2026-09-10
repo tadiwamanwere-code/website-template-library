@@ -677,6 +677,13 @@ function deriveSwaps(template, given) {
        Left alone it would still be called after the template. */
     set('ASSISTANT_NAME', firstWord(name) + ' AI');
 
+    /* Cloned templates carry the wordmark in two or three forms: as written,
+       in capitals, and shortened. They are all the same name. */
+    set('BRAND_1', name);
+    set('BRAND_2', name.toUpperCase());
+    set('BRAND_3', firstWord(name));
+    set('BRAND_4', firstWord(name).toUpperCase());
+
     /* Some wordmarks are set in two colours — "long" dark, "range" in the
        accent. Two words split at the space. One word splits in the middle,
        which is what a designer does with a single-word mark anyway. */

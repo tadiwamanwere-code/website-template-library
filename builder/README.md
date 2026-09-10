@@ -154,6 +154,28 @@ page, which is the text, which is the accent.
 `schemes.js` lists every role. A scheme that leaves one empty throws on
 load rather than leaving a hole in somebody's page.
 
+## Cloning a live site
+
+`clone-site.js` turns a live page into a template: it writes
+every stylesheet into the file, swaps the colours it leans on for CSS
+variables so the template can wear a theme, makes every address absolute,
+and throws the JavaScript away. `make-card.js` then takes the original
+firm's name, people, address, phone and email off the page and writes the
+swap card. `clone-specs.js` holds who each cloned site belongs to.
+
+    node builder/passes/clone-site.js 34-sitcha-electric https://example.com/ raw.html --own
+    node builder/passes/clone-specs.js
+
+**It only works on sites whose layout is in the CSS.** Seven WordPress law
+and finance sites were cloned this way and thrown out: those themes build
+their layout in JavaScript, so a page taken without its scripts collapses
+into text on top of pictures. A broken template is worse than no template.
+Vite, Next and hand-written sites come out right.
+
+**--own matters.** Without it every photograph is replaced with a stock one,
+because a cloned page's staff photographs are not ours to ship. Use it only
+for sites we own.
+
 ## Keys
 
 `builder/.env`, which git ignores:
