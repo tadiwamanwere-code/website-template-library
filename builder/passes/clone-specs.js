@@ -42,6 +42,55 @@ const SPECS = {
 
 
 
+  '37-ventrix-capital': {
+    title: 'Ventrix Capital',
+    industry: 'Professional services',
+    covers: 'Investment firms, venture capital, advisory and consulting firms, any firm selling expertise and partnership',
+    from: 'ventrix-cap.framer.website (a Framer design, used for inspiration)',
+    name: 'Ventrix',
+    /* The deep green is the brand's ground, not its accent; the lime is the
+       accent. The colour guess had them the other way round. */
+    roleMap: { dark: ['accent'], accentSoft: ['paper-3'], ink: ['ink'], ink2: ['ink-2'], ink3: ['ink-3'],
+      sheet: ['sheet'], paper: ['paper'], paper2: ['paper-2'], line: ['line'], line2: ['line-2'] },
+    nameAlso: [],
+    /* The demo is full of people who do not exist: four quoted founders,
+       a team, three blog authors, a rating and a street address. On a
+       client's page every one of those would be a claim about them, so each
+       becomes a line that plainly asks for the real thing. */
+    scrub: {
+      'info@Ventrix.com': 'hello@yourbusiness.example',
+      'info@ventrix.com': 'hello@yourbusiness.example',
+      'Ventrix has been fantastic as a sounding board for our vision, priorities, and strategic thinking. They were one of the first funds to support us, providing invaluable guidance and encouragement throughout our journey and growth.': 'A client’s own words about working with you go here.',
+      'Ventrix has been an exceptional partner from the very beginning, helping us sharpen our thinking, clarify our priorities, and stay focused on the bigger picture. Their early belief in our team and consistent strategic guidance have been incredibly valuable.': 'A second client’s own words about working with you go here.',
+      'From day one, Ventrix has brought thoughtful perspective, conviction, and practical advice to the table. They have helped us navigate important decisions with clarity while remaining a steady source of encouragement throughout our growth.': 'A third client’s own words about working with you go here.',
+      'Ventrix has played a meaningful role in our journey, not just as an early supporter but as a trusted strategic partner. Their ability to challenge our thinking, refine our vision, and back us with genuine conviction has made a lasting impact.': 'A fourth client’s own words about working with you go here.',
+      '>Jerry Helfer<': '>Client Name<',
+      '>Maya Chen<': '>Client Name<',
+      '>Arjun Mehta<': '>Client Name<',
+      '>Elena Brooks<': '>Client Name<',
+      '>Founder, GeoSignage&nbsp;<': '>Role, Company<',
+      '>Co-Founder &amp; CEO, Northline AI<': '>Role, Company<',
+      '>Founder, AtlasGrid<': '>Role, Company<',
+      '>Daniel Hamilton<': '>Team Member<',
+      '>Olivia Bennett<': '>Team Member<',
+      '>Founder &amp; CEO<': '>Role<',
+      '>Kimberly Mastrangelo<': '>Author<',
+      '>James Hall<': '>Author<',
+      '>Judith Rodriguez<': '>Author<',
+      '>May 11, 2026<': '>Date<',
+      'Healquest VC Invests in Royal Health Inc to Accelerate Innovation in Radiology Sector.': 'Your latest news headline goes here.',
+      '>100+Founders<': '>Founders<',
+      '>Rated 4.9/5 <': '>Client reviews <',
+      '>Est.2018<': '>Established<',
+      ' with 20+ years of experience and expertise.': ' with deep experience and expertise.',
+      ' with 20+ years of experience. ': ' with deep experience. ',
+      '3274 Doe Meadow Drive, Annapolis Junction, MD 20701': 'Your street address, City',
+      '3274 Doe Meadow Drive, Annapolis Junction, MD 01': 'Your street address, City',
+      '>Pentaclay<': '><',
+      'Buy for $129': ''
+    }
+  },
+
   '33-cloud-home': {
     title: 'Cloud Home',
     industry: 'Shops and retail',
@@ -105,7 +154,9 @@ const SPECS = {
 };
 
 let ok = 0;
-for (const folder of Object.keys(SPECS)) {
+/* node clone-specs.js <folder> runs one; with no folder, all of them. */
+const only = process.argv[2];
+for (const folder of Object.keys(SPECS).filter(f => !only || f === only)) {
   const specFile = path.join(HERE, '.spec-tmp.json');
   fs.writeFileSync(specFile, JSON.stringify(SPECS[folder], null, 2));
   console.log('======== ' + folder);
@@ -118,4 +169,4 @@ for (const folder of Object.keys(SPECS)) {
   }
   fs.rmSync(specFile, { force: true });
 }
-console.log('\n  ' + ok + ' of ' + Object.keys(SPECS).length + ' cards written.');
+console.log('\n  ' + ok + ' of ' + (only ? 1 : Object.keys(SPECS).length) + ' cards written.');

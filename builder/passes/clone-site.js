@@ -91,8 +91,30 @@ function stockFor(src, alt) {
   if (/city|skyline|street|map|location/.test(s)) return STOCK.city;
   if (/desk|paper|document|contract|sign|book|law/.test(s)) return STOCK.desk;
   if (/site|construct|roof|thatch|electric|work|tool|van/.test(s)) return STOCK.build;
-  return STOCK.hands;
+  /* No clue in the name, which is every picture on a Framer site: their
+     files are hashes. One photo for all of them made a page of identical
+     handshakes, so these take turns instead. The same original always gets
+     the same stand-in, because Framer prints each picture once per screen
+     size and the three copies must agree. */
+  const key = String(src).split('?')[0];
+  if (!POOL_SEEN.has(key)) POOL_SEEN.set(key, POOL[POOL_SEEN.size % POOL.length] + '?auto=format&fit=crop&w=1600&q=80');
+  return POOL_SEEN.get(key);
 }
+
+const POOL = [
+  'https://images.unsplash.com/photo-1531973576160-7125cd663d86',
+  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab',
+  'https://images.unsplash.com/photo-1517048676732-d65bc937f952',
+  'https://images.unsplash.com/photo-1497366754035-f200968a6e72',
+  'https://images.unsplash.com/photo-1542744173-8e7e53415bb0',
+  'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df',
+  'https://images.unsplash.com/photo-1499914485622-a88fac536970',
+  'https://images.unsplash.com/photo-1568992687947-868a62a9f521',
+  'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b',
+  'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2',
+  'https://images.unsplash.com/photo-1521791136064-7986c2920216'
+];
+const POOL_SEEN = new Map();
 
 /* --------------------------------------------------------------- the page */
 
@@ -312,6 +334,15 @@ async function main() {
 
   html = html.replace(/\s(src|href|data-src|data-bg|poster)\s*=\s*"([^"]*)"/gi,
     (w, a, v) => ' ' + a + '="' + abs(v) + '"');
+  /* A link to another page of the original site would take a client's
+     visitor to somebody else's website. A link to a section stays a jump
+     to that section; anything else on that site goes nowhere. */
+  const home = new URL(BASE).origin;
+  html = html.replace(/\shref="([^"]*)"/gi, function (w, v) {
+    if (v.indexOf(home) !== 0 || /\.(css|woff2?|ttf|otf|png|jpe?g|webp|avif|svg|gif|ico|mp4|webm)(\?|$)/i.test(v)) return w;
+    const hash = v.indexOf('#');
+    return ' href="' + (hash !== -1 && new URL(v).pathname === new URL(BASE).pathname ? v.slice(hash) : '#') + '"';
+  });
   html = html.replace(/\ssrcset\s*=\s*"([^"]*)"/gi, (w, v) =>
     ' srcset="' + v.split(',').map(p => {
       const bits = p.trim().split(/\s+/);
@@ -380,9 +411,18 @@ ${rootVars.join('\n')}
 
 /* The page was taken as it renders, so anything waiting on a scroll
    animation was caught at nothing. A file has nothing to scroll into. */
-[data-aos],[class*="animate"],[class*="fade"],[class*="reveal"],[class*="wow"]{
+[data-framer-appear-id],[data-aos],[class*="animate"],[class*="fade"],[class*="reveal"],[class*="wow"]{
   opacity:1!important;transform:none!important;visibility:visible!important;
 }
+/* Framer. Its text-reveal boxes are drawn 20px tall and grown by script to
+   fit the words; with no script they stay 20px and cut the heading off. The
+   "made in Framer" badge is theirs, not ours. */
+div[style*="height:20px;min-height:20px;overflow:hidden"]{height:auto!important;min-height:0!important;}
+/* Cards that wipe into view start fully clipped; script opens them. */
+[style*="clip-path:inset(100% 0% 0% 0%)"]{clip-path:none!important;}
+#__framer-badge-container{display:none!important;}
+/* A template's demo page carries the seller's own "buy this" button. */
+div:has(> a[href*="lemonsqueezy"]),div:has(> a[href*="gumroad.com"]),a[href*="framer.com/marketplace"]{display:none!important;}
 html{scroll-behavior:smooth;}
 img{max-width:100%;height:auto;}
 

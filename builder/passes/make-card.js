@@ -49,6 +49,10 @@ const FILE = path.join(DIR, 'index.html');
 const spec = JSON.parse(fs.readFileSync(specFile, 'utf8'));
 let html = fs.readFileSync(FILE, 'utf8');
 const roles = JSON.parse(fs.readFileSync(path.join(DIR, 'roles.json'), 'utf8'));
+/* The guess from the colours, unless the spec knows better. A brand's dark
+   ground can be its most saturated colour, and the guess then calls it the
+   accent. */
+const roleMap = spec.roleMap || roles.roleMap;
 
 const body = () => html.slice(html.indexOf('<body'));
 
@@ -101,10 +105,21 @@ emails.slice(0, 3).forEach(function (e, i) {
 
 /* 4. phone numbers. The link and the printed number are different strings
       and both have to go, or a client's page dials the original firm. */
-const phones = [...new Set((body().match(/(?:\+?\d[\d\s().-]{7,}\d)/g) || []))]
+/* Only in the words on the page. An icon's drawing is a long run of numbers
+   too ("6.398 11.101"), and changing one breaks the icon. */
+const pageWords = body().replace(/<(script|style|svg)[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, '\n');
+const phones = [...new Set((pageWords.match(/(?:\+?\d[\d\s().-]{7,}\d)/g) || []))]
   .map(p => p.trim())
   .filter(p => (p.replace(/\D/g, '').length >= 9 && p.replace(/\D/g, '').length <= 15))
+  .filter(p => !/\d\.\d{3}/.test(p))
   .filter(p => !/^\d{4}$/.test(p));
+function goText(find, replace) {
+  const before = html;
+  html = html.replace(/>([^<]*)</g, (m, t) => '>' + t.split(find).join(replace) + '<');
+  if (html === before) { misses.push(find.slice(0, 46)); return false; }
+  changes++;
+  return true;
+}
 const seenPhone = new Set();
 let phoneN = 0;
 phones.forEach(function (p) {
@@ -114,14 +129,21 @@ phones.forEach(function (p) {
   phoneN++;
   const key = phoneN === 1 ? 'PHONE' : 'PHONE_' + phoneN;
   const to = phoneN === 1 ? '+00 000 000 0000' : '+00 000 000 000' + phoneN;
-  if (go(p, to)) swaps.push({ key: key, find: to, label: phoneN === 1 ? 'Phone' : 'Phone ' + phoneN, maxChars: 24 });
+  if (goText(p, to)) swaps.push({ key: key, find: to, label: phoneN === 1 ? 'Phone' : 'Phone ' + phoneN, maxChars: 24 });
 });
 /* the tel: links, which carry the digits with no spaces */
-[...seenPhone].forEach(function (d, i) {
-  const to = i === 0 ? '+000000000000' : '+00000000000' + (i + 1);
-  const hit = go('tel:' + d, 'tel:' + to) || go('tel:+' + d, 'tel:' + to);
-  if (hit && i === 0) swaps.push({ key: 'PHONE_LINK', find: to, label: 'Phone, digits only', maxChars: 18 });
+/* Matched on the digits alone, because a link may carry the number in any
+   form: "tel:5108956500", "tel:+1 510…", "tel:(510) 895-6500". */
+const phoneOrder = [...seenPhone];
+let linked = false;
+html = html.replace(/href="tel:([^"]*)"/gi, function (m, v) {
+  const d = v.replace(/\D/g, '');
+  const i = phoneOrder.findIndex(p => d === p || d.endsWith(p) || p.endsWith(d));
+  if (i === -1 || d.length < 7) return m;
+  if (i === 0) linked = true;
+  return 'href="tel:' + (i === 0 ? '+000000000000' : '+00000000000' + (i + 1)) + '"';
 });
+if (linked) swaps.push({ key: 'PHONE_LINK', find: '+000000000000', label: 'Phone, digits only', maxChars: 18 });
 
 if (misses.length) {
   console.log('  not found (fine if the page never said it):');
@@ -153,11 +175,11 @@ const images = pics.slice(0, 20).map(function (src, i) {
 /* ---------------------------------------------------------- the swap card */
 
 const mix = (pct, to) => 'color-mix(in srgb, {} ' + pct + '%, ' + to + ')';
-const has = role => !!roles.roleMap[role];
-const varOf = role => roles.roleMap[role][0];
+const has = role => !!roleMap[role];
+const varOf = role => roleMap[role][0];
 
 const adjust = {};
-if (has('accent')) adjust.accent = { label: 'Accent', var: varOf('accent'),
+if (has('accent') || has('accentSoft')) adjust.accent = { label: 'Accent', var: varOf(has('accent') ? 'accent' : 'accentSoft'),
   also: has('accentDeep') ? { [varOf('accentDeep')]: mix(76, '#000') } : undefined };
 if (has('ink')) adjust.ink = { label: 'Text', var: varOf('ink'),
   also: has('ink2') ? { [varOf('ink2')]: mix(82, '#fff') } : undefined };
@@ -177,12 +199,12 @@ const card = {
   fontVars: { heading: [], body: [], mono: [] },
   schemes: ['ivory-forest', 'bone-terracotta', 'porcelain-ink', 'mist-cobalt',
     'sand-plum', 'linen-rust', 'sage-gold', 'cream-cocoa', 'slate-lime'],
-  roleMap: roles.roleMap,
+  roleMap: roleMap,
   adjust: adjust,
 
   _brandTokens: 'Words belonging to the site this was cloned from, not to a client.',
   brandTokens: names.concat(Object.keys(spec.scrub || {}))
-    .filter(t => t && t.length > 3 && !/^https?:/.test(t))
+    .filter(t => t && t.length > 3 && t.length < 40 && !/^https?:|[<>@]/.test(t))
     .slice(0, 12),
 
   swaps: swaps,

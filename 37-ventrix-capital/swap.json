@@ -1,0 +1,259 @@
+{
+  "template": "37-ventrix-capital",
+  "title": "Ventrix Capital",
+  "industry": "Professional services",
+  "covers": "Investment firms, venture capital, advisory and consulting firms, any firm selling expertise and partnership",
+  "_note": "Cloned with builder/passes/clone-site.js from ventrix-cap.framer.website (a Framer design, used for inspiration), then this pass took the original firm's details off it.",
+  "fontVars": {
+    "heading": [],
+    "body": [],
+    "mono": []
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
+  ],
+  "roleMap": {
+    "dark": [
+      "accent"
+    ],
+    "accentSoft": [
+      "paper-3"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "ink2": [
+      "ink-2"
+    ],
+    "ink3": [
+      "ink-3"
+    ],
+    "sheet": [
+      "sheet"
+    ],
+    "paper": [
+      "paper"
+    ],
+    "paper2": [
+      "paper-2"
+    ],
+    "line": [
+      "line"
+    ],
+    "line2": [
+      "line-2"
+    ]
+  },
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "paper-3"
+    },
+    "ink": {
+      "label": "Text",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 82%, #fff)"
+      }
+    },
+    "sheet": {
+      "label": "Page background",
+      "var": "sheet"
+    },
+    "paper": {
+      "label": "Section bands",
+      "var": "paper"
+    },
+    "dark": {
+      "label": "Dark blocks",
+      "var": "accent"
+    },
+    "line": {
+      "label": "Lines",
+      "var": "line"
+    }
+  },
+  "_brandTokens": "Words belonging to the site this was cloned from, not to a client.",
+  "brandTokens": [
+    "Ventrix",
+    " with 20+ years of experience. ",
+    "Buy for $129"
+  ],
+  "swaps": [
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Your Business Name",
+      "label": "Business name",
+      "maxChars": 34,
+      "required": true
+    },
+    {
+      "key": "EMAIL",
+      "find": "hello@yourbusiness.example",
+      "label": "Email",
+      "maxChars": 44
+    },
+    {
+      "key": "PHONE",
+      "find": "+00 000 000 0000",
+      "label": "Phone",
+      "maxChars": 24
+    },
+    {
+      "key": "PHONE_LINK",
+      "find": "+000000000000",
+      "label": "Phone, digits only",
+      "maxChars": 18
+    }
+  ],
+  "images": [
+    {
+      "key": "PIC_1",
+      "find": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 1",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_2",
+      "find": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 2",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_3",
+      "find": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 3",
+      "ratio": "3/2",
+      "search": "office interior"
+    },
+    {
+      "key": "PIC_4",
+      "find": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 4",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_5",
+      "find": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 5",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_6",
+      "find": "https://images.unsplash.com/photo-1499914485622-a88fac536970?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 6",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_7",
+      "find": "https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 7",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_8",
+      "find": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 8",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_9",
+      "find": "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 9",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_10",
+      "find": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 10",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_11",
+      "find": "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 11",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_12",
+      "find": "https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 12",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_13",
+      "find": "https://framerusercontent.com/images/3RkdYjypVJXlwF7DKomstjuLomY.svg?width=150&amp;height=24",
+      "label": "Picture 13",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_14",
+      "find": "https://framerusercontent.com/images/b5a89pMKgqH3GtuECiMPdeguESs.svg?width=150&amp;height=24",
+      "label": "Picture 14",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_15",
+      "find": "https://framerusercontent.com/images/t8nsxLEGxWR1CjgwdbfTX4M3hpw.svg?width=150&amp;height=21",
+      "label": "Picture 15",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_16",
+      "find": "https://framerusercontent.com/images/eZy63IVQZ1gUnL4i3RuB9R4Q.svg?width=150&amp;height=21",
+      "label": "Picture 16",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_17",
+      "find": "https://framerusercontent.com/images/PlqU17uf9TpT8usKh1eNRijxPE.svg?width=130&amp;height=24",
+      "label": "Picture 17",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_18",
+      "find": "https://framerusercontent.com/images/0v4ZroLdkGsoho1qcOVOuvtby0Q.svg?width=130&amp;height=24",
+      "label": "Picture 18",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_19",
+      "find": "https://framerusercontent.com/images/LqMPiHR92jCoAIAr4xuOTxNaDLw.svg?width=132&amp;height=24",
+      "label": "Picture 19",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_20",
+      "find": "https://framerusercontent.com/images/Q4v5Tqf89kS2x20p1ak9tqeHQc.svg?width=132&amp;height=24",
+      "label": "Picture 20",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    }
+  ]
+}
