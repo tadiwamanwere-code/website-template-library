@@ -1593,7 +1593,10 @@ a{color:inherit;}
     if(env.storage !== 'blob' && env.storage !== 'disk'){
       $('#topRight').innerHTML = '<span class="lbl">link-only mode</span>';
     }
-    go('sites');
+    /* /build?site=<slug> opens that site straight into the preview. It is
+       the Edit link UtahOp puts on a lead. */
+    var ask = new URLSearchParams(location.search).get('site');
+    if(ask) openSite(ask); else go('sites');
   });
 })();
 </script>

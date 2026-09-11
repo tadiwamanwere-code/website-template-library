@@ -176,6 +176,31 @@ Vite, Next and hand-written sites come out right.
 because a cloned page's staff photographs are not ours to ship. Use it only
 for sites we own.
 
+## Made from a UtahOp lead
+
+Each lead in the UtahOp CRM has a **Make website** button. It sends the
+lead's details to `POST /bapi/leads`, and the builder does the rest:
+
+1. **Picks the template from the trade** LeadForge found. `leads.js` has one
+   line per trade: pharmacy to the pharmacy, electrician to Sitcha, and so
+   on. A trade not on the list is matched against each card's `covers` line.
+   With nothing to go on it uses the accounting template, the most general.
+2. **Fills the shared fields:** name, trade, phone (the WhatsApp number
+   first, because that is the one people answer), email, town, address. A
+   field the design does not have is left out.
+3. **Saves it and answers with the link,** plus a Customise link that opens
+   the same site in this app (`/build?site=<slug>`).
+
+What LeadForge found about the business (the selling point, their Facebook,
+who to ask for) goes in the site's notes, never onto the page. It is
+research, not wording the business chose.
+
+Pressing the button again keeps the same link and every change made by hand
+here. Only the CRM's facts are sent again.
+
+The request must carry `Authorization: Bearer <BUILDER_API_KEY>`. With no
+key set the route refuses everything, so nobody else can fill the store.
+
 ## Keys
 
 `builder/.env`, which git ignores:
@@ -183,6 +208,7 @@ for sites we own.
 ```
 UNSPLASH_ACCESS_KEY=…
 PEXELS_API_KEY=…
+BUILDER_API_KEY=…      the same value as SITE_BUILDER_KEY in UtahOp
 ```
 
 On Vercel the same names are set in the project's environment settings.

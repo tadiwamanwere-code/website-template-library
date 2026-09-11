@@ -11,6 +11,7 @@
      /bapi/photos          picture search, through Unsplash and Pexels
      /bapi/sites           saved sites: list, create
      /bapi/sites/:slug     one site: read, delete
+     /bapi/leads           a site made straight from a CRM lead (UtahOp)
      /s/:slug              a saved site, rendered
      /p/:payload           a site carried inside its own link
 
@@ -25,6 +26,7 @@ const path = require('path');
 const { render, deriveSwaps, listTemplates, loadTemplate, fontList, headBlock, HIDE } = require('./render.js');
 const store = require('./store.js');
 const portable = require('./portable.js');
+const leads = require('./leads.js');
 
 const APP = path.join(__dirname, 'app', 'index.html');
 
@@ -46,6 +48,9 @@ loadEnv();
 
 const UNSPLASH = process.env.UNSPLASH_ACCESS_KEY || process.env.VITE_UNSPLASH_ACCESS_KEY || '';
 const PEXELS = process.env.PEXELS_API_KEY || '';
+/* The shared secret UtahOp sends with a lead. No key set means the door is
+   shut, not open: anyone could otherwise fill the store with sites. */
+const LEADS_KEY = process.env.BUILDER_API_KEY || '';
 
 /* ---------------------------------------------------------------- replies */
 
@@ -305,6 +310,63 @@ async function handle(req, res) {
     const record = await store.read(slug);
     if (!record) return json(res, 404, { error: 'No such site' });
     return json(res, 200, record);
+  }
+
+  /* ---- a site made from a CRM lead ----
+     UtahOp posts the lead; this picks the template from the trade, fills the
+     fields, saves it and answers with the link. Posting again with the slug
+     it got back updates that same site. */
+  if (route === '/bapi/leads' && method === 'POST') {
+    if (!LEADS_KEY) return json(res, 503, { error: 'BUILDER_API_KEY is not set on the builder' });
+    if (String(req.headers.authorization || '') !== 'Bearer ' + LEADS_KEY) {
+      return json(res, 401, { error: 'Wrong or missing key' });
+    }
+
+    const b = await readBody(req);
+    const lead = b.lead || {};
+    if (!(lead.organisation || lead.name)) return json(res, 400, { error: 'The lead has no name' });
+
+    const known = new Set(listTemplates().map(t => t.template));
+    const pick = b.template && known.has(b.template)
+      ? { template: b.template, why: 'chosen by hand' }
+      : leads.pickTemplate(lead.trade, [lead.organisation, lead.name].join(' '));
+
+    /* A remake keeps what a person already changed in the app: the theme,
+       the edits, the pictures. Only the CRM's own facts are refreshed. */
+    const old = b.slug ? await store.read(b.slug) : null;
+    const same = old && old.template === pick.template ? old : null;
+    /* Only the fields this design has. A pharmacy page with no email line
+       would otherwise warn about the email on every lead. */
+    const fields = new Set((loadTemplate(pick.template).card.swaps || []).map(s => s.key));
+    const facts = leads.swapsFor(lead);
+    for (const k of Object.keys(facts)) if (!fields.has(k)) delete facts[k];
+    const draft = {
+      template: pick.template,
+      theme: same ? same.theme : null,
+      swaps: Object.assign({}, same ? same.swaps : {}, facts),
+      edits: same ? same.edits || [] : [],
+      style: same ? same.style || {} : {},
+      notes: old ? old.notes || '' : leads.notesFor(lead),
+      status: old ? old.status || 'draft' : 'draft',
+      lead: { source: 'utahop', id: lead.id || null }
+    };
+
+    let record;
+    try {
+      record = await store.write(Object.assign({ slug: old ? old.slug : store.slugify(draft.swaps.BUSINESS_NAME) }, draft));
+    } catch (err) {
+      return json(res, 500, { error: 'Could not save: ' + String((err && err.message) || err) });
+    }
+    const { warnings } = buildSite(record);
+    return json(res, 200, {
+      slug: record.slug,
+      url: '/s/' + record.slug,
+      editUrl: '/build?site=' + encodeURIComponent(record.slug),
+      template: pick.template,
+      why: pick.why,
+      version: record.version,
+      warnings
+    });
   }
 
   /* ---- a saved site ---- */
