@@ -10,7 +10,7 @@
      /bapi/fonts           the typefaces on offer
      /bapi/photos          picture search, through Unsplash and Pexels
      /bapi/sites           saved sites: list, create
-     /bapi/sites/:slug     one site: read, delete
+     /bapi/sites/:slug     one site: read, delete (delete needs the key)
      /bapi/leads           a site made straight from a CRM lead (UtahOp)
      /s/:slug              a saved site, rendered
      /p/:payload           a site carried inside its own link
@@ -306,7 +306,15 @@ async function handle(req, res) {
 
   if (route.startsWith('/bapi/sites/')) {
     const slug = route.slice('/bapi/sites/'.length);
-    if (method === 'DELETE') return json(res, 200, { deleted: await store.remove(slug) });
+    /* Deleting needs the same key as the CRM. The app never deletes, so
+       nothing a person does in it is lost by this; a stranger with a slug
+       can no longer take a client's site down. */
+    if (method === 'DELETE') {
+      if (!LEADS_KEY || String(req.headers.authorization || '') !== 'Bearer ' + LEADS_KEY) {
+        return json(res, 401, { error: 'Wrong or missing key' });
+      }
+      return json(res, 200, { deleted: await store.remove(slug) });
+    }
     const record = await store.read(slug);
     if (!record) return json(res, 404, { error: 'No such site' });
     return json(res, 200, record);
