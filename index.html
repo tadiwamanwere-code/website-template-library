@@ -253,6 +253,18 @@ const TEMPLATES = [
   { n:'23', slug:'23-caro-accounting',       name:'Caro',          cat:'Professional Services', accent:'#17A2B8', genre:'Accounting firm — pinned service stack, two-tone headline' },
   { n:'24', slug:'24-safeway-furniture',     name:'Safeway',       cat:'E-commerce & Retail',   accent:'#8FB4F0', genre:'Fitted furniture — horizontal process track, materials spec' },
   { n:'25', slug:'25-gordons-bnb',           name:"Gordon's Bnb",  cat:'Hospitality & Travel',  accent:'#B8873F', genre:'Boutique guesthouse — slow image sequence, live booking total' },
+  { n:'33', slug:'33-cloud-home',            name:'Cloud Home',    cat:'E-commerce & Retail',   accent:'#06301a', genre:'Homeware shop — considered range, showroom photography' },
+  { n:'34', slug:'34-sitcha-electric',       name:'Sitcha Electric', cat:'Construction & Trades', accent:'#0e2a5e', genre:'Electrical contractor — call-outs, installs, service cards' },
+  { n:'35', slug:'35-grazeon-thatchers',     name:'Grazeon',       cat:'Construction & Trades', accent:'#d9a441', genre:'Thatching and timber — divisions, work gallery' },
+  { n:'36', slug:'36-alstyle-construction',  name:'Alstyle',       cat:'Construction & Trades', accent:'#16367c', genre:'Ceilings and drywall — before-and-after fitting work' },
+  { n:'37', slug:'37-ventrix-capital',       name:'Ventrix',       cat:'Professional Services', accent:'#013130', genre:'Investment firm — deep green editorial, partnership story' },
+  { n:'38', slug:'38-parvis-family-law',     name:'Parvis',        cat:'Professional Services', accent:'#55bec7', genre:'Family law — one named solicitor, soft palette' },
+  { n:'39', slug:'39-wegner-law',            name:'Wegner Law',    cat:'Professional Services', accent:'#c02b0a', genre:'Law firm — team profiles, step-by-step process' },
+  { n:'40', slug:'40-connolly-law',          name:'Connolly Law',  cat:'Professional Services', accent:'#c02b0a', genre:'Defence practice — several distinct services' },
+  { n:'41', slug:'41-hamilton-partners',     name:'Hamilton',      cat:'Property & Architecture', accent:'#033c21', genre:'Commercial property — building portfolio, leasing detail' },
+  { n:'42', slug:'42-jag-capital',           name:'JAG Capital',   cat:'Professional Services', accent:'#007acc', genre:'Wealth management — strategies, values, disclosures' },
+  { n:'43', slug:'43-cermak-legal',          name:'Cermak',        cat:'Professional Services', accent:'#c02b0a', genre:'Specialist law — named team, regulatory focus' },
+  { n:'44', slug:'44-berch-construction',    name:'Berch',         cat:'Construction & Trades', accent:'#3898ec', genre:'Construction consultancy — project list, clear grid' },
 ];
 
 const grid = document.getElementById('grid');
@@ -338,7 +350,7 @@ controls.addEventListener('click', e => {
   applyFilter(btn.dataset.cat);
 });
 applyFilter('All');
-document.getElementById('topMeta').textContent = TEMPLATES.length + ' TEMPLATES · BATCH 01–03';
+document.getElementById('topMeta').textContent = TEMPLATES.length + ' TEMPLATES · BATCH 01–04';
 
 /* ---------- prompts ---------- */
 const promptCache = {};

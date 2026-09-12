@@ -6,7 +6,7 @@
 <title>Site builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================================
    The tool's own interface follows the house rules: no decorative gradients,
@@ -14,18 +14,18 @@
    so it stays quiet and gets out of the way of the page being built.
    ========================================================================== */
 :root{
-  --bg:#0C0E11;
-  --bg-2:#111419;
-  --bg-3:#161A20;
-  --line:#242A32;
-  --line-2:#333B45;
-  --ink:#EBEEF2;
-  --ink-2:#9AA5B1;
-  --ink-3:#6B7580;
-  --accent:#F5A833;
-  --ok:#4ED08A;
-  --warn:#E8734A;
-  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --bg:#08080a;
+  --bg-2:#0e0e11;
+  --bg-3:#15151a;
+  --line:rgba(255,255,255,0.10);
+  --line-2:rgba(255,255,255,0.22);
+  --ink:#f4f4f5;
+  --ink-2:rgba(255,255,255,0.60);
+  --ink-3:rgba(255,255,255,0.38);
+  --accent:#f4f4f5;
+  --ok:#4ade80;
+  --warn:#e8734a;
+  --sans:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --ease:cubic-bezier(.22,1,.36,1);
 }
@@ -52,7 +52,13 @@ a{color:inherit;}
 }
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;}
 .brand svg{width:18px;height:20px;flex:none;}
-.brand b{font-size:14px;}
+.brand b{font-size:14px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;}
+.lib-link{
+  margin-left:auto;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;text-decoration:none;padding:9px 15px;border:1px solid var(--line-2);
+  white-space:nowrap;color:var(--ink-2);transition:color .2s var(--ease),border-color .2s var(--ease);
+}
+.lib-link:hover{color:var(--ink);border-color:var(--ink-3);}
 .steps{display:flex;align-items:center;gap:4px;margin-left:8px;}
 .step{
   font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
@@ -70,8 +76,8 @@ a{color:inherit;}
   transition:background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease);
 }
 .btn:hover{border-color:var(--ink-3);background:var(--bg-3);}
-.btn-primary{background:var(--accent);border-color:var(--accent);color:#17120A;}
-.btn-primary:hover{background:#ffbc4d;border-color:#ffbc4d;color:#17120A;}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#08080a;}
+.btn-primary:hover{background:#ffffff;border-color:#ffffff;color:#08080a;}
 .btn-quiet{border-color:transparent;color:var(--ink-2);padding-inline:10px;}
 .btn-quiet:hover{color:var(--ink);background:var(--bg-3);}
 .btn:disabled{opacity:.4;cursor:not-allowed;}
@@ -128,7 +134,7 @@ a{color:inherit;}
 .fld label{display:block;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);}
 .fld input,.fld textarea{width:100%;background:transparent;border:0;outline:none;padding:9px 0 3px;font-size:15px;}
 .fld textarea{resize:vertical;min-height:84px;line-height:1.55;}
-.fld input::placeholder,.fld textarea::placeholder{color:#4A525C;}
+.fld input::placeholder,.fld textarea::placeholder{color:var(--ink-3);}
 .fld::after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease);}
 .fld:focus-within::after{transform:scaleX(1);}
 .fld .count{position:absolute;right:14px;bottom:12px;font-family:var(--mono);font-size:10px;color:var(--ink-3);}
@@ -255,7 +261,7 @@ a{color:inherit;}
     <svg viewBox="0 0 28 32" aria-hidden="true">
       <path d="M14 1 L21.5 9.5 H6.5 Z" fill="currentColor"/>
       <rect x="10.5" y="11.5" width="7" height="14.5" fill="currentColor"/>
-      <rect x="3" y="28" width="22" height="3" fill="#F5A833"/>
+      <rect x="3" y="28" width="22" height="3" fill="#f4f4f5"/>
     </svg>
     <b>Site builder</b>
   </span>
@@ -266,7 +272,8 @@ a{color:inherit;}
     <span class="step" data-goto="preview">Preview</span>
     <span class="step" data-goto="finish">Finish</span>
   </nav>
-  <div class="right" id="topRight"></div>
+  <a class="lib-link" href="/">Template library</a>
+  <div class="right" id="topRight" style="margin-left:0"></div>
 </header>
 
 <main class="screens">
@@ -1554,7 +1561,7 @@ a{color:inherit;}
       var f = $('#stage');
       f.style.width = w ? w + 'px' : '100%';
       f.style.margin = w ? '0 auto' : '0';
-      f.style.borderInline = w ? '1px solid #242A32' : '0';
+      f.style.borderInline = w ? '1px solid rgba(255,255,255,0.10)' : '0';
     });
   });
 
@@ -1569,7 +1576,7 @@ a{color:inherit;}
       $('#openLink').href = url;
       $('#qr').innerHTML = '';
       if(window.QRCode && url.length < 900){
-        new QRCode($('#qr'), { text:url, width:150, height:150, colorDark:'#0C0E11', colorLight:'#ffffff' });
+        new QRCode($('#qr'), { text:url, width:150, height:150, colorDark:'#08080a', colorLight:'#ffffff' });
       }
       $('#finishTitle').textContent = 'The site is live';
       $('#finishNote').textContent = res.slug
