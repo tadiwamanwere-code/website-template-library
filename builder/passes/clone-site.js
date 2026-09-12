@@ -84,7 +84,13 @@ const STOCK = {
 
 function stockFor(src, alt) {
   const s = (src + ' ' + (alt || '')).toLowerCase();
-  if (/team|staff|attorney|lawyer|partner|founder|portrait|headshot|profile|bio|author|person/.test(s)) return STOCK.person;
+  /* People take turns too: a team section of four identical faces is worse
+     than no photographs at all. */
+  if (/team|staff|attorney|lawyer|portrait|headshot|profile|bio|author|person/.test(s)) {
+    const key = String(src).split('?')[0];
+    if (!PEOPLE_SEEN.has(key)) PEOPLE_SEEN.set(key, PEOPLE[PEOPLE_SEEN.size % PEOPLE.length] + '?auto=format&fit=crop&w=1000&q=80');
+    return PEOPLE_SEEN.get(key);
+  }
   if (/group|together|people|client/.test(s)) return STOCK.people;
   if (/office|building|reception|interior|premises/.test(s)) return STOCK.office;
   if (/meet|consult|talk|advice|discussion/.test(s)) return STOCK.meeting;
@@ -116,6 +122,32 @@ const POOL = [
 ];
 const POOL_SEEN = new Map();
 
+const PEOPLE = [
+  'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e',
+  'https://images.unsplash.com/photo-1560250097-0b93528c311a',
+  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2',
+  'https://images.unsplash.com/photo-1624797432677-6f803a98acb3',
+  'https://images.unsplash.com/photo-1614786269829-d24616faf56d',
+  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7'
+];
+const PEOPLE_SEEN = new Map();
+
+/* Backgrounds get quiet surfaces, not photographs. A section background is
+   usually a soft texture with words over it, and a busy city in its place
+   drowns the words. */
+const TEXTURES = [
+  'https://images.unsplash.com/photo-1566041510394-cf7c8fe21800',
+  'https://images.unsplash.com/photo-1601662528567-526cd06f6582',
+  'https://images.unsplash.com/photo-1558346648-9757f2fa4474',
+  'https://images.unsplash.com/photo-1498262257252-c282316270bc'
+];
+const TEXTURE_SEEN = new Map();
+function textureFor(u) {
+  const key = String(u).split('?')[0];
+  if (!TEXTURE_SEEN.has(key)) TEXTURE_SEEN.set(key, TEXTURES[TEXTURE_SEEN.size % TEXTURES.length] + '?auto=format&fit=crop&w=1800&q=70');
+  return TEXTURE_SEEN.get(key);
+}
+
 /* --------------------------------------------------------------- the page */
 
 let html = fs.readFileSync(rawFile, 'utf8');
@@ -143,24 +175,54 @@ while ((m = linkRe.exec(html)) !== null) {
   /* Google's own font sheet stays a link: it is small, it is meant to be
      linked, and inlining it would freeze the font files. */
   if (/fonts\.googleapis\.com/.test(url)) continue;
-  sheets.push({ tag: tag, url: url });
+  /* The media a sheet is for. A print sheet written into the page as if it
+     were for the screen lays the page out for paper: every picture full
+     width, the menu gone. That is what broke the WordPress clones. */
+  const media = ((tag.match(/media\s*=\s*["']([^"']+)["']/i) || [])[1] || 'all').trim();
+  sheets.push({ tag: tag, url: url, media: media });
 }
 
 async function main() {
   /* Some of these sites serve their stylesheets from a cache folder that
      only exists for a real browser. The file itself is still where it
      always was, so if the cache path 404s, ask for the plain one. */
+  /* Fetched stylesheets are kept in a folder outside the repo, so building
+     a template again does not ask somebody's server for the same forty
+     files. One site started refusing us half way through a rebuild, which
+     silently cost the page its header. Set CLONE_CACHE to move the folder. */
+  const CACHE = process.env.CLONE_CACHE || path.join(require('os').tmpdir(), 'clone-site-cache');
+  fs.mkdirSync(CACHE, { recursive: true });
+  const cacheFile = u => path.join(CACHE, require('crypto').createHash('sha1').update(u).digest('hex').slice(0, 20) + '.css');
+
   async function grab(url) {
+    const hit = cacheFile(url);
+    if (fs.existsSync(hit)) return fs.readFileSync(hit, 'utf8');
+
     const tries = [url];
     const plain = url.replace(/\/wp-content\/cache\/min\/\d+\//, '/')
       .replace(/\/cache\/(minify|autoptimize)\/[^?]*?(?=wp-content)/, '/');
     if (plain !== url) tries.push(plain);
     tries.push(url.replace(/\?.*$/, ''));
+
+    /* Three goes at each shape, waiting longer each time: a server that has
+       just served thirty files often says no to the thirty-first. */
     for (const t of tries) {
-      try {
-        const res = await fetch(t, { headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } });
-        if (res.ok) return await res.text();
-      } catch { /* try the next shape */ }
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const res = await fetch(t, { headers: {
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36',
+            'accept': 'text/css,*/*;q=0.1',
+            'referer': BASE.origin + '/'
+          } });
+          if (res.ok) {
+            const text = await res.text();
+            try { fs.writeFileSync(hit, text); } catch { /* a cache miss costs nothing */ }
+            return text;
+          }
+          if (res.status !== 429 && res.status < 500) break;   /* a real 404 will not improve */
+        } catch { /* try again */ }
+        await new Promise(r => setTimeout(r, 400 * (attempt + 1)));
+      }
     }
     return null;
   }
@@ -169,7 +231,8 @@ async function main() {
   for (const sheet of sheets) {
     try {
       /* A template nobody can load is not a template. */
-      if (css.length > 800e3) { console.error('  ! stopping at 800KB of CSS'); break; }
+      if (css.length > 2e6) { console.error('  ! stopping at 2MB of CSS'); break; }
+      if (/^print$/i.test(sheet.media)) { html = html.replace(sheet.tag, ''); continue; }
       const got = await grab(sheet.url);
       if (got === null) { console.error('  ! could not fetch ' + sheet.url); html = html.replace(sheet.tag, ''); continue; }
       let text = got;
@@ -182,6 +245,7 @@ async function main() {
       });
       /* @import pulls in more sheets. One level is enough for these. */
       text = text.replace(/@import\s+url\(([^)]+)\);?/g, '');
+      if (!/^(all|screen)$/i.test(sheet.media)) text = '@media ' + sheet.media + '{' + text + '}';
       css += '\n/* ---- ' + sheet.url.split('/').pop() + ' ---- */\n' + text;
     } catch (e) {
       console.error('  ! could not fetch ' + sheet.url);
@@ -191,7 +255,10 @@ async function main() {
 
   /* Styles written into the page itself, kept and made absolute too. */
   html = html.replace(/(<style\b[^>]*>)([\s\S]*?)(<\/style>)/gi, function (whole, open, body, close) {
-    css += '\n/* ---- inline ---- */\n' + body.replace(/url\(\s*(["']?)([^"')]+)\1\s*\)/g, function (w, q, u) {
+    const media = ((open.match(/media\s*=\s*["']([^"']+)["']/i) || [])[1] || 'all').trim();
+    if (/^print$/i.test(media)) return '';
+    if (!/^(all|screen)$/i.test(media)) body = '@media ' + media + '{' + body + '}';
+    css +='\n/* ---- inline ---- */\n' + body.replace(/url\(\s*(["']?)([^"')]+)\1\s*\)/g, function (w, q, u) {
       return /^(data:|https?:|\/\/)/i.test(u) ? w : 'url("' + abs(u) + '")';
     });
     return '';
@@ -338,6 +405,11 @@ async function main() {
      visitor to somebody else's website. A link to a section stays a jump
      to that section; anything else on that site goes nowhere. */
   const home = new URL(BASE).origin;
+  /* Their social pages and their office on a map are theirs too. */
+  if (!OWN) {
+    html = html.replace(/\shref="https?:\/\/(?:www\.)?(?:facebook|instagram|linkedin|twitter|x|youtube|tiktok|pinterest|avvo|yelp)\.com[^"]*"/gi, ' href="#"');
+    html = html.replace(/\shref="https?:\/\/(?:maps\.google\.[a-z.]+|(?:www\.)?google\.[a-z.]+\/maps|goo\.gl\/maps|maps\.app\.goo\.gl)[^"]*"/gi, ' href="#"');
+  }
   html = html.replace(/\shref="([^"]*)"/gi, function (w, v) {
     if (v.indexOf(home) !== 0 || /\.(css|woff2?|ttf|otf|png|jpe?g|webp|avif|svg|gif|ico|mp4|webm)(\?|$)/i.test(v)) return w;
     const hash = v.indexOf('#');
@@ -352,17 +424,48 @@ async function main() {
   html = html.replace(/style\s*=\s*"([^"]*url\([^"]*)"/gi, (w, v) =>
     'style="' + v.replace(/url\(\s*(["']?)([^"')]+)\1\s*\)/g, (x, q, u) => 'url("' + abs(u) + '")') + '"');
 
+  /* ------------------------------------------------------ split headings
+     Animation libraries (GSAP SplitText and the like) cut a heading into
+     one span per word or line, positioned for the reveal, and keep the
+     sentence whole in aria-label. Frozen, the spans are the wrong words in
+     the wrong places and nobody can edit the line. The sentence goes back. */
+  html = html.replace(/<(h[1-6]|p|div)(\b[^>]*?)\saria-label="([^"]*)"([^>]*)>([\s\S]*?)<\/\1>/gi,
+    function (m, tag, a1, label, a2, inner) {
+      if (!/gsap_split|split-line|split-word|split-char|splitting|\bword\b|\bchar\b/i.test(inner)) return m;
+      /* A div is only safe when nothing inside it is another div. */
+      if (tag.toLowerCase() === 'div' && /<div\b/i.test(inner)) return m;
+      return '<' + tag + a1 + a2 + '>' + label + '</' + tag + '>';
+    });
+
   /* ----------------------------------------------------------- the photos
      Somebody else's page keeps its shape. What fills it is ours. */
 
   let replaced = 0;
   if (!OWN) {
     html = html.replace(/<img\b[^>]*>/gi, function (tag) {
+      /* A lazy-loaded picture keeps a blank placeholder in src and the real
+         address in data-src until script swaps them. There is no script. */
+      const lazy = (tag.match(/\sdata-(?:lazy-)?src\s*=\s*"([^"]+)"/i) || [])[1];
+      if (lazy && /\ssrc\s*=\s*"(data:|about:blank)/i.test(tag)) {
+        tag = tag.replace(/\ssrc\s*=\s*"[^"]*"/i, ' src="' + lazy + '"');
+      }
       const src = (tag.match(/\ssrc\s*=\s*"([^"]*)"/i) || [])[1] || '';
-      if (/\.svg(\?|$)/i.test(src) || /^data:/i.test(src)) return tag;   /* icons stay */
       const alt = (tag.match(/\salt\s*=\s*"([^"]*)"/i) || [])[1] || '';
-      /* A logo is markup the swap card replaces, not a photograph. */
-      if (/logo|brand|mark|icon/i.test(src + alt)) return tag;
+      const cls = (tag.match(/\sclass\s*=\s*"([^"]*)"/i) || [])[1] || '';
+      /* A logo is often a vector file, so this comes before the rule that
+         leaves vector icons alone. */
+      if (/logo/i.test(src + alt + cls)) return '<span class="clone-wordmark">Your Business Name</span>';
+      if (/\.svg(\?|$)/i.test(src) || /^data:/i.test(src)) return tag;   /* icons stay */
+      /* Their logo is their identity. It becomes a plain wordmark that the
+         builder fills with the client's name. */
+      if (/logo/i.test(src + alt + cls)) {
+        return '<span class="clone-wordmark">Your Business Name</span>';
+      }
+      /* Small pictures are icons: an illustration of a key, a scale, a
+         house. They carry no identity and a photograph would look absurd in
+         a 60px circle. The width comes from the rendered snapshot. */
+      const shown = +((tag.match(/\sdata-cw\s*=\s*"(\d+)"/i) || [])[1] || (tag.match(/\swidth\s*=\s*"(\d+)"/i) || [])[1] || 0);
+      if ((shown && shown < 160) || /brand|mark|icon/i.test(src + alt)) return tag;
       replaced++;
       return tag
         .replace(/\ssrcset\s*=\s*"[^"]*"/i, '')
@@ -370,8 +473,8 @@ async function main() {
         .replace(/\ssrc\s*=\s*"[^"]*"/i, ' src="' + stockFor(src, alt) + '"');
     });
     /* Backgrounds pointing at their server, swapped the same way. */
-    css = css.replace(new RegExp('url\\("' + BASE.origin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[^"]*\\.(jpe?g|png|webp)"\\)', 'gi'),
-      function () { replaced++; return 'url("' + STOCK.office + '")'; });
+    css = css.replace(new RegExp('url\\("' + BASE.origin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[^"]*\\.(jpe?g|webp)"\\)', 'gi'),   /* a .png background is nearly always an icon */
+      function (m) { replaced++; return 'url("' + textureFor(m) + '")'; });
     console.log('  ' + replaced + ' photographs swapped for stock');
   }
 
@@ -384,11 +487,19 @@ async function main() {
   const preconnect = '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
     + '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
 
+  /* The classes on <html> and <body> stay. WordPress and Elementor hang
+     whole layouts off them: the full-width page, the header style, the
+     "home" rules. Dropping them squeezed a page into the theme's narrow
+     default column. "no-js" becomes "js", because the page no longer needs
+     its script to be shown. */
+  const attr = (tag, name) => ((html.match(new RegExp('<' + tag + '\\b[^>]*\\s' + name + '\\s*=\\s*"([^"]*)"', 'i')) || [])[1] || '');
+  const htmlClass = attr('html', 'class').replace(/\bno-js\b/g, 'js').replace(/\blenis[\w-]*/g, '').replace(/\s+/g, ' ').trim();
+  const bodyClass = attr('body', 'class').trim();
   let body = html.slice(html.indexOf('<body'));
   body = body.replace(/^<body[^>]*>/, '').replace(/<\/body>[\s\S]*$/, '');
 
   const page = `<!DOCTYPE html>
-<html lang="en">
+<html lang="en"${htmlClass ? ' class="' + htmlClass + '"' : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -398,7 +509,7 @@ ${preconnect}
 ${fontLinks}
 <style>
 /* ══════════════════════════════════════════════════════════════════════════
-   Cloned from ${BASE.origin} by builder/passes/clone-site.js.
+   ${OWN ? "Cloned from " + BASE.origin + " by" : "Built with"} builder/passes/clone-site.js.
 
    The design is kept as it stands. The one change of substance is that the
    colours it leans on are read from the variables below instead of being
@@ -411,7 +522,7 @@ ${rootVars.join('\n')}
 
 /* The page was taken as it renders, so anything waiting on a scroll
    animation was caught at nothing. A file has nothing to scroll into. */
-[data-framer-appear-id],[data-aos],[class*="animate"],[class*="fade"],[class*="reveal"],[class*="wow"]{
+[data-framer-appear-id]:not([class*="menu"]):not([class*="nav"]):not([class*="modal"]):not([class*="popup"]):not([class*="drawer"]):not([class*="offcanvas"]),[data-aos]:not([class*="menu"]):not([class*="nav"]):not([class*="modal"]):not([class*="popup"]):not([class*="drawer"]):not([class*="offcanvas"]),[class*="animate"]:not([class*="menu"]):not([class*="nav"]):not([class*="modal"]):not([class*="popup"]):not([class*="drawer"]):not([class*="offcanvas"]),[class*="fade"]:not([class*="menu"]):not([class*="nav"]):not([class*="modal"]):not([class*="popup"]):not([class*="drawer"]):not([class*="offcanvas"]),[class*="reveal"]:not([class*="menu"]):not([class*="nav"]):not([class*="modal"]):not([class*="popup"]):not([class*="drawer"]):not([class*="offcanvas"]),[class*="wow"]:not([class*="menu"]):not([class*="nav"]):not([class*="modal"]):not([class*="popup"]):not([class*="drawer"]):not([class*="offcanvas"]){
   opacity:1!important;transform:none!important;visibility:visible!important;
 }
 /* Framer. Its text-reveal boxes are drawn 20px tall and grown by script to
@@ -421,15 +532,18 @@ div[style*="height:20px;min-height:20px;overflow:hidden"]{height:auto!important;
 /* Cards that wipe into view start fully clipped; script opens them. */
 [style*="clip-path:inset(100% 0% 0% 0%)"]{clip-path:none!important;}
 #__framer-badge-container{display:none!important;}
+/* Elementor's sticky header clones itself with script to hold its place. */
+.elementor-sticky__spacer{display:none!important;}
 /* A template's demo page carries the seller's own "buy this" button. */
 div:has(> a[href*="lemonsqueezy"]),div:has(> a[href*="gumroad.com"]),a[href*="framer.com/marketplace"]{display:none!important;}
 html{scroll-behavior:smooth;}
 img{max-width:100%;height:auto;}
+.clone-wordmark{display:inline-block;font-weight:700;font-size:22px;line-height:1.1;letter-spacing:.01em;white-space:nowrap;color:inherit;}
 
 ${css}
 </style>
 </head>
-<body>
+<body${bodyClass ? ' class="' + bodyClass + '"' : ''}>
 ${body}
 
 <script>

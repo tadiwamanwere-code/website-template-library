@@ -78,6 +78,13 @@ function go(find, replace, note) {
       after the firm. Replace "Wegner" first and "Matthew Wegner" is left
       half-changed and worse than either. Longest first for the same reason. */
 let scrubbed = 0;
+/* Patterns, for things that repeat with different words each time: a dozen
+   testimonials, each in its own box. [source, flags, replacement]. */
+for (const [src, flags, rep] of spec.scrubRe || []) {
+  const before = html;
+  html = html.replace(new RegExp(src, flags), rep);
+  if (html === before) misses.push('pattern ' + src.slice(0, 40)); else scrubbed++;
+}
 for (const from of Object.keys(spec.scrub || {}).sort((a, b) => b.length - a.length)) {
   if (go(from, spec.scrub[from], 'scrub "' + from + '"')) scrubbed++;
 }
@@ -93,6 +100,20 @@ names.forEach(function (n, i) {
     swaps.push({ key: 'BRAND_' + i, find: placeholder, label: 'Name, short form ' + i, maxChars: 24 });
   }
 });
+
+/* 2b. the placeholders the scrub above wrote. A page that now says "Your
+       City" should ask for the town in the builder, not leave it there. */
+const EXTRAS = [
+  ['ADDRESS', 'Your street address', 'Street address', 60],
+  ['ADDRESS_2', 'Second office address', 'Second address', 60],
+  ['CITY', 'Your City', 'Town or city', 34],
+  ['CITY_2', 'Second City', 'Second town', 34],
+  ['REGION', 'Your State', 'County, state or province', 34],
+  ['PERSON_NAME', 'Your Name', 'Lead person’s name', 34]
+];
+for (const [key, find, label, maxChars] of EXTRAS) {
+  if (html.indexOf(find) !== -1) swaps.push({ key, find, label, maxChars });
+}
 
 /* 3. email addresses, found by pattern */
 const emails = [...new Set((body().match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || []))]
@@ -111,7 +132,7 @@ const pageWords = body().replace(/<(script|style|svg)[\s\S]*?<\/\1>/gi, ' ').rep
 const phones = [...new Set((pageWords.match(/(?:\+?\d[\d\s().-]{7,}\d)/g) || []))]
   .map(p => p.trim())
   .filter(p => (p.replace(/\D/g, '').length >= 9 && p.replace(/\D/g, '').length <= 15))
-  .filter(p => !/\d\.\d{3}/.test(p))
+  .filter(p => !/\d\.\d{3}/.test(p) || /^\(?\d{3}\)?[.]\d{3}[.]\d{4}$/.test(p))
   .filter(p => !/^\d{4}$/.test(p));
 function goText(find, replace) {
   const before = html;

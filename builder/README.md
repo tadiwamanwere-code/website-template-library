@@ -156,25 +156,56 @@ load rather than leaving a hole in somebody's page.
 
 ## Cloning a live site
 
-`clone-site.js` turns a live page into a template: it writes
-every stylesheet into the file, swaps the colours it leans on for CSS
-variables so the template can wear a theme, makes every address absolute,
-and throws the JavaScript away. `make-card.js` then takes the original
-firm's name, people, address, phone and email off the page and writes the
-swap card. `clone-specs.js` holds who each cloned site belongs to.
+`clone-site.js` turns a live page into a template: it writes every
+stylesheet into the file, swaps the colours it leans on for CSS variables so
+the template can wear a theme, makes every address absolute, and throws the
+JavaScript away. `make-card.js` then takes the original firm's name, people,
+address, phone and email off the page and writes the swap card.
+`clone-specs.js` holds what has to come off each site, and
+`rebuild-clones.js` builds every clone again when these tools improve.
 
-    node builder/passes/clone-site.js 34-sitcha-electric https://example.com/ raw.html --own
-    node builder/passes/clone-specs.js
+**Take the page from a browser, not from `curl`.** Open it, scroll to the
+bottom so everything that loads on scroll has loaded, then save what the
+browser ended up with. A page fetched cold is missing whatever its script
+was going to add.
 
-**It only works on sites whose layout is in the CSS.** Seven WordPress law
-and finance sites were cloned this way and thrown out: those themes build
-their layout in JavaScript, so a page taken without its scripts collapses
-into text on top of pictures. A broken template is worse than no template.
-Vite, Next and hand-written sites come out right.
+    node builder/passes/snap-decode.js snap.json raw.html
+    node builder/passes/clone-site.js 40-connolly-law https://example.com/ raw.html
+    node builder/passes/clone-specs.js 40-connolly-law
 
 **--own matters.** Without it every photograph is replaced with a stock one,
-because a cloned page's staff photographs are not ours to ship. Use it only
-for sites we own.
+every logo becomes a plain wordmark, and links to the site's other pages and
+its social accounts go nowhere. A cloned page's staff photographs and logo
+are not ours to ship. Use `--own` only for sites we own.
+
+### What used to break them, and what it really was
+
+Seven WordPress and Webflow sites were cloned, came out in pieces, and were
+blamed on "the layout is in the JavaScript". That was wrong. Four things
+were doing it, and all four are fixed:
+
+- **A print stylesheet.** `<link media="print">` was written in as if it
+  were for the screen, so the page was laid out for paper: every picture
+  full width, no menu. Print sheets are now left out, and a sheet for any
+  other medium is wrapped in its own `@media` block.
+- **The classes on `<html>` and `<body>`.** WordPress and Elementor hang
+  whole layouts off them. Dropped, an Elementor page falls into the theme's
+  narrow default column. They are kept now.
+- **Pictures that load late.** A lazy image keeps a blank placeholder in
+  `src` and the real address in `data-src`. The real one is put back.
+- **My own "show everything" rule.** It matched any class containing
+  "fade", which includes `mobile-menu-fade-in`, so every clone opened on a
+  phone with its menu already down the screen. Menus are excluded.
+
+Two more things a modern site does, now handled: a heading cut into one
+span per word for a reveal animation is put back together from its
+`aria-label`, and Elementor's sticky header leaves behind a copy of itself
+that is hidden.
+
+**Fetched stylesheets are cached** outside the repo, so building a clone
+again does not ask somebody's server for the same forty files. One site
+started refusing us half way through, which cost the page its header
+without saying so.
 
 ## Made from a UtahOp lead
 

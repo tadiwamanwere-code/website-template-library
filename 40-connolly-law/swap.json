@@ -1,0 +1,175 @@
+{
+  "template": "40-connolly-law",
+  "title": "Connolly Law",
+  "industry": "Professional services",
+  "covers": "Law firms, traffic and criminal defence, conveyancing, any practice with several distinct services",
+  "_note": "Cloned with builder/passes/clone-site.js from connollylawoffice.com (layout used for inspiration; every name, photo, badge and quote removed), then this pass took the original firm's details off it.",
+  "fontVars": {
+    "heading": [],
+    "body": [],
+    "mono": []
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
+  ],
+  "roleMap": {
+    "accent": [
+      "accent"
+    ],
+    "accentDeep": [
+      "accent-deep"
+    ],
+    "accentSoft": [
+      "accent-soft"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "dark": [
+      "dark"
+    ],
+    "ink2": [
+      "ink-2"
+    ],
+    "dark2": [
+      "dark-2"
+    ],
+    "sheet": [
+      "sheet"
+    ],
+    "paper": [
+      "paper"
+    ],
+    "paper2": [
+      "paper-2"
+    ],
+    "paper3": [
+      "paper-3"
+    ],
+    "ink3": [
+      "ink-3"
+    ],
+    "line": [
+      "line"
+    ],
+    "line2": [
+      "line-2"
+    ]
+  },
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "accent",
+      "also": {
+        "accent-deep": "color-mix(in srgb, {} 76%, #000)"
+      }
+    },
+    "ink": {
+      "label": "Text",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 82%, #fff)"
+      }
+    },
+    "sheet": {
+      "label": "Page background",
+      "var": "sheet"
+    },
+    "paper": {
+      "label": "Section bands",
+      "var": "paper"
+    },
+    "dark": {
+      "label": "Dark blocks",
+      "var": "dark"
+    },
+    "line": {
+      "label": "Lines",
+      "var": "line"
+    }
+  },
+  "_brandTokens": "Words belonging to the site this was cloned from, not to a client.",
+  "brandTokens": [
+    "Connolly Law Office",
+    "60559",
+    "Connolly Law Office P.C.",
+    "Learn More About Sean",
+    "Sean P. Connolly",
+    "Sean Connolly",
+    "Cathleen Clift",
+    "Golriz Connolly",
+    "Terri Krueger",
+    "Julia Zajączkowski",
+    "Illinois Vehicle Code",
+    "801 N. Cass Avenue Suite 200"
+  ],
+  "swaps": [
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Your Business Name",
+      "label": "Business name",
+      "maxChars": 34,
+      "required": true
+    },
+    {
+      "key": "ADDRESS",
+      "find": "Your street address",
+      "label": "Street address",
+      "maxChars": 60
+    },
+    {
+      "key": "CITY",
+      "find": "Your City",
+      "label": "Town or city",
+      "maxChars": 34
+    },
+    {
+      "key": "REGION",
+      "find": "Your State",
+      "label": "County, state or province",
+      "maxChars": 34
+    },
+    {
+      "key": "PERSON_NAME",
+      "find": "Your Name",
+      "label": "Lead person’s name",
+      "maxChars": 34
+    },
+    {
+      "key": "PHONE",
+      "find": "+00 000 000 0000",
+      "label": "Phone",
+      "maxChars": 24
+    },
+    {
+      "key": "PHONE_LINK",
+      "find": "+000000000000",
+      "label": "Phone, digits only",
+      "maxChars": 18
+    }
+  ],
+  "images": [
+    {
+      "key": "PIC_1",
+      "find": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 1",
+      "ratio": "3/2",
+      "search": "office interior"
+    },
+    {
+      "key": "PIC_2",
+      "find": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1000&q=80",
+      "label": "Picture 2",
+      "ratio": "3/2",
+      "search": "person at work"
+    }
+  ]
+}

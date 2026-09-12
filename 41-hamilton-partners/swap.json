@@ -1,0 +1,184 @@
+{
+  "template": "41-hamilton-partners",
+  "title": "Hamilton Partners",
+  "industry": "Property",
+  "covers": "Commercial property developers, landlords, property managers, any firm with a portfolio of buildings",
+  "_note": "Cloned with builder/passes/clone-site.js from hamiltonpartners.com (layout used for inspiration; every name, photo and property removed), then this pass took the original firm's details off it.",
+  "fontVars": {
+    "heading": [],
+    "body": [],
+    "mono": []
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
+  ],
+  "roleMap": {
+    "accent": [
+      "accent"
+    ],
+    "accentDeep": [
+      "accent-deep"
+    ],
+    "accentSoft": [
+      "accent-soft"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "ink2": [
+      "ink-2"
+    ],
+    "dark2": [
+      "dark-2"
+    ],
+    "sheet": [
+      "sheet"
+    ],
+    "paper": [
+      "paper"
+    ],
+    "paper2": [
+      "paper-2"
+    ],
+    "paper3": [
+      "paper-3"
+    ],
+    "ink3": [
+      "ink-3"
+    ],
+    "line": [
+      "line"
+    ],
+    "line2": [
+      "line-2"
+    ]
+  },
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "accent",
+      "also": {
+        "accent-deep": "color-mix(in srgb, {} 76%, #000)"
+      }
+    },
+    "ink": {
+      "label": "Text",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 82%, #fff)"
+      }
+    },
+    "sheet": {
+      "label": "Page background",
+      "var": "sheet"
+    },
+    "paper": {
+      "label": "Section bands",
+      "var": "paper"
+    },
+    "line": {
+      "label": "Lines",
+      "var": "line"
+    }
+  },
+  "_brandTokens": "Words belonging to the site this was cloned from, not to a client.",
+  "brandTokens": [
+    "Hamilton Partners",
+    "member of the Hamilton community",
+    "Esplanade at Locust Point",
+    "Hamilton Lakes",
+    "Lake Park Commerce Center Building 1",
+    "Downers Grove, IL 60515, United States",
+    "Itasca, IL 60143",
+    "West Valley, UT 84120",
+    "Chicago Region",
+    "Phoenix Region",
+    "Salt Lake Region"
+  ],
+  "swaps": [
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Your Business Name",
+      "label": "Business name",
+      "maxChars": 34,
+      "required": true
+    },
+    {
+      "key": "ADDRESS",
+      "find": "Your street address",
+      "label": "Street address",
+      "maxChars": 60
+    },
+    {
+      "key": "PHONE",
+      "find": "+00 000 000 0000",
+      "label": "Phone",
+      "maxChars": 24
+    },
+    {
+      "key": "PHONE_LINK",
+      "find": "+000000000000",
+      "label": "Phone, digits only",
+      "maxChars": 18
+    }
+  ],
+  "images": [
+    {
+      "key": "PIC_1",
+      "find": "https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 1",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_2",
+      "find": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 2",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_3",
+      "find": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 3",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_4",
+      "find": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 4",
+      "ratio": "3/2",
+      "search": "office interior"
+    },
+    {
+      "key": "PIC_5",
+      "find": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 5",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_6",
+      "find": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 6",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_7",
+      "find": "https://images.unsplash.com/photo-1499914485622-a88fac536970?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 7",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    }
+  ]
+}

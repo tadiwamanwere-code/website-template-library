@@ -1,0 +1,202 @@
+{
+  "template": "38-parvis-family-law",
+  "title": "Parvis Family Law",
+  "industry": "Professional services",
+  "covers": "Solicitors, family lawyers, mediators, any practice led by one named professional",
+  "_note": "Cloned with builder/passes/clone-site.js from lindsayparvis.com (layout used for inspiration; every name, photo and quote removed), then this pass took the original firm's details off it.",
+  "fontVars": {
+    "heading": [],
+    "body": [],
+    "mono": []
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
+  ],
+  "roleMap": {
+    "accent": [
+      "accent"
+    ],
+    "accentDeep": [
+      "accent-deep"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "dark": [
+      "dark"
+    ],
+    "ink2": [
+      "ink-2"
+    ],
+    "dark2": [
+      "dark-2"
+    ],
+    "sheet": [
+      "sheet"
+    ],
+    "paper": [
+      "paper"
+    ],
+    "paper2": [
+      "paper-2"
+    ],
+    "paper3": [
+      "paper-3"
+    ],
+    "ink3": [
+      "ink-3"
+    ],
+    "line": [
+      "line"
+    ],
+    "line2": [
+      "line-2"
+    ]
+  },
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "accent",
+      "also": {
+        "accent-deep": "color-mix(in srgb, {} 76%, #000)"
+      }
+    },
+    "ink": {
+      "label": "Text",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 82%, #fff)"
+      }
+    },
+    "sheet": {
+      "label": "Page background",
+      "var": "sheet"
+    },
+    "paper": {
+      "label": "Section bands",
+      "var": "paper"
+    },
+    "dark": {
+      "label": "Dark blocks",
+      "var": "dark"
+    },
+    "line": {
+      "label": "Lines",
+      "var": "line"
+    }
+  },
+  "_brandTokens": "Words belonging to the site this was cloned from, not to a client.",
+  "brandTokens": [
+    "Joseph Greenwald &amp; Laake, PA",
+    "20770",
+    "20850",
+    "Learn More About Lindsay",
+    "Lindsay Parvis",
+    " 111 Rockville Pike, ",
+    " 6404 Ivy Lane, ",
+    " Suite 975 ",
+    " Suite 400 ",
+    "Maryland"
+  ],
+  "swaps": [
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Your Business Name",
+      "label": "Business name",
+      "maxChars": 34,
+      "required": true
+    },
+    {
+      "key": "ADDRESS",
+      "find": "Your street address",
+      "label": "Street address",
+      "maxChars": 60
+    },
+    {
+      "key": "ADDRESS_2",
+      "find": "Second office address",
+      "label": "Second address",
+      "maxChars": 60
+    },
+    {
+      "key": "CITY",
+      "find": "Your City",
+      "label": "Town or city",
+      "maxChars": 34
+    },
+    {
+      "key": "CITY_2",
+      "find": "Second City",
+      "label": "Second town",
+      "maxChars": 34
+    },
+    {
+      "key": "REGION",
+      "find": "Your State",
+      "label": "County, state or province",
+      "maxChars": 34
+    },
+    {
+      "key": "PERSON_NAME",
+      "find": "Your Name",
+      "label": "Lead person’s name",
+      "maxChars": 34
+    },
+    {
+      "key": "PHONE",
+      "find": "+00 000 000 0000",
+      "label": "Phone",
+      "maxChars": 24
+    },
+    {
+      "key": "PHONE_2",
+      "find": "+00 000 000 0002",
+      "label": "Phone 2",
+      "maxChars": 24
+    },
+    {
+      "key": "PHONE_LINK",
+      "find": "+000000000000",
+      "label": "Phone, digits only",
+      "maxChars": 18
+    }
+  ],
+  "images": [
+    {
+      "key": "PIC_1",
+      "find": "https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 1",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_2",
+      "find": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 2",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_3",
+      "find": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 3",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_4",
+      "find": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1000&q=80",
+      "label": "Picture 4",
+      "ratio": "3/2",
+      "search": "person at work"
+    }
+  ]
+}

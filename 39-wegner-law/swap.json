@@ -1,0 +1,200 @@
+{
+  "template": "39-wegner-law",
+  "title": "Wegner Law",
+  "industry": "Professional services",
+  "covers": "Law firms, debt and bankruptcy advisers, accountants, any practice with a team and a process",
+  "_note": "Cloned with builder/passes/clone-site.js from attorneywegner.com (layout used for inspiration; every name, photo and quote removed), then this pass took the original firm's details off it.",
+  "fontVars": {
+    "heading": [],
+    "body": [],
+    "mono": []
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
+  ],
+  "roleMap": {
+    "accent": [
+      "accent"
+    ],
+    "accentDeep": [
+      "accent-deep"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "dark": [
+      "dark"
+    ],
+    "ink2": [
+      "ink-2"
+    ],
+    "dark2": [
+      "dark-2"
+    ],
+    "sheet": [
+      "sheet"
+    ],
+    "paper": [
+      "paper"
+    ],
+    "paper2": [
+      "paper-2"
+    ],
+    "paper3": [
+      "paper-3"
+    ],
+    "ink3": [
+      "ink-3"
+    ],
+    "line": [
+      "line"
+    ],
+    "line2": [
+      "line-2"
+    ]
+  },
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "accent",
+      "also": {
+        "accent-deep": "color-mix(in srgb, {} 76%, #000)"
+      }
+    },
+    "ink": {
+      "label": "Text",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 82%, #fff)"
+      }
+    },
+    "sheet": {
+      "label": "Page background",
+      "var": "sheet"
+    },
+    "paper": {
+      "label": "Section bands",
+      "var": "paper"
+    },
+    "dark": {
+      "label": "Dark blocks",
+      "var": "dark"
+    },
+    "line": {
+      "label": "Lines",
+      "var": "line"
+    }
+  },
+  "_brandTokens": "Words belonging to the site this was cloned from, not to a client.",
+  "brandTokens": [
+    "Wegner Law, PLLC",
+    "Wegner Law PLLC",
+    "Wegner Law ,LLC",
+    "Wegner Law Firm",
+    "Wegner Law",
+    "76244",
+    "Matthew Wegner",
+    "Caden Pratte",
+    "Maria Estrada",
+    "Racheal Wegner",
+    "9500 Ray White Road Suite 200",
+    "9500 Ray White Road"
+  ],
+  "swaps": [
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Your Business Name",
+      "label": "Business name",
+      "maxChars": 34,
+      "required": true
+    },
+    {
+      "key": "BRAND_1",
+      "find": "YourBusiness",
+      "label": "Name, short form 1",
+      "maxChars": 24
+    },
+    {
+      "key": "BRAND_4",
+      "find": "YourBusiness4",
+      "label": "Name, short form 4",
+      "maxChars": 24
+    },
+    {
+      "key": "ADDRESS",
+      "find": "Your street address",
+      "label": "Street address",
+      "maxChars": 60
+    },
+    {
+      "key": "CITY",
+      "find": "Your City",
+      "label": "Town or city",
+      "maxChars": 34
+    },
+    {
+      "key": "PHONE",
+      "find": "+00 000 000 0000",
+      "label": "Phone",
+      "maxChars": 24
+    },
+    {
+      "key": "PHONE_LINK",
+      "find": "+000000000000",
+      "label": "Phone, digits only",
+      "maxChars": 18
+    }
+  ],
+  "images": [
+    {
+      "key": "PIC_1",
+      "find": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1000&q=80",
+      "label": "Picture 1",
+      "ratio": "3/2",
+      "search": "person at work"
+    },
+    {
+      "key": "PIC_2",
+      "find": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1000&q=80",
+      "label": "Picture 2",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_3",
+      "find": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80",
+      "label": "Picture 3",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_4",
+      "find": "https://images.unsplash.com/photo-1624797432677-6f803a98acb3?auto=format&fit=crop&w=1000&q=80",
+      "label": "Picture 4",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_5",
+      "find": "https://images.unsplash.com/photo-1614786269829-d24616faf56d?auto=format&fit=crop&w=1000&q=80",
+      "label": "Picture 5",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_6",
+      "find": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1000&q=80",
+      "label": "Picture 6",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    }
+  ]
+}

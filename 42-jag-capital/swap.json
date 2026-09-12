@@ -1,0 +1,162 @@
+{
+  "template": "42-jag-capital",
+  "title": "JAG Capital",
+  "industry": "Professional services",
+  "covers": "Investment managers, wealth advisers, pension and fund managers, any firm with strategies and values to explain",
+  "_note": "Cloned with builder/passes/clone-site.js from jagcap.com (layout used for inspiration; every name, photo, claim and figure removed), then this pass took the original firm's details off it.",
+  "fontVars": {
+    "heading": [],
+    "body": [],
+    "mono": []
+  },
+  "schemes": [
+    "ivory-forest",
+    "bone-terracotta",
+    "porcelain-ink",
+    "mist-cobalt",
+    "sand-plum",
+    "linen-rust",
+    "sage-gold",
+    "cream-cocoa",
+    "slate-lime"
+  ],
+  "roleMap": {
+    "accent": [
+      "accent"
+    ],
+    "accentDeep": [
+      "accent-deep"
+    ],
+    "accentSoft": [
+      "accent-soft"
+    ],
+    "ink": [
+      "ink"
+    ],
+    "dark": [
+      "dark"
+    ],
+    "ink2": [
+      "ink-2"
+    ],
+    "dark2": [
+      "dark-2"
+    ],
+    "sheet": [
+      "sheet"
+    ],
+    "paper": [
+      "paper"
+    ],
+    "paper2": [
+      "paper-2"
+    ],
+    "ink3": [
+      "ink-3"
+    ],
+    "line": [
+      "line"
+    ],
+    "line2": [
+      "line-2"
+    ]
+  },
+  "adjust": {
+    "accent": {
+      "label": "Accent",
+      "var": "accent",
+      "also": {
+        "accent-deep": "color-mix(in srgb, {} 76%, #000)"
+      }
+    },
+    "ink": {
+      "label": "Text",
+      "var": "ink",
+      "also": {
+        "ink-2": "color-mix(in srgb, {} 82%, #fff)"
+      }
+    },
+    "sheet": {
+      "label": "Page background",
+      "var": "sheet"
+    },
+    "paper": {
+      "label": "Section bands",
+      "var": "paper"
+    },
+    "dark": {
+      "label": "Dark blocks",
+      "var": "dark"
+    },
+    "line": {
+      "label": "Lines",
+      "var": "line"
+    }
+  },
+  "_brandTokens": "Words belonging to the site this was cloned from, not to a client.",
+  "brandTokens": [
+    "JAG Capital Management",
+    "JAG Capital Management, LLC",
+    "JAG Capital Management LLC",
+    "GIPS® Verified Compliance",
+    "is available in a 1940 Act mutual fund.",
+    "The Art of Investment Misery",
+    "1610 Des Peres Road, Suite 120",
+    "St. Louis, MO 63131"
+  ],
+  "swaps": [
+    {
+      "key": "BUSINESS_NAME",
+      "find": "Your Business Name",
+      "label": "Business name",
+      "maxChars": 34,
+      "required": true
+    },
+    {
+      "key": "BRAND_1",
+      "find": "YourBusiness",
+      "label": "Name, short form 1",
+      "maxChars": 24
+    },
+    {
+      "key": "ADDRESS",
+      "find": "Your street address",
+      "label": "Street address",
+      "maxChars": 60
+    },
+    {
+      "key": "CITY",
+      "find": "Your City",
+      "label": "Town or city",
+      "maxChars": 34
+    },
+    {
+      "key": "PHONE",
+      "find": "+00 000 000 0000",
+      "label": "Phone",
+      "maxChars": 24
+    },
+    {
+      "key": "PHONE_2",
+      "find": "+00 000 000 0002",
+      "label": "Phone 2",
+      "maxChars": 24
+    }
+  ],
+  "images": [
+    {
+      "key": "PIC_1",
+      "find": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 1",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    },
+    {
+      "key": "PIC_2",
+      "find": "https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&fit=crop&w=1600&q=80",
+      "label": "Picture 2",
+      "ratio": "3/2",
+      "search": "the trade at work"
+    }
+  ]
+}
