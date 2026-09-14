@@ -1,0 +1,8 @@
+{
+  "name": "website-template-library",
+  "private": true,
+  "description": "The template library and the site builder. The only dependency is the Anthropic SDK, used by builder/ai.js when ANTHROPIC_API_KEY is set.",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.125.0"
+  }
+}

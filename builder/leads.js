@@ -302,4 +302,20 @@ function notesFor(lead) {
   return lines.join('\n');
 }
 
-module.exports = { pickTemplate, rankTemplates, swapsFor, notesFor, BY_TRADE };
+/* The research the AI may use, and nothing else from the lead. Phone and
+   email are left out: they go into fields, not into writing. */
+const CONTEXT_KEYS = ['name', 'organisation', 'trade', 'tradeGroup', 'location', 'suburb', 'province',
+  'website', 'sellingPoint', 'sellingPointEvidence', 'painPoints', 'pitchAngle', 'modules', 'interestedIn',
+  'personName', 'personTitle', 'facebook', 'instagram', 'cms', 'hasBooking', 'hasEcommerce', 'hasPayments',
+  'isBroken', 'brokenReasons', 'repNotes'];
+function contextFor(lead) {
+  const out = {};
+  for (const k of CONTEXT_KEYS) {
+    const v = lead[k];
+    if (v === null || v === undefined || v === '' || (Array.isArray(v) && !v.length)) continue;
+    out[k] = typeof v === 'string' ? v.slice(0, 2000) : v;
+  }
+  return out;
+}
+
+module.exports = { pickTemplate, rankTemplates, swapsFor, notesFor, contextFor, BY_TRADE };

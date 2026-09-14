@@ -232,6 +232,41 @@ here. Only the CRM's facts are sent again.
 The request must carry `Authorization: Bearer <BUILDER_API_KEY>`. With no
 key set the route refuses everything, so nobody else can fill the store.
 
+## The AI
+
+The top of the right rail has an AI panel. **Fit this site to the
+business** rewrites the whole page for the lead: headline, introduction,
+services for that trade, calls to action, a photograph for every picture
+slot, and a theme. The box below it takes any request in plain words
+("shorter hero", "warmer photos", "this is a plumber in Mutare, not an
+electrician"). **Undo** puts the version before back.
+
+It works from the research UtahOp sends with the lead: the trade, the
+selling point, the pain points and pitch angle LeadForge found, the rep's
+notes, the town. Those, and what you type, are the **only facts it may
+state**. It will not invent a year, a price, a rating, a client, a
+testimonial, a staff name or a turnaround time; where the template says
+something like that and the research does not back it, it writes honest
+wording or a placeholder like `[Year founded]`, and lists what it needed
+to know under the result.
+
+How it changes the page matters. It never writes HTML. Every change is an
+ordinary swap or a text edit, the same thing clicking a line and typing
+makes, so anything it does can be edited by hand afterwards. Photos come
+from the same Unsplash and Pexels search the Pictures list uses. Each AI
+request saves a new version.
+
+| File | What it is |
+|---|---|
+| `ai.js` | Talks to the model. Claude when `ANTHROPIC_API_KEY` is set, otherwise Gemini with UtahOp's keys. |
+| `ai-site.js` | The rules, the brief it sends, and the checks on what comes back. |
+
+The AI routes want `BUILDER_AI_PASSCODE`. The app asks for it once and
+remembers it in that browser. UtahOp can call them with its own key.
+
+A Claude Pro or Max subscription cannot power this: those are for a person
+using the Claude apps. A server needs an API key from console.anthropic.com.
+
 ## Keys
 
 `builder/.env`, which git ignores:

@@ -80,6 +80,9 @@ a{color:inherit;}
 .btn-primary:hover{background:#ffffff;border-color:#ffffff;color:#08080a;}
 .btn-quiet{border-color:transparent;color:var(--ink-2);padding-inline:10px;}
 .btn-quiet:hover{color:var(--ink);background:var(--bg-3);}
+.ai-prompt{width:100%;min-height:92px;resize:vertical;padding:10px;border:1px solid var(--rule, rgba(128,128,128,.35));border-radius:8px;background:transparent;line-height:1.5;font-size:13px;}
+.ai-state,.ai-result{margin:0;font-size:12px;line-height:1.5;color:var(--ink-2);white-space:pre-wrap;}
+.ai-result:empty{display:none;}
 .btn:disabled{opacity:.4;cursor:not-allowed;}
 
 /* ---- screens ------------------------------------------------------------- */
@@ -449,6 +452,19 @@ a{color:inherit;}
     </div>
 
     <aside class="rail right">
+      <div class="grp" id="aiGrp">
+        <h4>AI</h4>
+        <div style="padding:0 16px;display:grid;gap:8px">
+          <p class="ai-state" id="aiState">Checking…</p>
+          <button class="btn btn-primary" id="aiFit" style="width:100%">Fit this site to the business</button>
+          <textarea id="aiPrompt" class="ai-prompt" rows="4" placeholder="Ask for a change. For example: rewrite the hero for a solar installer in Bulawayo, find warmer photos, make it sound more premium."></textarea>
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="aiAsk" style="flex:1">Ask AI</button>
+            <button class="btn btn-quiet" id="aiUndo" title="Go back to the version before the last change">Undo</button>
+          </div>
+          <div class="ai-result" id="aiResult"></div>
+        </div>
+      </div>
       <div class="grp">
         <h4>Sections</h4>
         <div id="sectionList"></div>
@@ -1592,6 +1608,66 @@ a{color:inherit;}
   });
 
   /* ------------------------------------------------------------------ start */
+  /* ================================================================ THE AI
+     One request changes the site on the server and saves a new version;
+     the page is then opened again so everything on screen agrees with it. */
+  function aiPass(){ try { return localStorage.getItem("builderAiPass") || ""; } catch(e){ return ""; } }
+  function aiCall(path, body){
+    var send = function(pass){
+      return fetch(API + path, { method:"POST", headers:{ "Content-Type":"application/json", "x-builder-passcode": pass }, body: JSON.stringify(body) })
+        .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ j._status = r.status; return j; }); });
+    };
+    return send(aiPass()).then(function(j){
+      if(j._status !== 401) return j;
+      var p = window.prompt("The AI passcode");
+      if(!p) return j;
+      try { localStorage.setItem("builderAiPass", p); } catch(e){}
+      return send(p);
+    });
+  }
+  function aiBusy(on, msg){
+    ["#aiFit","#aiAsk","#aiUndo"].forEach(function(s){ var b = $(s); if(b) b.disabled = on; });
+    if(msg !== undefined) $("#aiResult").textContent = msg;
+  }
+  function runAi(text){
+    if(!text) { toast("Say what you want changed"); return; }
+    aiBusy(true, "Working. This can take a minute.");
+    save(true).then(function(){
+      if(!state.slug) throw new Error("Save the site first");
+      return aiCall("/ai", { slug: state.slug, prompt: text });
+    }).then(function(j){
+      aiBusy(false);
+      if(j.error){ $("#aiResult").textContent = j.error; return; }
+      var d = j.done || {};
+      var lines = [j.summary || "Done."];
+      lines.push("Changed: " + (d.text||0) + " lines of text, " + (d.fields||0) + " fields, " + (d.pictures||0) + " photos" + (d.theme ? ", the theme" : "") + ".");
+      if(j.skipped && j.skipped.length) lines.push("Left alone: " + j.skipped.join("; ") + ".");
+      if(j.questions && j.questions.length) lines.push("It needs to know:\n- " + j.questions.join("\n- "));
+      $("#aiResult").textContent = lines.join("\n\n");
+      $("#aiPrompt").value = "";
+      openSite(state.slug);
+    }).catch(function(e){ aiBusy(false, String(e.message || e)); });
+  }
+  var FIT_PROMPT = "Make this whole site fit this business using the research: the headline and introduction, "
+    + "service descriptions for this trade, calls to action, and any section titles still about the template's original trade. "
+    + "Choose a photograph for every picture slot. Pick the theme that suits the trade. "
+    + "Replace every claim the research does not support.";
+  $("#aiFit").addEventListener("click", function(){ runAi(FIT_PROMPT); });
+  $("#aiAsk").addEventListener("click", function(){ runAi($("#aiPrompt").value.trim()); });
+  $("#aiPrompt").addEventListener("keydown", function(e){ if(e.key === "Enter" && (e.ctrlKey || e.metaKey)) runAi(this.value.trim()); });
+  $("#aiUndo").addEventListener("click", function(){
+    if(!state.slug) return;
+    aiBusy(true, "Going back one version.");
+    aiCall("/ai/undo", { slug: state.slug }).then(function(j){
+      aiBusy(false, j.error || "Back to the version before.");
+      if(!j.error) openSite(state.slug);
+    });
+  });
+  fetch(API + "/ai/status").then(function(r){ return r.json(); }).then(function(s){
+    if(!s.enabled){ $("#aiState").textContent = "AI is not set up on this builder."; aiBusy(true); return; }
+    $("#aiState").textContent = "Uses the lead's research. Every change is saved as a new version. Answering: " + (s.provider === "claude" ? "Claude" : "Gemini") + ".";
+  }).catch(function(){ $("#aiState").textContent = "Could not reach the AI."; });
+
   Promise.all([
     loadTemplates(),
     api('/fonts').then(function(f){ fonts = f; }),

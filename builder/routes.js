@@ -27,6 +27,8 @@ const { render, deriveSwaps, listTemplates, loadTemplate, fontList, headBlock, H
 const store = require('./store.js');
 const portable = require('./portable.js');
 const leads = require('./leads.js');
+const ai = require('./ai.js');
+const aiSite = require('./ai-site.js');
 
 const APP = path.join(__dirname, 'app', 'index.html');
 
@@ -51,6 +53,14 @@ const PEXELS = process.env.PEXELS_API_KEY || '';
 /* The shared secret UtahOp sends with a lead. No key set means the door is
    shut, not open: anyone could otherwise fill the store with sites. */
 const LEADS_KEY = process.env.BUILDER_API_KEY || '';
+/* The AI spends money on every request, and /build has no login, so the
+   AI routes want a passcode the app asks for once. UtahOp's key works too. */
+const AI_PASSCODE = process.env.BUILDER_AI_PASSCODE || '';
+function aiAllowed(req) {
+  const auth = String(req.headers.authorization || '');
+  if (LEADS_KEY && auth === 'Bearer ' + LEADS_KEY) return true;
+  return !!AI_PASSCODE && String(req.headers['x-builder-passcode'] || '') === AI_PASSCODE;
+}
 
 /* ---------------------------------------------------------------- replies */
 
@@ -144,6 +154,13 @@ async function fromPexels(query, page, orientation) {
 
 /* Both libraries, shuffled together a few at a time, so one of them does not
    fill the whole panel. */
+/* Unsplash asks for a ping when one of its photos is used. */
+function usePhoto(download) {
+  if (UNSPLASH && download && /^https:\/\/api\.unsplash\.com\//.test(download)) {
+    fetch(download, { headers: { Authorization: 'Client-ID ' + UNSPLASH } }).catch(function () { });
+  }
+}
+
 async function searchPhotos(query, page, orientation) {
   if (!UNSPLASH && !PEXELS) {
     return { error: 'No photo library keys set. Add UNSPLASH_ACCESS_KEY or PEXELS_API_KEY to builder/.env', results: [] };
@@ -282,6 +299,44 @@ async function handle(req, res) {
     return json(res, 200, await searchPhotos(q, url.searchParams.get('page'), url.searchParams.get('orientation')));
   }
 
+  /* ---- the AI ----
+     status says whether a key is set and which model answers. POST /bapi/ai
+     takes { slug, prompt }, lets the model change the site, and saves the
+     result as a new version. /bapi/ai/undo puts the version before back. */
+  if (route === '/bapi/ai/status') return json(res, 200, ai.status());
+
+  if (route === '/bapi/ai' && method === 'POST') {
+    if (!aiAllowed(req)) return json(res, 401, { error: 'The AI needs its passcode.' });
+    const b = await readBody(req);
+    const record = b.slug ? await store.read(b.slug) : null;
+    if (!record) return json(res, 404, { error: 'Save the site first.' });
+    const prompt = String(b.prompt || '').trim().slice(0, 3000);
+    if (!prompt) return json(res, 400, { error: 'Say what you want changed.' });
+    try {
+      const out = await aiSite.improve(record, prompt, { searchPhotos: searchPhotos, usePhoto: usePhoto });
+      const log = (record.aiLog || []).concat([{ at: new Date().toISOString(), prompt: prompt, summary: out.summary }]).slice(-30);
+      const saved = await store.write(Object.assign({}, out.draft, { slug: record.slug, aiLog: log }));
+      const { warnings } = buildSite(saved);
+      return json(res, 200, { summary: out.summary, questions: out.questions, done: out.done,
+        skipped: out.skipped, version: saved.version, warnings: warnings });
+    } catch (err) {
+      const known = err instanceof ai.AiError;
+      if (!known) console.error('[ai]', err);
+      return json(res, known ? 502 : 500, { error: known ? err.message : 'The AI step failed. Try again.' });
+    }
+  }
+
+  if (route === '/bapi/ai/undo' && method === 'POST') {
+    if (!aiAllowed(req)) return json(res, 401, { error: 'The AI needs its passcode.' });
+    const b = await readBody(req);
+    const record = b.slug ? await store.read(b.slug) : null;
+    const prev = record && (record.history || []).slice(-1)[0];
+    if (!prev) return json(res, 404, { error: 'There is no earlier version to go back to.' });
+    const saved = await store.write({ slug: record.slug, theme: prev.theme, swaps: prev.swaps || {},
+      edits: prev.edits || [], style: prev.style || {} });
+    return json(res, 200, { version: saved.version });
+  }
+
   if (route === '/bapi/photos/use' && method === 'POST') {
     const b = await readBody(req);
     /* Unsplash asks for this ping when a photo is actually used. It is a
@@ -395,7 +450,10 @@ async function handle(req, res) {
       style: same ? same.style || {} : {},
       notes: old ? old.notes || '' : leads.notesFor(lead),
       status: old ? old.status || 'draft' : 'draft',
-      lead: { source: 'utahop', id: lead.id || null }
+      lead: { source: 'utahop', id: lead.id || null },
+      /* What LeadForge and the rep know, kept for the AI to work from. It
+         never reaches the page on its own. */
+      context: leads.contextFor(lead)
     };
 
     let record;
