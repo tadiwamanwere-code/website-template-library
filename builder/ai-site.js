@@ -206,7 +206,11 @@ async function improve(record, prompt, deps) {
     }
   }));
 
-  if (answer.theme && paletteNames(card).indexOf(answer.theme) !== -1 && answer.theme !== record.theme) {
+  /* A request for a new headline came back with a new colour scheme as well.
+     The theme only changes when the request is about the look, or about the
+     whole site. */
+  const aboutLook = /theme|colou?r|palette|look|style|dark|light|whole site|entire site|fit this site/i.test(prompt);
+  if (aboutLook && answer.theme && paletteNames(card).indexOf(answer.theme) !== -1 && answer.theme !== record.theme) {
     theme = answer.theme;
     done.theme = true;
   }
