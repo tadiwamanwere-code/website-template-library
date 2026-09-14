@@ -206,6 +206,45 @@ async function handle(req, res) {
     return json(res, 200, rows);
   }
 
+  /* ---- which template suits this business ------------------------------
+     The CRM asks this before it makes anything, so a rep can see what the
+     system would choose, and every other design it could have chosen, with
+     the reason beside each. Same key as /bapi/leads: it answers questions
+     about the library, and only the agency's own CRM may ask.
+     GET /bapi/suggest?trade=law-firm&group=Professional+services&name=… */
+  if (route === '/bapi/suggest') {
+    if (!LEADS_KEY) return json(res, 503, { error: 'BUILDER_API_KEY is not set on the builder' });
+    if (String(req.headers.authorization || '') !== 'Bearer ' + LEADS_KEY) {
+      return json(res, 401, { error: 'Wrong or missing key' });
+    }
+    const q = url.searchParams;
+    const lead = {
+      trade: q.get('trade') || '',
+      tradeGroup: q.get('group') || '',
+      organisation: q.get('name') || '',
+      sellingPoint: q.get('note') || ''
+    };
+    const ranked = leads.rankTemplates(lead);
+    const best = leads.pickTemplate(lead);
+    return json(res, 200, {
+      pick: best.template,
+      why: best.why,
+      templates: ranked.map(t => ({
+        template: t.template,
+        title: t.title,
+        industry: t.industry,
+        covers: t.covers,
+        why: t.why,
+        /* Not a score out of a hundred, and not shown as one. It is here so
+           the CRM can tell a real match from the tail of the list. */
+        score: t.score,
+        fits: t.score > 0,
+        preview: '/' + t.template + '/index.html',
+        recommended: t.template === best.template
+      }))
+    });
+  }
+
   if (route === '/bapi/fonts') return json(res, 200, fontList());
 
   /* ---- the look, on its own -------------------------------------------
@@ -337,7 +376,7 @@ async function handle(req, res) {
     const known = new Set(listTemplates().map(t => t.template));
     const pick = b.template && known.has(b.template)
       ? { template: b.template, why: 'chosen by hand' }
-      : leads.pickTemplate(lead.trade, [lead.organisation, lead.name].join(' '));
+      : leads.pickTemplate(lead);
 
     /* A remake keeps what a person already changed in the app: the theme,
        the edits, the pictures. Only the CRM's own facts are refreshed. */
@@ -372,6 +411,12 @@ async function handle(req, res) {
       editUrl: '/build?site=' + encodeURIComponent(record.slug),
       template: pick.template,
       why: pick.why,
+      /* What else would have suited, so the CRM can offer a swap on the spot
+         instead of sending the rep back to ask. */
+      alternatives: leads.rankTemplates(lead)
+        .filter(t => t.template !== pick.template && t.score > 0)
+        .slice(0, 6)
+        .map(t => ({ template: t.template, title: t.title, industry: t.industry, why: t.why })),
       version: record.version,
       warnings
     });
