@@ -462,6 +462,7 @@ a{color:inherit;}
             <button class="btn" id="aiAsk" style="flex:1">Ask AI</button>
             <button class="btn btn-quiet" id="aiUndo" title="Go back to the version before the last change">Undo</button>
           </div>
+          <button class="btn" id="wfAsk" style="width:100%" title="Leave this request for WebForge, the Claude agent running on your computer">Send to WebForge</button>
           <div class="ai-result" id="aiResult"></div>
         </div>
       </div>
@@ -1626,7 +1627,7 @@ a{color:inherit;}
     });
   }
   function aiBusy(on, msg){
-    ["#aiFit","#aiAsk","#aiUndo"].forEach(function(s){ var b = $(s); if(b) b.disabled = on; });
+    ["#aiFit","#aiAsk","#aiUndo","#wfAsk"].forEach(function(s){ var b = $(s); if(b) b.disabled = on; });
     if(msg !== undefined) $("#aiResult").textContent = msg;
   }
   function runAi(text){
@@ -1663,6 +1664,46 @@ a{color:inherit;}
       if(!j.error) openSite(state.slug);
     });
   });
+  /* WebForge: the request waits on the builder until the agent on someone's
+     computer picks it up, so the app checks back every few seconds. */
+  var wfTimer = null;
+  function wfWatch(id, slug, since){
+    clearTimeout(wfTimer);
+    wfTimer = setTimeout(function(){
+      fetch(API + "/webforge/jobs?slug=" + encodeURIComponent(slug), { headers:{ "x-builder-passcode": aiPass() } })
+        .then(function(r){ return r.json(); }).then(function(list){
+          var j = (list || []).filter(function(x){ return x.id === id; })[0];
+          if(!j) { aiBusy(false, "The request was lost. Send it again."); return; }
+          if(j.status === "waiting" || j.status === "working"){
+            var mins = Math.floor((Date.now() - since) / 60000);
+            $("#aiResult").textContent = j.status === "working"
+              ? "WebForge is working on it."
+              : "Waiting for WebForge to pick it up." + (mins >= 1 ? " Is watch.js running on your computer?" : "");
+            return wfWatch(id, slug, since);
+          }
+          aiBusy(false);
+          var lines = [(j.status === "failed" ? "WebForge could not do it. " : "") + (j.reply || "Done.")];
+          if(j.questions && j.questions.length) lines.push("It needs to know:\n- " + j.questions.join("\n- "));
+          $("#aiResult").textContent = lines.join("\n\n");
+          if(j.status === "done" && state.slug === slug) openSite(slug);
+        }).catch(function(){ wfWatch(id, slug, since); });
+    }, 5000);
+  }
+  $("#wfAsk").addEventListener("click", function(){
+    var text = $("#aiPrompt").value.trim();
+    if(!text) { toast("Say what you want changed"); return; }
+    aiBusy(true, "Sending to WebForge.");
+    save(true).then(function(){
+      if(!state.slug) throw new Error("Save the site first");
+      return aiCall("/webforge/ask", { slug: state.slug, prompt: text });
+    }).then(function(j){
+      if(j.error){ aiBusy(false, j.error); return; }
+      $("#aiPrompt").value = "";
+      $("#aiResult").textContent = "Waiting for WebForge to pick it up.";
+      wfWatch(j.id, j.slug, Date.now());
+    }).catch(function(e){ aiBusy(false, String(e.message || e)); });
+  });
+
   fetch(API + "/ai/status").then(function(r){ return r.json(); }).then(function(s){
     if(!s.enabled){ $("#aiState").textContent = "AI is not set up on this builder."; aiBusy(true); return; }
     $("#aiState").textContent = "Uses the lead's research. Every change is saved as a new version. Answering: " + (s.provider === "claude" ? "Claude" : "Gemini") + ".";

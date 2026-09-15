@@ -179,7 +179,7 @@ async function read(slug) {
 async function list() {
   let all = [];
   try { all = await driver.list(); } catch { all = []; }
-  return all.sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
+  return all.filter(r => r && r.slug !== 'webforge-jobs').sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
 }
 
 /* Finish writes a new version, never an overwrite. People break things and
@@ -212,4 +212,25 @@ async function remove(slug) {
   try { return await driver.remove(slug); } catch { return false; }
 }
 
-module.exports = { list, read, write, remove, slugify, checkSlug, DIR, DRIVER };
+/* WebForge's requests, one small file next to the sites. Kept apart from
+   the site records so a request does not make a new version, and so the
+   agent can check for work without reading every site. */
+const JOBS_SLUG = 'webforge-jobs';
+const jobsDriver = DRIVER === 'blob'
+  ? { read: () => blob.read(JOBS_SLUG).then(j => j, () => null), put: v => blob.put(JOBS_SLUG, v) }
+  : {
+    file: path.join(__dirname, 'webforge-jobs.json'),
+    async read() { try { return JSON.parse(fs.readFileSync(this.file, 'utf8')); } catch { return null; } },
+    async put(v) { fs.writeFileSync(this.file, JSON.stringify(v, null, 2)); }
+  };
+
+async function readJobs() {
+  const doc = await jobsDriver.read();
+  return (doc && doc.jobs) || [];
+}
+
+async function writeJobs(jobs) {
+  await jobsDriver.put({ slug: JOBS_SLUG, jobs: jobs.slice(-50) });
+}
+
+module.exports = { list, read, write, remove, slugify, checkSlug, readJobs, writeJobs, DIR, DRIVER };

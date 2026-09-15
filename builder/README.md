@@ -264,8 +264,38 @@ request saves a new version.
 The AI routes want `BUILDER_AI_PASSCODE`. The app asks for it once and
 remembers it in that browser. UtahOp can call them with its own key.
 
-A Claude Pro or Max subscription cannot power this: those are for a person
-using the Claude apps. A server needs an API key from console.anthropic.com.
+The built-in AI runs on the server, so it needs an API key. A Claude Pro or
+Max subscription cannot power it. That is what WebForge is for.
+
+## WebForge
+
+WebForge is a Claude Code agent that runs on your own computer, on the
+Claude subscription that computer is logged into. **Send to WebForge** in
+the AI panel leaves the request on the builder. The agent picks it up,
+changes the site, and its reply appears in the panel.
+
+Start it, and leave the terminal open:
+
+    node builder/webforge/watch.js
+
+It checks for requests every 20 seconds and handles them one at a time.
+When nothing is running, requests wait. The panel says so after a minute.
+
+| File | What it is |
+|---|---|
+| `webforge/agent.md` | The agent: who it is, how it handles a request, the rules. `watch.js` copies it to `~/.claude/agents/webforge.md` on start. |
+| `webforge/tool.js` | Its only way in: `jobs`, `claim`, `brief`, `apply`, `reply`, `undo`, `sites`. |
+| `webforge/watch.js` | Keeps it on duty. Starts `claude -p --agent webforge` for each request. |
+
+It works to the same rules as the built-in AI, and its changes go through
+the same checks (`ai-site.js` `apply`), so it cannot write HTML or state a
+fact the research does not have. The agent may only run `tool.js`, read,
+and write its answer files in `webforge/work/`.
+
+You can also talk to it directly in any Claude Code session: "use the
+webforge agent to handle the waiting requests". The tool reads
+`BUILDER_AI_PASSCODE` from `builder/.env`, and talks to the live builder
+unless `WEBFORGE_URL` says otherwise.
 
 ## Keys
 

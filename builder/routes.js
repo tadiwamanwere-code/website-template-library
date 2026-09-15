@@ -337,6 +337,92 @@ async function handle(req, res) {
     return json(res, 200, { version: saved.version });
   }
 
+  /* ---- WebForge ----
+     An agent that runs on someone's own computer, on their Claude
+     subscription. The app leaves a request here. The agent claims it, reads
+     the brief, sends changes back, and leaves a reply. Its changes go
+     through the same checks as the built-in AI, so it cannot write HTML or
+     put a line on the page that was not asked for. */
+  if (route.startsWith('/bapi/webforge/')) {
+    if (!aiAllowed(req)) return json(res, 401, { error: 'WebForge needs the AI passcode.' });
+    const b = method === 'POST' ? await readBody(req) : {};
+    const jobs = await store.readJobs();
+    const job = id => jobs.find(j => j.id === String(id || ''));
+
+    if (route === '/bapi/webforge/ask' && method === 'POST') {
+      const record = b.slug ? await store.read(b.slug) : null;
+      if (!record) return json(res, 404, { error: 'Save the site first.' });
+      const prompt = String(b.prompt || '').trim().slice(0, 3000);
+      if (!prompt) return json(res, 400, { error: 'Say what you want changed.' });
+      const j = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), slug: record.slug,
+        name: (record.swaps && record.swaps.BUSINESS_NAME) || record.slug, prompt: prompt,
+        status: 'waiting', askedAt: new Date().toISOString() };
+      await store.writeJobs(jobs.concat([j]));
+      return json(res, 200, j);
+    }
+
+    if (route === '/bapi/webforge/jobs') {
+      const slug = url.searchParams.get('slug');
+      const status = url.searchParams.get('status');
+      return json(res, 200, jobs.filter(j => (!slug || j.slug === slug) && (!status || j.status === status)));
+    }
+
+    if (route === '/bapi/webforge/claim' && method === 'POST') {
+      const j = job(b.id);
+      if (!j) return json(res, 404, { error: 'No such request.' });
+      if (j.status !== 'waiting') return json(res, 409, { error: 'That request is already ' + j.status + '.' });
+      j.status = 'working';
+      j.startedAt = new Date().toISOString();
+      await store.writeJobs(jobs);
+      return json(res, 200, j);
+    }
+
+    if (route === '/bapi/webforge/brief') {
+      const slug = url.searchParams.get('slug');
+      const record = slug ? await store.read(slug) : null;
+      if (!record) return json(res, 404, { error: 'No such site.' });
+      const j = job(url.searchParams.get('id'));
+      const prompt = j ? j.prompt : String(url.searchParams.get('prompt') || '');
+      const p = aiSite.prepare(record, prompt);
+      return json(res, 200, { slug: record.slug, version: record.version, preview: '/s/' + record.slug,
+        rules: aiSite.RULES, answerShape: aiSite.SCHEMA, brief: p.brief });
+    }
+
+    if (route === '/bapi/webforge/apply' && method === 'POST') {
+      const record = b.slug ? await store.read(b.slug) : null;
+      if (!record) return json(res, 404, { error: 'No such site.' });
+      const answer = b.answer || {};
+      const j = job(b.id);
+      const prompt = j ? j.prompt : String(b.prompt || '');
+      try {
+        const out = await aiSite.apply(record, aiSite.prepare(record, prompt), {
+          summary: answer.summary || '', fields: answer.fields || [], textEdits: answer.textEdits || [],
+          pictures: answer.pictures || [], theme: answer.theme || '', questions: answer.questions || []
+        }, prompt, { searchPhotos: searchPhotos, usePhoto: usePhoto });
+        const log = (record.aiLog || []).concat([{ at: new Date().toISOString(), by: 'webforge', prompt: prompt, summary: out.summary }]).slice(-30);
+        const saved = await store.write(Object.assign({}, out.draft, { slug: record.slug, aiLog: log }));
+        const { warnings } = buildSite(saved);
+        return json(res, 200, { version: saved.version, done: out.done, skipped: out.skipped, warnings: warnings });
+      } catch (err) {
+        console.error('[webforge]', err);
+        return json(res, 500, { error: String(err.message || err) });
+      }
+    }
+
+    if (route === '/bapi/webforge/reply' && method === 'POST') {
+      const j = job(b.id);
+      if (!j) return json(res, 404, { error: 'No such request.' });
+      j.status = b.status === 'failed' ? 'failed' : 'done';
+      j.reply = String(b.reply || '').slice(0, 4000);
+      j.questions = (Array.isArray(b.questions) ? b.questions : []).map(String).slice(0, 8);
+      j.finishedAt = new Date().toISOString();
+      await store.writeJobs(jobs);
+      return json(res, 200, j);
+    }
+
+    return json(res, 404, { error: 'No such WebForge route.' });
+  }
+
   if (route === '/bapi/photos/use' && method === 'POST') {
     const b = await readBody(req);
     /* Unsplash asks for this ping when a photo is actually used. It is a

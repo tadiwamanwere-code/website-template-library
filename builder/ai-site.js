@@ -147,15 +147,25 @@ function orientationFor(ratio) {
   return r > 1.1 ? 'landscape' : r < 0.9 ? 'portrait' : 'squarish';
 }
 
-/* The model's answer, checked and turned into a new swaps/edits/theme. */
-async function improve(record, prompt, deps) {
+/* The site as the model sees it: the card, the rendered page, and the brief. */
+function prepare(record, prompt) {
   const card = loadTemplate(record.template).card;
   const { html } = render(record.template, deriveSwaps(record.template, record.swaps || {}), record.theme,
     { edits: record.edits || [], style: record.style || {} });
-  const texts = pageText(html);
+  return { card: card, html: html, brief: brief(record, card, pageText(html), prompt) };
+}
 
-  const answer = await ai.ask(RULES, brief(record, card, texts, prompt), SCHEMA);
+/* The built-in AI: one request to the model, then the same checks WebForge's
+   answers go through. */
+async function improve(record, prompt, deps) {
+  const p = prepare(record, prompt);
+  const answer = await ai.ask(RULES, p.brief, SCHEMA);
+  return apply(record, p, answer, prompt, deps);
+}
 
+/* An answer in the SCHEMA shape, checked and turned into a new swaps/edits/theme. */
+async function apply(record, prepared, answer, prompt, deps) {
+  const { card, html } = prepared;
   const swaps = Object.assign({}, record.swaps || {});
   const edits = (record.edits || []).map(e => Object.assign({}, e));
   let theme = record.theme;
@@ -224,4 +234,4 @@ async function improve(record, prompt, deps) {
   };
 }
 
-module.exports = { improve, pageText };
+module.exports = { improve, prepare, apply, pageText, RULES, SCHEMA };

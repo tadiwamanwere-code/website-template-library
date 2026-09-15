@@ -27,3 +27,7 @@ builder/.env
 skills-lock.json
 
 .env*
+
+# WebForge requests when the builder runs on this machine
+builder/webforge-jobs.json
+builder/webforge/work/
