@@ -3,7 +3,7 @@
 Public page: /rylo-barber/
 Private booking inbox: /rylo-barber/inbox.html
 
-The layout adapts the library's Noir template to the supplied Japanese ink artwork. It is built for phones first. The three Pexels photos are labelled as style references, not Rylo client work. Photo credits appear in the footer.
+The layout adapts the library's Noir template to the supplied Japanese ink artwork. It is built for phones first. The hero and three haircut portraits are matching AI-generated visual concepts. They share a Japanese ink mural, red sun and warm lighting. The footer explains that these are not actual premises or Rylo client results.
 
 Bookings are appointment requests. The shop must contact the customer to agree the time and price. No availability, prices, hours or address have been invented. There are no automatic email or WhatsApp alerts. Open the inbox and use Refresh to see new requests.
 
