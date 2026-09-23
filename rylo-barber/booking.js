@@ -193,7 +193,7 @@
       if (e.status === 409) { resetChoice(); showStep(1); await fetchSlots(); error('That time was just taken. Pick another free time. Your details are still here.'); }
       else error(e.name === 'TimeoutError' ? 'The connection took too long. Try again. The same request will not create a second booking.' : e.message);
     } finally {
-      sending = false; $('#details-fields').disabled = false; $('#submit-booking').innerHTML = 'Book demo visit <span aria-hidden="true">↗</span>';
+      sending = false; $('#details-fields').disabled = false; $('#submit-booking').innerHTML = 'Book demo visit <span aria-hidden="true"><svg class="ui-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M6 18 18 6M6 6h12v12"/></svg></span>';
       document.querySelectorAll('[data-step]').forEach((b, i) => b.disabled = i > step || step === 3);
     }
   };
