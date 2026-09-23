@@ -3,6 +3,14 @@
   const $ = s => document.querySelector(s);
   const API = '/api/rylo-booking';
   const HISTORY = 'rylo.bookingHistory.v1', PROFILE = 'rylo.bookingDetails.v1';
+  const MEMBER = 'rylo.member.v1';
+  const profilePage = document.body.dataset.page === 'profile';
+  function openDialog(id) {
+    $('#booking-dialog').hidden = id !== 'booking-dialog';
+    $('#profile-dialog').hidden = id !== 'profile-dialog';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  function openBooking() { location.href = 'booking.html'; }
   const stepIds = ['service', 'time', 'details', 'ticket'];
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let info, available, service = 'Haircut', barberId = 'kai', date = '', time = '', week = 0, step = 0;
@@ -27,7 +35,7 @@
     if (value === 2) paintReview();
     if (focus) {
       $('#step-' + stepIds[value] + ' h3').focus({ preventScroll: true });
-      $('#booking-panel').scrollIntoView({ behavior: reduceMotion ? 'instant' : 'smooth', block: 'start' });
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'instant' : 'smooth' });
     }
   }
   async function json(url, init) {
@@ -108,7 +116,7 @@
     box.append(el('p', selectedService().duration + ' minutes · Harare time (UTC+2) · Demo'));
   }
   function showTicket(value) {
-    ticket = value; showStep(3);
+    ticket = value; if ($('#booking-dialog').hidden) openDialog('booking-dialog'); showStep(3);
     const box = $('#booking-ticket'); box.replaceChildren();
     const head = el('div', undefined, 'ticket-head'); head.append(el('span', 'rylo.', 'ticket-brand'), el('span', 'BOOKED / DEMO', 'ticket-stamp')); box.append(head);
     box.append(el('p', dayLabel(value.date, { weekday: 'long', day: 'numeric', month: 'long' }), 'ticket-date'));
@@ -118,7 +126,9 @@
     box.append(data, el('p', value.reference, 'ticket-reference'), el('p', 'A demo experience. Not a real appointment.', 'ticket-footer'));
   }
   function renderHistory() {
-    const rows = history(); $('#history-count').textContent = String(rows.length);
+    const rows = history(); const member = saved(MEMBER, null), person = saved(PROFILE, null);
+    $('#profile-greeting').textContent = member || rows.length ? (person?.name ? 'Welcome back, ' + person.name + '.' : 'Welcome to your Rylo profile.') + ' ' + rows.length + (rows.length === 1 ? ' visit saved.' : ' visits saved.') : 'Your profile is created after your first booking.';
+    $('#history-count').textContent = String(rows.length);
     const box = $('#history-list'); box.replaceChildren();
     if (!rows.length) box.append(el('p', 'Your tickets will appear here after booking.', 'history-hint'));
     rows.forEach(t => { const card = el('div', undefined, 'history-card'), copy = el('div'); copy.append(el('strong', t.service + ' · ' + t.barberName), el('small', dayLabel(t.date, { day: 'numeric', month: 'short' }) + ' at ' + t.time), el('small', t.reference)); card.append(copy, button('View ticket', '', () => { showTicket(t); $('#local-note').textContent = 'Saved on this device. Status shown is from when this ticket was saved.'; })); box.append(card); });
@@ -158,6 +168,7 @@
   document.querySelectorAll('[data-step]').forEach((b, i) => b.onclick = () => { if (i < step && !sending && step !== 3) { showStep(i); if (i === 1) fetchSlots(); } });
   document.querySelectorAll('[data-service],[data-look]').forEach(b => b.onclick = () => {
     if (sending) return;
+    openDialog('booking-dialog');
     service = b.dataset.service || 'Haircut'; resetChoice();
     if (b.dataset.look) $('#notes').value = 'I would like: ' + b.dataset.look + '.';
     if (info) { showStep(1); fetchSlots(); } else $('#book').scrollIntoView({ behavior: reduceMotion ? 'instant' : 'smooth' });
@@ -172,10 +183,11 @@
     try {
       const result = await json(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(25000) });
       if (!result.ticket) throw new Error('We could not load your ticket. Please try again.');
+      if (!saved(MEMBER, null)) save(MEMBER, { id: crypto.randomUUID(), createdAt: new Date().toISOString() });
       const ticketSaved = save(HISTORY, [result.ticket, ...history().filter(t => t.id !== result.ticket.id)].slice(0, 30));
       const profileSaved = remember ? save(PROFILE, { name: body.name, phone: body.phone }) : erase(PROFILE);
       showTicket(result.ticket); renderHistory();
-      $('#local-note').textContent = !ticketSaved ? 'Your booking was saved, but this browser could not save your history. Download your ticket below.' : remember && !profileSaved ? 'Ticket saved on this device. Your contact details could not be saved.' : 'Ticket saved in My bookings on this device.';
+      $('#local-note').textContent = !ticketSaved ? 'Your booking was saved, but this browser could not save your history. Download your ticket below.' : remember && !profileSaved ? 'Ticket saved on this device. Your contact details could not be saved.' : 'Your Rylo profile is ready. Your ticket is saved in your profile on this device.';
       toast(result.ticket);
     } catch (e) {
       if (e.status === 409) { resetChoice(); showStep(1); await fetchSlots(); error('That time was just taken. Pick another free time. Your details are still here.'); }
@@ -185,7 +197,7 @@
       document.querySelectorAll('[data-step]').forEach((b, i) => b.disabled = i > step || step === 3);
     }
   };
-  $('#new-booking').onclick = startAgain;
+  $('#new-booking').onclick = () => profilePage ? openBooking() : startAgain();
   $('#close-toast').onclick = () => $('#booking-toast').classList.remove('shown');
   $('#save-ticket').onclick = () => {
     if (!ticket) return;
@@ -196,5 +208,13 @@
   $('#forget-details').onclick = () => { if (erase(PROFILE)) { $('#remember-details').checked = false; $('#name').value = ''; $('#phone').value = ''; renderHistory(); } else error('This browser could not clear saved details.'); };
   $('#remember-details').onchange = () => { if (!$('#remember-details').checked) { erase(PROFILE); renderHistory(); } };
   window.addEventListener('storage', renderHistory);
-  load();
+  document.querySelectorAll('[data-open-booking],a[href="#book"]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); if (!sending) openBooking(); }));
+  document.querySelectorAll('[data-open-profile]').forEach(b => b.onclick = () => { location.href = 'profile.html'; });
+  openDialog(profilePage ? 'profile-dialog' : 'booking-dialog');
+  const params = new URLSearchParams(location.search);
+  service = params.get('service') || service;
+  if (params.get('look')) $('#notes').value = 'I would like: ' + params.get('look').slice(0,200) + '.';
+  renderHistory();
+  if (!profilePage) load();
+
 })();
