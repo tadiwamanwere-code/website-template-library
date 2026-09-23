@@ -42,10 +42,16 @@ async function find(id, cfg) {
   return (result.blobs || []).find(b => b.pathname === pathname);
 }
 async function read(blob, cfg) {
-  const response = await fetch(blob.url + '?t=' + Date.now(), { cache: 'no-store', signal: AbortSignal.timeout(12000) });
-  if (!response.ok) throw new Error('Booking could not be read');
-  return unseal(await response.json(), cfg.key);
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const response = await fetch(blob.url + '?t=' + Date.now(), { cache: 'no-store', signal: AbortSignal.timeout(12000) });
+    if (response.ok) return unseal(await response.json(), cfg.key);
+    if (attempt === 3 || ![404, 429, 500, 502, 503, 504].includes(response.status)) {
+      throw new Error('Booking could not be read (' + response.status + ')');
+    }
+    await new Promise(resolve => setTimeout(resolve, [250, 750, 1500][attempt]));
+  }
 }
+
 async function put(record, cfg, overwrite = false) {
   await storage('/' + PREFIX + record.id + '.json', cfg, { method: 'PUT', headers: { 'content-type': 'application/json', 'x-content-type': 'application/json', 'x-add-random-suffix': '0', 'x-cache-control-max-age': '0', 'x-allow-overwrite': overwrite ? '1' : '0' }, body: seal(record, cfg.key) });
 }
