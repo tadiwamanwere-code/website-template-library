@@ -5,6 +5,8 @@ const PREFIX = 'rylo-bookings/';
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
 const SERVICES = ['Haircut', 'Beard tidy', 'Haircut and beard'];
 const limits = new Map();
+const schedule = require('../builder/rylo-schedule');
+const HOLD_PREFIX = 'rylo-slot-holds/';
 function config() {
   const token = process.env.BLOB_READ_WRITE_TOKEN;
   const secret = process.env.BUILDER_API_KEY;
@@ -28,7 +30,7 @@ function unseal(body, key) {
 }
 async function storage(path, cfg, init = {}) {
   const response = await fetch(BASE + path, { ...init, headers: { authorization: 'Bearer ' + cfg.token, 'x-api-version': '7', ...init.headers }, signal: AbortSignal.timeout(12000) });
-  if (!response.ok) throw new Error('Booking storage request failed');
+  if (!response.ok) { const error = new Error('Booking storage request failed'); error.status = response.status; throw error; }
   return response.json();
 }
 async function blobs(cfg, prefix, cursor) {
@@ -47,6 +49,38 @@ async function read(blob, cfg) {
 async function put(record, cfg, overwrite = false) {
   await storage('/' + PREFIX + record.id + '.json', cfg, { method: 'PUT', headers: { 'content-type': 'application/json', 'x-content-type': 'application/json', 'x-add-random-suffix': '0', 'x-cache-control-max-age': '0', 'x-allow-overwrite': overwrite ? '1' : '0' }, body: seal(record, cfg.key) });
 }
+
+async function occupiedSlots(date, cfg) {
+  const occupied = new Set(); let cursor;
+  do {
+    const page = await blobs(cfg, HOLD_PREFIX + date + '/', cursor);
+    (page.blobs || []).forEach(b => occupied.add(b.pathname.slice(HOLD_PREFIX.length)));
+    cursor = page.hasMore ? page.cursor : null;
+  } while (cursor);
+  return occupied;
+}
+async function holdSlot(record, cfg) {
+  const path = HOLD_PREFIX + schedule.slotKey(record.date, record.barberId, record.time);
+  try {
+    await storage('/' + path, cfg, { method: 'PUT', headers: { 'content-type': 'application/json', 'x-content-type': 'application/json', 'x-add-random-suffix': '0', 'x-allow-overwrite': '0', 'x-cache-control-max-age': '60' }, body: seal({ id: record.id }, cfg.key) });
+  } catch (error) {
+    const page = await blobs(cfg, path);
+    const existing = (page.blobs || []).find(b => b.pathname === path);
+    if (!existing) throw error;
+    const owner = await read(existing, cfg);
+    if (owner.id !== record.id) { const conflict = new Error('That time was just taken. Please choose another.'); conflict.status = 409; throw conflict; }
+  }
+}
+async function releaseSlot(record, cfg) {
+  if (!record.demo || !record.barberId) return;
+  const path = HOLD_PREFIX + schedule.slotKey(record.date, record.barberId, record.time);
+  const page = await blobs(cfg, path);
+  const existing = (page.blobs || []).find(b => b.pathname === path);
+  if (existing && (await read(existing, cfg)).id === record.id) {
+    await storage('/delete', cfg, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ urls: [existing.url] }) });
+  }
+}
+
 function validation(b, now = new Date()) {
   if (!b || !UUID.test(b.requestId || '')) return 'Please reload the page and try again.';
   if (!SERVICES.includes(b.service)) return 'Please choose a service.';
@@ -83,7 +117,9 @@ async function handler(req, res) {
   try { cfg = config(); } catch { return reply(res, 503, { error: 'Booking is temporarily unavailable. Please try again shortly.' }); }
   const method = req.method;
   const admin = secureEqual(req.headers['x-rylo-passcode'], cfg.passcode);
-  if (method !== 'POST' && !admin) return reply(res, 401, { error: 'Enter your builder passcode to view bookings.' });
+  const url = new URL(req.url || '/', 'http://localhost');
+  const availability = method === 'GET' && url.searchParams.get('action') === 'availability';
+  if (method !== 'POST' && !availability && !admin) return reply(res, 401, { error: 'Enter your builder passcode to view bookings.' });
   if (!['GET', 'POST', 'PATCH', 'DELETE'].includes(method)) return reply(res, 405, { error: 'Method not allowed.' });
   const origin = req.headers.origin;
   if (origin) {
@@ -91,6 +127,15 @@ async function handler(req, res) {
     catch { return reply(res, 403, { error: 'Invalid origin.' }); }
   }
   try {
+    if (availability) {
+      const info = schedule.catalog();
+      const date = url.searchParams.get('date');
+      const service = url.searchParams.get('service');
+      if (!date) return reply(res, 200, info);
+      if (!info.days.some(d => d.date === date) || !SERVICES.includes(service)) return reply(res, 422, { error: 'Please choose a date and service.' });
+      const occupied = await occupiedSlots(date, cfg);
+      return reply(res, 200, { ...info, date, availability: info.barbers.map(b => ({ ...b, slots: schedule.slots(date, service, b.id, occupied) })) });
+    }
     if (method === 'GET') {
       const all = []; let cursor;
       do {
@@ -103,7 +148,9 @@ async function handler(req, res) {
     let b;
     try { b = await bodyOf(req); } catch { return reply(res, 400, { error: 'We could not read the request. Please try again.' }); }
     if (method === 'POST') {
+      if (!b || typeof b !== 'object' || Array.isArray(b)) return reply(res, 422, { error: 'Please send a valid booking.' });
       if (b.website) return reply(res, 400, { error: 'Please leave the website field empty.' });
+      b.offset = schedule.OFFSET;
       const invalid = validation(b);
       if (invalid) return reply(res, 422, { error: invalid });
       const ip = req.headers['x-forwarded-for'] || 'local';
@@ -112,26 +159,37 @@ async function handler(req, res) {
       if (++bucket.count > 8) return reply(res, 429, { error: 'Please wait a minute before trying again.' });
       limits.set(ip, bucket);
       if (limits.size > 2000) for (const [key, value] of limits) if (value.until < Date.now()) limits.delete(key);
-      const reference = 'RY-' + b.requestId.slice(-8).toUpperCase();
-      // Retrying a lost connection does not create a second appointment request.
-      if (!await find(b.requestId, cfg)) {
-        const record = { id: b.requestId, reference, service: b.service, name: b.name.trim(), phone: b.phone.trim(), notes: b.notes.trim(), date: b.date, time: b.time, offset: b.offset, status: 'pending', createdAt: new Date().toISOString() };
-        try { await put(record, cfg); } catch (err) { if (!await find(b.requestId, cfg)) throw err; }
+      const existing = await find(b.requestId, cfg);
+      if (existing) {
+        const record = await read(existing, cfg);
+        return reply(res, 200, { reference: record.reference, status: record.status, ticket: schedule.ticket(record) });
       }
-      return reply(res, 201, { reference, status: 'pending' });
+      const barber = schedule.BARBERS.find(x => x.id === b.barberId);
+      if (!barber || b.demo !== true) return reply(res, 422, { error: 'Choose a demo barber before booking.' });
+      const choices = schedule.slots(b.date, b.service, barber.id);
+      if (!choices.some(x => x.time === b.time && x.available)) return reply(res, 409, { error: 'That time is no longer available. Please choose another.' });
+      const record = { id: b.requestId, reference: 'RY-' + b.requestId.slice(-8).toUpperCase(), service: b.service, duration: schedule.SERVICES.find(x => x.id === b.service).duration, barberId: barber.id, barberName: barber.name, demo: true, name: b.name.trim(), phone: b.phone.trim(), notes: b.notes.trim(), date: b.date, time: b.time, offset: schedule.OFFSET, status: 'confirmed', createdAt: new Date().toISOString() };
+      await holdSlot(record, cfg);
+      // If a response is lost, retrying this ID finishes the same booking.
+      try { await put(record, cfg); } catch (error) { if (!await find(record.id, cfg)) throw error; }
+      return reply(res, 201, { reference: record.reference, status: record.status, ticket: schedule.ticket(record) });
     }
     if (!UUID.test(b.id || '')) return reply(res, 400, { error: 'Invalid booking.' });
     const blob = await find(b.id, cfg);
     if (!blob) return reply(res, 404, { error: 'Booking not found.' });
     if (method === 'DELETE') {
+      await releaseSlot(await read(blob, cfg), cfg);
       await storage('/delete', cfg, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ urls: [blob.url] }) });
       return reply(res, 200, { deleted: true });
     }
     if (!['pending', 'confirmed', 'completed', 'cancelled'].includes(b.status)) return reply(res, 422, { error: 'Invalid status.' });
     const record = await read(blob, cfg);
+    if (record.demo && record.status === 'cancelled' && b.status !== 'cancelled') await holdSlot(record, cfg);
     await put({ ...record, status: b.status, updatedAt: new Date().toISOString() }, cfg, true);
+    if (b.status === 'cancelled') await releaseSlot(record, cfg);
     return reply(res, 200, { status: b.status });
-  } catch {
+  } catch (error) {
+    if (error.status === 409) return reply(res, 409, { error: error.message });
     return reply(res, 503, { error: 'We could not save your request right now. Please try again. Your appointment is not confirmed.' });
   }
 }
