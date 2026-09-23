@@ -62,7 +62,7 @@ async function occupiedSlots(date, cfg) {
 async function holdSlot(record, cfg) {
   const path = HOLD_PREFIX + schedule.slotKey(record.date, record.barberId, record.time);
   try {
-    await storage('/' + path, cfg, { method: 'PUT', headers: { 'content-type': 'application/json', 'x-content-type': 'application/json', 'x-add-random-suffix': '0', 'x-allow-overwrite': '0', 'x-cache-control-max-age': '60' }, body: seal({ id: record.id }, cfg.key) });
+    await storage('/?pathname=' + encodeURIComponent(path), cfg, { method: 'PUT', headers: { 'x-api-version': '12', 'x-vercel-blob-access': 'public', 'content-type': 'application/json', 'x-content-type': 'application/json', 'x-add-random-suffix': '0', 'x-allow-overwrite': '0', 'x-cache-control-max-age': '60' }, body: seal({ id: record.id }, cfg.key) });
   } catch (error) {
     const page = await blobs(cfg, path);
     const existing = (page.blobs || []).find(b => b.pathname === path);

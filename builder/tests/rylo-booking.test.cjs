@@ -2,7 +2,7 @@ const assert=require('node:assert/strict'),crypto=require('node:crypto'),http=re
 process.env.BLOB_READ_WRITE_TOKEN='test';process.env.BUILDER_API_KEY='test-encryption-key';process.env.BUILDER_AI_PASSCODE='test-pass';
 const handler=require('../../api/rylo-booking'),schedule=require('../rylo-schedule');const stored=new Map();const nativeFetch=global.fetch;
 global.fetch=async(url,init={})=>{const u=new URL(url);if(u.hostname==='blob.vercel-storage.com'){
-if(init.method==='PUT'){const p=u.pathname.slice(1);if(stored.has(p)&&init.headers['x-allow-overwrite']!=='1')return Response.json({error:'exists'},{status:409});stored.set(p,JSON.parse(init.body));return Response.json({url:'https://test-store.test/'+p});}
+if(init.method==='PUT'){const p=u.searchParams.get('pathname')||u.pathname.slice(1);if(stored.has(p)&&init.headers['x-api-version']==='12'&&init.headers['x-allow-overwrite']!=='1')return Response.json({error:'exists'},{status:409});stored.set(p,JSON.parse(init.body));return Response.json({url:'https://test-store.test/'+p});}
 if(init.method==='POST'){JSON.parse(init.body).urls.forEach(s=>stored.delete(new URL(s).pathname.slice(1)));return Response.json({});}
 return Response.json({blobs:[...stored.keys()].filter(p=>p.startsWith(u.searchParams.get('prefix'))).map(p=>({pathname:p,url:'https://test-store.test/'+p}))});}
 if(u.hostname==='test-store.test')return Response.json(stored.get(u.pathname.slice(1)));return nativeFetch(url,init);};
