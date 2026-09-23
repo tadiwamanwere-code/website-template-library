@@ -3,13 +3,26 @@
   "functions": {
     "api/app.js": {
       "includeFiles": "{**/index.html,**/swap.json}",
-      "maxDuration": 300
+      "maxDuration": 300,
+      "excludeFiles": "{builder/out/**,builder/sites/**,builder/.env,**/*.env,**/.env*}"
     }
   },
   "rewrites": [
-    { "source": "/build", "destination": "/api/app?p=/build" },
-    { "source": "/bapi/:rest*", "destination": "/api/app?p=/bapi/:rest*" },
-    { "source": "/s/:rest*", "destination": "/api/app?p=/s/:rest*" },
-    { "source": "/p/:rest*", "destination": "/api/app?p=/p/:rest*" }
+    {
+      "source": "/build",
+      "destination": "/api/app?p=/build"
+    },
+    {
+      "source": "/bapi/:rest*",
+      "destination": "/api/app?p=/bapi/:rest*"
+    },
+    {
+      "source": "/s/:rest*",
+      "destination": "/api/app?p=/s/:rest*"
+    },
+    {
+      "source": "/p/:rest*",
+      "destination": "/api/app?p=/p/:rest*"
+    }
   ]
 }

@@ -30,7 +30,7 @@ function unseal(body, key) {
 }
 async function storage(path, cfg, init = {}) {
   const response = await fetch(BASE + path, { ...init, headers: { authorization: 'Bearer ' + cfg.token, 'x-api-version': '7', ...init.headers }, signal: AbortSignal.timeout(12000) });
-  if (!response.ok) { const error = new Error('Booking storage request failed'); error.status = response.status; throw error; }
+  if (!response.ok) { const detail = await response.json().catch(() => ({})); const error = new Error('Booking storage request failed'); error.status = response.status; error.code = detail.error?.message?.includes('already exists') ? 'blob_exists' : detail.error?.code; throw error; }
   return response.json();
 }
 async function blobs(cfg, prefix, cursor) {
@@ -64,13 +64,22 @@ async function holdSlot(record, cfg) {
   try {
     await storage('/?pathname=' + encodeURIComponent(path), cfg, { method: 'PUT', headers: { 'x-api-version': '12', 'x-vercel-blob-access': 'public', 'content-type': 'application/json', 'x-content-type': 'application/json', 'x-add-random-suffix': '0', 'x-allow-overwrite': '0', 'x-cache-control-max-age': '60' }, body: seal({ id: record.id }, cfg.key) });
   } catch (error) {
-    const page = await blobs(cfg, path);
-    const existing = (page.blobs || []).find(b => b.pathname === path);
-    if (!existing) throw error;
-    const owner = await read(existing, cfg);
-    if (owner.id !== record.id) { const conflict = new Error('That time was just taken. Please choose another.'); conflict.status = 409; throw conflict; }
+    // A new Blob can appear in reads shortly after its conditional write.
+    // The provider's already-exists response is enough to reject a competing booking.
+    let owner;
+    try {
+      const page = await blobs(cfg, path);
+      const existing = (page.blobs || []).find(b => b.pathname === path);
+      if (existing) owner = await read(existing, cfg);
+    } catch { /* Preserve the write result when the new file is not readable yet. */ }
+    if (owner?.id === record.id) return;
+    if (owner || error.code === 'blob_exists' || error.status === 409) {
+      const conflict = new Error('That time was just taken. Please choose another.'); conflict.status = 409; throw conflict;
+    }
+    throw error;
   }
 }
+
 async function releaseSlot(record, cfg) {
   if (!record.demo || !record.barberId) return;
   const path = HOLD_PREFIX + schedule.slotKey(record.date, record.barberId, record.time);
@@ -189,6 +198,7 @@ async function handler(req, res) {
     if (b.status === 'cancelled') await releaseSlot(record, cfg);
     return reply(res, 200, { status: b.status });
   } catch (error) {
+    console.error('Rylo booking error:', error.name, error.message);
     if (error.status === 409) return reply(res, 409, { error: error.message });
     return reply(res, 503, { error: 'We could not save your request right now. Please try again. Your appointment is not confirmed.' });
   }

@@ -1,4 +1,11 @@
-# Reference screenshots and the local dev server. Kept in the repo, not needed on the site.
-# Note: each template's prompt.md IS needed. The gallery fetches it for the Copy prompt button.
+# Development files must never be published.
 _inspo-notes
 serve.js
+builder/out
+builder/sites
+builder/.env
+.env*
+**/.env*
+**/*.env
+.claude
+.agents
