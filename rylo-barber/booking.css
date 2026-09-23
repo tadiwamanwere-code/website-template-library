@@ -9,3 +9,36 @@
 body.flow-open{overflow:hidden}dialog{color:var(--paper);background:#131511;border:1px solid #b59a6955;padding:24px;width:min(620px,calc(100% - 32px));max-height:92dvh;margin:auto;overscroll-behavior:contain}dialog::backdrop{background:#080a08db;backdrop-filter:blur(8px)}dialog .booking-panel{border:0;padding:0;background:none}dialog .flow-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.flow-brand{font:44px/1 var(--serif);color:var(--paper);text-decoration:none}.flow-close{width:48px;height:48px;border:1px solid #45493e;background:none;color:var(--paper);font-size:30px}.flow-caption{display:flex;justify-content:space-between;color:var(--gold);font-size:10px;letter-spacing:.13em;margin-bottom:25px}.booking-launch{padding:30px;border:1px solid var(--rule);display:grid;gap:22px}.booking-launch h3{font:42px/1.1 var(--serif)}.booking-launch>p{color:var(--muted)}.booking-launch .btn{justify-content:space-between}.profile-intro h2{font:60px/1.1 var(--serif);margin:20px 0}.profile-intro p{margin-bottom:18px}.profile-intro .btn{margin:12px 0}.profile-ticket-link{width:100%;justify-content:center;margin:0 0 15px}.history-wrap h3{display:flex;justify-content:space-between;font:28px var(--serif)}.booking-toast{z-index:100}body:has(dialog[open]) .booking-toast.shown{z-index:100}.booking-progress{position:sticky;top:-1px;background:#131511;padding-block:10px;z-index:2}@media(max-width:600px){dialog{width:100%;height:100dvh;max-height:100dvh;margin:0;border:0;padding:20px 20px calc(24px + env(safe-area-inset-bottom))}.booking-launch{padding:24px}.booking-step h3{font-size:36px}}
 
 .booking-page{min-height:100dvh;background:#131511}.booking-page main{width:min(620px,100%);margin:0 auto;padding:24px 22px 60px}.booking-page .booking-panel{padding:0;border:0}.booking-page .flow-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.booking-page .flow-close{display:grid;place-items:center;text-decoration:none}.booking-page .flow-caption{display:flex;justify-content:space-between}.booking-page .booking-toast{z-index:100}.booking-page .booking-progress{top:0}.booking-page .step-actions{padding-bottom:12px}.booking-page .step-actions .btn{min-width:0}@media(min-width:700px){.booking-page main{padding-top:40px}}
+
+/* Quiet motion: short feedback, a slow hero settle, and native page changes. */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:rylo-page-out 120ms ease both}
+::view-transition-new(root){animation:rylo-page-in 240ms ease both}
+@keyframes rylo-page-out{to{opacity:0}}
+@keyframes rylo-page-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:no-preference){
+ .hero-art{animation:rylo-hero-settle 7s cubic-bezier(.16,1,.3,1) both}
+ @keyframes rylo-hero-settle{from{transform:scale(1.045)}to{transform:scale(1)}}
+ .btn,.nav-book,.cut button,.gallery-controls button,.service-option,.barber-card,.date-choice,.time-choice,.flow-close{transition:background-color .22s ease,border-color .22s ease,color .22s ease,transform .22s ease,box-shadow .22s ease}
+ .ui-arrow{transition:transform .28s cubic-bezier(.16,1,.3,1)}
+ .btn:active,.nav-book:active,.cut button:active,.service-option:active,.barber-card:active,.date-choice:active,.time-choice:active{transform:scale(.98)}
+ .booking-progress li{transition:border-color .3s ease}
+ .booking-progress button{transition:color .3s ease}
+ .field input,.field textarea{transition:border-color .2s ease,box-shadow .2s ease}
+ .field input:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 2px #b59a6918}
+ .step-panel-enter{animation:rylo-step-in .38s cubic-bezier(.16,1,.3,1) both}
+ @keyframes rylo-step-in{from{transform:translateY(10px);opacity:.7}to{transform:none;opacity:1}}
+ #step-ticket:not([hidden]) .booking-ticket{animation:rylo-ticket-in .6s cubic-bezier(.16,1,.3,1) both}
+ @keyframes rylo-ticket-in{from{transform:translateY(16px) rotate(-1deg)}to{transform:none}}
+ @media(hover:hover) and (pointer:fine){
+  .btn:hover .ui-arrow,.nav-book:hover .ui-arrow,.cut button:hover .ui-arrow{transform:translate(2px,-2px)}
+  .service-option:hover,.barber-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .date-choice:not(:disabled):hover,.time-choice:not(:disabled):hover{border-color:var(--gold)}
+  .flow-close:hover{border-color:var(--gold);transform:rotate(5deg)}
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+ ::view-transition-old(root),::view-transition-new(root){animation:none!important}
+}
